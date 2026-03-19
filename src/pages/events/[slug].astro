@@ -1,0 +1,193 @@
+---
+// 💡 OPTIONAL PAGE - Delete this file if not needed for your project
+// Individual event page
+
+export const prerender = true;
+
+import { getCollection, render } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+
+export async function getStaticPaths() {
+    const events = await getCollection("events");
+    return events.map((event) => ({
+        params: { slug: event.slug },
+        props: { event },
+    }));
+}
+
+const { event } = Astro.props;
+const { Content } = await render(event);
+
+const eventDate = event.data.date;
+const formattedDate = eventDate.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+});
+---
+
+<MainLayout
+    title={`${event.data.title} | Events`}
+    description={event.data.description}
+>
+    <!-- Hero -->
+    <section class="py-16 lg:py-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <a
+                href="/events"
+                class="text-sm font-medium text-neutral-500 hover:text-black dark:hover:text-white mb-6 inline-block"
+            >
+                ← Back to Events
+            </a>
+
+            <div class="flex flex-wrap gap-3 mb-6">
+                <span
+                    class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-medium rounded-full"
+                >
+                    {event.data.eventType}
+                </span>
+                {event.data.isVirtual && (
+                    <span
+                        class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-sm font-medium rounded-full"
+                    >
+                        Virtual
+                    </span>
+                )}
+                {!event.data.isUpcoming && (
+                    <span
+                        class="px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 text-sm font-medium rounded-full"
+                    >
+                        Past Event
+                    </span>
+                )}
+            </div>
+
+            <h1
+                class="text-4xl md:text-5xl font-black text-black dark:text-white mb-6"
+            >
+                {event.data.title}
+            </h1>
+
+            <!-- Event Meta -->
+            <div class="flex flex-wrap gap-6 text-neutral-600 dark:text-neutral-400">
+                <div class="flex items-center gap-2">
+                    <span>📅</span>
+                    <span>{formattedDate}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span>🕐</span>
+                    <span>{event.data.time}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span>⏱️</span>
+                    <span>{event.data.duration}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span>📍</span>
+                    <span>{event.data.location}</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Content -->
+    <section class="pb-16 lg:pb-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <!-- Main Content -->
+                <div class="lg:col-span-2">
+                    <h2
+                        class="text-xl font-bold text-black dark:text-white mb-4"
+                    >
+                        About this Event
+                    </h2>
+                    <p
+                        class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-8"
+                    >
+                        {event.data.description}
+                    </p>
+
+                    <div class="prose dark:prose-invert max-w-none">
+                        <Content />
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="lg:col-span-1">
+                    <div
+                        class="sticky top-24 p-6 bg-neutral-100 dark:bg-neutral-800 rounded-lg"
+                    >
+                        {event.data.isUpcoming ? (
+                            <>
+                                <h3
+                                    class="text-lg font-bold text-black dark:text-white mb-4"
+                                >
+                                    Register for this Event
+                                </h3>
+                                <p
+                                    class="text-sm text-neutral-600 dark:text-neutral-400 mb-6"
+                                >
+                                    Secure your spot today. Spaces are limited.
+                                </p>
+                                {event.data.registrationLink ? (
+                                    <a
+                                        href={event.data.registrationLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="block w-full px-6 py-3 bg-black dark:bg-white text-white dark:text-black font-bold rounded-md text-center hover:opacity-80 transition-opacity"
+                                    >
+                                        Register Now
+                                    </a>
+                                ) : (
+                                    <a
+                                        href="mailto:events@example.com?subject=Registration: {event.data.title}"
+                                        class="block w-full px-6 py-3 bg-black dark:bg-white text-white dark:text-black font-bold rounded-md text-center hover:opacity-80 transition-opacity"
+                                    >
+                                        Register via Email
+                                    </a>
+                                )}
+                            </>
+                        ) : (
+                            <>
+                                <h3
+                                    class="text-lg font-bold text-black dark:text-white mb-4"
+                                >
+                                    Event Completed
+                                </h3>
+                                <p
+                                    class="text-sm text-neutral-600 dark:text-neutral-400 mb-6"
+                                >
+                                    This event has ended. Check out our upcoming events for more opportunities.
+                                </p>
+                                <a
+                                    href="/events"
+                                    class="block w-full px-6 py-3 border-2 border-black dark:border-white text-black dark:text-white font-bold rounded-md text-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                                >
+                                    View Upcoming Events
+                                </a>
+                            </>
+                        )}
+
+                        <!-- Add to Calendar -->
+                        {event.data.isUpcoming && (
+                            <div class="mt-6 pt-6 border-t border-neutral-200 dark:border-neutral-700">
+                                <h4
+                                    class="text-sm font-bold text-black dark:text-white mb-3"
+                                >
+                                    Add to Calendar
+                                </h4>
+                                <a
+                                    href="#"
+                                    class="text-sm text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white flex items-center gap-2"
+                                >
+                                    <span>📆</span> Download .ics file
+                                </a>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</MainLayout>

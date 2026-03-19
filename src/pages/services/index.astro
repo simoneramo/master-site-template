@@ -1,0 +1,209 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import FAQ from "../../components/FAQ.astro";
+import { getEntry } from "astro:content";
+
+// 🔘 Page Settings: toggle isActive in TinaCMS > Page Settings > services
+const pageConfig = await getEntry("pages", "services");
+if (pageConfig?.data?.isActive === false) return Astro.redirect("/404");
+
+const servicesPage = await getEntry("services", "index");
+if (!servicesPage) {
+    throw new Error("Services page data not found");
+}
+const aboutPage = await getEntry("about", "index");
+
+const { hero, mainServices, cta } = servicesPage.data;
+
+const faq = aboutPage?.data?.faq;
+
+const targetIndustries = [
+    {
+        category: "The daily routine (High visibility)",
+        description:
+            "Target these for high-traffic mobile use and social proof in local hubs.",
+        items: [
+            "Cafes & coffee shops",
+            "Restaurants & bistros",
+            "Boutique retail & gift shops",
+            "Bakeries & patisseries",
+        ],
+    },
+    {
+        category: "The trades (The 'Emergency' search)",
+        description:
+            "These businesses rely heavily on 'Click-to-Call' and mobile speed for users in a hurry.",
+        items: [
+            "Plumbers & gas fitters",
+            "Electricians & solar installers",
+            "Landscapers & gardeners",
+            "Concreters & bricklayers",
+            "Painters & decorators",
+            "Pest control services",
+        ],
+    },
+    {
+        category: "Professional services (The 'Trust' search)",
+        description:
+            "These clients value a clean, 'Gold standard' look to match their professional reputation.",
+        items: [
+            "Accountants & bookkeepers",
+            "Lawyers & conveyancers",
+            "Real estate agencies (Independent)",
+            "Consultants",
+            "Mortgage brokers",
+        ],
+    },
+    {
+        category: "Health & wellness (The 'Booking' search)",
+        description:
+            "Target businesses that need better integration for appointments.",
+        items: [
+            "Physiotherapists & osteopaths",
+            "Yoga & pilates studios",
+            "Psychologists & counselors",
+            "Personal trainers & local gyms",
+            "Hair salons & barbers",
+        ],
+    },
+    {
+        category: "Specialty local services",
+        description: "",
+        items: [
+            "Pet groomers & dog walkers",
+            "Auto mechanics & detailers",
+            "Cleaning services",
+            "Photographers",
+        ],
+    },
+];
+---
+
+<MainLayout title="Services">
+    <!-- Hero Section -->
+    <section class="py-20 bg-white dark:bg-black">
+        <div class="container mx-auto px-4 lg:px-0 text-center">
+            <p
+                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+            >
+                {hero.label}
+            </p>
+            <h1 class="text-5xl md:text-7xl text-pretty font-bold mb-8">
+                {hero.heading}
+            </h1>
+            <p
+                class="text-lg md:text-xl font-medium mb-10 text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto"
+            >
+                {hero.description}
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Services -->
+    <section class="py-20 dark:bg-zinc-900">
+        <div class="container mx-auto px-4 lg:px-0">
+            <p
+                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-2"
+            >
+                {mainServices.sectionLabel}
+            </p>
+            <h2 class="text-5xl font-bold mb-4">
+                {mainServices.heading}
+            </h2>
+            <p
+                class="text-lg text-neutral-600 dark:text-neutral-400 mb-12 max-w-3xl font-medium"
+            >
+                {mainServices.description}
+            </p>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {
+                    mainServices.items.map((service) => (
+                        <article class="relative border-2 bg-white dark:bg-black border-stone-200 dark:border-zinc-700 p-4 md:p-8 md:pb-12 rounded-lg transition-colors group">
+                            <div class="text-4xl mb-6">{service.icon}</div>
+                            <h3 class="text-xl font-bold mb-2">
+                                {service.title}
+                            </h3>
+                            <p class="leading-relaxed text-neutral-600 dark:text-neutral-400 font-medium mb-6">
+                                {service.description}
+                            </p>
+
+                            <a
+                                href={service.linkUrl}
+                                class="inline-block font-bold border-b-2 border-current hover:border-transparent after:absolute after:inset-0"
+                            >
+                                Learn more &rarr;
+                            </a>
+                        </article>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Industries -->
+    <section class="py-20 bg-white dark:bg-black">
+        <div class="container mx-auto px-4 md:px-0">
+            <div class="text-center mb-16">
+                <p
+                    class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+                >
+                    Target market
+                </p>
+                <h2 class="text-5xl font-bold mb-6">Industries we serve</h2>
+                <p
+                    class="text-lg text-neutral-600 dark:text-neutral-400 mb-12 font-medium"
+                >
+                    We've worked with organizations across multiple sectors.
+                </p>
+            </div>
+
+            <ul
+                class="grid grid-cols-2 md:grid-cols-4 gap-5 text-md sm:text-lg font-medium text-neutral-600 dark:text-neutral-400"
+            >
+                {
+                    targetIndustries
+                        .flatMap((group) => group.items)
+                        .map((item) => <li class="text-center">{item}</li>)
+                }
+            </ul>
+        </div>
+    </section>
+
+    <!-- FAQ Section (Reused from About page) -->
+    {faq && <FAQ data={faq} />}
+
+    <!-- CTA Section -->
+    <section class="pb-32 container mx-auto px-4 md:px-0">
+        <div
+            class="bg-zinc-200 dark:bg-zinc-900 p-16 md:p-32 text-center rounded-xl"
+        >
+            <p
+                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+            >
+                {cta.sectionLabel}
+            </p>
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                {cta.heading}
+            </h2>
+            <p class="text-lg font-medium mb-10">
+                {cta.description}
+            </p>
+            <a
+                href={cta.primaryBtn.link}
+                class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-black bg-white dark:bg-green-600 dark:text-white transition-all duration-300 text-lg rounded-md hover:bg-white dark:hover:bg-black"
+            >
+                <span
+                    class="transform transition-transform duration-300 group-hover:-translate-x-4"
+                >
+                    {cta.primaryBtn.text}
+                </span>
+                <span
+                    class="absolute right-6 transform translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                >
+                    &rarr;
+                </span>
+            </a>
+        </div>
+    </section>
+</MainLayout>

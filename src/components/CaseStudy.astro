@@ -1,0 +1,530 @@
+---
+
+---
+
+<div
+    class="py-16 px-4 flex items-center justify-center min-h-screen bg-stone-50 dark:bg-black"
+>
+    <div class="max-w-6xl w-full">
+        <!-- Header Section -->
+        <div class="text-center mb-12">
+            <h2
+                class="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-2"
+            >
+                Case Study
+            </h2>
+            <h3
+                class="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6"
+            >
+                Real Results. No Fluff.
+            </h3>
+            <p
+                class="text-neutral-600 dark:text-neutral-400 text-lg max-w-2xl mx-auto"
+            >
+                See how We Make Small design principles transformed a local
+                business from a "Digital Liability" to a "Lead Generator."
+            </p>
+        </div>
+
+        <!-- Comparison Card -->
+        <div
+            class="bg-white dark:bg-zinc-900 rounded-[2.5rem] shadow-2xl overflow-hidden border border-neutral-100 dark:border-neutral-800"
+        >
+            <div class="grid md:grid-cols-2">
+                <!-- Visual Comparison Area -->
+                <div
+                    id="cs-visual-area"
+                    class="relative p-8 flex items-center justify-center min-h-[500px] smooth-transition bg-zinc-100 dark:bg-zinc-800"
+                >
+                    <!-- Status Badge -->
+                    <div class="absolute top-6 left-6 z-10">
+                        <span
+                            id="cs-status-badge"
+                            class="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest smooth-transition bg-zinc-800 text-white dark:bg-zinc-700"
+                        >
+                            Before (DIY Builder)
+                        </span>
+                    </div>
+
+                    <!-- Mockup Simulation -->
+                    <div
+                        id="cs-mockup-frame"
+                        class="w-64 h-[450px] rounded-[3rem] border-8 border-neutral-300 dark:border-neutral-700 shadow-2xl relative overflow-hidden smooth-transition bg-zinc-200 dark:bg-zinc-800 scale-100"
+                    >
+                        <!-- Content Container -->
+                        <div class="p-4 space-y-4 h-full relative">
+                            <!-- Elements that change based on state -->
+                            <div
+                                id="cs-mockup-header"
+                                class="h-4 w-20 rounded-full smooth-transition bg-zinc-400 dark:bg-zinc-600"
+                            >
+                            </div>
+                            <div
+                                id="cs-mockup-hero"
+                                class="h-32 w-full rounded-2xl smooth-transition bg-zinc-300 dark:bg-zinc-700"
+                            >
+                            </div>
+
+                            <div class="space-y-2">
+                                <div
+                                    id="cs-mockup-line-1"
+                                    class="h-3 w-full rounded-full smooth-transition bg-zinc-300 dark:bg-zinc-700"
+                                >
+                                </div>
+                                <div
+                                    id="cs-mockup-line-2"
+                                    class="h-3 w-3/4 rounded-full smooth-transition bg-zinc-300 dark:bg-zinc-700"
+                                >
+                                </div>
+                            </div>
+
+                            <!-- The 'Call Now' Button (Hidden in Before state) -->
+                            <div
+                                id="cs-mockup-cta"
+                                class="pt-8 opacity-0 transform translate-y-4 smooth-transition"
+                            >
+                                <div
+                                    class="h-12 w-full bg-green-600 rounded-xl shadow-lg flex items-center justify-center text-white text-xs font-bold"
+                                >
+                                    CALL NOW
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Toggle Trigger Button -->
+                    <button
+                        id="cs-toggle-btn"
+                        class="absolute bottom-6 right-6 p-4 bg-black dark:bg-white text-white dark:text-black rounded-full shadow-xl hover:scale-110 active:scale-95 smooth-transition focus:outline-none focus:ring-4 focus:ring-neutral-200 dark:focus:ring-neutral-700 z-20 cursor-pointer"
+                        aria-label="Toggle Before and After"
+                    >
+                        <!-- Arrow Right Left Icon -->
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><path d="m16 19 5-5-5-5"></path><path
+                                d="m8 5-5 5 5 5"></path><path d="M4 10h16"
+                            ></path><path d="M4 14h16"></path></svg
+                        >
+                    </button>
+                </div>
+
+                <!-- Data & Narrative Area -->
+                <div class="p-8 md:p-12 flex flex-col justify-center">
+                    <div class="space-y-8">
+                        <div>
+                            <h4
+                                id="cs-narrative-title"
+                                class="text-3xl font-bold text-black dark:text-white leading-tight mb-2 smooth-transition"
+                            >
+                                Held Back by Legacy Bloat
+                            </h4>
+                            <p
+                                id="cs-narrative-desc"
+                                class="text-neutral-500 dark:text-neutral-400 smooth-transition"
+                            >
+                                A template-heavy DIY site with fragmented code
+                                and poor mobile optimisation.
+                            </p>
+                        </div>
+
+                        <!-- Stats Grid -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <!-- Speed -->
+                            <div
+                                class="p-4 bg-stone-50 dark:bg-zinc-800 rounded-2xl border border-neutral-100 dark:border-neutral-700"
+                            >
+                                <div class="mb-2">
+                                    <svg
+                                        id="cs-icon-speed"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="text-red-500 smooth-transition"
+                                        ><polygon
+                                            points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+                                        ></polygon></svg
+                                    >
+                                </div>
+                                <p
+                                    class="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest"
+                                >
+                                    Mobile Speed
+                                </p>
+                                <p
+                                    id="cs-stat-speed"
+                                    class="text-2xl font-bold text-black dark:text-white smooth-transition"
+                                >
+                                    9.4s
+                                </p>
+                            </div>
+
+                            <!-- Conversion -->
+                            <div
+                                class="p-4 bg-stone-50 dark:bg-zinc-800 rounded-2xl border border-neutral-100 dark:border-neutral-700"
+                            >
+                                <div class="mb-2">
+                                    <svg
+                                        id="cs-icon-conversion"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="text-red-500 smooth-transition"
+                                        ><polyline
+                                            points="22 7 13.5 15.5 8.5 10.5 2 17"
+                                        ></polyline><polyline
+                                            points="16 7 22 7 22 13"
+                                        ></polyline></svg
+                                    >
+                                </div>
+                                <p
+                                    class="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest"
+                                >
+                                    Conversion
+                                </p>
+                                <p
+                                    id="cs-stat-conversion"
+                                    class="text-2xl font-bold text-black dark:text-white smooth-transition"
+                                >
+                                    1.2%
+                                </p>
+                            </div>
+
+                            <!-- Score -->
+                            <div
+                                class="p-4 bg-stone-50 dark:bg-zinc-800 rounded-2xl border border-neutral-100 dark:border-neutral-700"
+                            >
+                                <div class="mb-2">
+                                    <svg
+                                        id="cs-icon-score"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="text-red-500 smooth-transition"
+                                        ><rect
+                                            width="14"
+                                            height="20"
+                                            x="5"
+                                            y="2"
+                                            rx="2"
+                                            ry="2"></rect><path d="M12 18h.01"
+                                        ></path></svg
+                                    >
+                                </div>
+                                <p
+                                    class="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest"
+                                >
+                                    Speed Score
+                                </p>
+                                <p
+                                    id="cs-stat-score"
+                                    class="text-2xl font-bold text-black dark:text-white smooth-transition"
+                                >
+                                    24/100
+                                </p>
+                            </div>
+
+                            <!-- Security -->
+                            <div
+                                class="p-4 bg-stone-50 dark:bg-zinc-800 rounded-2xl border border-neutral-100 dark:border-neutral-700"
+                            >
+                                <div class="mb-2">
+                                    <svg
+                                        id="cs-icon-security"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="text-red-500 smooth-transition"
+                                        ><path
+                                            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
+                                        ></path><path d="m9 12 2 2 4-4"
+                                        ></path></svg
+                                    >
+                                </div>
+                                <p
+                                    class="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest"
+                                >
+                                    Security
+                                </p>
+                                <p
+                                    id="cs-stat-security"
+                                    class="text-sm font-bold text-black dark:text-white truncate smooth-transition"
+                                >
+                                    Not Secure
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Footer Status Line -->
+                        <div
+                            class="pt-4 border-t border-neutral-100 dark:border-neutral-800"
+                        >
+                            <div class="flex items-center gap-3">
+                                <!-- Status Icon (changes dynamically) -->
+                                <div id="cs-status-icon-container">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="text-red-500"
+                                        ><path
+                                            d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"
+                                        ></path><path d="M12 9v4"></path><path
+                                            d="M12 17h.01"></path></svg
+                                    >
+                                </div>
+                                <span
+                                    id="cs-status-text"
+                                    class="font-bold text-neutral-700 dark:text-neutral-300 smooth-transition"
+                                    >Slow & Vulnerable</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Link -->
+        <div class="mt-12 text-center">
+            <p class="text-black dark:text-white font-medium mb-4">
+                Ready to move your business into the "After" column?
+            </p>
+            <a
+                href="#contact"
+                class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-md hover:bg-black dark:hover:bg-white"
+            >
+                <span
+                    class="transform transition-transform duration-300 group-hover:-translate-x-4"
+                >
+                    Get your free 10-Minute audit
+                </span>
+                <span
+                    class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                >
+                    →
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Smooth transitions for all interactive elements */
+    .smooth-transition {
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        let isAfter = false;
+
+        // DOM Elements
+        const toggleBtn = document.getElementById("cs-toggle-btn");
+
+        // Visual Area Elements
+        const visualArea = document.getElementById("cs-visual-area");
+        const statusBadge = document.getElementById("cs-status-badge");
+        const mockupFrame = document.getElementById("cs-mockup-frame");
+        const mockupHeader = document.getElementById("cs-mockup-header");
+        const mockupHero = document.getElementById("cs-mockup-hero");
+        const mockupLine1 = document.getElementById("cs-mockup-line-1");
+        const mockupLine2 = document.getElementById("cs-mockup-line-2");
+        const mockupCta = document.getElementById("cs-mockup-cta");
+
+        // Text/Data Elements
+        const narrativeTitle = document.getElementById("cs-narrative-title");
+        const narrativeDesc = document.getElementById("cs-narrative-desc");
+        const statSpeed = document.getElementById("cs-stat-speed");
+        const statConversion = document.getElementById("cs-stat-conversion");
+        const statScore = document.getElementById("cs-stat-score");
+        const statSecurity = document.getElementById("cs-stat-security");
+        const statusText = document.getElementById("cs-status-text");
+        const statusIconContainer = document.getElementById(
+            "cs-status-icon-container",
+        );
+
+        // Icons (SVGs as strings)
+        const icons = {
+            alert: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-600"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>`,
+            check: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-600"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>`,
+        };
+
+        if (toggleBtn) {
+            toggleBtn.addEventListener("click", () => {
+                isAfter = !isAfter;
+                updateUI();
+            });
+        }
+
+        function updateUI() {
+            if (
+                !visualArea ||
+                !statusBadge ||
+                !mockupFrame ||
+                !mockupHeader ||
+                !mockupHero ||
+                !mockupLine1 ||
+                !mockupLine2 ||
+                !mockupCta ||
+                !narrativeTitle ||
+                !narrativeDesc ||
+                !statSpeed ||
+                !statConversion ||
+                !statScore ||
+                !statSecurity ||
+                !statusText ||
+                !statusIconContainer
+            )
+                return;
+
+            if (isAfter) {
+                // --- AFTER STATE ---
+
+                // 1. Visual Changes
+                visualArea.classList.remove("bg-zinc-100");
+                visualArea.classList.add("bg-black");
+
+                statusBadge.textContent = "After (WeMakeSmall)";
+                statusBadge.classList.remove("bg-zinc-800");
+                statusBadge.classList.remove("dark:bg-zinc-700");
+                statusBadge.classList.add("bg-white", "text-black");
+                statusBadge.classList.remove("text-white");
+
+                mockupFrame.classList.remove("bg-zinc-200", "scale-100");
+                mockupFrame.classList.remove("dark:bg-zinc-800");
+                mockupFrame.classList.add("bg-white", "scale-105");
+
+                mockupHeader.classList.remove("bg-zinc-400");
+                mockupHeader.classList.add("bg-black");
+
+                mockupHero.classList.remove("bg-zinc-300");
+                mockupHero.classList.add("bg-zinc-100");
+
+                mockupLine1.classList.remove("bg-zinc-300");
+                mockupLine1.classList.add("bg-zinc-200");
+
+                mockupLine2.classList.remove("bg-zinc-300");
+                mockupLine2.classList.add("bg-zinc-200");
+
+                mockupCta.classList.remove("opacity-0", "translate-y-4"); // Show CTA
+
+                // 2. Data Changes
+                narrativeTitle.textContent = "Built for High Performance";
+                narrativeDesc.textContent =
+                    "A custom Astro + JAMstack build with Simon's conversion-led UX framework.";
+
+                statSpeed.textContent = "1.2s";
+                statConversion.textContent = "5.5%+";
+                statScore.textContent = "98/100";
+                statSecurity.textContent = "SSL + 256-bit";
+
+                statusText.textContent = "The Gold Standard";
+                statusIconContainer.innerHTML = icons.check;
+
+                // Highlight Icons - Namespaced selector to avoid affecting Header
+                document
+                    .querySelectorAll('[id^="cs-icon-"]')
+                    .forEach((icon) => {
+                        icon.classList.remove("text-red-500");
+                        icon.classList.add(
+                            "text-green-600",
+                            "dark:text-green-500",
+                        );
+                    });
+            } else {
+                // --- BEFORE STATE ---
+
+                // 1. Visual Changes
+                visualArea.classList.add("bg-zinc-100");
+                visualArea.classList.remove("bg-black");
+
+                statusBadge.textContent = "Before (DIY Builder)";
+                statusBadge.classList.add("bg-zinc-800");
+                statusBadge.classList.add("dark:bg-zinc-700");
+                statusBadge.classList.remove("bg-white", "text-black");
+                statusBadge.classList.add("text-white");
+
+                mockupFrame.classList.add("bg-zinc-200", "scale-100");
+                mockupFrame.classList.add("dark:bg-zinc-800"); // Restore default dark mode
+                mockupFrame.classList.remove("bg-white", "scale-105");
+
+                mockupHeader.classList.add("bg-zinc-400");
+                mockupHeader.classList.remove("bg-black");
+
+                mockupHero.classList.add("bg-zinc-300");
+                mockupHero.classList.remove("bg-zinc-100");
+
+                mockupLine1.classList.add("bg-zinc-300");
+                mockupLine1.classList.remove("bg-zinc-200");
+
+                mockupLine2.classList.add("bg-zinc-300");
+                mockupLine2.classList.remove("bg-zinc-200");
+
+                mockupCta.classList.add("opacity-0", "translate-y-4"); // Hide CTA
+
+                // 2. Data Changes
+                narrativeTitle.textContent = "Held Back by Legacy Bloat";
+                narrativeDesc.textContent =
+                    "A template-heavy DIY site with fragmented code and poor mobile optimisation.";
+
+                statSpeed.textContent = "9.4s";
+                statConversion.textContent = "1.2%";
+                statScore.textContent = "24/100";
+                statSecurity.textContent = "Not Secure";
+
+                statusText.textContent = "Slow & Vulnerable";
+                statusIconContainer.innerHTML = icons.alert;
+
+                // Dim Icons
+                document
+                    .querySelectorAll('[id^="cs-icon-"]')
+                    .forEach((icon) => {
+                        icon.classList.add("text-red-500");
+                        icon.classList.remove(
+                            "text-green-600",
+                            "dark:text-green-500",
+                        );
+                    });
+            }
+        }
+    });
+</script>

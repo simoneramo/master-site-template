@@ -1,0 +1,139 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+
+import { getCollection } from "astro:content";
+
+const services = await getCollection("offerings");
+const processes = (await getCollection("processSteps")).sort(
+    (a, b) => (a.data.order || 0) - (b.data.order || 0),
+);
+
+const sitemapCategories = [
+    {
+        title: "Main",
+        links: [
+            { label: "Home", url: "/" },
+            { label: "About Us", url: "/about" },
+            { label: "Our services", url: "/services" },
+            { label: "Our process", url: "/process" },
+            { label: "Contact us", url: "/contact" },
+        ],
+    },
+    {
+        title: "Services",
+        links: services.map((service) => ({
+            label: service.data.title,
+            url: `/services/${service.slug}`,
+        })),
+    },
+    {
+        title: "Process",
+        links: processes.map((process) => ({
+            label: process.data.title,
+            url: `/process/${process.slug}`,
+        })),
+    },
+    {
+        title: "Work & solutions",
+        links: [
+            { label: "Design blueprints", url: "/design-blueprints" },
+            { label: "Design system", url: "/design-system" },
+        ],
+    },
+    {
+        title: "Resources & knowledge",
+        links: [
+            { label: "Insights (Blog)", url: "/insights" },
+            { label: "Common web terms", url: "/common-web-terms" },
+            { label: "Technology stack", url: "/tech" },
+            { label: "Resources hub", url: "/resources" },
+        ],
+    },
+    {
+        title: "Company",
+        links: [
+            { label: "Referral program", url: "/referral" },
+            { label: "Who we are", url: "/who" },
+        ],
+    },
+    {
+        title: "Actions",
+        links: [
+            { label: "Get a quote", url: "/get-a-quote" },
+            { label: "Free audit", url: "/audit" },
+        ],
+    },
+];
+---
+
+<MainLayout title="Page Not Found">
+    <!-- Hero Section -->
+    <section class="py-20 bg-white dark:bg-black">
+        <div class="container mx-auto max-w-4xl text-center px-4">
+            <p
+                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+            >
+                404
+            </p>
+            <h1 class="text-5xl md:text-7xl font-bold mb-8 dark:text-white">
+                Page not found
+            </h1>
+            <p
+                class="text-lg md:text-xl font-medium mb-10 text-black dark:text-white"
+            >
+                The page you're looking for doesn't exist. Here are some helpful
+                links:
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-20">
+                <a
+                    href="/"
+                    class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-8 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200"
+                >
+                    <span
+                        class="transform transition-transform duration-300 group-hover:-translate-x-4"
+                    >
+                        Go home
+                    </span>
+                    <span
+                        class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                    >
+                        &rarr;
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sitemap Grid -->
+    <section
+        class="py-20 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-neutral-800"
+    >
+        <div class="px-8">
+            <h2 class="text-3xl font-bold mb-12 dark:text-white">Sitemap</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+                {
+                    sitemapCategories.map((category) => (
+                        <div class="flex flex-col gap-2">
+                            <h3 class="text-xl font-bold pb-2 dark:text-white">
+                                {category.title}
+                            </h3>
+                            <ul class="flex flex-col gap-3">
+                                {category.links.map((link) => (
+                                    <li>
+                                        <a
+                                            href={link.url}
+                                            class="text-md font-medium text-neutral-800 dark:text-neutral-400 hover:text-black dark:hover:text-white hover:underline transition-colors decoration-2 underline-offset-4"
+                                        >
+                                            {link.label}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+</MainLayout>

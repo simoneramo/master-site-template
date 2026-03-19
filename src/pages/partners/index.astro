@@ -1,0 +1,204 @@
+---
+// 💡 OPTIONAL PAGE - Delete this file if not needed for your project
+// This is a stub page for Partners/Integrations/Technology Partners
+// Customize or remove based on client needs
+
+import { getCollection, getEntry } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+
+// 🔘 Page Settings: toggle isActive in TinaCMS > Page Settings > partners
+const pageConfig = await getEntry("pages", "partners");
+if (pageConfig?.data?.isActive === false) return Astro.redirect("/404");
+
+const partners = await getCollection("partners", ({ data }) => data.isActive !== false);
+partners.sort((a, b) => a.data.order - b.data.order);
+const featuredPartners = partners.filter((p) => p.data.isFeatured);
+---
+
+<MainLayout
+    title="Partners | Our Technology Partners"
+    description="Discover our network of trusted partners and integrations that help us deliver exceptional results."
+>
+    <!-- Hero Section -->
+    <section class="py-24 lg:py-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center">
+                <span
+                    class="text-sm font-bold tracking-wider text-neutral-500 uppercase mb-4 block"
+                >
+                    Partners
+                </span>
+                <h1
+                    class="text-4xl md:text-5xl lg:text-6xl font-black text-black dark:text-white mb-6"
+                >
+                    Trusted Partners
+                </h1>
+                <p
+                    class="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed"
+                >
+                    We work with industry-leading technology providers to
+                    deliver comprehensive solutions for our clients.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partner Categories -->
+    <section class="pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Category 1 -->
+                <div
+                    class="p-6 border-2 border-neutral-200 dark:border-neutral-800 rounded-lg text-center"
+                >
+                    <div class="text-4xl mb-4">☁️</div>
+                    <h3
+                        class="text-lg font-bold text-black dark:text-white mb-2"
+                    >
+                        Cloud Providers
+                    </h3>
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                        Infrastructure and hosting partners
+                    </p>
+                </div>
+
+                <!-- Category 2 -->
+                <div
+                    class="p-6 border-2 border-neutral-200 dark:border-neutral-800 rounded-lg text-center"
+                >
+                    <div class="text-4xl mb-4">🔧</div>
+                    <h3
+                        class="text-lg font-bold text-black dark:text-white mb-2"
+                    >
+                        Tools & Software
+                    </h3>
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                        Productivity and development tools
+                    </p>
+                </div>
+
+                <!-- Category 3 -->
+                <div
+                    class="p-6 border-2 border-neutral-200 dark:border-neutral-800 rounded-lg text-center"
+                >
+                    <div class="text-4xl mb-4">🤝</div>
+                    <h3
+                        class="text-lg font-bold text-black dark:text-white mb-2"
+                    >
+                        Service Partners
+                    </h3>
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                        Complementary service providers
+                    </p>
+                </div>
+
+                <!-- Category 4 -->
+                <div
+                    class="p-6 border-2 border-neutral-200 dark:border-neutral-800 rounded-lg text-center"
+                >
+                    <div class="text-4xl mb-4">🏢</div>
+                    <h3
+                        class="text-lg font-bold text-black dark:text-white mb-2"
+                    >
+                        Enterprise
+                    </h3>
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                        Large-scale solution partners
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Partners Grid -->
+    <section class="pb-24 lg:pb-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2
+                class="text-2xl md:text-3xl font-bold text-black dark:text-white mb-8 text-center"
+            >
+                Our Partner Ecosystem
+            </h2>
+
+            <!-- Partner Logos Grid from CMS -->
+            {partners.length > 0 ? (
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-16">
+                    {partners.map((partner) => (
+                        <a 
+                            href={partner.data.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="aspect-[3/2] border-2 border-neutral-200 dark:border-neutral-800 rounded-lg flex items-center justify-center p-6 hover:border-black dark:hover:border-white transition-colors group"
+                        >
+                            <div class="text-center">
+                                {partner.data.logo ? (
+                                    <img 
+                                        src={partner.data.logo} 
+                                        alt={partner.data.name}
+                                        class="max-h-12 max-w-full object-contain opacity-70 group-hover:opacity-100 transition-opacity"
+                                    />
+                                ) : (
+                                    <div class="text-3xl mb-2">🏢</div>
+                                )}
+                                <span class="text-sm font-medium text-neutral-500 dark:text-neutral-400 group-hover:text-black dark:group-hover:text-white transition-colors">
+                                    {partner.data.name}
+                                </span>
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            ) : (
+                <div class="text-center py-16 border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg mb-16">
+                    <p class="text-neutral-500">No partners added yet.</p>
+                </div>
+            )}
+
+            <!-- Become a Partner CTA -->
+            <div
+                class="bg-neutral-100 dark:bg-neutral-900 rounded-lg p-8 md:p-12 text-center"
+            >
+                <h3
+                    class="text-2xl md:text-3xl font-bold text-black dark:text-white mb-4"
+                >
+                    Become a Partner
+                </h3>
+                <p
+                    class="text-lg text-neutral-600 dark:text-neutral-400 mb-8 max-w-2xl mx-auto"
+                >
+                    Interested in partnering with us? Let's explore how we can
+                    work together to create value for our mutual clients.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a
+                        href="/contact"
+                        class="px-8 py-3 bg-black dark:bg-white text-white dark:text-black font-bold rounded-md hover:opacity-80 transition-opacity"
+                    >
+                        Contact Us
+                    </a>
+                    <a
+                        href="#"
+                        class="px-8 py-3 border-2 border-black dark:border-white text-black dark:text-white font-bold rounded-md hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                    >
+                        View Partner Program
+                    </a>
+                </div>
+            </div>
+
+            <!-- Developer Note -->
+            <div
+                class="mt-16 p-6 bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-800 rounded-lg"
+            >
+                <p class="text-amber-800 dark:text-amber-200 font-medium">
+                    <strong>💡 Developer Note:</strong> This page uses TinaCMS content.
+                </p>
+                <ul
+                    class="mt-2 ml-4 list-disc text-amber-700 dark:text-amber-300"
+                >
+                    <li>Manage partners in TinaCMS under "Partners"</li>
+                    <li>Upload logos via TinaCMS media manager</li>
+                    <li>Mark partners as "Featured" to highlight them</li>
+                    <li>Create partner detail pages at <code>src/pages/partners/[slug].astro</code></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</MainLayout>

@@ -1,0 +1,114 @@
+---
+// Supports weights 100-900
+import "@fontsource-variable/inter";
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+    title?: string;
+    description?: string;
+    hideMenu?: boolean;
+    showPhoneButton?: boolean;
+    hideCTA?: boolean;
+}
+
+const {
+    title = "Your Business Name | Your Tagline Here",
+    description = "A short, compelling description of your business that will appear in search results. Keep it under 160 characters.",
+    hideMenu = false,
+    showPhoneButton = false,
+    hideCTA = false,
+    mainPadding = true,
+} = Astro.props;
+
+// Gracefully handle missing site config (e.g. local dev without site set)
+const siteBase = Astro.site ?? Astro.url;
+const canonicalURL = new URL(Astro.url.pathname, siteBase);
+const ogImage = new URL("/images/og-image.jpg", siteBase);
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>{title}</title>
+
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalURL} />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalURL} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={ogImage} />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:image" content={ogImage} />
+
+        <script is:inline>
+            if (
+                localStorage.getItem("theme") === "dark" ||
+                (!("theme" in localStorage) &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches)
+            ) {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        </script>
+
+        <script type="application/ld+json" is:inline>
+            {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": "Your Business Name",
+                "url": ""
+            }
+        </script>
+
+        <script>
+            import Alpine from 'alpinejs';
+            
+            // Make Alpine available globally for any inline scripts
+            window.Alpine = Alpine;
+            
+            // Initialize Alpine
+            Alpine.start();
+            
+            // Re-initialize on Astro page transitions
+            document.addEventListener("astro:page-load", () => {
+                // Only re-init the main content area to avoid double-initializing persisted elements (Header/Footer)
+                const main = document.getElementById("main-content");
+                if (main) Alpine.initTree(main);
+            });
+        </script>
+    </head>
+    <body
+        class="bg-white text-neutral-800 dark:bg-zinc-950 dark:text-neutral-200 antialiased font-sans flex flex-col min-h-screen"
+    >
+        <a
+            href="#main-content"
+            class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-black text-white dark:bg-white dark:text-black px-6 py-3 font-bold rounded-md"
+        >
+            Skip to main content
+        </a>
+
+        <Header
+            hideMenu={hideMenu}
+            showPhoneButton={showPhoneButton}
+            hideCTA={hideCTA}
+        />
+
+        <main id="main-content" class={mainPadding ? "pt-20" : ""}>
+            <slot />
+        </main>
+
+        <Footer />
+        <!-- 💬 Add your live chat script here (e.g. Tawk.to, Crisp, Intercom) -->
+    </body>
+</html>

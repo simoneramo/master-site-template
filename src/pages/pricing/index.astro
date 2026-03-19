@@ -1,0 +1,563 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import { getEntry } from "astro:content";
+
+// 🔘 Page Settings: toggle isActive in TinaCMS > Page Settings > pricing
+const pageConfig = await getEntry("pages", "pricing");
+if (pageConfig?.data?.isActive === false) return Astro.redirect("/404");
+---
+
+<MainLayout title="Pricing - WeMakeSmall">
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="py-4">
+        <div class="px-8 mx-auto flex items-center gap-2 text-md font-bold">
+            <a
+                href="/"
+                class="text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white transition-colors"
+                >Home</a
+            >
+            <span class="text-neutral-300 dark:text-neutral-700">/</span>
+            <span class="text-black dark:text-white">Pricing</span>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="py-20">
+        <div class="container mx-auto max-w-4xl text-center px-4">
+            <p
+                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+            >
+                Investment
+            </p>
+            <h1 class="text-5xl md:text-7xl font-bold mb-8">
+                Transparent pricing
+            </h1>
+            <p
+                class="text-lg md:text-xl font-medium mb-10 text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto"
+            >
+                No hidden fees, no surprise costs. Just clear, upfront pricing
+                for high-performance digital assets.
+            </p>
+        </div>
+    </section>
+
+    <!-- Pricing Tiers -->
+    <section class="py-20">
+        <div class="container mx-auto px-4 md:px-0">
+            <div class="mb-16 text-center">
+                <p
+                    class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+                >
+                    Pricing
+                </p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    WeMakeSmall Pricing & Service Tiers
+                </h2>
+                <p
+                    class="text-lg text-neutral-600 dark:text-neutral-400 font-medium"
+                >
+                    All projects are built for extreme speed (0.8s load times)
+                    and include <strong class="text-black dark:text-white"
+                        >100% ownership</strong
+                    > of your code. <br class="hidden md:block" />We follow a
+                    50% deposit / 50% on launch payment structure.
+                </p>
+            </div>
+
+            <div
+                class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-6 max-w-6xl mx-auto text-left"
+            >
+                <!-- Card 1 -->
+                <div
+                    class="rounded-lg border-2 border-zinc-200 dark:border-zinc-800 p-8 pt-12 flex flex-col bg-white dark:bg-zinc-950 transition-colors relative"
+                >
+                    <h3 class="text-2xl font-bold mb-2 tracking-tight">
+                        The Landing Page
+                    </h3>
+                    <p class="text-neutral-600 mb-6 h-12 leading-relaxed">
+                        Specific campaigns, lead magnets, or "Coming Soon"
+                        pages.
+                    </p>
+                    <div class="mb-8">
+                        <span
+                            class="text-neutral-500 text-xs font-bold tracking-wider uppercase block mb-2"
+                            >Starting at</span
+                        >
+                        <span class="text-5xl font-regular">$500*</span>
+                    </div>
+
+                    <ul
+                        class="flex flex-col gap-4 text-sm font-medium flex-1 mb-8"
+                    >
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Timeline:</strong
+                                > 7–14 Days</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Pages:</strong
+                                > 1 Focused Page</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Tech Stack:</strong
+                                > Astro + Vercel</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Editing:</strong
+                                > No (Developer managed)</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Performance:</strong
+                                > 95+ PageSpeed Score</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Form:</strong
+                                > Contact</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3 opacity-60">
+                            <span class="text-red-500 font-bold mt-0.5">✕</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Payments:</strong
+                                > No</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Training:</strong
+                                > 15-min Video Guide</span
+                            >
+                        </li>
+                    </ul>
+
+                    <a
+                        href="/contact?subject=New+Project&projectType=Landing+Page"
+                        class="mt-auto block w-full text-center py-4 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 font-bold transition-colors text-black dark:text-white"
+                        >Get Started</a
+                    >
+                    <a
+                        href="/pricing/landing-page"
+                        class="mt-4 block w-full text-center text-sm font-bold text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white transition-colors"
+                    >
+                        Learn more about The Landing Page &rarr;
+                    </a>
+                </div>
+
+                <!-- Card 2 -->
+                <div
+                    class="rounded-lg border-2 border-zinc-00 dark:border-zinc-600 p-8 pt-12 flex flex-col bg-white dark:bg-zinc-950 relative transform md:-translate-y-4 shadow-xl z-10"
+                >
+                    <div
+                        class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-green-600 dark:bg-white text-white dark:text-black px-6 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase"
+                    >
+                        Popular
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-2 tracking-tight">
+                        The One-Pager
+                    </h3>
+                    <p class="text-neutral-600 mb-6 h-12 leading-relaxed">
+                        New startups & trades needing a professional digital
+                        business card.
+                    </p>
+                    <div class="mb-8">
+                        <span
+                            class="text-neutral-500 text-xs font-bold tracking-wider uppercase block mb-2"
+                            >Starting at</span
+                        >
+                        <span class="text-5xl font-regular">$600*</span>
+                    </div>
+
+                    <ul
+                        class="flex flex-col gap-4 text-sm font-medium flex-1 mb-8"
+                    >
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Timeline:</strong
+                                > 21 Days</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Pages:</strong
+                                > 1 Multi-section Scrolling Page</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Tech Stack:</strong
+                                > Astro + Vercel</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Editing:</strong
+                                > Tina.io (Basic text/image)</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Performance:</strong
+                                > 95+ PageSpeed Score</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Form:</strong
+                                > Contact</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Payments:</strong
+                                > Optional Add-on</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Training:</strong
+                                > 30-min Video Guide</span
+                            >
+                        </li>
+                    </ul>
+
+                    <a
+                        href="/contact?subject=New+Project&projectType=One-Pager"
+                        class="mt-auto block w-full text-center py-4 rounded-xl bg-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 font-bold transition-colors text-white dark:text-black"
+                        >Get Started</a
+                    >
+                    <a
+                        href="/pricing/one-pager"
+                        class="mt-4 block w-full text-center text-sm font-bold text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white transition-colors"
+                    >
+                        Learn more &rarr;
+                    </a>
+                </div>
+
+                <!-- Card 3 -->
+                <div
+                    class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-8 lg:pt-12 flex flex-col bg-white dark:bg-zinc-950 hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors shadow-sm relative"
+                >
+                    <h3 class="text-2xl font-bold mb-2 tracking-tight">
+                        The Full Website
+                    </h3>
+                    <p class="text-neutral-600 mb-6 h-12 leading-relaxed">
+                        Growing businesses requiring a full authority-building
+                        presence.
+                    </p>
+                    <div class="mb-8">
+                        <span
+                            class="text-neutral-500 text-xs font-bold tracking-wider uppercase block mb-2"
+                            >Starting at</span
+                        >
+                        <span class="text-5xl font-regular">$1,000*</span>
+                    </div>
+
+                    <ul
+                        class="flex flex-col gap-4 text-sm font-medium flex-1 mb-8"
+                    >
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Timeline:</strong
+                                > 28 Days (Strict)</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Pages:</strong
+                                > Up to 5 Pages + Blog/Gallery</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Tech Stack:</strong
+                                > Astro + Vercel</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Editing:</strong
+                                > Tina.io (Full CMS control)</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Performance:</strong
+                                > 95+ PageSpeed Score</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Form:</strong
+                                > Contact + Custom</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Payments:</strong
+                                > Stripe / Square Integrated</span
+                            >
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-green-500 mt-0.5">✓</span>
+                            <span
+                                ><strong class="text-black dark:text-white"
+                                    >Training:</strong
+                                > 1-hour Live Training</span
+                            >
+                        </li>
+                    </ul>
+
+                    <a
+                        href="/contact?subject=New+Project&projectType=Full+Website"
+                        class="mt-auto block w-full text-center py-4 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 font-bold transition-colors text-black dark:text-white"
+                        >Get Started</a
+                    >
+                    <a
+                        href="/pricing/full-website"
+                        class="mt-4 block w-full text-center text-sm font-bold text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white transition-colors"
+                    >
+                        Learn more &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 max-w-3xl mx-auto">
+                <p
+                    class="text-sm font-medium text-neutral-500 dark:text-neutral-400 mb-4"
+                >
+                    * Listed prices are considered a starting point. Final costs
+                    may vary depending on requested features, design complexity,
+                    and specific build requirements of your project.
+                </p>
+                <p
+                    class="text-base text-neutral-600 dark:text-neutral-300 font-medium"
+                >
+                    Want a more accurate quote without waiting?
+                    <a
+                        href="/get-a-quote"
+                        class="text-black dark:text-white font-bold underline decoration-2 underline-offset-4 hover:decoration-4 transition-all"
+                    >
+                        Get a detailed quote &rarr;
+                    </a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional info section -->
+    <section class="py-20">
+        <div class="container mx-auto px-4 md:px-0">
+            <p
+                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+            >
+                Standard Features
+            </p>
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                What’s Included in Every Build
+            </h2>
+            <p
+                class="text-lg text-neutral-600 dark:text-neutral-400 mb-12 max-w-3xl font-medium"
+            >
+                Every website we build comes fully loaded with premium features.
+                We don't believe in charging extra for fundamental best
+                practices and high-performance infrastructure.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <article
+                    class="relative border-2 bg-white dark:bg-black border-stone-200 dark:border-zinc-700 p-4 md:p-8 rounded-lg transition-colors group"
+                >
+                    <div class="text-4xl mb-4">📱</div>
+                    <h3
+                        class="text-xl md:text-2xl dark:text-zinc-200 font-bold mb-2"
+                    >
+                        Mobile-First Design
+                    </h3>
+                    <p
+                        class="text-lg text-neutral-600 dark:text-zinc-400 leading-relaxed font-medium"
+                    >
+                        All projects are natively designed mobile-first. We
+                        thoroughly test on real devices to guarantee a seamless,
+                        ultra-responsive experience for everyone.
+                    </p>
+                </article>
+                <article
+                    class="relative border-2 bg-white dark:bg-black border-stone-200 dark:border-zinc-700 p-4 md:p-8 rounded-lg transition-colors group"
+                >
+                    <div class="text-4xl mb-4">⚡️</div>
+                    <h3
+                        class="text-xl md:text-2xl dark:text-zinc-200 font-bold mb-2"
+                    >
+                        Zero-JS Speed
+                    </h3>
+                    <p
+                        class="text-lg text-neutral-600 dark:text-zinc-400 leading-relaxed font-medium"
+                    >
+                        We build with Astro to guarantee near-instant loading
+                        times. Your website will feel lightning-fast and
+                        responsive, even on poor 4G mobile connections.
+                    </p>
+                </article>
+                <article
+                    class="relative border-2 bg-white dark:bg-black border-stone-200 dark:border-zinc-700 p-4 md:p-8 rounded-lg transition-colors group"
+                >
+                    <div class="text-4xl mb-4">▲</div>
+                    <h3
+                        class="text-xl md:text-2xl dark:text-zinc-200 font-bold mb-2"
+                    >
+                        Vercel Hosting Setup
+                    </h3>
+                    <p
+                        class="text-lg text-neutral-600 dark:text-zinc-400 leading-relaxed font-medium"
+                    >
+                        We leverage Vercel's global edge network for
+                        military-grade security and speed. We handle all
+                        deployment and maintenance so you never need to worry.
+                    </p>
+                </article>
+                <article
+                    class="relative border-2 bg-white dark:bg-black border-stone-200 dark:border-zinc-700 p-4 md:p-8 rounded-lg transition-colors group"
+                >
+                    <div class="text-4xl mb-4">📍</div>
+                    <h3
+                        class="text-xl md:text-2xl dark:text-zinc-200 font-bold mb-2"
+                    >
+                        Local SEO
+                    </h3>
+                    <p
+                        class="text-lg text-neutral-600 dark:text-zinc-400 leading-relaxed font-medium"
+                    >
+                        We build technical SEO excellence directly into your
+                        code's foundation. This strategic optimisation ensures
+                        Google ranks your local business higher.
+                    </p>
+                </article>
+                <article
+                    class="relative border-2 bg-white dark:bg-black border-stone-200 dark:border-zinc-700 p-4 md:p-8 rounded-lg transition-colors group"
+                >
+                    <div class="text-4xl mb-4">🔑</div>
+                    <h3
+                        class="text-xl md:text-2xl dark:text-zinc-200 font-bold mb-2"
+                    >
+                        100% Ownership
+                    </h3>
+                    <p
+                        class="text-lg text-neutral-600 dark:text-zinc-400 leading-relaxed font-medium"
+                    >
+                        We believe you should unconditionally own your digital
+                        property. We provide full code ownership without locks,
+                        so you are never tied to a platform.
+                    </p>
+                </article>
+                <article
+                    class="relative border-2 bg-white dark:bg-black border-stone-200 dark:border-zinc-700 p-4 md:p-8 rounded-lg transition-colors group"
+                >
+                    <div class="text-4xl mb-4">♿️</div>
+                    <h3
+                        class="text-xl md:text-2xl dark:text-zinc-200 font-bold mb-2"
+                    >
+                        WCAG Accessibility
+                    </h3>
+                    <p
+                        class="text-lg text-neutral-600 dark:text-zinc-400 leading-relaxed font-medium"
+                    >
+                        Every build includes integrated accessibility best
+                        practices. We ensure your website meets strict
+                        compliance guidelines to be usable for all visitors.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="pb-32 container mx-auto px-4 md:px-0">
+        <div
+            class="bg-zinc-200 dark:bg-zinc-900 p-16 md:p-32 text-center rounded-xl"
+        >
+            <p
+                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+            >
+                Get started
+            </p>
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                Ready to build something great?
+            </h2>
+            <p class="text-lg mb-10">
+                Join thousands of developers building accessible,
+                high-performance websites!.
+            </p>
+            <a
+                href="/audit"
+                class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-black bg-white dark:bg-green-600 dark:text-white transition-all duration-300 text-lg rounded-md hover:bg-white dark:hover:bg-black"
+            >
+                <span
+                    class="transform transition-transform duration-300 group-hover:-translate-x-4"
+                >
+                    Get your free audit
+                </span>
+                <span
+                    class="absolute right-6 transform translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                >
+                    &rarr;
+                </span>
+            </a>
+        </div>
+    </section>
+</MainLayout>

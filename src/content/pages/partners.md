@@ -1,0 +1,4 @@
+---
+isActive: true
+label: Partners
+---

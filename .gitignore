@@ -1,0 +1,41 @@
+# build output
+dist/
+
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# tina
+tina/__generated__/
+
+# environment variables
+.env
+.env.production
+.env.local
+.env.*.local
+
+# macOS-specific files
+.DS_Store
+.DS_Store?
+
+# jetbrains setting folder
+.idea/
+
+# temporary scripts
+update_templates_*.js
+update_templates_*.mjs
+
+node_modules
+.vercel
+.netlify
+
+.agent
+.antigravity

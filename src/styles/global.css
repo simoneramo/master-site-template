@@ -1,0 +1,182 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Alpine.js x-cloak - hide elements until Alpine initializes */
+[x-cloak] {
+  display: none !important;
+}
+
+/* Enable class-based dark mode for Tailwind CSS 4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* ─── Brand Colours ─────────────────────────────────────────────────────── */
+  /* Primary: main brand colour (buttons, headings, key UI) */
+  --color-primary: #000000;
+  /* Secondary: inverse / contrast colour */
+  --color-secondary: #ffffff;
+  /* Accent: highlight colour for CTAs, links, badges — swap this per client */
+  --color-accent: #2563eb;
+
+  /* ─── Semantic Surface Tokens ───────────────────────────────────────────── */
+  /* Page background */
+  --color-bg: #ffffff;
+  /* Card / panel backgrounds (slightly off-white) */
+  --color-surface: #f9fafb;
+  /* Border colour for dividers, input outlines */
+  --color-border: #e5e7eb;
+
+  /* ─── Text Tokens ───────────────────────────────────────────────────────── */
+  /* Main body text */
+  --color-text: #111827;
+  /* Secondary / supporting text */
+  --color-text-muted: #6b7280;
+
+  /* ─── Typography ────────────────────────────────────────────────────────── */
+  /* Body font (swapped by Project Starter via font selection) */
+  --font-sans: system-ui, sans-serif;
+  /* Heading font — set to same as body by default, override per client */
+  --font-heading: var(--font-sans);
+
+  /* ─── Border Radius ─────────────────────────────────────────────────────── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* ─── Shadows ───────────────────────────────────────────────────────────── */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* ─── Animations ────────────────────────────────────────────────────────── */
+  @keyframes fade-in-up {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
+  --animate-scroll: scroll 80s linear infinite;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+
+body {
+  font-family: 'Inter Variable', system-ui, sans-serif;
+  font-display: swap;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+
+
+
+@layer base {
+  *:focus-visible {
+    outline: 3px solid #000000;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .bg-black *:focus-visible,
+  .dark .dark\:bg-black *:focus-visible,
+  html.dark *:focus-visible {
+    outline-color: #ffffff;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+
+
+  body,
+  header,
+  section,
+  footer,
+  div,
+  a,
+  button,
+  input,
+  textarea {
+    transition-property: background-color, border-color, color;
+    transition-duration: 300ms;
+  }
+}
+
+.animate-scroll {
+  animation: var(--animate-scroll);
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
+/* Explicit Prose Overrides */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose strong {
+  font-weight: 900 !important;
+}
+
+.prose h2 {
+  margin-top: 1.5em;
+}
+
+.prose ul>li::marker {
+  color: inherit !important;
+}
+
+.prose code {
+  font-weight: 600;
+}
+
+.prose code::before,
+.prose code::after {
+  content: "";
+}

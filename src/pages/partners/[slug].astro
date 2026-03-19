@@ -1,0 +1,150 @@
+---
+// 💡 OPTIONAL PAGE - Delete this file if not needed for your project
+// Individual partner page
+
+export const prerender = true;
+
+import { getCollection, render } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+
+export async function getStaticPaths() {
+    const partners = await getCollection("partners");
+    return partners.map((partner) => ({
+        params: { slug: partner.slug },
+        props: { partner },
+    }));
+}
+
+const { partner } = Astro.props;
+const { Content } = await render(partner);
+---
+
+<MainLayout
+    title={`${partner.data.name} | Partners`}
+    description={partner.data.description}
+>
+    <!-- Hero -->
+    <section class="py-16 lg:py-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <a
+                href="/partners"
+                class="text-sm font-medium text-neutral-500 hover:text-black dark:hover:text-white mb-6 inline-block"
+            >
+                ← Back to Partners
+            </a>
+
+            <div class="flex items-center gap-6 mb-8">
+                {partner.data.logo ? (
+                    <div class="w-24 h-24 bg-white rounded-lg p-4 flex items-center justify-center">
+                        <img
+                            src={partner.data.logo}
+                            alt={partner.data.name}
+                            class="max-w-full max-h-full object-contain"
+                        />
+                    </div>
+                ) : (
+                    <div class="w-24 h-24 bg-neutral-100 dark:bg-neutral-800 rounded-lg flex items-center justify-center text-4xl">
+                        🏢
+                    </div>
+                )}
+
+                <div>
+                    <span
+                        class="text-sm font-medium text-neutral-500 uppercase tracking-wider"
+                    >
+                        {partner.data.category} Partner
+                    </span>
+                    <h1
+                        class="text-4xl md:text-5xl font-black text-black dark:text-white"
+                    >
+                        {partner.data.name}
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partner Content -->
+    <section class="pb-16 lg:pb-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <!-- Main Content -->
+                <div class="lg:col-span-2 space-y-8">
+                    <div>
+                        <h2
+                            class="text-xl font-bold text-black dark:text-white mb-4"
+                        >
+                            About {partner.data.name}
+                        </h2>
+                        <p
+                            class="text-neutral-600 dark:text-neutral-400 leading-relaxed"
+                        >
+                            {partner.data.description}
+                        </p>
+                    </div>
+
+                    <!-- Body Content -->
+                    <div class="prose dark:prose-invert max-w-none">
+                        <Content />
+                    </div>
+
+                    <!-- Integration Info -->
+                    <div
+                        class="p-6 bg-neutral-100 dark:bg-neutral-800 rounded-lg"
+                    >
+                        <h3
+                            class="text-lg font-bold text-black dark:text-white mb-3"
+                        >
+                            Partnership Benefits
+                        </h3>
+                        <p class="text-neutral-600 dark:text-neutral-400">
+                            Our partnership with {partner.data.name} enables us
+                            to deliver enhanced solutions for our clients through
+                            their {partner.data.category.toLowerCase()}
+                            expertise.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="lg:col-span-1">
+                    <div
+                        class="sticky top-24 p-6 bg-neutral-100 dark:bg-neutral-800 rounded-lg"
+                    >
+                        <h3
+                            class="text-lg font-bold text-black dark:text-white mb-4"
+                        >
+                            Visit {partner.data.name}
+                        </h3>
+                        <p
+                            class="text-sm text-neutral-600 dark:text-neutral-400 mb-6"
+                        >
+                            Learn more about their products and services.
+                        </p>
+                        <a
+                            href={partner.data.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="block w-full px-6 py-3 bg-black dark:bg-white text-white dark:text-black font-bold rounded-md text-center hover:opacity-80 transition-opacity"
+                        >
+                            Visit Website →
+                        </a>
+
+                        <div class="mt-6 pt-6 border-t border-neutral-200 dark:border-neutral-700">
+                            <h4
+                                class="text-sm font-bold text-black dark:text-white mb-3"
+                            >
+                                Partner Category
+                            </h4>
+                            <span
+                                class="inline-block px-3 py-1 bg-white dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-sm rounded-full"
+                            >
+                                {partner.data.category}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</MainLayout>

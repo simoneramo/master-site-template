@@ -1,0 +1,109 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import FAQ from "../components/FAQ.astro";
+import { getEntry } from "astro:content";
+
+// 🔘 Page Settings: toggle isActive in TinaCMS > Page Settings > faq
+const pageConfig = await getEntry("pages", "faq");
+if (pageConfig?.data?.isActive === false) return Astro.redirect("/404");
+
+const faqData = {
+    sectionLabel: "Common questions",
+    heading: "Frequently asked questions",
+    description:
+        "Find answers to common questions about our services, process, and how we work with clients to deliver exceptional web solutions.",
+    items: [
+        {
+            question: "How long does a typical project take?",
+            answer: "A typical project takes exactly 28 days. WeMakeSmall follows a strictly enforced delivery cycle that moves from discovery and design through to development and launch within that four-week window.",
+        },
+        {
+            question: "Do you offer post-launch support?",
+            answer: "Absolutely. We offer various maintenance and support packages to ensure your website remains secure, up-to-date, and performing optimally long after launch.",
+        },
+        {
+            question: "What is your pricing structure?",
+            answer: "We project-based pricing tailored to your specific needs. After our initial consultation, we provide a detailed proposal outlining the scope and cost. We believe in transparency, so there are no hidden fees.",
+        },
+        {
+            question: "Will I be able to update the website myself?",
+            answer: "Yes! We build most of our sites with user-friendly Content Management Systems (CMS) like TinaCMS. We provide training and documentation so you can easily update text, images, and other content.",
+        },
+        {
+            question: "Do you help with SEO?",
+            answer: "Yes, all our websites are built with SEO best practices in mind, including semantic HTML, fast load times, and mobile responsiveness. We also offer dedicated SEO services for ongoing optimisation and content strategy.",
+        },
+        {
+            question: "Do you provide hosting?",
+            answer: "Yes, we set use Vercel for hosting, which is a high-performance hosting solution for your website to ensure reliability and speed, but can use Cloudflare and Netlify.",
+        },
+        {
+            question: "Who owns the website after it's launched?",
+            answer: "You do. Once the project is complete and paid for, you own 100% of the code, content, and design assets. We don't believe in vendor lock-in.",
+        },
+        {
+            question: "Can you help with branding and logo design?",
+            answer: "Yes, absolutely! I can assist with visual identity, brand guidelines and logo creation for digital presence to ensure your brand stands out.",
+        },
+    ],
+};
+---
+
+<MainLayout title="Frequently Asked Questions">
+    <!-- Hero Section -->
+    <section class="py-20">
+        <div class="container mx-auto max-w-4xl text-center">
+            <p
+                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+            >
+                FAQ label
+            </p>
+            <h1 class="text-5xl md:text-7xl font-bold mb-8">
+                Frequently asked questions
+            </h1>
+            <p
+                class="text-lg md:text-xl font-medium mb-10 text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto"
+            >
+                FAQ description lorem ipsum dolor sit amet consectetur
+                adipisicing elit. Quisquam, quod.
+            </p>
+        </div>
+    </section>
+
+    <FAQ data={faqData} initialVisibleCount={12} />
+
+    <!-- CTA Section -->
+    <section class="pb-32 container mx-auto px-4 md:px-0">
+        <div
+            class="bg-zinc-200 dark:bg-zinc-900 p-16 md:p-32 text-center rounded-xl"
+        >
+            <p
+                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+            >
+                Get started
+            </p>
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                Ready to build something great?
+            </h2>
+            <p class="text-lg mb-10">
+                Join thousands of developers building accessible,
+                high-performance websites!.
+            </p>
+            <a
+                href="/audit"
+                class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-black bg-white dark:bg-green-600 dark:text-white transition-all duration-300 text-lg rounded-md hover:bg-white dark:hover:bg-black"
+            >
+                <span
+                    class="transform transition-transform duration-300 group-hover:-translate-x-4"
+                >
+                    Get your free audit
+                </span>
+                <span
+                    class="absolute right-6 transform translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                >
+                    &rarr;
+                </span>
+            </a>
+        </div>
+    </section>
+</MainLayout>

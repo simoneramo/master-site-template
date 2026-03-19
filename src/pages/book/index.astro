@@ -1,0 +1,254 @@
+---
+// 💡 OPTIONAL PAGE - Delete this file if not needed for your project
+// This is a stub page for Booking/Appointment Scheduling
+// Customize or remove based on client needs
+
+import MainLayout from "../../layouts/MainLayout.astro";
+---
+
+<MainLayout
+    title="Book a Consultation | Schedule a Meeting"
+    description="Book a free consultation or schedule a meeting with our team. Find a time that works for you."
+>
+    <!-- Hero Section -->
+    <section class="py-24 lg:py-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center">
+                <span
+                    class="text-sm font-bold tracking-wider text-neutral-500 uppercase mb-4 block"
+                >
+                    Get Started
+                </span>
+                <h1
+                    class="text-4xl md:text-5xl lg:text-6xl font-black text-black dark:text-white mb-6"
+                >
+                    Book a Consultation
+                </h1>
+                <p
+                    class="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed"
+                >
+                    Ready to discuss your project? Schedule a free consultation
+                    with our team. We'll learn about your goals and show you
+                    how we can help.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Options -->
+    <section class="pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Option 1 -->
+                <div
+                    class="border-2 border-neutral-200 dark:border-neutral-800 rounded-lg p-8 text-center hover:border-black dark:hover:border-white transition-colors"
+                >
+                    <div class="text-4xl mb-4">📞</div>
+                    <h3
+                        class="text-xl font-bold text-black dark:text-white mb-2"
+                    >
+                        Discovery Call
+                    </h3>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                        A quick 15-minute call to discuss your needs and see if
+                        we're a good fit.
+                    </p>
+                    <span
+                        class="inline-block px-4 py-2 bg-neutral-100 dark:bg-neutral-800 text-sm font-bold rounded-full"
+                    >
+                        15 minutes
+                    </span>
+                </div>
+
+                <!-- Option 2 -->
+                <div
+                    class="border-2 border-black dark:border-white rounded-lg p-8 text-center relative"
+                >
+                    <span
+                        class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-black dark:bg-white text-white dark:text-black text-xs font-bold uppercase tracking-wider rounded-full"
+                    >
+                        Popular
+                    </span>
+                    <div class="text-4xl mb-4">💼</div>
+                    <h3
+                        class="text-xl font-bold text-black dark:text-white mb-2"
+                    >
+                        Strategy Session
+                    </h3>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                        A deep-dive 45-minute session to map out your project
+                        requirements and timeline.
+                    </p>
+                    <span
+                        class="inline-block px-4 py-2 bg-neutral-100 dark:bg-neutral-800 text-sm font-bold rounded-full"
+                    >
+                        45 minutes
+                    </span>
+                </div>
+
+                <!-- Option 3 -->
+                <div
+                    class="border-2 border-neutral-200 dark:border-neutral-800 rounded-lg p-8 text-center hover:border-black dark:hover:border-white transition-colors"
+                >
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3
+                        class="text-xl font-bold text-black dark:text-white mb-2"
+                    >
+                        Project Review
+                    </h3>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                        For existing projects. A 30-minute review of your
+                        current setup and recommendations.
+                    </p>
+                    <span
+                        class="inline-block px-4 py-2 bg-neutral-100 dark:bg-neutral-800 text-sm font-bold rounded-full"
+                    >
+                        30 minutes
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendar Embed Placeholder -->
+    <section class="pb-24 lg:pb-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div
+                class="border-2 border-neutral-200 dark:border-neutral-800 rounded-lg p-8 md:p-12"
+            >
+                <div class="text-center mb-8">
+                    <h2
+                        class="text-2xl md:text-3xl font-bold text-black dark:text-white mb-4"
+                    >
+                        Select a Date & Time
+                    </h2>
+                    <p class="text-neutral-600 dark:text-neutral-400">
+                        Choose a meeting type above, then pick an available slot
+                        below.
+                    </p>
+                </div>
+
+                <!-- Calendar Placeholder -->
+                <div
+                    class="aspect-[4/3] max-w-3xl mx-auto bg-neutral-100 dark:bg-neutral-800 rounded-lg flex items-center justify-center"
+                >
+                    <div class="text-center p-8">
+                        <div class="text-6xl mb-4">📅</div>
+                        <p
+                            class="text-neutral-600 dark:text-neutral-400 font-medium mb-2"
+                        >
+                            Calendar Integration
+                        </p>
+                        <p class="text-sm text-neutral-500 dark:text-neutral-500">
+                            Replace this placeholder with your booking<br />
+                            platform embed (Calendly, Cal.com, etc.)
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Alternative Booking Methods -->
+                <div class="mt-12 text-center">
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-4">
+                        Prefer to book another way?
+                    </p>
+                    <div class="flex flex-wrap gap-4 justify-center">
+                        <a
+                            href="mailto:hello@example.com"
+                            class="px-6 py-3 border-2 border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 font-bold rounded-md hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-colors"
+                        >
+                            Email Us
+                        </a>
+                        <a
+                            href="tel:+0000000000"
+                            class="px-6 py-3 border-2 border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 font-bold rounded-md hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-colors"
+                        >
+                            Call Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What to Expect -->
+            <div class="mt-16">
+                <h2
+                    class="text-2xl md:text-3xl font-bold text-black dark:text-white mb-8 text-center"
+                >
+                    What to Expect
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div
+                            class="w-16 h-16 mx-auto mb-4 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center text-2xl font-bold text-black dark:text-white"
+                        >
+                            1
+                        </div>
+                        <h3
+                            class="text-lg font-bold text-black dark:text-white mb-2"
+                        >
+                            Book Your Slot
+                        </h3>
+                        <p class="text-neutral-600 dark:text-neutral-400">
+                            Choose a time that works for your schedule
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div
+                            class="w-16 h-16 mx-auto mb-4 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center text-2xl font-bold text-black dark:text-white"
+                        >
+                            2
+                        </div>
+                        <h3
+                            class="text-lg font-bold text-black dark:text-white mb-2"
+                        >
+                            Confirmation
+                        </h3>
+                        <p class="text-neutral-600 dark:text-neutral-400">
+                            Receive calendar invite and meeting details
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div
+                            class="w-16 h-16 mx-auto mb-4 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center text-2xl font-bold text-black dark:text-white"
+                        >
+                            3
+                        </div>
+                        <h3
+                            class="text-lg font-bold text-black dark:text-white mb-2"
+                        >
+                            Let's Talk
+                        </h3>
+                        <p class="text-neutral-600 dark:text-neutral-400">
+                            We meet, discuss your needs, and outline next steps
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Developer Note -->
+            <div
+                class="mt-16 p-6 bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-800 rounded-lg"
+            >
+                <p class="text-amber-800 dark:text-amber-200 font-medium">
+                    <strong>💡 Developer Note:</strong> This is a placeholder
+                    booking page. To customize:
+                </p>
+                <ul
+                    class="mt-2 ml-4 list-disc text-amber-700 dark:text-amber-300"
+                >
+                    <li>
+                        Embed your booking platform (Calendly, Cal.com,
+                        Savvycal, etc.)
+                    </li>
+                    <li>
+                        Create multiple booking types with different durations
+                    </li>
+                    <li>Add intake forms to collect pre-meeting information</li>
+                    <li>
+                        Set up automated reminders and follow-up emails via your
+                        booking tool
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</MainLayout>

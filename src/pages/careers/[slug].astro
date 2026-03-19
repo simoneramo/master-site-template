@@ -1,0 +1,183 @@
+---
+// 💡 OPTIONAL PAGE - Delete this file if not needed for your project
+// Individual job posting page
+
+export const prerender = true;
+
+import { getCollection, render } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+
+export async function getStaticPaths() {
+    const jobs = await getCollection("jobs");
+    return jobs.map((job) => ({
+        params: { slug: job.slug },
+        props: { job },
+    }));
+}
+
+const { job } = Astro.props;
+const { Content } = await render(job);
+---
+
+<MainLayout
+    title={`${job.data.title} | Careers`}
+    description={job.data.description}
+>
+    <!-- Hero -->
+    <section class="py-16 lg:py-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <a
+                href="/careers"
+                class="text-sm font-medium text-neutral-500 hover:text-black dark:hover:text-white mb-6 inline-block"
+            >
+                ← Back to Careers
+            </a>
+
+            <div class="flex flex-wrap gap-3 mb-6">
+                <span
+                    class="px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-sm font-medium rounded-full"
+                >
+                    {job.data.department}
+                </span>
+                <span
+                    class="px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-sm font-medium rounded-full"
+                >
+                    {job.data.type}
+                </span>
+                <span
+                    class="px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-sm font-medium rounded-full"
+                >
+                    {job.data.location}
+                </span>
+            </div>
+
+            <h1
+                class="text-4xl md:text-5xl font-black text-black dark:text-white mb-6"
+            >
+                {job.data.title}
+            </h1>
+
+            {job.data.salary && (
+                <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-8">
+                    {job.data.salary}
+                </p>
+            )}
+        </div>
+    </section>
+
+    <!-- Job Content -->
+    <section class="pb-16 lg:pb-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <!-- Main Content -->
+                <div class="lg:col-span-2 space-y-10">
+                    <!-- Description -->
+                    <div>
+                        <h2
+                            class="text-xl font-bold text-black dark:text-white mb-4"
+                        >
+                            About the Role
+                        </h2>
+                        <p
+                            class="text-neutral-600 dark:text-neutral-400 leading-relaxed"
+                        >
+                            {job.data.description}
+                        </p>
+                    </div>
+
+                    <!-- Responsibilities -->
+                    {job.data.responsibilities && (
+                        <div>
+                            <h2
+                                class="text-xl font-bold text-black dark:text-white mb-4"
+                            >
+                                Responsibilities
+                            </h2>
+                            <ul class="space-y-3">
+                                {job.data.responsibilities.map((item) => (
+                                    <li class="flex items-start gap-3">
+                                        <span class="text-green-500 mt-1">
+                                            ✓
+                                        </span>
+                                        <span class="text-neutral-600 dark:text-neutral-400">
+                                            {item}
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+
+                    <!-- Requirements -->
+                    {job.data.requirements && (
+                        <div>
+                            <h2
+                                class="text-xl font-bold text-black dark:text-white mb-4"
+                            >
+                                Requirements
+                            </h2>
+                            <ul class="space-y-3">
+                                {job.data.requirements.map((item) => (
+                                    <li class="flex items-start gap-3">
+                                        <span class="text-blue-500 mt-1">
+                                            •
+                                        </span>
+                                        <span class="text-neutral-600 dark:text-neutral-400">
+                                            {item}
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+
+                    <!-- Additional Content from Markdown -->
+                    <div class="prose dark:prose-invert max-w-none">
+                        <Content />
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="lg:col-span-1">
+                    <div
+                        class="sticky top-24 p-6 bg-neutral-100 dark:bg-neutral-800 rounded-lg"
+                    >
+                        <h3
+                            class="text-lg font-bold text-black dark:text-white mb-4"
+                        >
+                            Apply for this role
+                        </h3>
+                        <p
+                            class="text-sm text-neutral-600 dark:text-neutral-400 mb-6"
+                        >
+                            Send your resume and a brief introduction to:
+                        </p>
+                        <a
+                            href="mailto:careers@example.com?subject=Application: {job.data.title}"
+                            class="block w-full px-6 py-3 bg-black dark:bg-white text-white dark:text-black font-bold rounded-md text-center hover:opacity-80 transition-opacity"
+                        >
+                            Apply Now
+                        </a>
+
+                        {job.data.benefits && (
+                            <div class="mt-8 pt-6 border-t border-neutral-200 dark:border-neutral-700">
+                                <h4
+                                    class="text-sm font-bold text-black dark:text-white mb-3"
+                                >
+                                    Benefits
+                                </h4>
+                                <ul class="space-y-2">
+                                    {job.data.benefits.map((benefit) => (
+                                        <li class="text-sm text-neutral-600 dark:text-neutral-400 flex items-center gap-2">
+                                            <span>🎁</span> {benefit}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</MainLayout>

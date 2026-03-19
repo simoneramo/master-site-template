@@ -1,0 +1,25 @@
+---
+const { data } = Astro.props;
+---
+
+<section
+    class="py-20 md:py-32 bg-stone-50 dark:bg-black border-b border-zinc-200 dark:border-neutral-800"
+>
+    <div class="container mx-auto max-w-4xl text-center px-4">
+        {
+            data.label && (
+                <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4 bg-pink-500">
+                    {data.label}
+                </p>
+            )
+        }
+        <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">
+            {data.heading}
+        </h1>
+        <p
+            class="text-lg md:text-xl font-medium mb-10 text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto"
+        >
+            {data.description}
+        </p>
+    </div>
+</section>

@@ -1,0 +1,531 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Footer from "../components/Footer.astro";
+import { getEntry } from "astro:content";
+import ServiceAreas from "../components/ServiceAreas.astro";
+
+const contactPage = await getEntry("contact", "index");
+
+if (!contactPage) {
+    throw new Error("Contact page data not found");
+}
+const { hero, form, otherWays, faq } = contactPage.data;
+if (!form) {
+  throw new Error("Form section data is missing in contact page content");
+}
+
+interface ContactItem {
+    icon: string;
+    title: string;
+    description: string;
+    email: string;
+}
+
+interface FAQItem {
+    question: string;
+    answer: string;
+}
+---
+
+<MainLayout title="Contact">
+
+        <!-- Hero Section -->
+        <section class="py-20">
+            <div class="container mx-auto max-w-4xl text-center">
+                <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
+                    {hero.label}
+                </p>
+                <h1 class="text-5xl md:text-7xl font-bold mb-8">
+                    {hero.heading}
+                </h1>
+                <p class="text-lg md:text-xl font-medium mb-10 text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+                    {hero.description}
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section id="form"
+            class="py-20"
+        >
+            <div class="container mx-auto max-w-2xl">
+                <div class="text-center mb-6">
+                    <p
+                    class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+                >
+                    {form.sectionLabel}
+                </p>
+                    <h2
+                        class="text-5xl font-bold mb-4 dark:text-white"
+                    >
+                        {form.heading}
+                    </h2>
+                    <p class="text-neutral-700 dark:text-white font-medium text-lg">
+                        {form.description}
+                    </p>
+                </div>
+
+                <form
+                    class="space-y-6 p-6 md:p-8"
+                    x-data="{
+                        name: '',
+                        email: '',
+                        subject: '',
+                        projectType: '',
+                        message: '',
+                        isSubmitting: false,
+                        showSuccess: false,
+                        showError: false,
+                        errorMessage: '',
+                        touched: {
+                            name: false,
+                            email: false,
+                            subject: false,
+                            projectType: false,
+                            message: false
+                        },
+                        errors: {
+                            name: false,
+                            email: false,
+                            subject: false,
+                            projectType: false,
+                            message: false
+                        },
+
+                        validateName() {
+                            this.errors.name = this.touched.name && this.name.trim().length < 2;
+                        },
+
+                        validateEmail() {
+                            if (!this.touched.email) return;
+                            const isValid = this.email && this.email.includes('@') && this.email.includes('.') && this.email.length > 5;
+                            this.errors.email = !isValid;
+                        },
+
+                        validateSubject() {
+                            this.errors.subject = this.touched.subject && this.subject.trim().length < 3;
+                            if (this.subject !== 'New Project') {
+                                this.projectType = '';
+                                this.touched.projectType = false;
+                                this.errors.projectType = false;
+                            }
+                        },
+
+                        validateProjectType() {
+                            if (this.subject !== 'New Project') return;
+                            this.errors.projectType = this.touched.projectType && this.projectType === '';
+                        },
+
+                        validateMessage() {
+                            this.errors.message = this.touched.message && this.message.trim().length < 40;
+                        },
+
+                        isValid(field) {
+                            return this.touched[field] && !this.errors[field];
+                        },
+
+                        formIsValid() {
+                            const nameOk = this.name.trim().length >= 2;
+                            const emailOk = this.email && this.email.includes('@') && this.email.includes('.') && this.email.length > 5;
+                            const subjectOk = this.subject.trim().length >= 3;
+                            const projectTypeOk = this.subject !== 'New Project' || this.projectType !== '';
+                            const messageOk = this.message.trim().length >= 40;
+                            return nameOk && emailOk && subjectOk && projectTypeOk && messageOk;
+                        },
+
+                        async submitForm() {
+                            this.touched.name = true;
+                            this.touched.email = true;
+                            this.touched.subject = true;
+                            this.touched.message = true;
+                            if (this.subject === 'New Project') this.touched.projectType = true;
+
+                            this.validateName();
+                            this.validateEmail();
+                            this.validateSubject();
+                            this.validateProjectType();
+                            this.validateMessage();
+
+                            if (this.errors.name || this.errors.email || this.errors.subject || this.errors.projectType || this.errors.message) {
+                                return;
+                            }
+
+                            this.isSubmitting = true;
+                            this.showError = false;
+
+                            try {
+                                const response = await fetch('/api/contact', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        name: this.name,
+                                        email: this.email,
+                                        subject: this.subject,
+                                        projectType: this.projectType,
+                                        message: this.message
+                                    })
+                                });
+
+                                const data = await response.json();
+
+                                if (response.ok) {
+                                    this.showSuccess = true;
+                                    this.name = '';
+                                    this.email = '';
+                                    this.subject = '';
+                                    this.projectType = '';
+                                    this.message = '';
+                                    this.touched = { name: false, email: false, subject: false, projectType: false, message: false };
+                                    this.errors = { name: false, email: false, subject: false, projectType: false, message: false };
+
+                                    // Redirect to thank you page after success
+                                    window.location.href = '/contact-thankyou';
+                                } else {
+                                    this.showError = true;
+                                    this.errorMessage = data.error || 'Failed to send message. Please try again.';
+                                    setTimeout(() => this.showError = false, 5000);
+                                }
+                            } catch (error) {
+                                this.showError = true;
+                                this.errorMessage = 'Network error. Please check your connection and try again.';
+                                setTimeout(() => this.showError = false, 5000);
+                            } finally {
+                                this.isSubmitting = false;
+                            }
+                        }
+                    }"
+                    x-init="() => {
+                        const params = new URLSearchParams(window.location.search);
+                        const s = params.get('subject');
+                        const pt = params.get('projectType');
+                        if (s) { subject = s; touched.subject = true; validateSubject(); }
+                        if (pt && subject === 'New Project') { projectType = pt; touched.projectType = true; validateProjectType(); }
+                    }"
+                    @submit.prevent="submitForm()"
+                >
+                    <div
+                        x-show="showSuccess"
+                        x-transition
+                        class="p-4 bg-green-100 border-l-4 border-green-500 text-green-700 mb-6 rounded-md"
+                        role="alert"
+                    >
+                        <p class="font-bold">Message sent successfully!</p>
+                        <p>We'll get back to you shortly.</p>
+                    </div>
+
+                    <div
+                        x-show="showError"
+                        x-transition
+                        class="p-4 bg-red-100 border-l-4 border-red-600 text-red-700 mb-6 rounded-md"
+                        role="alert"
+                    >
+                        <p class="font-bold">Error sending message</p>
+                        <p x-text="errorMessage"></p>
+                    </div>
+
+                
+
+                    <div>
+                        <label for="name" class="block font-bold mb-2">
+                            Name <abbr title="required">*</abbr>
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            x-model="name"
+                            @blur="touched.name = true; validateName()"
+                            @input="touched.name && validateName()"
+                            autocomplete="name"
+                            required
+                            class="w-full p-4 border-2 focus:text-black focus:border-black dark:focus:border-zinc-500 dark:focus:text-white transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md dark:text-white appearance-none"
+                            :class="errors.name ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : isValid('name') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                            placeholder="Jane Doe"
+                        />
+                        <p
+                            x-show="errors.name"
+                            class="text-red-600 mt-1 font-medium"
+                        >
+                            Please enter your name (at least 2 characters).
+                        </p>
+                    </div>
+
+                    <div>
+                        <label for="email" class="block font-bold mb-2">
+                            Email address <abbr title="required">*</abbr>
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            x-model="email"
+                            @blur="touched.email = true; validateEmail()"
+                            autocomplete="email"
+                            required
+                            class="w-full p-4 border-2 focus:text-black focus:border-black dark:focus:border-zinc-500 dark:focus:text-white transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md dark:text-white appearance-none"
+                            :class="errors.email ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : isValid('email') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                            placeholder="you@example.com"
+                        />
+                        <p
+                            x-show="errors.email"
+                            class="text-red-600 mt-1 font-medium"
+                        >
+                            Please enter a valid email address.
+                        </p>
+                    </div>
+
+                    <div>
+                        <label for="subject" class="block font-bold mb-2">
+                            Subject <abbr title="required">*</abbr>
+                        </label>
+                        <div class="relative">
+                            <select
+                                id="subject"
+                                name="subject"
+                                x-model="subject"
+                                @blur="touched.subject = true; validateSubject()"
+                                @change="touched.subject = true; validateSubject()"
+                                required
+                                class="w-full p-4 border-2 focus:text-black focus:border-black dark:focus:border-zinc-500 dark:focus:text-white transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md dark:text-white appearance-none"
+                                :class="errors.subject ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : isValid('subject') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                            >
+                                <option value="" disabled selected>Select a topic...</option>
+                                <option value="New Project">New Project Inquiry</option>
+                                <option value="Existing Project">Existing Project</option>
+                                <option value="General Inquiry">General Inquiry</option>
+                                <option value="Partnership">Partnership / Collaboration</option>
+                                <option value="Support">Support / Maintenance</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-neutral-500">
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                    <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p
+                            x-show="errors.subject"
+                            class="text-red-600 mt-1 font-medium"
+                        >
+                            Please select a subject.
+                        </p>
+                    </div>
+
+                    <!-- Conditional: Project Type (only when New Project Inquiry selected) -->
+                    <div x-show="subject === 'New Project'" x-transition>
+                        <label for="projectType" class="block font-bold mb-2">
+                            Project Type <abbr title="required">*</abbr>
+                        </label>
+                        <div class="relative">
+                            <select
+                                id="projectType"
+                                name="projectType"
+                                x-model="projectType"
+                                @blur="touched.projectType = true; validateProjectType()"
+                                @change="touched.projectType = true; validateProjectType()"
+                                class="w-full p-4 border-2 focus:text-black focus:border-black dark:focus:border-zinc-500 dark:focus:text-white transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md dark:text-white appearance-none"
+                                :class="errors.projectType ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : (touched.projectType && projectType !== '') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                            >
+                                <option value="" disabled selected>Select a project type...</option>
+                                <option value="Landing Page">Landing Page</option>
+                                <option value="One-Pager">One-Pager</option>
+                                <option value="Full Website">Full Website</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-neutral-500">
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                    <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p
+                            x-show="errors.projectType"
+                            class="text-red-600 mt-1 font-medium"
+                        >
+                            Please select a project type.
+                        </p>
+                    </div>
+
+                    <div>
+                        <label for="message" class="block font-bold mb-2">
+                            Message <abbr title="required">*</abbr>
+                        </label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="6"
+                            x-model="message"
+                            @blur="touched.message = true; validateMessage()"
+                            @input="touched.message && validateMessage()"
+                            required
+                            class="w-full p-4 border-2 focus:text-black focus:border-black dark:focus:border-zinc-500 dark:focus:text-white transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md dark:text-white appearance-none"
+                            :class="errors.message ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : isValid('message') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                            placeholder="Tell us about your project..."
+                        ></textarea>
+                        <p
+                            x-show="errors.message"
+                            class="text-red-600 mt-1 font-medium text-sm"
+                        >
+                            Please enter a message (at least 40 characters). A short description of your project helps us help you faster!
+                        </p>
+                    </div>
+
+                    <button
+                        type="submit"
+                        :disabled="isSubmitting || !formIsValid()"
+                        class="w-full group relative inline-flex items-center justify-center overflow-hidden h-14 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-md hover:bg-black dark:hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed disabled:saturate-0 cursor-pointer"
+                    >
+                        <div x-show="!isSubmitting" class="relative flex items-center justify-center px-10">
+                            <span
+                                class="transform transition-transform duration-300 group-hover:-translate-x-4"
+                            >
+                                Send message
+                            </span>
+                            <span
+                                class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                            >
+                                &rarr;
+                            </span>
+                        </div>
+                        <span x-show="isSubmitting">Sending...</span>
+                    </button>
+
+                    <p
+                        class="text-sm text-center text-neutral-800 dark:text-neutral-500"
+                    >
+                        We respect your privacy. Your information will never be
+                        shared.
+                    </p>
+                </form>
+            </div>
+        </section>
+
+        <!-- Other Ways to Connect -->
+        <section class="py-20 bg-white dark:bg-zinc-900">
+            <div class="px-4 md:px-0">
+
+                <div class="text-center">
+                  <p
+                            class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+                        >
+                            {otherWays.sectionLabel}
+                        </p>
+                <h2 class="text-5xl font-bold mb-4">{otherWays.heading}</h2>
+                <p class="text-lg text-neutral-600 dark:text-white mb-12 font-medium">{otherWays.description}</p>
+</div>
+            <div class="container mx-auto max-w-4xl">
+                <div class="grid md:grid-cols-2 gap-8">
+                    {otherWays.items.map((item: ContactItem) => (
+                    <article class="relative border-2 bg-white border-neutral-300 dark:bg-zinc-900 dark:border-zinc-700 hover:border-black dark:hover:border-white p-8 rounded-lg text-center transition-colors group">
+                        <div class="w-16 h-16 bg-zinc-100 dark:bg-zinc-800 mx-auto mb-6 flex items-center justify-center rounded-md text-black dark:text-white transition-colors">
+                            <span class="text-3xl">{item.icon}</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">{item.title}</h3>
+                        <p class="font-medium text-neutral-600 mb-4">{item.description}</p>
+                        <a href={`mailto:${item.email}`} class="font-bold border-b-2 border-current hover:border-transparent inline-block after:absolute after:inset-0 text-pink-600">
+                            {item.email}
+                        </a>
+                    </article>
+                    ))}
+                </div>
+                </div>
+            </div>
+        </section>
+
+        
+   <!-- Location Map & Service Areas -->
+        {contactPage.data.serviceAreas && (
+            <ServiceAreas data={contactPage.data.serviceAreas} />
+        )}
+
+
+
+
+
+        <!-- FAQ Section -->
+        <section class="py-20 dark:bg-black">
+            <div class="px-4 md:px-0">
+
+                <div class="text-center">
+                    <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">{faq.sectionLabel}</p>
+                    <h2 class="text-5xl font-bold mb-4">{faq.heading}</h2>
+                    <p class="text-lg text-neutral-600 dark:text-white mb-12 font-medium">
+                        {faq.description}
+                    </p>
+                </div>
+
+                <div
+                    class="space-y-4 max-w-2xl mx-auto"
+                    x-data="{ activeAccordion: null }"
+                >
+                    {faq.items.map((item: FAQItem, index: number) => (
+                            <div
+                                class="border-2 border-zinc-200 dark:border-zinc-700 hover:border-black hover:bg-black hover:text-white dark:hover:border-neutral-900 dark:hover:bg-zinc-900 dark:hover:text-white rounded-lg transition-colors duration-300"
+                                :class={`activeAccordion === ${index + 1} ? 'bg-black text-white dark:bg-white dark:text-black' : 'bg-white text-black dark:bg-black dark:text-white'`}
+                            >
+                                <h3>
+                                    <button
+                                        @click={`activeAccordion = (activeAccordion === ${index + 1} ? null : ${index + 1})`}
+                                        :aria-expanded={`activeAccordion === ${index + 1}`}
+                                        aria-controls={`accordion-content-${index + 1}`}
+                                        class="flex items-center justify-between w-full p-6 text-left font-bold text-lg transition-colors rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-current cursor-pointer"
+                                        :class={`activeAccordion === ${index + 1} ? 'rounded-b-none' : ''`}
+                                    >
+                                        <span>{item.question}</span>
+                                        <span class="text-2xl transform transition-transform" :class={`activeAccordion === ${index + 1} ? 'rotate-180' : ''`}>↓</span>
+                                    </button>
+                                </h3>
+                                <div
+                                    id={`accordion-content-${index + 1}`}
+                                    x-show={`activeAccordion === ${index + 1}`}
+                                    x-collapse
+                                    class="p-6 pt-0 text-base font-medium"
+                                >
+                                    <p class="leading-relaxed">
+                                        {item.answer}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                </div>
+            </div>
+        </section>
+
+
+      <!-- CTA Section -->
+    <section class="pb-32 container mx-auto px-4 md:px-0">
+        <div
+            class="bg-zinc-200 dark:bg-zinc-900 p-16 md:p-32 text-center rounded-xl"
+        >
+            <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
+                Get started
+            </p>
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                Ready to build something great?
+            </h2>
+            <p class="text-lg mb-10">
+                Join thousands of developers building accessible,
+                high-performance websites!.
+            </p>
+            <a
+                href="/audit"
+                class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-black bg-white dark:bg-green-600 dark:text-white transition-all duration-300 text-lg rounded-md hover:bg-white dark:hover:bg-black"
+            >
+                <span
+                    class="transform transition-transform duration-300 group-hover:-translate-x-4"
+                >
+                    Get your free audit
+                </span>
+                <span
+                    class="absolute right-6 transform translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                >
+                    &rarr;
+                </span>
+            </a>
+        </div>
+    </section>
+    
+
+</MainLayout>

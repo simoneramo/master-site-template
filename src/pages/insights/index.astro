@@ -1,0 +1,294 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { getCollection, getEntry } from "astro:content";
+
+// 🔘 Page Settings: toggle isActive in TinaCMS > Page Settings > insights
+const pageConfig = await getEntry("pages", "insights");
+if (pageConfig?.data?.isActive === false) return Astro.redirect("/404");
+
+const allPosts = (await getCollection("insights")).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const serializedPosts = allPosts.map((post) => ({
+    slug: post.slug,
+    data: {
+        title: post.data.title,
+        description: post.data.description,
+        pubDate: post.data.pubDate,
+        heroImage: post.data.heroImage,
+        tags: post.data.tags,
+    },
+}));
+---
+
+<MainLayout title="Insights">
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="py-4">
+        <div class="px-8 mx-auto flex items-center gap-2 text-md font-bold">
+            <a
+                href="/"
+                class="text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white transition-colors"
+            >
+                Home
+            </a>
+            <span class="text-neutral-300 dark:text-neutral-700">/</span>
+            <a
+                href="/resources"
+                class="text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white transition-colors"
+            >
+                Resources
+            </a>
+            <span class="text-neutral-300 dark:text-neutral-700">/</span>
+            <span class="text-black dark:text-white">Insights</span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-20">
+        <div class="container mx-auto max-w-4xl text-center">
+            <p
+                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+            >
+                Latest insights
+            </p>
+            <h1 class="text-5xl md:text-7xl font-bold mb-8">Insights</h1>
+            <p
+                class="text-lg md:text-xl font-medium mb-10 text-neutral-600 dark:text-white"
+            >
+                Discover tips, best practices, and insights to help you build
+                better web experiences.
+            </p>
+        </div>
+    </section>
+
+    <section class="pb-20 py-20 dark:bg-zinc-900">
+        <div class="container mx-auto px-4 lg:px-8">
+            <script is:inline define:vars={{ initialPosts: serializedPosts }}>
+                window.allPostsData = initialPosts;
+                // Official tags from tina/config.ts to ensure match with CMS
+                const OFFICIAL_TAGS = [
+                    "Accessibility",
+                    "Performance",
+                    "SEO",
+                    "Design Systems",
+                    "Headless CMS",
+                    "Astro",
+                    "Web Development",
+                    "UI/UX",
+                    "Case Studies",
+                    "Tutorials",
+                    "Business",
+                    "New Tag",
+                ];
+                window.uniqueTags = ["All", ...OFFICIAL_TAGS.sort()];
+            </script>
+
+            <div
+                class="flex flex-col"
+                x-data="{
+                        allPosts: [],
+                        tags: [],
+                        currentTag: 'All',
+                        visibleCount: 6,
+                        tagsExpanded: false,
+
+
+                        get filteredPosts() {
+                            if (this.currentTag === 'All') {
+                                return this.allPosts;
+                            }
+                            return this.allPosts.filter(post => {
+                                if (!post.data.tags) return false;
+                                const normalizedTags = post.data.tags.map(t => t.toLowerCase());
+                                return normalizedTags.includes(this.currentTag.toLowerCase());
+                            });
+                        },
+
+                        get displayedTags() {
+                            if (this.tagsExpanded) {
+                                return this.tags;
+                            }
+                            return this.tags.slice(0, 6);
+                        },
+
+                        init() {
+                            this.allPosts = window.allPostsData || [];
+                            this.tags = window.uniqueTags || ['All'];
+                            
+                            const observer = new IntersectionObserver((entries) => {
+                                if (entries[0].isIntersecting && this.visibleCount < this.filteredPosts.length) {
+                                    this.loadMore();
+                                }
+                            }, { rootMargin: '200px' });
+                            
+                            this.$nextTick(() => {
+                                if (this.$refs.loader) observer.observe(this.$refs.loader);
+                            });
+
+                            this.$watch('currentTag', () => {
+                                this.visibleCount = 6;
+                            });
+                        },
+
+                        loadMore() {
+                            this.visibleCount = Math.min(this.visibleCount + 3, this.filteredPosts.length);
+                        },
+                        
+                        setTag(tag) {
+                            this.currentTag = tag;
+                        },
+
+                        formatDate(dateStr) {
+                            return new Date(dateStr).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                            });
+                        },
+                        
+                        countPostsByTag(tag) {
+                             if (tag === 'All') return this.allPosts.length;
+                             return this.allPosts.filter(p => {
+                                 if (!p.data.tags) return false;
+                                 const normalizedTags = p.data.tags.map(t => t.toLowerCase());
+                                 return normalizedTags.includes(tag.toLowerCase());
+                             }).length;
+                        }
+                    }"
+            >
+                <!-- Horizontal Filter Pills -->
+                <div class="mb-12">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <template x-for="tag in displayedTags" :key="tag">
+                            <button
+                                @click="setTag(tag)"
+                                class="px-5 py-2 rounded-full font-bold text-sm transition-colors cursor-pointer capitalize border-2 whitespace-nowrap"
+                                :class="currentTag === tag 
+                                        ? 'bg-black border-black text-white dark:bg-white dark:border-white dark:text-black' 
+                                        : 'bg-transparent border-zinc-200 dark:border-zinc-800 hover:border-black dark:hover:border-white text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white'"
+                            >
+                                <span x-text="tag"></span>
+                                <span
+                                    class="text-xs ml-2 opacity-60"
+                                    x-show="tag !== 'All'"
+                                    x-text="'(' + countPostsByTag(tag) + ')'"
+                                ></span>
+                            </button>
+                        </template>
+
+                        <button
+                            x-show="tags.length > 6"
+                            @click="tagsExpanded = !tagsExpanded"
+                            class="px-5 py-2 text-sm font-bold text-black dark:text-white underline decoration-2 underline-offset-4 hover:decoration-4 transition-all whitespace-nowrap"
+                            x-text="tagsExpanded ? 'Show less' : 'Show more...'"
+                        ></button>
+                    </div>
+                </div>
+
+                <!-- Post Grid (3 Columns) -->
+                <div>
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-12"
+                    >
+                        <template
+                            x-for="(post, index) in filteredPosts"
+                            :key="post.slug"
+                        >
+                            <a
+                                :href="'/insights/' + post.slug"
+                                x-show="index < visibleCount"
+                                x-transition.opacity.duration.500ms
+                                class="group relative flex flex-col overflow-hidden rounded-lg h-full"
+                            >
+                                <template x-if="post.data.heroImage">
+                                    <div
+                                        class="relative aspect-video overflow-hidden bg-red dark:bg-zinc-800"
+                                    >
+                                        <img
+                                            :src="post.data.heroImage"
+                                            :alt="post.data.title"
+                                            class="h-full w-full object-cover transition duration-500 group-hover:scale-110"
+                                            loading="lazy"
+                                        />
+                                        <!-- Gradient Overlay for Tag Visibility -->
+                                        <div
+                                            class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,0,0,0.85)_0%,transparent_50%)] pointer-events-none z-0"
+                                        >
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <div
+                                    class="p-6 bg-white dark:bg-black border-x-2 border-b-2 border-stone-200 dark:border-zinc-700 rounded-b-lg flex flex-col grow"
+                                >
+                                    <!-- Category Badge -->
+                                    <span
+                                        class="absolute top-4 right-4 bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full z-10 capitalize"
+                                        x-text="post.data.tags && post.data.tags.length > 0 ? post.data.tags[0] : 'Insights'"
+                                    >
+                                    </span>
+
+                                    <time
+                                        :datetime="post.data.pubDate"
+                                        class="block text-sm font-bold text-neutral-500 dark:text-neutral-400 mb-2"
+                                        x-text="formatDate(post.data.pubDate)"
+                                    >
+                                    </time>
+
+                                    <h3
+                                        class="text-xl font-bold text-black dark:text-white mb-2 transition-colors"
+                                        x-text="post.data.title"
+                                    >
+                                    </h3>
+
+                                    <p
+                                        class="text-neutral-600 dark:text-neutral-400 font-medium line-clamp-2 mb-6 text-base"
+                                        x-text="post.data.description"
+                                    >
+                                    </p>
+
+                                    <div
+                                        class="mt-auto flex items-center font-bold text-black dark:text-white"
+                                    >
+                                        <span
+                                            class="inline-block border-b-2 border-current group-hover:border-transparent transition-colors"
+                                            >Read article</span
+                                        >
+                                        <span
+                                            class="ml-2 transform transition-transform duration-300 group-hover:translate-x-2"
+                                        >
+                                            &rarr;
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </template>
+                    </div>
+
+                    <!-- Infinite Scroll Trigger -->
+                    <div
+                        x-ref="loader"
+                        x-show="visibleCount < filteredPosts.length"
+                        class="flex flex-col items-center justify-center mt-20 gap-6"
+                    >
+                        <div
+                            class="w-10 h-10 border-4 border-zinc-200 border-t-black dark:border-zinc-800 dark:border-t-white rounded-full animate-spin"
+                        >
+                        </div>
+
+                        <button
+                            @click="loadMore()"
+                            class="px-6 py-2 border-2 border-black dark:border-white font-bold rounded-md hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 shadow-sm"
+                        >
+                            Load more posts
+                        </button>
+                    </div>
+                </div>
+                <!-- Newsletter Section Removed -->
+            </div>
+        </div>
+    </section>
+</MainLayout>

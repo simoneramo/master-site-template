@@ -1,0 +1,239 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+
+const teamMembers = [
+    {
+        name: "Team Member Name",
+        role: "Founder & Lead Developer",
+        bio: "Replace this with a short bio. Describe their background, expertise, and what they bring to the business. Keep it concise and written in third person.",
+        emoji: "👋",
+        initials: "TM",
+        colorClass: "bg-blue-200 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300",
+        linkedin: "#",
+    },
+    {
+        name: "Team Member Name",
+        role: "Senior Designer",
+        bio: "Replace this with a short bio. Describe their background, expertise, and what they bring to the business. Keep it concise and written in third person.",
+        emoji: "🎨",
+        initials: "TM",
+        colorClass: "bg-emerald-200 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300",
+        linkedin: "#",
+    },
+    {
+        name: "Team Member Name",
+        role: "Project Manager",
+        bio: "Replace this with a short bio. Describe their background, expertise, and what they bring to the business. Keep it concise and written in third person.",
+        emoji: "📋",
+        initials: "TM",
+        colorClass: "bg-amber-200 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300",
+        linkedin: "#",
+    },
+];
+
+const values = [
+    {
+        icon: "🏆",
+        title: "Excellence in craft",
+        description:
+            "We hold ourselves to a high standard in everything we produce — from the first wireframe to the final line of code.",
+    },
+    {
+        icon: "🤝",
+        title: "Client partnership",
+        description:
+            "We work as an extension of your team, not just a supplier. Your goals become our goals.",
+    },
+    {
+        icon: "💬",
+        title: "Honest communication",
+        description:
+            "No jargon, no surprises. We communicate clearly throughout every project so you're always in the loop.",
+    },
+    {
+        icon: "🚀",
+        title: "Continuous growth",
+        description:
+            "Technology evolves fast. We stay at the leading edge so our clients always benefit from modern, future-proof solutions.",
+    },
+];
+---
+
+<MainLayout
+    title="Meet the Team"
+    description="Get to know the people behind the work. Our small, experienced team brings together design, development, and strategy to deliver results."
+>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="py-4">
+        <div class="px-8 mx-auto flex items-center gap-2 text-md font-bold">
+            <a
+                href="/"
+                class="text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white transition-colors"
+            >
+                Home
+            </a>
+            <span class="text-neutral-300 dark:text-neutral-700">/</span>
+            <a
+                href="/about"
+                class="text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white transition-colors"
+            >
+                About
+            </a>
+            <span class="text-neutral-300 dark:text-neutral-700">/</span>
+            <span class="text-black dark:text-white">Team</span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-24">
+        <div class="container mx-auto max-w-4xl text-center px-4">
+            <p
+                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+            >
+                The people behind the work
+            </p>
+            <h1 class="text-5xl md:text-7xl font-bold mb-8">
+                Meet our team
+            </h1>
+            <p
+                class="text-lg md:text-xl font-medium text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto"
+            >
+                A small, dedicated team combining design, development, and
+                strategy to deliver exceptional results for every client.
+            </p>
+        </div>
+    </section>
+
+    <!-- Team Members Grid -->
+    <section class="pb-20">
+        <div class="container mx-auto px-4 md:px-0">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {
+                    teamMembers.map((member) => (
+                        <article class="border-2 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-xl overflow-hidden group">
+                            {/* Avatar */}
+                            <div class="bg-zinc-100 dark:bg-zinc-900 h-56 flex items-center justify-center">
+                                <div
+                                    class={`w-28 h-28 flex items-center justify-center rounded-full font-bold text-3xl ${member.colorClass}`}
+                                >
+                                    {member.initials}
+                                </div>
+                            </div>
+                            {/* Content */}
+                            <div class="p-8">
+                                <div class="text-3xl mb-3">{member.emoji}</div>
+                                <h2 class="text-xl font-bold mb-1">
+                                    {member.name}
+                                </h2>
+                                <p class="text-sm font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-4">
+                                    {member.role}
+                                </p>
+                                <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed font-medium mb-6">
+                                    {member.bio}
+                                </p>
+                                <a
+                                    href={member.linkedin}
+                                    class="inline-flex items-center gap-2 font-bold text-sm border-b-2 border-black dark:border-white hover:border-transparent transition-colors"
+                                    aria-label={`Connect with ${member.name} on LinkedIn`}
+                                >
+                                    <svg
+                                        class="w-4 h-4 fill-current"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h5v-8.306c0-4.613 6.11-4.953 6.11 2.433v5.873h4.972v-9.167c0-7.85-8.835-7.516-11.114-3.56v-3.273z" />
+                                    </svg>
+                                    LinkedIn
+                                </a>
+                            </div>
+                        </article>
+                    ))
+                }
+            </div>
+
+            <!-- Add more team members note -->
+            <p
+                class="mt-10 text-center text-sm text-neutral-500 dark:text-neutral-400 font-medium"
+            >
+                <!-- 💡 Add or remove team members in the teamMembers array above -->
+            </p>
+        </div>
+    </section>
+
+    <!-- Team Values Section -->
+    <section class="py-20 bg-zinc-50 dark:bg-zinc-900/50">
+        <div class="container mx-auto px-4 md:px-0">
+            <div class="text-center mb-14">
+                <p
+                    class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+                >
+                    How we work
+                </p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    What drives us
+                </h2>
+                <p
+                    class="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto font-medium"
+                >
+                    The values that guide how we collaborate, communicate, and
+                    deliver for every client.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {
+                    values.map((v) => (
+                        <article class="border-2 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-8 rounded-xl">
+                            <div class="text-4xl mb-6">{v.icon}</div>
+                            <h3 class="text-lg font-bold mb-3">{v.title}</h3>
+                            <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed font-medium">
+                                {v.description}
+                            </p>
+                        </article>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- We're Hiring Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-4 md:px-0">
+            <div
+                class="bg-zinc-200 dark:bg-zinc-900 p-12 md:p-20 rounded-xl text-center"
+            >
+                <div class="text-5xl mb-6">🤝</div>
+                <p
+                    class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+                >
+                    Work with us
+                </p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    Interested in joining the team?
+                </h2>
+                <p
+                    class="text-lg mb-10 text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto font-medium"
+                >
+                    We're always open to connecting with talented designers,
+                    developers, and strategists. Drop us a line and let's start
+                    a conversation.
+                </p>
+                <a
+                    href="/contact"
+                    class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200"
+                >
+                    <span
+                        class="transform transition-transform duration-300 group-hover:-translate-x-2"
+                    >
+                        Get in touch
+                    </span>
+                    <span
+                        class="absolute right-6 transform translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                    >
+                        &rarr;
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+</MainLayout>

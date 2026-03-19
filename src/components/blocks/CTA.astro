@@ -1,0 +1,31 @@
+---
+const { data } = Astro.props;
+---
+
+<section class="py-20 footer-bg border-t-0!">
+    <div class="container mx-auto max-w-4xl text-center px-4">
+        <h2
+            class="text-4xl md:text-5xl font-bold text-black dark:text-white mb-8"
+        >
+            {data.heading}
+        </h2>
+
+        {
+            data.buttonText && data.buttonLink && (
+                <a
+                    href={data.buttonLink}
+                    class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200"
+                >
+                    <div class="relative flex items-center justify-center">
+                        <span class="transform transition-transform duration-300 group-hover:-translate-x-4">
+                            {data.buttonText}
+                        </span>
+                        <span class="absolute right-0 transform translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                            &rarr;
+                        </span>
+                    </div>
+                </a>
+            )
+        }
+    </div>
+</section>

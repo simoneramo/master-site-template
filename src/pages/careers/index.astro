@@ -1,0 +1,178 @@
+---
+// 💡 OPTIONAL PAGE - Delete this file if not needed for your project
+// This is a stub page for the Careers/Job Board
+// Customize or remove based on client needs
+
+import { getCollection, getEntry } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+
+// 🔘 Page Settings: toggle isActive in TinaCMS > Page Settings > careers
+const pageConfig = await getEntry("pages", "careers");
+if (pageConfig?.data?.isActive === false) return Astro.redirect("/404");
+
+const jobs = await getCollection("jobs", ({ data }) => data.isActive !== false);
+jobs.sort((a, b) => a.data.order - b.data.order);
+---
+
+<MainLayout
+    title="Careers | Join Our Team"
+    description="Explore career opportunities and join a team that's passionate about making a difference."
+>
+    <!-- Hero Section -->
+    <section class="py-24 lg:py-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl">
+                <span
+                    class="text-sm font-bold tracking-wider text-neutral-500 uppercase mb-4 block"
+                >
+                    Careers
+                </span>
+                <h1
+                    class="text-4xl md:text-5xl lg:text-6xl font-black text-black dark:text-white mb-6"
+                >
+                    Join Our Team
+                </h1>
+                <p
+                    class="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed"
+                >
+                    We're always looking for talented individuals who share our
+                    passion for excellence. Explore our open positions and find
+                    your next opportunity.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values/Why Join Us -->
+    <section class="pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div
+                        class="w-16 h-16 mx-auto mb-4 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center text-2xl"
+                    >
+                        🚀
+                    </div>
+                    <h3
+                        class="text-lg font-bold text-black dark:text-white mb-2"
+                    >
+                        Growth Opportunities
+                    </h3>
+                    <p class="text-neutral-600 dark:text-neutral-400">
+                        Continuous learning and career advancement
+                    </p>
+                </div>
+                <div class="text-center p-6">
+                    <div
+                        class="w-16 h-16 mx-auto mb-4 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center text-2xl"
+                    >
+                        🤝
+                    </div>
+                    <h3
+                        class="text-lg font-bold text-black dark:text-white mb-2"
+                    >
+                        Great Culture
+                    </h3>
+                    <p class="text-neutral-600 dark:text-neutral-400">
+                        Collaborative and inclusive work environment
+                    </p>
+                </div>
+                <div class="text-center p-6">
+                    <div
+                        class="w-16 h-16 mx-auto mb-4 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center text-2xl"
+                    >
+                        ⚖️
+                    </div>
+                    <h3
+                        class="text-lg font-bold text-black dark:text-white mb-2"
+                    >
+                        Work-Life Balance
+                    </h3>
+                    <p class="text-neutral-600 dark:text-neutral-400">
+                        Flexible arrangements that work for you
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Job Listings -->
+    <section class="pb-24 lg:pb-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2
+                class="text-2xl md:text-3xl font-bold text-black dark:text-white mb-8"
+            >
+                Open Positions
+            </h2>
+
+            <!-- Job Listings from CMS -->
+            {jobs.length > 0 ? (
+                <div class="space-y-4">
+                    {jobs.map((job) => (
+                        <div class="border-2 border-neutral-200 dark:border-neutral-800 rounded-lg p-6 hover:border-black dark:hover:border-white transition-colors">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                                <div>
+                                    <h3 class="text-xl font-bold text-black dark:text-white">
+                                        {job.data.title}
+                                    </h3>
+                                    <p class="text-neutral-600 dark:text-neutral-400 mt-1">
+                                        {job.data.department} • {job.data.type} • {job.data.location}
+                                        {job.data.salary && <span> • {job.data.salary}</span>}
+                                    </p>
+                                </div>
+                                <a
+                                    href={`/careers/${job.slug}`}
+                                    class="px-6 py-3 bg-black dark:bg-white text-white dark:text-black font-bold rounded-md hover:opacity-80 transition-opacity whitespace-nowrap text-center"
+                                >
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <!-- No Jobs State -->
+                <div class="p-8 text-center border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg">
+                    <p class="text-neutral-600 dark:text-neutral-400">
+                        No open positions at the moment.
+                    </p>
+                </div>
+            )}
+
+            <!-- General Application -->
+            <div class="mt-12 p-8 text-center border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg">
+                <p class="text-neutral-600 dark:text-neutral-400">
+                    Don't see a role that fits? We're always interested in
+                    meeting great people.
+                </p>
+                <a
+                    href="/contact"
+                    class="inline-block mt-4 text-black dark:text-white font-bold underline underline-offset-4"
+                >
+                    Send us your resume →
+                </a>
+            </div>
+
+            <!-- Developer Note -->
+            <div
+                class="mt-16 p-6 bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-800 rounded-lg"
+            >
+                <p class="text-amber-800 dark:text-amber-200 font-medium">
+                    <strong>💡 Developer Note:</strong> This page uses TinaCMS content.
+                </p>
+                <ul
+                    class="mt-2 ml-4 list-disc text-amber-700 dark:text-amber-300"
+                >
+                    <li>
+                        Manage job listings in TinaCMS under "Jobs / Careers"
+                    </li>
+                    <li>
+                        Create individual job pages at <code>src/pages/careers/[slug].astro</code>
+                    </li>
+                    <li>Add application form at <code>/careers/[slug]/apply.astro</code></li>
+                    <li>Inactive jobs are hidden automatically (isActive: false)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</MainLayout>

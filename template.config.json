@@ -1,0 +1,207 @@
+{
+  "name": "Falcon 1 Master Site Template",
+  "version": "2.0.0",
+  "description": "A production-ready Astro template with TinaCMS integration",
+  "pages": {
+    "tier1": {
+      "name": "Core Pages (Always Included)",
+      "description": "Essential pages that every site needs",
+      "pages": [
+        { "path": "src/pages/index.astro", "name": "Homepage", "required": true },
+        { "path": "src/pages/about/index.astro", "name": "About", "required": true },
+        { "path": "src/pages/contact.astro", "name": "Contact", "required": true },
+        { "path": "src/pages/contact-thankyou.astro", "name": "Contact Thank You", "required": true },
+        { "path": "src/pages/home-thankyou.astro", "name": "Home Thank You", "required": true },
+        { "path": "src/pages/privacy-policy.astro", "name": "Privacy Policy", "required": true },
+        { "path": "src/pages/terms-and-conditions.astro", "name": "Terms & Conditions", "required": true },
+        { "path": "src/pages/404.astro", "name": "404 Error Page", "required": true }
+      ]
+    },
+    "tier2": {
+      "name": "Common Pages (Usually Included)",
+      "description": "Standard business pages that most clients need",
+      "pages": [
+        { "path": "src/pages/get-a-quote.astro", "name": "Get a Quote", "default": false },
+        { "path": "src/pages/quote-thankyou.astro", "name": "Quote Thank You", "default": false },
+        { "path": "src/pages/services/index.astro", "name": "Services", "default": true },
+        { "path": "src/pages/services/[slug].astro", "name": "Service Detail Pages", "default": true },
+        { "path": "src/pages/pricing/index.astro", "name": "Pricing", "default": false },
+        { "path": "src/pages/insights/index.astro", "name": "Blog/Insights", "default": true },
+        { "path": "src/pages/insights/[...slug].astro", "name": "Blog Post Pages", "default": true },
+        { "path": "src/pages/faq.astro", "name": "FAQ Page", "default": true },
+        { "path": "src/pages/about/team.astro", "name": "Team Page", "default": false },
+        { "path": "src/pages/process/index.astro", "name": "Process Overview", "default": true },
+        { "path": "src/pages/process/[slug].astro", "name": "Process Step Pages", "default": true }
+      ]
+    },
+    "tier3": {
+      "name": "Optional Pages (Toggle as Needed)",
+      "description": "Specialized pages that may not be needed for every project",
+      "pages": [
+        {
+          "path": "src/pages/work/index.astro",
+          "name": "Portfolio / Work",
+          "description": "Showcase of projects and case studies",
+          "default": false
+        },
+        {
+          "path": "src/pages/work/[slug].astro",
+          "name": "Portfolio Detail Pages",
+          "description": "Individual project case study pages",
+          "default": false,
+          "hidden": true
+        },
+        {
+          "path": "src/pages/reviews/index.astro",
+          "name": "Reviews / Testimonials",
+          "description": "Client testimonials and ratings showcase",
+          "default": false
+        },
+        {
+          "path": "src/pages/careers/index.astro",
+          "name": "Careers / Jobs",
+          "description": "Job listings and company culture",
+          "default": false
+        },
+        {
+          "path": "src/pages/careers/[slug].astro",
+          "name": "Job Detail Pages",
+          "description": "Individual job posting pages",
+          "default": false,
+          "hidden": true
+        },
+        {
+          "path": "src/pages/partners/index.astro",
+          "name": "Partners / Integrations",
+          "description": "Technology partners and integrations",
+          "default": false
+        },
+        {
+          "path": "src/pages/partners/[slug].astro",
+          "name": "Partner Detail Pages",
+          "description": "Individual partner pages",
+          "default": false,
+          "hidden": true
+        },
+        {
+          "path": "src/pages/events/index.astro",
+          "name": "Events / Webinars",
+          "description": "Workshops, webinars, and events",
+          "default": false
+        },
+        {
+          "path": "src/pages/events/[slug].astro",
+          "name": "Event Detail Pages",
+          "description": "Individual event pages",
+          "default": false,
+          "hidden": true
+        },
+        {
+          "path": "src/pages/book/index.astro",
+          "name": "Book / Schedule",
+          "description": "Appointment booking and scheduling",
+          "default": false
+        },
+        {
+          "path": "src/pages/landing-page.astro",
+          "name": "Landing Page Template",
+          "description": "Standalone marketing landing page",
+          "default": false
+        },
+        {
+          "path": "src/pages/design-blueprints/index.astro",
+          "name": "Design Blueprints",
+          "description": "Pre-built design templates and blueprints",
+          "default": false
+        }
+      ]
+    }
+  },
+  "contentCollections": {
+    "required": ["homepage", "about", "globals", "contact"],
+    "optional": [
+      "insights",
+      "services",
+      "offerings",
+      "process",
+      "processSteps",
+      "templates",
+      "templatesPage",
+      "jobs",
+      "events",
+      "partners",
+      "testimonials",
+      "portfolio",
+      "components",
+      "quote"
+    ]
+  },
+  "pageContentMapping": {
+    "src/pages/services/index.astro": ["src/content/services", "src/content/offerings"],
+    "src/pages/insights/index.astro": ["src/content/insights"],
+    "src/pages/process/index.astro": ["src/content/process", "src/content/processSteps"],
+    "src/pages/tech/index.astro": ["src/content/tech"],
+    "src/pages/resources/glossary.astro": ["src/content/common-web-terms"],
+    "src/pages/work/index.astro": ["src/content/portfolio"],
+    "src/pages/careers/index.astro": ["src/content/jobs"],
+    "src/pages/events/index.astro": ["src/content/events"],
+    "src/pages/partners/index.astro": ["src/content/partners"],
+    "src/pages/reviews/index.astro": ["src/content/testimonials"],
+    "src/pages/get-a-quote.astro": ["src/content/quote"],
+    "src/pages/services/[slug].astro": ["src/content/offerings"],
+    "src/pages/process/[slug].astro": ["src/content/processSteps"]
+  },
+  "pageConfigMapping": {
+    "src/pages/services/index.astro": "src/content/pages/services.md",
+    "src/pages/insights/index.astro": "src/content/pages/insights.md",
+    "src/pages/process/index.astro": "src/content/pages/process.md",
+    "src/pages/pricing/index.astro": "src/content/pages/pricing.md",
+    "src/pages/faq.astro": "src/content/pages/faq.md",
+    "src/pages/careers/index.astro": "src/content/pages/careers.md",
+    "src/pages/events/index.astro": "src/content/pages/events.md",
+    "src/pages/partners/index.astro": "src/content/pages/partners.md",
+    "src/pages/reviews/index.astro": "src/content/pages/reviews.md",
+    "src/pages/work/index.astro": "src/content/pages/work.md"
+  },
+  "features": {
+    "darkMode": true,
+    "cms": "tinacms",
+    "contactForm": true,
+    "blog": true,
+    "analytics": false
+  },
+  "projectStarter": {
+    "prompts": [
+      {
+        "id": "projectName",
+        "type": "text",
+        "message": "What is the project name?",
+        "placeholder": "Acme Corp"
+      },
+      {
+        "id": "domain",
+        "type": "text",
+        "message": "What is the domain?",
+        "placeholder": "https://acme.com"
+      },
+      {
+        "id": "pages",
+        "type": "checkbox",
+        "message": "Select optional pages to include:",
+        "source": "tier3"
+      },
+      {
+        "id": "includeBlog",
+        "type": "confirm",
+        "message": "Include blog/insights section?",
+        "default": true
+      },
+      {
+        "id": "includeTeam",
+        "type": "confirm",
+        "message": "Include team page?",
+        "default": true
+      }
+    ]
+  }
+}

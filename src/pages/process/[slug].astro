@@ -1,0 +1,181 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import { getCollection } from "astro:content";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+    const processSteps = await getCollection("processSteps");
+    return processSteps.map((entry) => ({
+        params: { slug: entry.slug },
+        props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// Get next step logic
+const processSteps = await getCollection("processSteps");
+// Sort steps by order to ensure correct flow
+const sortedSteps = processSteps.sort(
+    (a, b) => (a.data.order || 0) - (b.data.order || 0),
+);
+const currentIndex = sortedSteps.findIndex((item) => item.slug === entry.slug);
+const nextStep = sortedSteps[(currentIndex + 1) % sortedSteps.length]; // Loop back to start if at end
+const isLastStep = currentIndex === sortedSteps.length - 1;
+---
+
+<MainLayout title={entry.data.title}>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="py-4">
+        <div class="px-8 mx-auto flex items-center gap-2 text-md font-bold">
+            <a
+                href="/"
+                class="text-neutral-500 hover:text-black dark:text-neutral-300 dark:hover:text-white transition-colors"
+            >
+                Home
+            </a>
+            <span class="text-neutral-400 dark:text-neutral-700">/</span>
+            <a
+                href="/process"
+                class="text-neutral-500 hover:text-black dark:text-neutral-300 dark:hover:text-white transition-colors"
+            >
+                Process
+            </a>
+            <span class="text-neutral-400 dark:text-neutral-700">/</span>
+            <span class="text-neutral-700 dark:text-white"
+                >{entry.data.title}</span
+            >
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="py-20">
+        <div class="container mx-auto px-4 md:px-0 text-center">
+            <div
+                class="w-20 h-20 bg-zinc-100 dark:bg-zinc-900 mx-auto rounded-xl flex items-center justify-center text-4xl mb-8"
+            >
+                {entry.data.icon}
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-tighter">
+                {entry.data.title}
+            </h1>
+            <p
+                class="text-xl md:text-2xl text-neutral-600 dark:text-neutral-400 font-medium leading-relaxed"
+            >
+                {entry.data.description}
+            </p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="py-20">
+        <div class="container mx-auto px-4 md:px-0">
+            <div class="prose prose-lg dark:prose-invert mx-auto">
+                <Content />
+            </div>
+
+            {
+                entry.data.listItems && (
+                    <div class="mt-12 not-prose">
+                        <h3 class="text-2xl font-bold mb-6">
+                            {entry.data.listTitle || "Key Deliverables"}
+                        </h3>
+                        <ul class="grid md:grid-cols-2 gap-4">
+                            {entry.data.listItems.map((item) => (
+                                <li class="flex items-center gap-3 p-4 bg-white dark:bg-black rounded-lg border border-zinc-200 dark:border-zinc-800">
+                                    <span class="text-xl">✅</span>
+                                    <span class="font-bold">{item}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )
+            }
+        </div>
+    </section>
+
+    <!-- Next Step Navigation -->
+    {
+        !isLastStep && (
+            <section class="py-12">
+                <div class="container mx-auto max-w-3xl px-4 md:px-0">
+                    <a
+                        href={`/process/${nextStep.slug}`}
+                        class="block group bg-white dark:bg-black p-8 rounded-2xl border-2 border-zinc-200 dark:border-zinc-800 transition-all duration-300"
+                    >
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-6">
+                                <div class="w-16 h-16 bg-zinc-100 dark:bg-zinc-900 rounded-xl flex items-center justify-center text-3xl">
+                                    {nextStep.data.icon}
+                                </div>
+                                <div>
+                                    <span class="text-sm font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-1 block">
+                                        Next Step
+                                    </span>
+                                    <h3 class="text-2xl font-bold group-hover:underline decoration-2 underline-offset-4">
+                                        {nextStep.data.order}.{" "}
+                                        {nextStep.data.title}
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="hidden md:flex w-12 h-12 rounded-full border-2 border-zinc-200 dark:border-zinc-800 items-center justify-center group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black group-hover:border-transparent transition-all duration-300">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class=""
+                                >
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        )
+    }
+
+    <!-- CTA Section -->
+    <section class="pb-32 container mx-auto px-4 md:px-0">
+        <div
+            class="bg-zinc-200 dark:bg-zinc-900 p-16 md:p-32 text-center rounded-xl"
+        >
+            <p
+                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+            >
+                Get started
+            </p>
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                Ready to build something great?
+            </h2>
+            <p class="text-lg mb-10">
+                Join thousands of developers building accessible,
+                high-performance websites!.
+            </p>
+            <a
+                href="/audit"
+                class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-black bg-white dark:bg-green-600 dark:text-white transition-all duration-300 text-lg rounded-md hover:bg-white dark:hover:bg-black"
+            >
+                <span
+                    class="transform transition-transform duration-300 group-hover:-translate-x-4"
+                >
+                    Get your free audit
+                </span>
+                <span
+                    class="absolute right-6 transform translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                >
+                    &rarr;
+                </span>
+            </a>
+        </div>
+    </section>
+</MainLayout>

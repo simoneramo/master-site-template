@@ -1,0 +1,464 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { getEntry } from "astro:content";
+
+const quotePage = await getEntry("quote", "index");
+if (!quotePage) {
+    return Astro.redirect("/404");
+}
+const { hero } = quotePage.data;
+---
+
+<MainLayout title="Get a Quote">
+    <!-- Hero Section -->
+    <section class="py-20">
+        <div class="container mx-auto max-w-4xl text-center">
+            <p
+                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+            >
+                {hero.label}
+            </p>
+            <h1 class="text-5xl md:text-7xl font-bold mb-8">
+                {hero.heading}
+            </h1>
+            <p
+                class="text-lg md:text-xl font-medium mb-10 text-neutral-600 dark:text-white"
+            >
+                {hero.description}
+            </p>
+        </div>
+    </section>
+
+    <!-- Quote Form Section -->
+    <section class="pb-20">
+        <div class="container mx-auto px-6 max-w-2xl">
+            <form
+                class="text-left space-y-6"
+                data-netlify="true"
+                name="quote-form"
+                method="POST"
+                action="/success"
+                x-data="{
+                        name: '',
+                        email: '',
+                        website: '',
+                        projectType: '',
+                        budget: '',
+                        timeline: '',
+                        details: '',
+                        isSubmitting: false,
+                        showSuccess: false,
+                        showError: false,
+                        errorMessage: '',
+                        touched: {
+                            name: false,
+                            email: false,
+                            projectType: false,
+                            budget: false,
+                            timeline: false,
+                            details: false
+                        },
+                        errors: {
+                            name: false,
+                            email: false,
+                            projectType: false,
+                            budget: false,
+                            timeline: false,
+                            details: false
+                        },
+
+                        validateName() {
+                            this.errors.name = this.touched.name && this.name.trim().length < 2;
+                        },
+
+                        validateEmail() {
+                            if (!this.touched.email) return;
+                            const isValid = this.email && this.email.includes('@') && this.email.includes('.') && this.email.length > 5;
+                            this.errors.email = !isValid;
+                        },
+
+                        validateProjectType() {
+                            this.errors.projectType = this.touched.projectType && this.projectType === '';
+                        },
+
+                        validateBudget() {
+                            this.errors.budget = this.touched.budget && this.budget === '';
+                        },
+
+                        validateTimeline() {
+                            this.errors.timeline = this.touched.timeline && this.timeline === '';
+                        },
+
+                        validateDetails() {
+                            this.errors.details = this.touched.details && this.details.trim().length > 0 && this.details.trim().length < 40;
+                        },
+
+                        isValid(field) {
+                            return this.touched[field] && !this.errors[field];
+                        },
+
+                        formIsValid() {
+                            const nameOk = this.name.trim().length >= 2;
+                            const emailOk = this.email && this.email.includes('@') && this.email.includes('.') && this.email.length > 5;
+                            const projectTypeOk = this.projectType !== '';
+                            const budgetOk = this.budget !== '';
+                            const timelineOk = this.timeline !== '';
+                            return nameOk && emailOk && projectTypeOk && budgetOk && timelineOk;
+                        },
+
+                        async submitForm() {
+                            this.touched.name = true;
+                            this.touched.email = true;
+                            this.touched.projectType = true;
+                            this.touched.budget = true;
+                            this.touched.timeline = true;
+                            
+                            this.validateName();
+                            this.validateEmail();
+                            this.validateProjectType();
+                            this.validateBudget();
+                            this.validateTimeline();
+
+                            if (this.errors.name || this.errors.email || this.errors.projectType || this.errors.budget || this.errors.timeline) {
+                                return;
+                            }
+
+                            this.isSubmitting = true;
+                            this.showError = false;
+
+                            const quoteMessage = `
+Project Type: ${this.projectType}
+Budget: ${this.budget}
+Timeline: ${this.timeline}
+Website: ${this.website || 'N/A'}
+
+Description:
+${this.details}
+                            `.trim();
+
+                            try {
+                                const response = await fetch('/api/contact', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        name: this.name,
+                                        email: this.email,
+                                        subject: 'New Quote Request',
+                                        message: quoteMessage
+                                    })
+                                });
+
+                                const data = await response.json();
+
+                                if (response.ok) {
+                                    this.showSuccess = true;
+                                    this.name = '';
+                                    this.email = '';
+                                    this.website = '';
+                                    this.projectType = '';
+                                    this.budget = '';
+                                    this.timeline = '';
+                                    this.details = '';
+                                    
+                                    this.touched = {
+                                        name: false, 
+                                        email: false, 
+                                        projectType: false, 
+                                        budget: false, 
+                                        timeline: false, 
+                                        details: false 
+                                    };
+                                    this.errors = { 
+                                        name: false, 
+                                        email: false, 
+                                        projectType: false, 
+                                        budget: false, 
+                                        timeline: false, 
+                                        details: false 
+                                    };
+
+                                    // Redirect to thank you page after success
+                                    window.location.href = '/quote-thankyou';
+                                } else {
+                                    this.showError = true;
+                                    this.errorMessage = data.error || 'Failed to send request. Please try again.';
+                                    setTimeout(() => this.showError = false, 5000);
+                                }
+                            } catch (error) {
+                                this.showError = true;
+                                this.errorMessage = 'Network error. Please check your connection and try again.';
+                                setTimeout(() => this.showError = false, 5000);
+                            } finally {
+                                this.isSubmitting = false;
+                            }
+                        }
+                    }"
+                @submit.prevent="submitForm()"
+            >
+                <div
+                    x-show="showSuccess"
+                    x-transition
+                    class="p-4 bg-green-100 border-l-4 border-green-500 text-green-700 mb-6 rounded-md"
+                    role="alert"
+                >
+                    <p class="font-bold">Request sent successfully!</p>
+                    <p>We'll provide a quote shortly.</p>
+                </div>
+
+                <div
+                    x-show="showError"
+                    x-transition
+                    class="p-4 bg-red-100 border-l-4 border-red-500 text-red-700 mb-6 rounded-md"
+                    role="alert"
+                >
+                    <p class="font-bold">Error</p>
+                    <p x-text="errorMessage"></p>
+                </div>
+                <div>
+                    <label for="name" class="block font-bold mb-2">
+                        Name <abbr title="required">*</abbr>
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        x-model="name"
+                        @blur="touched.name = true; validateName()"
+                        @input="touched.name && validateName()"
+                        required
+                        class="w-full p-4 border-2 focus:text-black focus:border-black dark:focus:border-zinc-500 dark:focus:text-white transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md dark:text-white"
+                        :class="errors.name ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : isValid('name') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                        placeholder="Jane Doe"
+                    />
+                    <p
+                        x-show="errors.name"
+                        class="text-red-600 mt-1 font-medium"
+                    >
+                        Please enter your name (at least 2 characters).
+                    </p>
+                </div>
+
+                <div>
+                    <label for="email" class="block font-bold mb-2">
+                        Email <abbr title="required">*</abbr>
+                    </label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        x-model="email"
+                        @blur="touched.email = true; validateEmail()"
+                        @input="touched.email && validateEmail()"
+                        required
+                        class="w-full p-4 border-2 focus:text-black focus:border-black dark:focus:border-zinc-500 dark:focus:text-white transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md dark:text-white"
+                        :class="errors.email ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : isValid('email') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                        placeholder="you@example.com"
+                    />
+                    <p
+                        x-show="errors.email"
+                        class="text-red-600 mt-1 font-medium"
+                    >
+                        Please enter a valid email address.
+                    </p>
+                </div>
+
+                <div>
+                    <label for="website" class="block font-bold mb-2">
+                        Current website (if any)
+                    </label>
+                    <input
+                        type="url"
+                        id="website"
+                        name="website"
+                        x-model="website"
+                        class="w-full p-4 bg-white dark:bg-black border-2 border-zinc-200 focus:bg-stone-50 focus:text-black focus:border-black dark:focus:border-zinc-500 dark:focus:bg-black dark:focus:text-white transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md dark:text-white dark:border-zinc-800"
+                        placeholder="https://example.com"
+                    />
+                </div>
+
+                <div>
+                    <label for="project-type" class="block font-bold mb-2">
+                        Project type <abbr title="required">*</abbr>
+                    </label>
+                    <div class="relative">
+                        <select
+                            id="project-type"
+                            name="project-type"
+                            x-model="projectType"
+                            @blur="touched.projectType = true; validateProjectType()"
+                            @change="touched.projectType = true; validateProjectType()"
+                            required
+                            class="w-full p-4 border-2 focus:text-black focus:border-black dark:focus:border-zinc-500 dark:focus:text-white transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md dark:text-white appearance-none"
+                            :class="errors.projectType ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : isValid('projectType') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                        >
+                            <option value="" disabled selected
+                                >Select a project type</option
+                            >
+                            <option>New website</option>
+                            <option>Website redesign</option>
+                            <option>Maintenance</option>
+                            <option>Other</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-neutral-500"
+                        >
+                            <svg
+                                class="h-4 w-4 fill-current"
+                                viewBox="0 0 20 20"
+                            >
+                                <path
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                ></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <p
+                        x-show="errors.projectType"
+                        class="text-red-600 mt-1 font-medium"
+                    >
+                        Please select a project type.
+                    </p>
+                </div>
+
+                <div>
+                    <label for="budget" class="block font-bold mb-2">
+                        Estimated budget (AUD) <abbr title="required">*</abbr>
+                    </label>
+                    <div class="relative">
+                        <select
+                            id="budget"
+                            name="budget"
+                            x-model="budget"
+                            @blur="touched.budget = true; validateBudget()"
+                            @change="touched.budget = true; validateBudget()"
+                            required
+                            class="w-full p-4 border-2 focus:text-black focus:border-black dark:focus:border-zinc-500 dark:focus:text-white transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md dark:text-white appearance-none"
+                            :class="errors.budget ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : isValid('budget') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                        >
+                            <option value="" disabled selected
+                                >Select a budget range</option
+                            >
+                            <option>Under $1,500</option>
+                            <option>$1,500 - $3,000</option>
+                            <option>$3,000 - $5,000</option>
+                            <option>$5,000+</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-neutral-500"
+                        >
+                            <svg
+                                class="h-4 w-4 fill-current"
+                                viewBox="0 0 20 20"
+                            >
+                                <path
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                ></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <p
+                        x-show="errors.budget"
+                        class="text-red-600 mt-1 font-medium"
+                    >
+                        Please select a budget range.
+                    </p>
+                </div>
+
+                <div>
+                    <label for="timeline" class="block font-bold mb-2">
+                        Desired timeline <abbr title="required">*</abbr>
+                    </label>
+                    <div class="relative">
+                        <select
+                            id="timeline"
+                            name="timeline"
+                            x-model="timeline"
+                            @blur="touched.timeline = true; validateTimeline()"
+                            @change="touched.timeline = true; validateTimeline()"
+                            required
+                            class="w-full p-4 border-2 focus:text-black focus:border-black dark:focus:border-zinc-500 dark:focus:text-white transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md dark:text-white appearance-none"
+                            :class="errors.timeline ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : isValid('timeline') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                        >
+                            <option value="" disabled selected
+                                >Select a timeline</option
+                            >
+                            <option>ASAP</option>
+                            <option>Within 28 days</option>
+                            <option>1-3 months</option>
+                            <option>Flexible</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-neutral-500"
+                        >
+                            <svg
+                                class="h-4 w-4 fill-current"
+                                viewBox="0 0 20 20"
+                            >
+                                <path
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                ></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <p
+                        x-show="errors.timeline"
+                        class="text-red-600 mt-1 font-medium"
+                    >
+                        Please select a timeline.
+                    </p>
+                </div>
+
+                <div>
+                    <label for="details" class="block font-bold mb-2">
+                        Project description
+                    </label>
+                    <textarea
+                        id="details"
+                        name="details"
+                        x-model="details"
+                        @blur="touched.details = true; validateDetails()"
+                        @input="touched.details && validateDetails()"
+                        rows="4"
+                        class="w-full p-4 border-2 focus:text-black focus:border-black dark:focus:border-zinc-500 dark:focus:text-white transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md dark:text-white"
+                        :class="errors.details ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : isValid('details') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                        placeholder="Describe your project goals, features needed, and any design preferences..."
+                    ></textarea>
+                    <p
+                        x-show="errors.details"
+                        class="text-red-600 mt-1 font-medium text-sm"
+                    >
+                        Please add a bit more detail (at least 40 characters).
+                        It helps us give you a more accurate quote!
+                    </p>
+                </div>
+
+                <div>
+                    <button
+                        type="submit"
+                        :disabled="isSubmitting || !formIsValid()"
+                        class="w-full group relative inline-flex items-center justify-center overflow-hidden h-14 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-md hover:bg-black dark:hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed disabled:saturate-0 cursor-pointer"
+                    >
+                        <div
+                            x-show="!isSubmitting"
+                            class="relative flex items-center justify-center px-10"
+                        >
+                            <span
+                                class="transform transition-transform duration-300 group-hover:-translate-x-4"
+                            >
+                                Submit request
+                            </span>
+                            <span
+                                class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                            >
+                                &rarr;
+                            </span>
+                        </div>
+                        <span x-show="isSubmitting">Sending...</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+</MainLayout>
