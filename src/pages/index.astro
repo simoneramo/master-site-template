@@ -19,7 +19,9 @@ const hero = homepageData.data.hero;
 const proofPoints = homepageData.data.proofPoints;
 const problems = homepageData.data.problems;
 const features = homepageData.data.features;
-const componentsData = await getEntry("components", "index");
+const calloutsData = await getEntry("globals", "callouts");
+const solutionsData = await getEntry("globals", "solutions");
+const testimonialsData = await getEntry("globals", "testimonials");
 
 const process = homepageData.data.process;
 
@@ -518,7 +520,7 @@ const faq = homepageData.data.faq;
                     /* Create 4 sets of testimonials to ensure smooth infinite scroll even on wide screens */
                     [...Array(4)].map(() => (
                         <div class="flex gap-8 shrink-0">
-                            {componentsData?.data?.testimonials?.items?.map(
+                            {testimonialsData?.data?.items?.map(
                                 (t: any, index: number) => {
                                     const colors = [
                                         "bg-blue-200 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300",

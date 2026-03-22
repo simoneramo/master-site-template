@@ -9,46 +9,121 @@ interface Props {
       answer: string;
     }[];
   };
+  variant?: "left" | "center";
   initialVisibleCount?: number;
 }
 
-const { data, initialVisibleCount = 6 } = Astro.props;
+const { data, variant = "left", initialVisibleCount = 6 } = Astro.props;
 ---
 
-<section class="py-20">
-  <div class="container mx-auto px-4 md:px-0">
-    <div class="grid lg:grid-cols-12 gap-12 items-start">
-      <!-- Header Section (Left on LG) -->
-      <div class="lg:col-span-5 text-center lg:text-left top-24 lg:sticky">
-        <p
-          class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
-        >
-          {data.sectionLabel}
-        </p>
-        <h2 class="text-5xl font-bold mb-4">{data.heading}</h2>
-        <p
-          class="text-lg text-neutral-600 dark:text-neutral-400 mb-6 font-medium max-w-2xl mx-auto lg:mx-0"
-        >
-          {data.description}
-        </p>
-        <p
-          class="text-lg text-neutral-600 dark:text-neutral-400 mb-12 lg:mb-0 font-medium max-w-2xl mx-auto lg:mx-0"
-        >
-          Have more questions? <a
-            href="/contact#form"
-            class="font-bold text-black dark:text-white underline underline-offset-2 hover:no-underline"
-            >Ask me anything</a
-          >
-        </p>
-      </div>
+{
+  /* ─────────────────────────────────────────────
+  VARIANT: LEFT (header left, accordion right)
+  ───────────────────────────────────────────── */
+}
+{
+  variant === "left" && (
+    <section class="py-20">
+      <div class="container mx-auto px-4 md:px-0">
+        <div class="grid lg:grid-cols-12 gap-12 items-start">
+          {/* Header Section (Left on LG) */}
+          <div class="lg:col-span-5 text-center lg:text-left top-24 lg:sticky">
+            <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
+              {data.sectionLabel}
+            </p>
+            <h2 class="text-5xl font-bold mb-4">{data.heading}</h2>
+            <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-6 font-medium max-w-2xl mx-auto lg:mx-0">
+              {data.description}
+            </p>
+            <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-12 lg:mb-0 font-medium max-w-2xl mx-auto lg:mx-0">
+              Have more questions?{" "}
+              <a
+                href="/contact#form"
+                class="font-bold text-black dark:text-white underline underline-offset-2 hover:no-underline"
+              >
+                Ask me anything
+              </a>
+            </p>
+          </div>
 
-      <!-- Accordion Section (Right on LG) -->
-      <div
-        class="lg:col-span-7 space-y-4 w-full"
-        x-data={`{ activeAccordion: null, visibleCount: ${initialVisibleCount}, totalItems: ${data.items.length} }`}
-      >
-        {
-          data.items.map((item, index) => (
+          {/* Accordion Section (Right on LG) */}
+          <div
+            class="lg:col-span-7 space-y-4 w-full"
+            x-data={`{ activeAccordion: null, visibleCount: ${initialVisibleCount}, totalItems: ${data.items.length} }`}
+          >
+            {data.items.map((item, index) => (
+              <div
+                x-show={`${index} < visibleCount`}
+                class="border-2 border-zinc-200 dark:border-zinc-700 hover:border-black hover:bg-black hover:text-white dark:hover:border-neutral-900 dark:hover:bg-zinc-900 dark:hover:text-white rounded-lg transition-colors duration-300"
+                :class={`activeAccordion === ${index + 1} ? 'bg-black text-white dark:bg-white dark:text-black' : 'bg-white text-black dark:bg-black dark:text-white'`}
+              >
+                <h3>
+                  <button
+                    @click={`activeAccordion = (activeAccordion === ${index + 1} ? null : ${index + 1})`}
+                    :aria-expanded={`activeAccordion === ${index + 1}`}
+                    aria-controls={`accordion-content-${index + 1}`}
+                    class="flex items-center justify-between w-full p-6 text-left font-bold text-lg transition-colors rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-current cursor-pointer"
+                    :class={`activeAccordion === ${index + 1} ? 'rounded-b-none' : ''`}
+                  >
+                    <span>{item.question}</span>
+                    <span
+                      class="text-2xl transform transition-transform"
+                      :class={`activeAccordion === ${index + 1} ? 'rotate-180' : ''`}
+                    >
+                      ↓
+                    </span>
+                  </button>
+                </h3>
+                <div
+                  id={`accordion-content-${index + 1}`}
+                  x-show={`activeAccordion === ${index + 1}`}
+                  x-collapse
+                  class="p-6 pt-0 text-base font-medium"
+                >
+                  <p class="leading-relaxed mt-4">{item.answer}</p>
+                </div>
+              </div>
+            ))}
+            <div class="mt-8 text-center" x-show="visibleCount < totalItems">
+              <button
+                @click={`visibleCount += ${initialVisibleCount}`}
+                class="group relative inline-flex items-center justify-center overflow-hidden h-12 px-8 font-bold text-black bg-white border-2 border-black dark:bg-black dark:text-white dark:border-white transition-all duration-300 text-base rounded-md hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+              >
+                <span class="mr-2">Show more questions</span>
+                <span>↓</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+{
+  /* ─────────────────────────────────────────────
+  VARIANT: CENTER (everything centered)
+  ───────────────────────────────────────────── */
+}
+{
+  variant === "center" && (
+    <section class="py-20 dark:bg-black">
+      <div class="container mx-auto px-4 md:px-0">
+        <div class="text-center">
+          <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
+            {data.sectionLabel}
+          </p>
+          <h2 class="text-5xl font-bold mb-4">{data.heading}</h2>
+          <p class="text-lg text-neutral-600 dark:text-white mb-12 font-medium">
+            {data.description}
+          </p>
+        </div>
+
+        <div
+          class="space-y-4 max-w-2xl mx-auto"
+          x-data={`{ activeAccordion: null, visibleCount: ${initialVisibleCount}, totalItems: ${data.items.length} }`}
+        >
+          {data.items.map((item, index) => (
             <div
               x-show={`${index} < visibleCount`}
               class="border-2 border-zinc-200 dark:border-zinc-700 hover:border-black hover:bg-black hover:text-white dark:hover:border-neutral-900 dark:hover:bg-zinc-900 dark:hover:text-white rounded-lg transition-colors duration-300"
@@ -77,21 +152,21 @@ const { data, initialVisibleCount = 6 } = Astro.props;
                 x-collapse
                 class="p-6 pt-0 text-base font-medium"
               >
-                <p class="leading-relaxed mt-4">{item.answer}</p>
+                <p class="leading-relaxed">{item.answer}</p>
               </div>
             </div>
-          ))
-        }
-        <div class="mt-8 text-center" x-show="visibleCount < totalItems">
-          <button
-            @click={`visibleCount += ${initialVisibleCount}`}
-            class="group relative inline-flex items-center justify-center overflow-hidden h-12 px-8 font-bold text-black bg-white border-2 border-black dark:bg-black dark:text-white dark:border-white transition-all duration-300 text-base rounded-md hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-          >
-            <span class="mr-2">Show more questions</span>
-            <span>↓</span>
-          </button>
+          ))}
+          <div class="mt-8 text-center" x-show="visibleCount < totalItems">
+            <button
+              @click={`visibleCount += ${initialVisibleCount}`}
+              class="group relative inline-flex items-center justify-center overflow-hidden h-12 px-8 font-bold text-black bg-white border-2 border-black dark:bg-black dark:text-white dark:border-white transition-all duration-300 text-base rounded-md hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+            >
+              <span class="mr-2">Show more questions</span>
+              <span>↓</span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
+  )
+}

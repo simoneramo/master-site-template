@@ -18,11 +18,11 @@ interface Props {
 
 let { data } = Astro.props;
 
-// If no data passed, fetch from global components collection
+// If no data passed, fetch from global testimonials
 if (!data) {
-    const components = await getEntry("components", "index");
-    if (components && components.data.testimonials) {
-        data = components.data.testimonials;
+    const testimonials = await getEntry("globals", "testimonials");
+    if (testimonials && testimonials.data) {
+        data = testimonials.data;
     }
 }
 ---

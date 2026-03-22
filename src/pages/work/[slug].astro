@@ -4,28 +4,29 @@
 
 export const prerender = true;
 
-import { getEntry } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import MainLayout from "../../layouts/MainLayout.astro";
+import CTASection from "../../components/CTASection.astro";
 
 export async function getStaticPaths() {
-    const workContent = await getEntry("work", "index");
-    const posts = workContent?.data?.posts || [];
-    
+    const posts = await getCollection("workPosts");
+
     return posts
-        .filter((post) => post.isActive !== false && post.slug)
+        .filter((post) => post.data.isActive !== false && post.data.slug)
         .map((post) => ({
-            params: { slug: post.slug },
-            props: { post },
+            params: { slug: post.data.slug },
+            props: { post: post.data },
         }));
 }
 
 const { post } = Astro.props;
+
+// Get CTA from work page content
+const workPage = await getEntry("work", "index");
+const cta = workPage?.data?.cta;
 ---
 
-<MainLayout
-    title={`${post.title} | Work`}
-    description={post.description}
->
+<MainLayout title={`${post.title} | Work`} description={post.description}>
     <!-- Hero -->
     <section class="py-16 lg:py-24">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,13 +43,13 @@ const { post } = Astro.props;
                 >
                     {post.category}
                 </span>
-                {post.industry && (
-                    <span
-                        class="px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-sm font-medium rounded-full"
-                    >
-                        {post.industry}
-                    </span>
-                )}
+                {
+                    post.industry && (
+                        <span class="px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-sm font-medium rounded-full">
+                            {post.industry}
+                        </span>
+                    )
+                }
             </div>
 
             <h1
@@ -57,28 +58,32 @@ const { post } = Astro.props;
                 {post.title}
             </h1>
 
-            {post.client && (
-                <p class="text-xl text-neutral-600 dark:text-neutral-400">
-                    Client: {post.client}
-                </p>
-            )}
+            {
+                post.client && (
+                    <p class="text-xl text-neutral-600 dark:text-neutral-400">
+                        Client: {post.client}
+                    </p>
+                )
+            }
         </div>
     </section>
 
     <!-- Project Image -->
-    {post.image && (
-        <section class="pb-16">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="aspect-video rounded-lg overflow-hidden">
-                    <img
-                        src={post.image}
-                        alt={post.title}
-                        class="w-full h-full object-cover"
-                    />
+    {
+        post.image && (
+            <section class="pb-16">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="aspect-video rounded-lg overflow-hidden">
+                        <img
+                            src={post.image}
+                            alt={post.title}
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
                 </div>
-            </div>
-        </section>
-    )}
+            </section>
+        )
+    }
 
     <!-- Project Content -->
     <section class="pb-16 lg:pb-24">
@@ -101,67 +106,79 @@ const { post } = Astro.props;
                     </div>
 
                     <!-- Project Link -->
-                    {post.link && (
-                        <div class="pt-8">
-                            <a
-                                href={post.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="inline-flex items-center gap-2 px-8 py-4 bg-black dark:bg-white text-white dark:text-black font-bold rounded-md hover:opacity-80 transition-opacity"
-                            >
-                                View Live Project
-                                <span>→</span>
-                            </a>
-                        </div>
-                    )}
+                    {
+                        post.link && (
+                            <div class="pt-8">
+                                <a
+                                    href={post.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="inline-flex items-center gap-2 px-8 py-4 bg-black dark:bg-white text-white dark:text-black font-bold rounded-md hover:opacity-80 transition-opacity"
+                                >
+                                    View Live Project
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        )
+                    }
                 </div>
 
                 <!-- Sidebar -->
                 <div class="lg:col-span-1">
-                    <div
-                        class="sticky top-24 space-y-6"
-                    >
+                    <div class="sticky top-24 space-y-6">
                         <!-- Project Details -->
-                        <div class="p-6 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
+                        <div
+                            class="p-6 bg-neutral-100 dark:bg-neutral-800 rounded-lg"
+                        >
                             <h3
                                 class="text-lg font-bold text-black dark:text-white mb-4"
                             >
                                 Project Details
                             </h3>
                             <dl class="space-y-4">
-                                {post.client && (
-                                    <div>
-                                        <dt class="text-sm text-neutral-500 dark:text-neutral-400">
-                                            Client
-                                        </dt>
-                                        <dd class="font-medium text-black dark:text-white">
-                                            {post.client}
-                                        </dd>
-                                    </div>
-                                )}
+                                {
+                                    post.client && (
+                                        <div>
+                                            <dt class="text-sm text-neutral-500 dark:text-neutral-400">
+                                                Client
+                                            </dt>
+                                            <dd class="font-medium text-black dark:text-white">
+                                                {post.client}
+                                            </dd>
+                                        </div>
+                                    )
+                                }
                                 <div>
-                                    <dt class="text-sm text-neutral-500 dark:text-neutral-400">
+                                    <dt
+                                        class="text-sm text-neutral-500 dark:text-neutral-400"
+                                    >
                                         Category
                                     </dt>
-                                    <dd class="font-medium text-black dark:text-white">
+                                    <dd
+                                        class="font-medium text-black dark:text-white"
+                                    >
                                         {post.category}
                                     </dd>
                                 </div>
-                                {post.industry && (
-                                    <div>
-                                        <dt class="text-sm text-neutral-500 dark:text-neutral-400">
-                                            Industry
-                                        </dt>
-                                        <dd class="font-medium text-black dark:text-white">
-                                            {post.industry}
-                                        </dd>
-                                    </div>
-                                )}
+                                {
+                                    post.industry && (
+                                        <div>
+                                            <dt class="text-sm text-neutral-500 dark:text-neutral-400">
+                                                Industry
+                                            </dt>
+                                            <dd class="font-medium text-black dark:text-white">
+                                                {post.industry}
+                                            </dd>
+                                        </div>
+                                    )
+                                }
                             </dl>
                         </div>
 
                         <!-- CTA -->
-                        <div class="p-6 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
+                        <div
+                            class="p-6 bg-neutral-100 dark:bg-neutral-800 rounded-lg"
+                        >
                             <h3
                                 class="text-lg font-bold text-black dark:text-white mb-3"
                             >
@@ -170,7 +187,8 @@ const { post } = Astro.props;
                             <p
                                 class="text-sm text-neutral-600 dark:text-neutral-400 mb-4"
                             >
-                                Let's discuss how we can help bring your vision to life.
+                                Let's discuss how we can help bring your vision
+                                to life.
                             </p>
                             <a
                                 href="/contact"
@@ -184,4 +202,6 @@ const { post } = Astro.props;
             </div>
         </div>
     </section>
+
+    {cta && <CTASection variant={cta.variant || "center"} data={cta} />}
 </MainLayout>

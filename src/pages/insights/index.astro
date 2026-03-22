@@ -1,12 +1,13 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
 import { getCollection, getEntry } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import PageHeroSection from "../../components/PageHeroSection.astro";
+import CTASection from "../../components/CTASection.astro";
 
-// 🔘 Page Settings: toggle isActive in TinaCMS > Page Settings > insights
-const pageConfig = await getEntry("pages", "insights");
-if (pageConfig?.data?.isActive === false) return Astro.redirect("/404");
+// Get insights page hero content
+const insightsPage = await getEntry("insightsPage", "insights");
+const hero = insightsPage?.data?.hero;
+const cta = insightsPage?.data?.cta;
 
 const allPosts = (await getCollection("insights")).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -25,7 +26,7 @@ const serializedPosts = allPosts.map((post) => ({
 ---
 
 <MainLayout title="Insights">
-    <!-- Breadcrumbs -->
+    <!-- Breadcrumbs Section -->
     <nav aria-label="Breadcrumb" class="py-4">
         <div class="px-8 mx-auto flex items-center gap-2 text-md font-bold">
             <a
@@ -46,25 +47,10 @@ const serializedPosts = allPosts.map((post) => ({
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="py-20">
-        <div class="container mx-auto max-w-4xl text-center">
-            <p
-                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
-            >
-                Latest insights
-            </p>
-            <h1 class="text-5xl md:text-7xl font-bold mb-8">Insights</h1>
-            <p
-                class="text-lg md:text-xl font-medium mb-10 text-neutral-600 dark:text-white"
-            >
-                Discover tips, best practices, and insights to help you build
-                better web experiences.
-            </p>
-        </div>
-    </section>
+    {hero && <PageHeroSection variant="center" data={hero} />}
 
-    <section class="pb-20 py-20 dark:bg-zinc-900">
+    <!-- Insights Section -->
+    <section class="pb-20 py-20">
         <div class="container mx-auto px-4 lg:px-8">
             <script is:inline define:vars={{ initialPosts: serializedPosts }}>
                 window.allPostsData = initialPosts;
@@ -291,4 +277,6 @@ const serializedPosts = allPosts.map((post) => ({
             </div>
         </div>
     </section>
+
+    {cta && <CTASection variant="center" data={cta} />}
 </MainLayout>

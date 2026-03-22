@@ -3,7 +3,16 @@
 // This is a stub page for Booking/Appointment Scheduling
 // Customize or remove based on client needs
 
+import { getEntry } from "astro:content";
+import PageHeroSection from "../../components/PageHeroSection.astro";
+import CTASection from "../../components/CTASection.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
+
+const bookPage = await getEntry("bookPage", "book");
+const hero = bookPage?.data?.hero;
+const bookingOptions = bookPage?.data?.bookingOptions;
+const calendarEmbed = bookPage?.data?.calendarEmbed;
+const cta = bookPage?.data?.cta;
 ---
 
 <MainLayout
@@ -11,162 +20,96 @@ import MainLayout from "../../layouts/MainLayout.astro";
     description="Book a free consultation or schedule a meeting with our team. Find a time that works for you."
 >
     <!-- Hero Section -->
-    <section class="py-24 lg:py-32">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-3xl mx-auto text-center">
-                <span
-                    class="text-sm font-bold tracking-wider text-neutral-500 uppercase mb-4 block"
-                >
-                    Get Started
-                </span>
-                <h1
-                    class="text-4xl md:text-5xl lg:text-6xl font-black text-black dark:text-white mb-6"
-                >
-                    Book a Consultation
-                </h1>
-                <p
-                    class="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed"
-                >
-                    Ready to discuss your project? Schedule a free consultation
-                    with our team. We'll learn about your goals and show you
-                    how we can help.
-                </p>
-            </div>
-        </div>
-    </section>
+    {hero && <PageHeroSection variant="center" data={hero} />}
 
     <!-- Booking Options -->
-    <section class="pb-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Option 1 -->
-                <div
-                    class="border-2 border-neutral-200 dark:border-neutral-800 rounded-lg p-8 text-center hover:border-black dark:hover:border-white transition-colors"
-                >
-                    <div class="text-4xl mb-4">📞</div>
-                    <h3
-                        class="text-xl font-bold text-black dark:text-white mb-2"
-                    >
-                        Discovery Call
-                    </h3>
-                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
-                        A quick 15-minute call to discuss your needs and see if
-                        we're a good fit.
-                    </p>
-                    <span
-                        class="inline-block px-4 py-2 bg-neutral-100 dark:bg-neutral-800 text-sm font-bold rounded-full"
-                    >
-                        15 minutes
-                    </span>
+    {
+        bookingOptions && bookingOptions.length > 0 && (
+            <section class="pb-16">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {bookingOptions.map((option) => (
+                            <div
+                                class={`rounded-lg p-8 text-center relative transition-colors ${
+                                    option.isPopular
+                                        ? "border-2 border-black dark:border-white"
+                                        : "border-2 border-neutral-200 dark:border-neutral-800 hover:border-black dark:hover:border-white"
+                                }`}
+                            >
+                                {option.isPopular && (
+                                    <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-black dark:bg-white text-white dark:text-black text-xs font-bold uppercase tracking-wider rounded-full">
+                                        Popular
+                                    </span>
+                                )}
+                                <div class="text-4xl mb-4">{option.icon}</div>
+                                <h3 class="text-xl font-bold text-black dark:text-white mb-2">
+                                    {option.title}
+                                </h3>
+                                <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                                    {option.description}
+                                </p>
+                                <span class="inline-block px-4 py-2 bg-neutral-100 dark:bg-neutral-800 text-sm font-bold rounded-full">
+                                    {option.duration}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-
-                <!-- Option 2 -->
-                <div
-                    class="border-2 border-black dark:border-white rounded-lg p-8 text-center relative"
-                >
-                    <span
-                        class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-black dark:bg-white text-white dark:text-black text-xs font-bold uppercase tracking-wider rounded-full"
-                    >
-                        Popular
-                    </span>
-                    <div class="text-4xl mb-4">💼</div>
-                    <h3
-                        class="text-xl font-bold text-black dark:text-white mb-2"
-                    >
-                        Strategy Session
-                    </h3>
-                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
-                        A deep-dive 45-minute session to map out your project
-                        requirements and timeline.
-                    </p>
-                    <span
-                        class="inline-block px-4 py-2 bg-neutral-100 dark:bg-neutral-800 text-sm font-bold rounded-full"
-                    >
-                        45 minutes
-                    </span>
-                </div>
-
-                <!-- Option 3 -->
-                <div
-                    class="border-2 border-neutral-200 dark:border-neutral-800 rounded-lg p-8 text-center hover:border-black dark:hover:border-white transition-colors"
-                >
-                    <div class="text-4xl mb-4">🚀</div>
-                    <h3
-                        class="text-xl font-bold text-black dark:text-white mb-2"
-                    >
-                        Project Review
-                    </h3>
-                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
-                        For existing projects. A 30-minute review of your
-                        current setup and recommendations.
-                    </p>
-                    <span
-                        class="inline-block px-4 py-2 bg-neutral-100 dark:bg-neutral-800 text-sm font-bold rounded-full"
-                    >
-                        30 minutes
-                    </span>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
+        )
+    }
 
     <!-- Calendar Embed Placeholder -->
-    <section class="pb-24 lg:pb-32">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div
-                class="border-2 border-neutral-200 dark:border-neutral-800 rounded-lg p-8 md:p-12"
-            >
-                <div class="text-center mb-8">
-                    <h2
-                        class="text-2xl md:text-3xl font-bold text-black dark:text-white mb-4"
-                    >
-                        Select a Date & Time
-                    </h2>
-                    <p class="text-neutral-600 dark:text-neutral-400">
-                        Choose a meeting type above, then pick an available slot
-                        below.
-                    </p>
-                </div>
+    {
+        calendarEmbed && (
+            <section class="pb-24 lg:pb-32">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="border-2 border-neutral-200 dark:border-neutral-800 rounded-lg p-8 md:p-12">
+                        <div class="text-center mb-8">
+                            <h2 class="text-2xl md:text-3xl font-bold text-black dark:text-white mb-4">
+                                {calendarEmbed.heading || "Select a Date & Time"}
+                            </h2>
+                            <p class="text-neutral-600 dark:text-neutral-400">
+                                {calendarEmbed.description || "Choose a meeting type above, then pick an available slot below."}
+                            </p>
+                        </div>
 
-                <!-- Calendar Placeholder -->
-                <div
-                    class="aspect-[4/3] max-w-3xl mx-auto bg-neutral-100 dark:bg-neutral-800 rounded-lg flex items-center justify-center"
-                >
-                    <div class="text-center p-8">
-                        <div class="text-6xl mb-4">📅</div>
-                        <p
-                            class="text-neutral-600 dark:text-neutral-400 font-medium mb-2"
-                        >
-                            Calendar Integration
-                        </p>
-                        <p class="text-sm text-neutral-500 dark:text-neutral-500">
-                            Replace this placeholder with your booking<br />
-                            platform embed (Calendly, Cal.com, etc.)
-                        </p>
+                        <!-- Calendar Placeholder -->
+                        <div class="aspect-4/3 max-w-3xl mx-auto bg-neutral-100 dark:bg-neutral-800 rounded-lg flex items-center justify-center">
+                            <div class="text-center p-8">
+                                <div class="text-6xl mb-4">{calendarEmbed.placeholderIcon || "📅"}</div>
+                                <p class="text-neutral-600 dark:text-neutral-400 font-medium mb-2">
+                                    {calendarEmbed.placeholderTitle || "Calendar Integration"}
+                                </p>
+                                <p class="text-sm text-neutral-500 dark:text-neutral-500">
+                                    {calendarEmbed.placeholderText || "Replace this placeholder with your booking platform embed (Calendly, Cal.com, etc.)"}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Alternative Booking Methods -->
+                        {calendarEmbed.alternativeMethods && calendarEmbed.alternativeMethods.length > 0 && (
+                            <div class="mt-12 text-center">
+                                <p class="text-neutral-600 dark:text-neutral-400 mb-4">
+                                    {calendarEmbed.alternativeLabel || "Prefer to book another way?"}
+                                </p>
+                                <div class="flex flex-wrap gap-4 justify-center">
+                                    {calendarEmbed.alternativeMethods.map((method) => (
+                                        <a
+                                            href={method.link}
+                                            class="px-6 py-3 border-2 border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 font-bold rounded-md hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-colors"
+                                        >
+                                            {method.label}
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
-
-                <!-- Alternative Booking Methods -->
-                <div class="mt-12 text-center">
-                    <p class="text-neutral-600 dark:text-neutral-400 mb-4">
-                        Prefer to book another way?
-                    </p>
-                    <div class="flex flex-wrap gap-4 justify-center">
-                        <a
-                            href="mailto:hello@example.com"
-                            class="px-6 py-3 border-2 border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 font-bold rounded-md hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-colors"
-                        >
-                            Email Us
-                        </a>
-                        <a
-                            href="tel:+0000000000"
-                            class="px-6 py-3 border-2 border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 font-bold rounded-md hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-colors"
-                        >
-                            Call Us
-                        </a>
-                    </div>
-                </div>
-            </div>
+            </section>
+        )
+    }
 
             <!-- What to Expect -->
             <div class="mt-16">
@@ -229,8 +172,8 @@ import MainLayout from "../../layouts/MainLayout.astro";
                 class="mt-16 p-6 bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-800 rounded-lg"
             >
                 <p class="text-amber-800 dark:text-amber-200 font-medium">
-                    <strong>💡 Developer Note:</strong> This is a placeholder
-                    booking page. To customize:
+                    <strong>💡 Developer Note:</strong> This is a placeholder booking
+                    page. To customize:
                 </p>
                 <ul
                     class="mt-2 ml-4 list-disc text-amber-700 dark:text-amber-300"
@@ -251,4 +194,7 @@ import MainLayout from "../../layouts/MainLayout.astro";
             </div>
         </div>
     </section>
+
+
+   {cta && <CTASection variant="center" data={cta} />}
 </MainLayout>

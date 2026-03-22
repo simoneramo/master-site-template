@@ -1,8 +1,17 @@
 ---
+import { getEntry } from "astro:content";
 import MainLayout from "../layouts/MainLayout.astro";
+
+const entry = await getEntry("homepage", "index");
+
+if (!entry || !entry.data.thankYou) {
+    throw new Error("Homepage thank you content not found.");
+}
+
+const { heading, description, buttonText, buttonLink } = entry.data.thankYou;
 ---
 
-<MainLayout title="Thank You">
+<MainLayout title={heading}>
     <div
         class="grow flex items-center justify-center min-h-[60vh] bg-stone-50 dark:bg-black"
     >
@@ -10,21 +19,20 @@ import MainLayout from "../layouts/MainLayout.astro";
             <h1
                 class="text-4xl md:text-6xl font-bold mb-6 text-black dark:text-white"
             >
-                Thank You!
+                {heading}
             </h1>
             <p
                 class="text-xl mb-10 max-w-2xl mx-auto text-neutral-600 dark:text-neutral-400"
             >
-                We've received your enquiry from our home page. We'll get back
-                to you as soon as possible.
+                {description}
             </p>
             <a
-                href="/"
+                href={buttonLink}
                 class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200"
             >
                 <span
                     class="transform transition-transform duration-300 group-hover:-translate-x-4"
-                    >Return home</span
+                    >{buttonText}</span
                 >
                 <span
                     class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
@@ -35,7 +43,7 @@ import MainLayout from "../layouts/MainLayout.astro";
     </div>
 </MainLayout>
 
-<script lang="ts">
+<script>
     import confetti from "canvas-confetti";
 
     const count = 600;
@@ -43,7 +51,7 @@ import MainLayout from "../layouts/MainLayout.astro";
         origin: { x: 0.5, y: 0.5 },
     };
 
-    function fire(particleRatio: number, opts: any) {
+    function fire(particleRatio, opts) {
         confetti(
             Object.assign({}, defaults, opts, {
                 particleCount: Math.floor(count * particleRatio),

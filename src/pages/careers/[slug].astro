@@ -8,7 +8,7 @@ import { getCollection, render } from "astro:content";
 import MainLayout from "../../layouts/MainLayout.astro";
 
 export async function getStaticPaths() {
-    const jobs = await getCollection("jobs");
+    const jobs = await getCollection("careers");
     return jobs.map((job) => ({
         params: { slug: job.slug },
         props: { job },

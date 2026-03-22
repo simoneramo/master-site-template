@@ -21,7 +21,7 @@
       "name": "Common Pages (Usually Included)",
       "description": "Standard business pages that most clients need",
       "pages": [
-        { "path": "src/pages/get-a-quote.astro", "name": "Get a Quote", "default": false },
+        { "path": "src/pages/quote.astro", "name": "Get a Quote", "default": false },
         { "path": "src/pages/quote-thankyou.astro", "name": "Quote Thank You", "default": false },
         { "path": "src/pages/services/index.astro", "name": "Services", "default": true },
         { "path": "src/pages/services/[slug].astro", "name": "Service Detail Pages", "default": true },
@@ -29,7 +29,7 @@
         { "path": "src/pages/insights/index.astro", "name": "Blog/Insights", "default": true },
         { "path": "src/pages/insights/[...slug].astro", "name": "Blog Post Pages", "default": true },
         { "path": "src/pages/faq.astro", "name": "FAQ Page", "default": true },
-        { "path": "src/pages/about/team.astro", "name": "Team Page", "default": false },
+        { "path": "src/pages/team/index.astro", "name": "Team Page", "default": false },
         { "path": "src/pages/process/index.astro", "name": "Process Overview", "default": true },
         { "path": "src/pages/process/[slug].astro", "name": "Process Step Pages", "default": true }
       ]
@@ -38,6 +38,12 @@
       "name": "Optional Pages (Toggle as Needed)",
       "description": "Specialized pages that may not be needed for every project",
       "pages": [
+        {
+          "path": "src/pages/landing-page.astro",
+          "name": "Landing Page",
+          "description": "High-conversion landing page with Hero and CTA sections",
+          "default": false
+        },
         {
           "path": "src/pages/work/index.astro",
           "name": "Portfolio / Work",
@@ -103,12 +109,6 @@
           "default": false
         },
         {
-          "path": "src/pages/landing-page.astro",
-          "name": "Landing Page Template",
-          "description": "Standalone marketing landing page",
-          "default": false
-        },
-        {
           "path": "src/pages/design-blueprints/index.astro",
           "name": "Design Blueprints",
           "description": "Pre-built design templates and blueprints",
@@ -118,9 +118,10 @@
     }
   },
   "contentCollections": {
-    "required": ["homepage", "about", "globals", "contact"],
+    "required": ["homepage", "about", "globals", "contact", "legalPages", "notFoundPage"],
     "optional": [
       "insights",
+      "insightsPage",
       "services",
       "offerings",
       "process",
@@ -128,12 +129,23 @@
       "templates",
       "templatesPage",
       "jobs",
+      "careersPage",
       "events",
+      "eventsPage",
       "partners",
+      "partnersPage",
       "testimonials",
+      "reviewsPage",
       "portfolio",
+      "workPosts",
+      "work",
       "components",
-      "quote"
+      "quote",
+      "bookPage",
+      "teamPage",
+      "faqPage",
+      "pricingPage",
+      "landingPage"
     ]
   },
   "pageContentMapping": {
@@ -147,7 +159,8 @@
     "src/pages/events/index.astro": ["src/content/events"],
     "src/pages/partners/index.astro": ["src/content/partners"],
     "src/pages/reviews/index.astro": ["src/content/testimonials"],
-    "src/pages/get-a-quote.astro": ["src/content/quote"],
+    "src/pages/quote.astro": ["src/content/quote"],
+    "src/pages/landing-page.astro": ["src/content/landingPage"],
     "src/pages/services/[slug].astro": ["src/content/offerings"],
     "src/pages/process/[slug].astro": ["src/content/processSteps"]
   },
@@ -161,7 +174,9 @@
     "src/pages/events/index.astro": "src/content/pages/events.md",
     "src/pages/partners/index.astro": "src/content/pages/partners.md",
     "src/pages/reviews/index.astro": "src/content/pages/reviews.md",
-    "src/pages/work/index.astro": "src/content/pages/work.md"
+    "src/pages/work/index.astro": "src/content/pages/work.md",
+    "src/pages/book/index.astro": "src/content/bookPage/book.md",
+    "src/pages/team/index.astro": "src/content/teamPage/team.md"
   },
   "features": {
     "darkMode": true,

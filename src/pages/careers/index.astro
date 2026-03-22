@@ -4,13 +4,18 @@
 // Customize or remove based on client needs
 
 import { getCollection, getEntry } from "astro:content";
+import PageHeroSection from "../../components/PageHeroSection.astro";
+import CTASection from "../../components/CTASection.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 
-// 🔘 Page Settings: toggle isActive in TinaCMS > Page Settings > careers
-const pageConfig = await getEntry("pages", "careers");
-if (pageConfig?.data?.isActive === false) return Astro.redirect("/404");
+// Get careers page hero content from TinaCMS
+const careersPage = await getEntry("careersPage", "careers");
+const hero = careersPage?.data?.hero;
+const values = careersPage?.data?.values;
+const generalApplication = careersPage?.data?.generalApplication;
+const cta = careersPage?.data?.cta;
 
-const jobs = await getCollection("jobs", ({ data }) => data.isActive !== false);
+const jobs = await getCollection("careers", ({ data }) => data.isActive !== false);
 jobs.sort((a, b) => a.data.order - b.data.order);
 ---
 
@@ -18,83 +23,36 @@ jobs.sort((a, b) => a.data.order - b.data.order);
     title="Careers | Join Our Team"
     description="Explore career opportunities and join a team that's passionate about making a difference."
 >
-    <!-- Hero Section -->
-    <section class="py-24 lg:py-32">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-3xl">
-                <span
-                    class="text-sm font-bold tracking-wider text-neutral-500 uppercase mb-4 block"
-                >
-                    Careers
-                </span>
-                <h1
-                    class="text-4xl md:text-5xl lg:text-6xl font-black text-black dark:text-white mb-6"
-                >
-                    Join Our Team
-                </h1>
-                <p
-                    class="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed"
-                >
-                    We're always looking for talented individuals who share our
-                    passion for excellence. Explore our open positions and find
-                    your next opportunity.
-                </p>
-            </div>
-        </div>
-    </section>
+
+
+    <PageHeroSection variant="center" data={hero} />
 
     <!-- Values/Why Join Us -->
-    <section class="pb-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center p-6">
-                    <div
-                        class="w-16 h-16 mx-auto mb-4 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center text-2xl"
-                    >
-                        🚀
-                    </div>
-                    <h3
-                        class="text-lg font-bold text-black dark:text-white mb-2"
-                    >
-                        Growth Opportunities
-                    </h3>
-                    <p class="text-neutral-600 dark:text-neutral-400">
-                        Continuous learning and career advancement
-                    </p>
-                </div>
-                <div class="text-center p-6">
-                    <div
-                        class="w-16 h-16 mx-auto mb-4 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center text-2xl"
-                    >
-                        🤝
-                    </div>
-                    <h3
-                        class="text-lg font-bold text-black dark:text-white mb-2"
-                    >
-                        Great Culture
-                    </h3>
-                    <p class="text-neutral-600 dark:text-neutral-400">
-                        Collaborative and inclusive work environment
-                    </p>
-                </div>
-                <div class="text-center p-6">
-                    <div
-                        class="w-16 h-16 mx-auto mb-4 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center text-2xl"
-                    >
-                        ⚖️
-                    </div>
-                    <h3
-                        class="text-lg font-bold text-black dark:text-white mb-2"
-                    >
-                        Work-Life Balance
-                    </h3>
-                    <p class="text-neutral-600 dark:text-neutral-400">
-                        Flexible arrangements that work for you
-                    </p>
+    {values?.items && values.items.length > 0 && (
+        <section class="pb-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {values.items.map((item: any) => (
+                        <div class="text-center p-6">
+                            <div
+                                class="w-16 h-16 mx-auto mb-4 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center text-2xl"
+                            >
+                                {item.icon}
+                            </div>
+                            <h3
+                                class="text-lg font-bold text-black dark:text-white mb-2"
+                            >
+                                {item.title}
+                            </h3>
+                            <p class="text-neutral-600 dark:text-neutral-400">
+                                {item.description}
+                            </p>
+                        </div>
+                    ))}
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    )}
 
     <!-- Job Listings -->
     <section class="pb-24 lg:pb-32">
@@ -140,18 +98,19 @@ jobs.sort((a, b) => a.data.order - b.data.order);
             )}
 
             <!-- General Application -->
-            <div class="mt-12 p-8 text-center border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg">
-                <p class="text-neutral-600 dark:text-neutral-400">
-                    Don't see a role that fits? We're always interested in
-                    meeting great people.
-                </p>
-                <a
-                    href="/contact"
-                    class="inline-block mt-4 text-black dark:text-white font-bold underline underline-offset-4"
-                >
-                    Send us your resume →
-                </a>
-            </div>
+            {generalApplication && (
+                <div class="mt-12 p-8 text-center border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg">
+                    <p class="text-neutral-600 dark:text-neutral-400">
+                        {generalApplication.description}
+                    </p>
+                    <a
+                        href={generalApplication.buttonLink}
+                        class="inline-block mt-4 text-black dark:text-white font-bold underline underline-offset-4"
+                    >
+                        {generalApplication.buttonText}
+                    </a>
+                </div>
+            )}
 
             <!-- Developer Note -->
             <div
@@ -175,4 +134,8 @@ jobs.sort((a, b) => a.data.order - b.data.order);
             </div>
         </div>
     </section>
+
+ 
+    {cta && <CTASection variant="center" data={cta} />}
+    
 </MainLayout>

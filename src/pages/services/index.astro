@@ -1,103 +1,22 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
+import PageHeroSection from "../../components/PageHeroSection.astro";
 import FAQ from "../../components/FAQ.astro";
-import { getEntry } from "astro:content";
+import CTASection from "../../components/CTASection.astro";
 
-// 🔘 Page Settings: toggle isActive in TinaCMS > Page Settings > services
-const pageConfig = await getEntry("pages", "services");
-if (pageConfig?.data?.isActive === false) return Astro.redirect("/404");
+import { getEntry } from "astro:content";
 
 const servicesPage = await getEntry("services", "index");
 if (!servicesPage) {
     throw new Error("Services page data not found");
 }
-const aboutPage = await getEntry("about", "index");
 
-const { hero, mainServices, cta } = servicesPage.data;
-
-const faq = aboutPage?.data?.faq;
-
-const targetIndustries = [
-    {
-        category: "The daily routine (High visibility)",
-        description:
-            "Target these for high-traffic mobile use and social proof in local hubs.",
-        items: [
-            "Cafes & coffee shops",
-            "Restaurants & bistros",
-            "Boutique retail & gift shops",
-            "Bakeries & patisseries",
-        ],
-    },
-    {
-        category: "The trades (The 'Emergency' search)",
-        description:
-            "These businesses rely heavily on 'Click-to-Call' and mobile speed for users in a hurry.",
-        items: [
-            "Plumbers & gas fitters",
-            "Electricians & solar installers",
-            "Landscapers & gardeners",
-            "Concreters & bricklayers",
-            "Painters & decorators",
-            "Pest control services",
-        ],
-    },
-    {
-        category: "Professional services (The 'Trust' search)",
-        description:
-            "These clients value a clean, 'Gold standard' look to match their professional reputation.",
-        items: [
-            "Accountants & bookkeepers",
-            "Lawyers & conveyancers",
-            "Real estate agencies (Independent)",
-            "Consultants",
-            "Mortgage brokers",
-        ],
-    },
-    {
-        category: "Health & wellness (The 'Booking' search)",
-        description:
-            "Target businesses that need better integration for appointments.",
-        items: [
-            "Physiotherapists & osteopaths",
-            "Yoga & pilates studios",
-            "Psychologists & counselors",
-            "Personal trainers & local gyms",
-            "Hair salons & barbers",
-        ],
-    },
-    {
-        category: "Specialty local services",
-        description: "",
-        items: [
-            "Pet groomers & dog walkers",
-            "Auto mechanics & detailers",
-            "Cleaning services",
-            "Photographers",
-        ],
-    },
-];
+const { hero, mainServices, targetIndustries, faq, cta } = servicesPage.data;
 ---
 
 <MainLayout title="Services">
     <!-- Hero Section -->
-    <section class="py-20 bg-white dark:bg-black">
-        <div class="container mx-auto px-4 lg:px-0 text-center">
-            <p
-                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
-            >
-                {hero.label}
-            </p>
-            <h1 class="text-5xl md:text-7xl text-pretty font-bold mb-8">
-                {hero.heading}
-            </h1>
-            <p
-                class="text-lg md:text-xl font-medium mb-10 text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto"
-            >
-                {hero.description}
-            </p>
-        </div>
-    </section>
+    {hero && <PageHeroSection variant="center" data={hero} />}
 
     <!-- Main Services -->
     <section class="py-20 dark:bg-zinc-900">
@@ -145,16 +64,23 @@ const targetIndustries = [
     <section class="py-20 bg-white dark:bg-black">
         <div class="container mx-auto px-4 md:px-0">
             <div class="text-center mb-16">
-                <p
-                    class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
-                >
-                    Target market
-                </p>
-                <h2 class="text-5xl font-bold mb-6">Industries we serve</h2>
+                {
+                    targetIndustries?.sectionLabel && (
+                        <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
+                            {targetIndustries.sectionLabel}
+                        </p>
+                    )
+                }
+                <h2 class="text-5xl font-bold mb-6">
+                    {targetIndustries?.heading || "Industries we serve"}
+                </h2>
                 <p
                     class="text-lg text-neutral-600 dark:text-neutral-400 mb-12 font-medium"
                 >
-                    We've worked with organizations across multiple sectors.
+                    {
+                        targetIndustries?.description ||
+                            "We've worked with organizations across multiple sectors."
+                    }
                 </p>
             </div>
 
@@ -162,8 +88,8 @@ const targetIndustries = [
                 class="grid grid-cols-2 md:grid-cols-4 gap-5 text-md sm:text-lg font-medium text-neutral-600 dark:text-neutral-400"
             >
                 {
-                    targetIndustries
-                        .flatMap((group) => group.items)
+                    targetIndustries?.groups
+                        ?.flatMap((group) => group.items)
                         .map((item) => <li class="text-center">{item}</li>)
                 }
             </ul>
@@ -206,4 +132,6 @@ const targetIndustries = [
             </a>
         </div>
     </section>
+
+    {cta && <CTASection variant="center" data={cta} />}
 </MainLayout>

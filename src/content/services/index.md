@@ -135,6 +135,75 @@ mainServices:
         - Ranking improvements
       linkText: Boost your rankings
       linkUrl: /services/local-and-technical-seo
+targetIndustries:
+  sectionLabel: Target market
+  heading: Industries we serve
+  description: We've worked with organizations across multiple sectors.
+  groups:
+    - category: The daily routine (High visibility)
+      description: Target these for high-traffic mobile use and social proof in local hubs.
+      items:
+        - Cafes & coffee shops
+        - Restaurants & bistros
+        - Boutique retail & gift shops
+        - Bakeries & patisseries
+    - category: The trades (The 'Emergency' search)
+      description: These businesses rely heavily on 'Click-to-Call' and mobile speed for users in a hurry.
+      items:
+        - Plumbers & gas fitters
+        - Electricians & solar installers
+        - Landscapers & gardeners
+        - Concreters & bricklayers
+        - Painters & decorators
+        - Pest control services
+    - category: Professional services (The 'Trust' search)
+      description: These clients value a clean, 'Gold standard' look to match their professional reputation.
+      items:
+        - Accountants & bookkeepers
+        - Lawyers & conveyancers
+        - Real estate agencies (Independent)
+        - Consultants
+        - Mortgage brokers
+    - category: Health & wellness (The 'Booking' search)
+      description: Target businesses that need better integration for appointments.
+      items:
+        - Physiotherapists & osteopaths
+        - Yoga & pilates studios
+        - Psychologists & counselors
+        - Personal trainers & local gyms
+        - Hair salons & barbers
+    - category: Specialty local services
+      description: ""
+      items:
+        - Pet groomers & dog walkers
+        - Auto mechanics & detailers
+        - Cleaning services
+        - Photographers
+faq:
+  sectionLabel: FAQ
+  heading: Frequently asked questions
+  description: Common questions about our services.
+  items:
+    - question: How long does a typical project take?
+      answer: >-
+        A typical project takes exactly 28 days. WeMakeSmall follows a strictly
+        enforced delivery cycle that moves from discovery and design through to
+        development and launch within that four-week window.
+    - question: Do you offer post-launch support?
+      answer: >-
+        Absolutely. We offer various maintenance and support packages to ensure
+        your website remains secure, up-to-date, and performing optimally long
+        after launch.
+    - question: What is your pricing structure?
+      answer: >-
+        We use project-based pricing tailored to your specific needs. After our
+        initial consultation, we provide a detailed proposal outlining the scope
+        and cost. We believe in transparency, so there are no hidden fees.
+    - question: Will I be able to update the website myself?
+      answer: >-
+        Yes! We build most of our sites with user-friendly Content Management
+        Systems (CMS) like TinaCMS. We provide training and documentation so you
+        can easily update text, images, and other content.
 cta:
   sectionLabel: Ready to get started
   heading: Ready to get started?

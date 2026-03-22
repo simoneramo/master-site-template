@@ -5,48 +5,34 @@
 
 import { getCollection, getEntry } from "astro:content";
 import MainLayout from "../../layouts/MainLayout.astro";
+import PageHeroSection from "../../components/PageHeroSection.astro";
+import CTASection from "../../components/CTASection.astro";
 
-// 🔘 Page Settings: toggle isActive in TinaCMS > Page Settings > reviews
-const pageConfig = await getEntry("pages", "reviews");
-if (pageConfig?.data?.isActive === false) return Astro.redirect("/404");
+// Get reviews page hero content from TinaCMS
+const reviewsPage = await getEntry("reviewsPage", "reviews");
+const hero = reviewsPage?.data?.hero;
+const cta = reviewsPage?.data?.cta;
 
-const testimonials = await getCollection("testimonials", ({ data }) => data.isActive !== false);
+const testimonials = await getCollection(
+    "testimonials",
+    ({ data }) => data.isActive !== false,
+);
 testimonials.sort((a, b) => a.data.order - b.data.order);
 const featuredTestimonials = testimonials.filter((t) => t.data.isFeatured);
-const averageRating = testimonials.length > 0
-    ? testimonials.reduce((acc, t) => acc + t.data.rating, 0) / testimonials.length
-    : 0;
+const averageRating =
+    testimonials.length > 0
+        ? testimonials.reduce((acc, t) => acc + t.data.rating, 0) /
+          testimonials.length
+        : 0;
 ---
 
 <MainLayout
     title="Reviews | What Our Clients Say"
     description="Read reviews and testimonials from our satisfied clients. See why businesses trust us with their projects."
 >
-    <!-- Hero Section -->
-    <section class="py-24 lg:py-32">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-3xl mx-auto text-center">
-                <span
-                    class="text-sm font-bold tracking-wider text-neutral-500 uppercase mb-4 block"
-                >
-                    Reviews
-                </span>
-                <h1
-                    class="text-4xl md:text-5xl lg:text-6xl font-black text-black dark:text-white mb-6"
-                >
-                    Client Testimonials
-                </h1>
-                <p
-                    class="text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed"
-                >
-                    Don't just take our word for it. Here's what our clients
-                    have to say about working with us.
-                </p>
-            </div>
-        </div>
-    </section>
+    {hero && <PageHeroSection variant="center" data={hero} />}
 
-    <!-- Overall Rating Summary -->
+    <!-- Overall Rating Summary Section -->
     <section class="pb-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div
@@ -58,12 +44,19 @@ const averageRating = testimonials.length > 0
                     >
                         4.9
                     </div>
-                    <div class="flex gap-1 text-2xl my-2 justify-center md:justify-start">⭐⭐⭐⭐⭐</div>
+                    <div
+                        class="flex gap-1 text-2xl my-2 justify-center md:justify-start"
+                    >
+                        ⭐⭐⭐⭐⭐
+                    </div>
                     <p class="text-neutral-600 dark:text-neutral-400">
                         Based on 50+ reviews
                     </p>
                 </div>
-                <div class="hidden md:block w-px h-24 bg-neutral-300 dark:bg-neutral-700"></div>
+                <div
+                    class="hidden md:block w-px h-24 bg-neutral-300 dark:bg-neutral-700"
+                >
+                </div>
                 <div class="grid grid-cols-2 gap-6 text-center md:text-left">
                     <div>
                         <div
@@ -71,7 +64,9 @@ const averageRating = testimonials.length > 0
                         >
                             98%
                         </div>
-                        <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                        <p
+                            class="text-sm text-neutral-600 dark:text-neutral-400"
+                        >
                             Would recommend
                         </p>
                     </div>
@@ -81,7 +76,9 @@ const averageRating = testimonials.length > 0
                         >
                             50+
                         </div>
-                        <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                        <p
+                            class="text-sm text-neutral-600 dark:text-neutral-400"
+                        >
                             Projects delivered
                         </p>
                     </div>
@@ -90,45 +87,56 @@ const averageRating = testimonials.length > 0
         </div>
     </section>
 
-    <!-- Testimonials Grid from CMS -->
+    <!-- Testimonials Grid Section -->
     <section class="pb-24 lg:pb-32">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {testimonials.length > 0 ? (
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {testimonials.map((testimonial) => (
-                    <div class="border-2 border-neutral-200 dark:border-neutral-800 rounded-lg p-6">
-                        <div class="flex gap-1 text-xl mb-4">
-                            {"⭐".repeat(testimonial.data.rating)}
-                        </div>
-                        <p class="text-neutral-700 dark:text-neutral-300 mb-6 leading-relaxed">
-                            "{testimonial.data.quote}"
-                        </p>
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full bg-neutral-200 dark:bg-neutral-700 flex items-center justify-center text-xl overflow-hidden">
-                                {testimonial.data.authorImage ? (
-                                    <img src={testimonial.data.authorImage} alt="" class="w-full h-full object-cover" />
-                                ) : (
-                                    "👤"
-                                )}
-                            </div>
-                            <div>
-                                <div class="font-bold text-black dark:text-white">
-                                    {testimonial.data.authorName}
+            {
+                testimonials.length > 0 ? (
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {testimonials.map((testimonial) => (
+                            <div class="border-2 border-neutral-200 dark:border-neutral-800 rounded-lg p-6">
+                                <div class="flex gap-1 text-xl mb-4">
+                                    {"⭐".repeat(testimonial.data.rating)}
                                 </div>
-                                <div class="text-sm text-neutral-600 dark:text-neutral-400">
-                                    {testimonial.data.authorTitle}
-                                    {testimonial.data.authorCompany && `, ${testimonial.data.authorCompany}`}
+                                <p class="text-neutral-700 dark:text-neutral-300 mb-6 leading-relaxed">
+                                    "{testimonial.data.quote}"
+                                </p>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-neutral-200 dark:bg-neutral-700 flex items-center justify-center text-xl overflow-hidden">
+                                        {testimonial.data.authorImage ? (
+                                            <img
+                                                src={
+                                                    testimonial.data.authorImage
+                                                }
+                                                alt=""
+                                                class="w-full h-full object-cover"
+                                            />
+                                        ) : (
+                                            "👤"
+                                        )}
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-black dark:text-white">
+                                            {testimonial.data.authorName}
+                                        </div>
+                                        <div class="text-sm text-neutral-600 dark:text-neutral-400">
+                                            {testimonial.data.authorTitle}
+                                            {testimonial.data.authorCompany &&
+                                                `, ${testimonial.data.authorCompany}`}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        ))}
                     </div>
-                ))}
-            </div>
-            ) : (
-                <div class="text-center py-16 border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg">
-                    <p class="text-neutral-500">No testimonials added yet.</p>
-                </div>
-            )}
+                ) : (
+                    <div class="text-center py-16 border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg">
+                        <p class="text-neutral-500">
+                            No testimonials added yet.
+                        </p>
+                    </div>
+                )
+            }
 
             <!-- Leave a Review CTA -->
             <div class="mt-16 text-center">
@@ -153,7 +161,10 @@ const averageRating = testimonials.length > 0
                 <ul
                     class="mt-2 ml-4 list-disc text-amber-700 dark:text-amber-300"
                 >
-                    <li>Manage testimonials in TinaCMS under "Testimonials / Reviews"</li>
+                    <li>
+                        Manage testimonials in TinaCMS under "Testimonials /
+                        Reviews"
+                    </li>
                     <li>Upload author photos via media manager</li>
                     <li>Set ratings (1-5 stars) for each testimonial</li>
                     <li>Mark featured testimonials to highlight them</li>
@@ -161,4 +172,6 @@ const averageRating = testimonials.length > 0
             </div>
         </div>
     </section>
+
+    {cta && <CTASection variant="center" data={cta} />}
 </MainLayout>

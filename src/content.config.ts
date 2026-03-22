@@ -125,6 +125,12 @@ const homepage = defineCollection({
 			}),
 			privacyNote: z.string(),
 		}),
+		thankYou: z.object({
+			heading: z.string(),
+			description: z.string(),
+			buttonText: z.string(),
+			buttonLink: z.string(),
+		}).optional(),
 	}),
 });
 
@@ -220,6 +226,20 @@ const contact = defineCollection({
 				answer: z.string(),
 			})),
 		}),
+		thankyou: z.object({
+			heading: z.string(),
+			description: z.string(),
+			buttonText: z.string(),
+			buttonLink: z.string(),
+		}).optional(),
+		cta: z.object({
+			variant: z.enum(["center", "left"]).optional(),
+			sectionLabel: z.string().optional(),
+			heading: z.string(),
+			description: z.string(),
+			buttonText: z.string(),
+			buttonLink: z.string(),
+		}).optional(),
 	}),
 });
 
@@ -255,14 +275,6 @@ const process = defineCollection({
 				description: z.string(),
 			})),
 		}),
-		cta: z.object({
-			heading: z.string(),
-			description: z.string(),
-			primaryBtn: z.object({
-				text: z.string(),
-				link: z.string(),
-			}),
-		}),
 		faq: z.object({
 			sectionLabel: z.string().optional(),
 			heading: z.string(),
@@ -272,6 +284,13 @@ const process = defineCollection({
 				answer: z.string(),
 			})),
 		}).optional(),
+		cta: z.object({
+			sectionLabel: z.string().optional(),
+			heading: z.string(),
+			description: z.string(),
+			buttonText: z.string(),
+			buttonLink: z.string(),
+		}),
 	}),
 });
 
@@ -283,6 +302,12 @@ const quote = defineCollection({
 			heading: z.string(),
 			description: z.string(),
 		}),
+		thankYou: z.object({
+			heading: z.string(),
+			description: z.string(),
+			buttonText: z.string(),
+			buttonLink: z.string(),
+		}).optional(),
 	}),
 });
 
@@ -428,18 +453,14 @@ const globals = defineCollection({
 			url: z.string(),
 		})).optional(),
 
-		// Reviews fields
+		// Shared section fields (reviews, solutions, testimonials, serviceAreas)
 		sectionLabel: z.string().optional(),
 		heading: z.string().optional(),
+		description: z.string().optional(),
 		averageRating: z.number().optional(),
 		totalReviews: z.number().optional(),
-		items: z.array(z.object({
-			author: z.string(),
-			date: z.string(),
-			avatar: z.string().optional(),
-			rating: z.number(),
-			content: z.string(),
-		})).optional(),
+		// Flexible items: accepts any shape (reviews, callouts, solutions, testimonials)
+		items: z.array(z.record(z.any())).optional(),
 
 		// Service Areas fields
 		mapSrc: z.string().optional(),
@@ -544,7 +565,7 @@ const pages = defineCollection({
 
 // 💡 OPTIONAL COLLECTIONS - Set isActive: false to hide items
 
-const jobs = defineCollection({
+const careers = defineCollection({
 	type: 'content',
 	schema: z.object({
 		isActive: z.boolean().default(true).describe('Show this job on the careers page'),
@@ -608,6 +629,24 @@ const testimonials = defineCollection({
 	}),
 });
 
+const bookPage = defineCollection({
+	type: 'content',
+	schema: z.object({
+		hero: z.object({
+			label: z.string().optional(),
+			heading: z.string(),
+			description: z.string(),
+		}),
+		cta: z.object({
+			label: z.string().optional(),
+			heading: z.string(),
+			description: z.string(),
+			buttonText: z.string(),
+			buttonLink: z.string(),
+		}).optional(),
+	}),
+});
+
 const work = defineCollection({
 	type: 'content',
 	schema: z.object({
@@ -616,6 +655,13 @@ const work = defineCollection({
 			heading: z.string(),
 			description: z.string(),
 		}),
+		cta: z.object({
+			label: z.string().optional(),
+			heading: z.string(),
+			description: z.string(),
+			buttonText: z.string(),
+			buttonLink: z.string(),
+		}).optional(),
 		posts: z.array(z.object({
 			slug: z.string(),
 			isActive: z.boolean().default(true).describe('Show this project on the work page'),
@@ -632,6 +678,14 @@ const work = defineCollection({
 	}),
 });
 
+const legalPages = defineCollection({
+	type: 'content',
+	schema: z.object({
+		title: z.string(),
+		lastUpdated: z.string(),
+	}),
+});
+
 export const collections = {
 	insights, homepage, about, contact, process, quote, templates, globals, templatesPage, components, offerings, processSteps, "common-web-terms": commonWebTerms,
 	services,
@@ -639,9 +693,11 @@ export const collections = {
 	// 💡 Page config — controls which optional pages are live (isActive toggle)
 	pages,
 	// 💡 Optional collections - can be removed if not needed
-	jobs,
+	careers,
 	events,
 	partners,
 	testimonials,
 	work,
+	bookPage,
+	legalPages,
 };

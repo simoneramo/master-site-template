@@ -123,7 +123,7 @@ process:
         We develop a comprehensive roadmap that aligns with your objectives, 
         timeline, and budget. Clear planning prevents costly surprises.
     - title: 3. Design
-      icon: "\U0000270F"
+      icon: "🎨"
       description: >-
         We create beautiful, functional designs that bring your brand to life 
         and resonate with your target audience.
@@ -142,11 +142,6 @@ process:
       description: >-
         We handle deployment smoothly, ensuring a seamless transition from 
         development to live environment.
-    - title: 7. Growth
-      icon: "\U0001F4C8"
-      description: >-
-        We provide ongoing support and optimization to help your digital 
-        presence evolve with your business needs.
 comparison:
   sectionLabel: Why Choose Us
   heading: How we compare
@@ -315,4 +310,9 @@ contactForm:
     title: Message sent successfully!
     description: We'll be in touch shortly.
   privacyNote: 'We respect your inbox. No spam, ever.'
+thankYou:
+  heading: Thank You!
+  description: We've received your enquiry from our home page. We'll get back to you as soon as possible.
+  buttonText: Return home
+  buttonLink: /
 ---

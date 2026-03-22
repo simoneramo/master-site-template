@@ -8,73 +8,69 @@ interface NavLink {
 const navLinks: NavLink[] = [
     { 
         label: "Home", 
-        url: "/"
-        //children: [
+        url: "/",
+        children: [
             // 💡 OPTIONAL: Uncomment if using Events page
-            // { label: "Page Name", url: "/page-name" },
-        //]
+            { label: "Page Name", url: "/page-name" },
+        ]
     },
-    // { 
-    //     label: "Services", 
-    //     url: "/services",
-    //     children: [
-    //         { label: "All Services", url: "/services" },
-    //         { label: "Quality Website Builds", url: "/services/quality-website-builds" },
-    //         { label: "Local & Technical SEO", url: "/services/local-and-technical-seo" },
-    //         { label: "CRO Focused UI/UX Design", url: "/services/cro-focused-ui-ux-design" },
-    //         { label: "Managed Content & Support", url: "/services/managed-content-and-support" },
-    //         { label: "Secure Hosting", url: "/services/secure-hosting" },
-    //         { label: "Performance Audits", url: "/services/performance-audits" }
-    //     ]
-    // },
-    // { 
-    //     label: "Process", 
-    //     url: "/process",
-    //     children: [
-    //         { label: "Our Process", url: "/process" },
-    //         { label: "Discovery & Planning", url: "/process/discovery-and-planning" },
-    //         { label: "Design & Architecture", url: "/process/design-and-architecture" },
-    //         { label: "Development", url: "/process/development" },
-    //         { label: "Testing & QA", url: "/process/testing-and-qa" },
-    //         { label: "Launch", url: "/process/launch" },
-    //         { label: "Support & Optimisation", url: "/process/support-and-optimisation" }
-    //     ]
-    // },
-    // { 
-    //     label: "Showcase", 
-    //     url: "/case-studies",
-    //     children: [
-    //         { label: "Case Studies", url: "/case-studies" },
+    { 
+        label: "Services", 
+        url: "/services",
+        children: [
+            { label: "All Services", url: "/services" },
+            { label: "Quality Website Builds", url: "/services/quality-website-builds" },
+            { label: "Local & Technical SEO", url: "/services/local-and-technical-seo" },
+            { label: "CRO Focused UI/UX Design", url: "/services/cro-focused-ui-ux-design" },
+            { label: "Managed Content & Support", url: "/services/managed-content-and-support" },
+            { label: "Secure Hosting", url: "/services/secure-hosting" },
+            { label: "Performance Audits", url: "/services/performance-audits" }
+        ]
+    },
+    { 
+        label: "Process", 
+        url: "/process",
+        children: [
+            { label: "Our Process", url: "/process" },
+            { label: "Discovery & Planning", url: "/process/discovery-and-planning" },
+            { label: "Design & Architecture", url: "/process/design-and-architecture" },
+            { label: "Development", url: "/process/development" },
+            { label: "Testing & QA", url: "/process/testing-and-qa" },
+            { label: "Launch", url: "/process/launch" },
+            { label: "Support & Optimisation", url: "/process/support-and-optimisation" }
+        ]
+    },
+    { 
+        label: "Showcase", 
+        url: "/showcase",
+        children: [
+  
             // 💡 OPTIONAL: Uncomment if using Portfolio/Work page
-            // { label: "Our Work", url: "/work" },
+            { label: "Our Work", url: "/work" },
             // 💡 OPTIONAL: Uncomment if using Partners page
-            // { label: "Partners", url: "/partners" },
-    //     ]
-    // },
+            { label: "Partners", url: "/partners" },
+        ]
+    },
     { 
         label: "About", 
         url: "/about",
         children: [
             { label: "About Us", url: "/about" },
             { label: "Team", url: "/about/team" },
-            // 💡 OPTIONAL: Uncomment if using Founder page
-            // { label: "Founder", url: "/about/founder" },
-            { label: "Tech Stack", url: "/tech" },
             { label: "Pricing", url: "/pricing" },
             // 💡 OPTIONAL: Uncomment if using Careers page
-            // { label: "Careers", url: "/careers" },
+            { label: "Careers", url: "/careers" },
         ]
     },
-    // { 
-    //     label: "Resources", 
-    //     url: "/resources",
-    //     children: [
-    //         { label: "Insights", url: "/insights" },
-    //         { label: "Web Glossary", url: "/resources/glossary" },
-    //         // 💡 OPTIONAL: Uncomment if using Events page
-    //         // { label: "Events", url: "/events" },
-    //     ]
-    // },
+    { 
+        label: "Resources", 
+        url: "/resources",
+        children: [
+            { label: "Insights", url: "/insights" },
+            // 💡 OPTIONAL: Uncomment if using Events page
+            { label: "Events", url: "/events" },
+        ]
+    },
     { 
         label: "Contact", 
         url: "/contact",
@@ -82,14 +78,14 @@ const navLinks: NavLink[] = [
             { label: "Contact Us", url: "/contact" },
             { label: "FAQ", url: "/faq" },
             // 💡 OPTIONAL: Uncomment if using Book/Schedule page
-            // { label: "Book a Call", url: "/book" },
+            { label: "Book a Call", url: "/book" },
             // 💡 OPTIONAL: Uncomment if using Reviews page
-            // { label: "Reviews", url: "/reviews" },
+            { label: "Reviews", url: "/reviews" },
         ]
     },
 ];
 
-const ctaButton = { text: "Get a quote", url: "/get-a-quote" };
+const ctaButton = { text: "Get a quote", url: "/quote" };
 const { hideMenu = false, showPhoneButton = false, hideCTA = false } = Astro.props;
 ---
 

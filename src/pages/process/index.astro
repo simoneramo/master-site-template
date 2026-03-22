@@ -1,12 +1,10 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
-import Footer from "../../components/Footer.astro";
+import PageHeroSection from "../../components/PageHeroSection.astro";
 import FAQ from "../../components/FAQ.astro";
-import { getEntry } from "astro:content";
+import CTASection from "../../components/CTASection.astro";
 
-// 🔘 Page Settings: toggle isActive in TinaCMS > Page Settings > process
-const pageConfig = await getEntry("pages", "process");
-if (pageConfig?.data?.isActive === false) return Astro.redirect("/404");
+import { getEntry } from "astro:content";
 
 const processPage = await getEntry("process", "index");
 
@@ -15,34 +13,11 @@ if (!processPage) {
 }
 
 const { hero, steps, difference, faq, cta } = processPage.data;
-const aboutpageData = await getEntry("about", "index");
-
-if (!aboutpageData) {
-    return Astro.redirect("/404");
-}
-
-const values = aboutpageData.data.values;
 ---
 
 <MainLayout title="Process">
     <!-- Hero Section -->
-    <section class="py-20 dark:bg-zinc-900">
-        <div class="mx-auto px-6 max-w-4xl text-center">
-            <p
-                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
-            >
-                {hero.label}
-            </p>
-            <h1 class="text-5xl md:text-6xl font-bold mb-8">
-                {hero.heading}
-            </h1>
-            <p
-                class="text-lg md:text-xl font-medium mb-10 text-neutral-600 dark:text-neutral-400"
-            >
-                {hero.description}
-            </p>
-        </div>
-    </section>
+    {hero && <PageHeroSection variant="center" data={hero} />}
 
     <!-- Process Steps -->
     <section class="py-20">
@@ -99,25 +74,25 @@ const values = aboutpageData.data.values;
             <p
                 class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
             >
-                {values.sectionLabel}
+                {difference.sectionLabel}
             </p>
-            <h2 class="text-5xl font-bold mb-2">{values.heading}</h2>
+            <h2 class="text-5xl font-bold mb-2">{difference.heading}</h2>
             <p
                 class="text-lg leading-relaxed mb-6 max-w-4xl text-neutral-700 dark:text-neutral-400"
             >
-                {values.description}
+                {difference.description}
             </p>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {
-                    values.items.map((values) => (
+                    difference.items.map((difference) => (
                         <article class="border-2 bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-900 p-8 rounded-xl">
-                            <div class="text-4xl mb-6">{values.icon}</div>
+                            <div class="text-4xl mb-6">{difference.icon}</div>
                             <h3 class="text-lg md:text-xl font-bold mb-4">
-                                {values.title}
+                                {difference.title}
                             </h3>
                             <p class="leading-relaxed font-medium text-neutral-700 dark:text-neutral-300">
-                                {values.description}
+                                {difference.description}
                             </p>
                         </article>
                     ))
@@ -128,37 +103,5 @@ const values = aboutpageData.data.values;
 
     {faq && <FAQ data={faq} />}
 
-    <!-- CTA Section -->
-    <section class="pb-32 container mx-auto px-4 md:px-0">
-        <div
-            class="bg-zinc-200 dark:bg-zinc-900 p-16 md:p-32 text-center rounded-xl"
-        >
-            <p
-                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
-            >
-                Get started
-            </p>
-            <h2 class="text-4xl md:text-5xl font-bold mb-6">
-                {cta.heading}
-            </h2>
-            <p class="text-lg font-medium mb-10">
-                {cta.description}
-            </p>
-            <a
-                href={cta.primaryBtn.link}
-                class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-black bg-white dark:bg-green-600 dark:text-white transition-all duration-300 text-lg rounded-md hover:bg-white dark:hover:bg-black"
-            >
-                <span
-                    class="transform transition-transform duration-300 group-hover:-translate-x-4"
-                >
-                    {cta.primaryBtn.text}
-                </span>
-                <span
-                    class="absolute right-6 transform translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
-                >
-                    &rarr;
-                </span>
-            </a>
-        </div>
-    </section>
+    {cta && <CTASection variant="center" data={cta} />}
 </MainLayout>

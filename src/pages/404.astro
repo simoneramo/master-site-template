@@ -1,7 +1,11 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import PageHeroSection from "../components/PageHeroSection.astro";
+import { getCollection, getEntry } from "astro:content";
 
-import { getCollection } from "astro:content";
+// Get 404 page content from TinaCMS
+const notFoundPage = await getEntry("notFoundPage", "404");
+const hero = notFoundPage?.data?.hero;
 
 const services = await getCollection("offerings");
 const processes = (await getCollection("processSteps")).sort(
@@ -59,7 +63,7 @@ const sitemapCategories = [
     {
         title: "Actions",
         links: [
-            { label: "Get a quote", url: "/get-a-quote" },
+            { label: "Get a quote", url: "/quote" },
             { label: "Free audit", url: "/audit" },
         ],
     },
@@ -67,43 +71,8 @@ const sitemapCategories = [
 ---
 
 <MainLayout title="Page Not Found">
-    <!-- Hero Section -->
-    <section class="py-20 bg-white dark:bg-black">
-        <div class="container mx-auto max-w-4xl text-center px-4">
-            <p
-                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
-            >
-                404
-            </p>
-            <h1 class="text-5xl md:text-7xl font-bold mb-8 dark:text-white">
-                Page not found
-            </h1>
-            <p
-                class="text-lg md:text-xl font-medium mb-10 text-black dark:text-white"
-            >
-                The page you're looking for doesn't exist. Here are some helpful
-                links:
-            </p>
-
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-20">
-                <a
-                    href="/"
-                    class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-8 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200"
-                >
-                    <span
-                        class="transform transition-transform duration-300 group-hover:-translate-x-4"
-                    >
-                        Go home
-                    </span>
-                    <span
-                        class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
-                    >
-                        &rarr;
-                    </span>
-                </a>
-            </div>
-        </div>
-    </section>
+    <!-- Page Hero Section -->
+    <PageHeroSection variant="center" data={hero} />
 
     <!-- Sitemap Grid -->
     <section

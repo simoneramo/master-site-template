@@ -1,6 +1,8 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
+import PageHeroSection from "../../components/PageHeroSection.astro";
 import FAQ from "../../components/FAQ.astro";
+import CTASection from "../../components/CTASection.astro";
 import { getEntry } from "astro:content";
 
 const aboutpageData = await getEntry("about", "index");
@@ -18,24 +20,7 @@ const cta = aboutpageData.data.cta;
 ---
 
 <MainLayout title="About">
-    <!-- Hero Section -->
-    <section class="py-32">
-        <div class="container mx-auto max-w-4xl px-4 md:px-0 text-center">
-            <p
-                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
-            >
-                {hero.label}
-            </p>
-            <h1 class="text-5xl md:text-7xl font-bold mb-8">
-                {hero.heading}
-            </h1>
-            <p
-                class="text-lg md:text-xl font-medium mb-10 text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto"
-            >
-                {hero.description}
-            </p>
-        </div>
-    </section>
+    <PageHeroSection variant="center" data={hero} />
 
     <!-- Values Section -->
     <section class="py-20">
@@ -109,38 +94,5 @@ const cta = aboutpageData.data.cta;
     <!-- FAQ Section -->
     {faq && <FAQ data={faq} />}
 
-    <!-- CTA Section -->
-    <section class="pb-32 container mx-auto px-4 md:px-0">
-        <div
-            class="bg-zinc-200 dark:bg-zinc-900 p-16 md:p-32 text-center rounded-xl"
-        >
-            <p
-                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
-            >
-                Get started
-            </p>
-            <h2 class="text-4xl md:text-5xl font-bold mb-6">
-                Ready to build something great?
-            </h2>
-            <p class="text-lg mb-10">
-                Join thousands of developers building accessible,
-                high-performance websites!.
-            </p>
-            <a
-                href="/audit"
-                class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-black bg-white dark:bg-green-600 dark:text-white transition-all duration-300 text-lg rounded-md hover:bg-white dark:hover:bg-black"
-            >
-                <span
-                    class="transform transition-transform duration-300 group-hover:-translate-x-4"
-                >
-                    Get your free audit
-                </span>
-                <span
-                    class="absolute right-6 transform translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
-                >
-                    &rarr;
-                </span>
-            </a>
-        </div>
-    </section>
+    {cta && <CTASection variant="center" data={cta} />}
 </MainLayout>

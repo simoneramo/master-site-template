@@ -1,28 +1,36 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import { getEntry } from "astro:content";
+
+// Get contact page thank you content from TinaCMS
+const contactPage = await getEntry("contact", "index");
+const thankyou = contactPage?.data?.thankyou;
 ---
 
 <MainLayout title="Message Sent">
+    <!-- Hero Section -->
     <div class="flex items-center justify-center bg-white dark:bg-black">
         <section class="py-20 px-6 text-center">
             <h1
                 class="text-4xl md:text-6xl font-bold mb-6 text-black dark:text-white"
             >
-                Message Sent!
+                {thankyou?.heading || "Message Sent!"}
             </h1>
             <p
                 class="text-xl mb-10 max-w-2xl mx-auto text-neutral-600 dark:text-neutral-400"
             >
-                Thanks for reaching out. We've received your message and will be
-                in touch with you shortly.
+                {
+                    thankyou?.description ||
+                        "Thanks for reaching out. We've received your message and will be in touch with you shortly."
+                }
             </p>
             <a
-                href="/"
+                href={thankyou?.buttonLink || "/"}
                 class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200"
             >
                 <span
                     class="transform transition-transform duration-300 group-hover:-translate-x-4"
-                    >Return home</span
+                    >{thankyou?.buttonText || "Return home"}</span
                 >
                 <span
                     class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"

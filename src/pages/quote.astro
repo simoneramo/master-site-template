@@ -1,5 +1,6 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import PageHeroSection from "../components/PageHeroSection.astro";
 import { getEntry } from "astro:content";
 
 const quotePage = await getEntry("quote", "index");
@@ -10,24 +11,7 @@ const { hero } = quotePage.data;
 ---
 
 <MainLayout title="Get a Quote">
-    <!-- Hero Section -->
-    <section class="py-20">
-        <div class="container mx-auto max-w-4xl text-center">
-            <p
-                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
-            >
-                {hero.label}
-            </p>
-            <h1 class="text-5xl md:text-7xl font-bold mb-8">
-                {hero.heading}
-            </h1>
-            <p
-                class="text-lg md:text-xl font-medium mb-10 text-neutral-600 dark:text-white"
-            >
-                {hero.description}
-            </p>
-        </div>
-    </section>
+    {hero && <PageHeroSection variant="center" data={hero} />}
 
     <!-- Quote Form Section -->
     <section class="pb-20">

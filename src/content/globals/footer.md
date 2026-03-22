@@ -104,7 +104,7 @@ columns:
       # - label: Book a Call
       #   url: /book
       - label: Get a Quote
-        url: /get-a-quote
+        url: /quote
       - label: '0400 000 000'
         url: 'tel:0400000000'
       - label: hello@yourdomain.com.au
@@ -116,6 +116,6 @@ legalLinks:
   - label: Terms & Conditions
     url: /terms-and-conditions
   - label: Get a free quote →
-    url: /get-a-quote
+    url: /quote
 _template: footer
 ---

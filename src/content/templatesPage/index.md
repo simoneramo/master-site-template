@@ -10,6 +10,6 @@ cta:
   description: 'Choose a template and we''ll handle the rest, from customization to hosting.'
   primaryBtn:
     text: Start your project
-    link: /get-a-quote
+    link: /quote
 ---
 
