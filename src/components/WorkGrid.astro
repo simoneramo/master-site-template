@@ -1,0 +1,115 @@
+---
+interface Props {
+    data?: {
+        sectionLabel?: string;
+        heading?: string;
+        description?: string;
+        ctaText?: string;
+        ctaLink?: string;
+    };
+    projects?: {
+        slug: string;
+        data: {
+            title: string;
+            description: string;
+            category: string;
+            image?: string;
+        };
+    }[];
+    variant?: "left" | "center";
+}
+
+const { data, projects = [], variant = "center" } = Astro.props;
+
+const isCenter = variant === "center";
+---
+
+{
+    data && (
+        <section id="work" class="py-20 bg-white dark:bg-black">
+            <div class="container mx-auto px-4 md:px-0">
+                {(data.sectionLabel || data.heading || data.description) && (
+                    <div class={isCenter ? "text-center" : ""}>
+                        {data.sectionLabel && (
+                            <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
+                                {data.sectionLabel}
+                            </p>
+                        )}
+                        {data.heading && (
+                            <h2 class="text-5xl font-bold mb-4">
+                                {data.heading}
+                            </h2>
+                        )}
+                        {data.description && (
+                            <p class={`text-lg text-neutral-600 dark:text-neutral-400 mb-12 font-medium ${isCenter ? "max-w-3xl mx-auto" : "max-w-3xl"}`}>
+                                {data.description}
+                            </p>
+                        )}
+                    </div>
+                )}
+
+                {/* Projects Grid */}
+                {projects && projects.length > 0 ? (
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {projects.map((project) => (
+                            <a
+                                href={`/work/${project.slug}`}
+                                class="group bg-white relative flex flex-col overflow-hidden rounded-lg h-full"
+                            >
+                                <div class="relative aspect-6/5 overflow-hidden bg-stone-100 dark:bg-zinc-800">
+                                    {project.data.image?.trim() ? (
+                                        <img
+                                            alt={project.data.title}
+                                            src={project.data.image}
+                                            class="h-full w-full object-cover object-top transition duration-500 group-hover:scale-110"
+                                            loading="lazy"
+                                        />
+                                    ) : (
+                                        <div class="h-full w-full flex items-center justify-center bg-neutral-200 dark:bg-neutral-700">
+                                            <span class="text-4xl">🏗️</span>
+                                        </div>
+                                    )}
+                                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,0,0,0.85)_0%,transparent_50%)] pointer-events-none z-0" />
+                                </div>
+                                <div class="p-6 bg-white dark:bg-black border-x-2 border-b-2 border-zinc-200 dark:border-zinc-800 rounded-b-lg flex flex-col grow">
+                                    <span class="absolute top-4 right-4 bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full z-10 capitalize">
+                                        {project.data.category}
+                                    </span>
+                                    <h3 class="text-lg font-bold text-black dark:text-white mb-3 transition-colors">
+                                        {project.data.title}
+                                    </h3>
+                                    <p class="text-neutral-600 dark:text-neutral-400 font-medium line-clamp-2 mb-6">
+                                        {project.data.description}
+                                    </p>
+                                    <div class="mt-auto flex items-center font-bold text-black dark:text-white">
+                                        <span class="inline-block border-b-2 border-current group-hover:border-transparent transition-colors">
+                                            View project
+                                        </span>
+                                        <span class="ml-2 transform transition-transform duration-300 group-hover:translate-x-2">
+                                            &rarr;
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        ))}
+                    </div>
+                ) : (
+                    <div class="text-center py-16 border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg">
+                        <p class="text-neutral-500">No projects added yet.</p>
+                    </div>
+                )}
+
+                {data.ctaText && data.ctaLink && (
+                    <div class="mt-10">
+                        <a
+                            href={data.ctaLink}
+                            class="font-bold border-b-2 border-black dark:border-white hover:border-transparent transition-colors text-black dark:text-white"
+                        >
+                            {data.ctaText} &rarr;
+                        </a>
+                    </div>
+                )}
+            </div>
+        </section>
+    )
+}

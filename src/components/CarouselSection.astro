@@ -1,0 +1,157 @@
+---
+interface Props {
+    id?: string;
+    data?: {
+        sectionLabel?: string;
+        heading?: string;
+        description?: string;
+        items: {
+            icon: string;
+            title: string;
+            description: string;
+        }[];
+    };
+    variant?: "center" | "left";
+    ctaText?: string;
+    ctaLink?: string;
+}
+
+const { id, data, variant = "center", ctaText, ctaLink } = Astro.props;
+const isCenter = variant === "center";
+---
+
+{
+    data && (
+        <section id={id} class="py-20 overflow-hidden">
+            <div
+                class="container mx-auto px-4 md:px-0"
+                x-data={`{
+                currentIndex: 0,
+                totalItems: ${data.items.length},
+                visibleItems: 3,
+                swipeTolerance: 30,
+                wheelTimer: null,
+                updateVisible() {
+                    if (window.innerWidth < 768) {
+                        this.visibleItems = 1;
+                    } else if (window.innerWidth < 1024) {
+                        this.visibleItems = 2;
+                    } else {
+                        this.visibleItems = 3;
+                    }
+                    // Reset index if out of bounds when resizing
+                     if (this.currentIndex > this.totalItems - Math.floor(this.visibleItems)) {
+                        this.currentIndex = Math.max(0, this.totalItems - Math.floor(this.visibleItems));
+                    }
+                },
+                init() {
+                    this.updateVisible();
+                },
+                next() {
+                    if (this.currentIndex < this.totalItems - Math.floor(this.visibleItems)) {
+                        this.currentIndex++;
+                    }
+                },
+                prev() {
+                    if (this.currentIndex > 0) {
+                        this.currentIndex--;
+                    }
+                },
+                handleWheel(e) {
+                    // Only handle horizontal scrolling
+                    if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
+                    
+                    // Debounce
+                    if (this.wheelTimer) return;
+
+                    if (e.deltaX > this.swipeTolerance) {
+                        this.next();
+                        this.wheelTimer = setTimeout(() => { this.wheelTimer = null; }, 500);
+                    } else if (e.deltaX < -this.swipeTolerance) {
+                        this.prev();
+                        this.wheelTimer = setTimeout(() => { this.wheelTimer = null; }, 500);
+                    }
+                }
+            }`}
+                @resize.window.debounce="updateVisible()"
+                @wheel.passive="handleWheel($event)"
+            >
+                <div class={`mb-12 ${isCenter ? "text-center" : ""}`}>
+                    {data.sectionLabel && (
+                        <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
+                            {data.sectionLabel}
+                        </p>
+                    )}
+                    {data.heading && (
+                        <h2 class={`text-4xl md:text-5xl font-bold mb-4 dark:text-zinc-200 ${isCenter ? "" : ""}`}>
+                            {data.heading}
+                        </h2>
+                    )}
+                    {data.description && (
+                        <p class={`text-lg text-neutral-600 dark:text-neutral-400 max-w-3xl font-medium ${isCenter ? "mx-auto" : ""}`}>
+                            {data.description}
+                        </p>
+                    )}
+                </div>
+
+                <!-- Carousel Window -->
+                <div class="relative overflow-hidden -mx-4">
+                    <!-- Track -->
+                    <div
+                        class="flex transition-transform duration-500 ease-in-out will-change-transform"
+                        :style="`transform: translateX(-${currentIndex * (100 / visibleItems)}%)`"
+                    >
+                        {
+                            data.items.map((item) => (
+                                <div :class="'shrink-0 px-4'" :style="'width: ' + (100 / visibleItems) + '%'">
+                                    <article class="h-full border-2 bg-white dark:bg-black border-zinc-200 dark:border-zinc-800 p-4 md:p-8 rounded-xl flex flex-col transition-colors">
+                                        <div class="text-4xl mb-4">
+                                            {item.icon}
+                                        </div>
+                                        <h3 class="text-xl lg:text-2xl font-bold mb-4 dark:text-zinc-200">
+                                            {item.title}
+                                        </h3>
+                                        <p class="text-lg text-neutral-600 dark:text-zinc-400 leading-relaxed font-medium grow">
+                                            {item.description}
+                                        </p>
+                                    </article>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <div class={`flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-0 ${isCenter ? "mt-12" : "mt-8"}`}>
+                    {ctaText && ctaLink && (
+                        <a
+                            href={ctaLink}
+                            class="order-2 md:order-1 font-bold border-b-2 border-black dark:border-white hover:border-transparent transition-colors text-black dark:text-white"
+                        >
+                            {ctaText} &rarr;
+                        </a>
+                    )}
+
+                    <!-- Navigation Arrows -->
+                    <div class="flex gap-4 order-1 md:order-2">
+                        <button
+                            @click="prev()"
+                            class="w-12 h-12 rounded-full cursor-pointer bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white flex items-center justify-center transition-colors hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-zinc-200 disabled:hover:text-black dark:disabled:hover:bg-zinc-800 dark:disabled:hover:text-white"
+                            :disabled="currentIndex === 0"
+                            aria-label="Previous slide"
+                        >
+                            &larr;
+                        </button>
+                        <button
+                            @click="next()"
+                            class="w-12 h-12 rounded-full cursor-pointer bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white flex items-center justify-center transition-colors hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-zinc-200 disabled:hover:text-black dark:disabled:hover:bg-zinc-800 dark:disabled:hover:text-white"
+                            :disabled="currentIndex >= totalItems - Math.floor(visibleItems)"
+                            aria-label="Next slide"
+                        >
+                            &rarr;
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    )
+}

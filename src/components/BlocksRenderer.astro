@@ -1,0 +1,117 @@
+---
+import PageHeroSection from "./PageHeroSection.astro";
+import CardGrid from "./CardGrid.astro";
+import CTASection from "./CTASection.astro";
+import Testimonials from "./Testimonials.astro";
+
+interface Props {
+  blocks?: any[];
+}
+
+const { blocks = [] } = Astro.props;
+---
+
+{
+  blocks.map((block) => {
+    const template = block._template;
+
+    switch (template) {
+      case "hero":
+        return (
+          <PageHeroSection
+            variant={block.variant || "center"}
+            data={{
+              label: block.sectionLabel,
+              heading: block.heading,
+              description: block.description,
+              buttonText: block.buttonText,
+              buttonLink: block.buttonLink,
+            }}
+          />
+        );
+
+      case "text":
+        return (
+          <section class="py-20">
+            <div class="container mx-auto px-4 md:px-0 max-w-4xl">
+              {block.sectionLabel && (
+                <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
+                  {block.sectionLabel}
+                </p>
+              )}
+              {block.heading && (
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">{block.heading}</h2>
+              )}
+              <div class="prose prose-lg dark:prose-invert max-w-none" set:html={block.content} />
+            </div>
+          </section>
+        );
+
+      case "cards":
+        return (
+          <CardGrid
+            data={{
+              sectionLabel: block.sectionLabel,
+              heading: block.heading,
+              description: block.description,
+              items: block.items,
+            }}
+            variant="center"
+            columns={parseInt(block.columns) || 3}
+          />
+        );
+
+      case "imageText":
+        const isLeft = block.layout === "left";
+        return (
+          <section class="py-20">
+            <div class="container mx-auto px-4 md:px-0">
+              <div class={`grid md:grid-cols-2 gap-12 items-center ${isLeft ? "" : "md:grid-flow-dense"}`}>
+                <div class={isLeft ? "" : "md:col-start-2"}>
+                  <img
+                    src={block.image}
+                    alt={block.alt}
+                    class="w-full rounded-xl"
+                  />
+                </div>
+                <div class={isLeft ? "" : "md:col-start-1 md:row-start-1"}>
+                  {block.heading && (
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">{block.heading}</h2>
+                  )}
+                  <div class="prose prose-lg dark:prose-invert" set:html={block.content} />
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+
+      case "cta":
+        return (
+          <CTASection
+            variant="center"
+            data={{
+              sectionLabel: block.sectionLabel,
+              heading: block.heading,
+              description: block.description,
+              buttonText: block.buttonText,
+              buttonLink: block.buttonLink,
+            }}
+          />
+        );
+
+      case "testimonials":
+        return (
+          <Testimonials
+            data={{
+              sectionLabel: block.sectionLabel,
+              heading: block.heading,
+              items: block.items,
+            }}
+          />
+        );
+
+      default:
+        return null;
+    }
+  })
+}

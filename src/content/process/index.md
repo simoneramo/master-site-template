@@ -17,7 +17,7 @@ steps:
         - User personas and journey maps
         - Technical requirements specification
         - Timeline and milestone plan
-      linkText: Learn more
+      linkText: Learn more4
       linkUrl: /process/discovery-and-planning
     - icon: "\U0001F4D0"
       title: 2. Design & architecture
@@ -82,6 +82,8 @@ difference:
     - icon: "\U0001F465"
       title: Fixed pricing & clear timelines
       description: 'No hidden fees, no moving goalposts. We provide fixed-price quotes and defined delivery timelines so you always know what to expect.'
+      linkText: Optional
+      linkUrl: /
     - icon: "\U0001F4AC"
       title: Transparent communication
       description: 'No jargon, no surprises. We keep you informed every step of the way with regular updates, demos, and clear documentation.'

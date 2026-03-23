@@ -1,0 +1,45 @@
+---
+/**
+ * BlockRenderer — Maps flexible page blocks to existing site components
+ *
+ * Each block's `_template` value maps to a real component.
+ * The block data is passed as `data` (and optionally `variant`).
+ *
+ * Supported _template values:
+ *   hero      → PageHeroSection
+ *   features  → CardGrid
+ *   cta       → CTASection
+ */
+
+import PageHeroSection from "@/components/PageHeroSection.astro";
+import CardGrid from "@/components/CardGrid.astro";
+import CTASection from "@/components/CTASection.astro";
+
+interface Props {
+  blocks?: any[];
+}
+
+const { blocks = [] } = Astro.props;
+---
+
+{
+  blocks?.map((block) => {
+    if (!block) return null;
+
+    const template = block._template;
+
+    switch (template) {
+      case "hero":
+        return <PageHeroSection variant={block.variant || "center"} data={block} />;
+
+      case "features":
+        return <CardGrid data={block} variant={block.variant || "center"} columns={block.columns || 3} />;
+
+      case "cta":
+        return <CTASection variant={block.variant || "center"} data={block} />;
+
+      default:
+        return null;
+    }
+  })
+}

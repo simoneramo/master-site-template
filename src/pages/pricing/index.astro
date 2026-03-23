@@ -1,6 +1,8 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
 import PageHeroSection from "../../components/PageHeroSection.astro";
+import CardGrid from "../../components/CardGrid.astro";
+import PricingTiers from "../../components/PricingTiers.astro";
 import CTASection from "../../components/CTASection.astro";
 import { getEntry } from "astro:content";
 
@@ -29,179 +31,11 @@ const cta = pricingPage?.data?.cta;
     {hero && <PageHeroSection variant="center" data={hero} />}
 
     <!-- Pricing Tiers -->
-    <section class="py-20">
-        <div class="container mx-auto px-4 md:px-0">
-            <div class="mb-16 text-center">
-                {
-                    pricingTiers?.sectionLabel && (
-                        <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
-                            {pricingTiers.sectionLabel}
-                        </p>
-                    )
-                }
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">
-                    {pricingTiers?.heading || "Pricing & Service Tiers"}
-                </h2>
-                <p
-                    class="text-lg text-neutral-600 dark:text-neutral-400 font-medium"
-                >
-                    {
-                        pricingTiers?.description ||
-                            "All projects include 100% ownership of your code."
-                    }
-                </p>
-            </div>
+    {pricingTiers && <PricingTiers data={pricingTiers} />}
 
-            <div
-                class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-6 max-w-6xl mx-auto text-left"
-            >
-                {
-                    pricingTiers?.tiers?.map((tier) => (
-                        <div
-                            class={`rounded-lg border-2 p-8 pt-12 flex flex-col bg-white dark:bg-zinc-950 transition-colors relative ${
-                                tier.isPopular
-                                    ? "border-black dark:border-white transform md:-translate-y-4 shadow-xl z-10"
-                                    : "border-zinc-200 dark:border-zinc-800"
-                            }`}
-                        >
-                            {tier.isPopular && (
-                                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-green-600 dark:bg-white text-white dark:text-black px-6 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase">
-                                    Popular
-                                </div>
-                            )}
+    <!-- Features Section -->
+    {features && <CardGrid data={features} variant="center" columns={3} />}
 
-                            <h3 class="text-2xl font-bold mb-2 tracking-tight">
-                                {tier.name}
-                            </h3>
-                            <p class="text-neutral-600 mb-6 h-12 leading-relaxed">
-                                {tier.description}
-                            </p>
-                            <div class="mb-8">
-                                {tier.priceLabel && (
-                                    <span class="text-neutral-500 text-xs font-bold tracking-wider uppercase block mb-2">
-                                        {tier.priceLabel}
-                                    </span>
-                                )}
-                                <span class="text-5xl font-regular">
-                                    {tier.price}
-                                </span>
-                            </div>
-
-                            <ul class="flex flex-col gap-4 text-sm font-medium flex-1 mb-8">
-                                {tier.features?.map((feature) => (
-                                    <li class="flex items-start gap-3">
-                                        {feature.included ? (
-                                            <span class="text-green-500 mt-0.5">
-                                                ✓
-                                            </span>
-                                        ) : (
-                                            <span class="text-red-500 font-bold mt-0.5">
-                                                ✕
-                                            </span>
-                                        )}
-                                        <span
-                                            class={
-                                                feature.included
-                                                    ? ""
-                                                    : "opacity-60"
-                                            }
-                                        >
-                                            <strong class="text-black dark:text-white">
-                                                {feature.label}:
-                                            </strong>
-                                            {feature.value}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
-
-                            <a
-                                href={tier.buttonLink}
-                                class={`mt-auto block w-full text-center py-4 rounded-xl font-bold transition-colors ${
-                                    tier.isPopular
-                                        ? "bg-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black"
-                                        : "bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-black dark:text-white"
-                                }`}
-                            >
-                                {tier.buttonText}
-                            </a>
-                            {tier.learnMoreLink && (
-                                <a
-                                    href={tier.learnMoreLink}
-                                    class="mt-4 block w-full text-center text-sm font-bold text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white transition-colors"
-                                >
-                                    Learn more about {tier.name} &rarr;
-                                </a>
-                            )}
-                        </div>
-                    ))
-                }
-            </div>
-
-            <div class="text-center mt-12 max-w-3xl mx-auto">
-                {
-                    pricingTiers?.footerNote && (
-                        <p class="text-sm font-medium text-neutral-500 dark:text-neutral-400 mb-4">
-                            {pricingTiers.footerNote}
-                        </p>
-                    )
-                }
-                {
-                    pricingTiers?.ctaText && pricingTiers?.ctaLink && (
-                        <p class="text-base text-neutral-600 dark:text-neutral-300 font-medium">
-                            Want a more accurate quote without waiting?
-                            <a
-                                href={pricingTiers.ctaLink}
-                                class="text-black dark:text-white font-bold underline decoration-2 underline-offset-4 hover:decoration-4 transition-all"
-                            >
-                                {pricingTiers.ctaText} &rarr;
-                            </a>
-                        </p>
-                    )
-                }
-            </div>
-        </div>
-    </section>
-
-    <!-- Additional info section -->
-    <section class="py-20">
-        <div class="container mx-auto px-4 md:px-0">
-            {
-                features?.sectionLabel && (
-                    <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
-                        {features.sectionLabel}
-                    </p>
-                )
-            }
-            <h2 class="text-4xl md:text-5xl font-bold mb-4">
-                {features?.heading || "What's Included in Every Build"}
-            </h2>
-            <p
-                class="text-lg text-neutral-600 dark:text-neutral-400 mb-12 max-w-3xl font-medium"
-            >
-                {
-                    features?.description ||
-                        "Every website we build comes fully loaded with premium features."
-                }
-            </p>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                {
-                    features?.items?.map((item) => (
-                        <article class="relative border-2 bg-white dark:bg-black border-stone-200 dark:border-zinc-700 p-4 md:p-8 rounded-lg transition-colors group">
-                            <div class="text-4xl mb-4">{item.icon}</div>
-                            <h3 class="text-xl md:text-2xl dark:text-zinc-200 font-bold mb-2">
-                                {item.title}
-                            </h3>
-                            <p class="text-lg text-neutral-600 dark:text-zinc-400 leading-relaxed font-medium">
-                                {item.description}
-                            </p>
-                        </article>
-                    ))
-                }
-            </div>
-        </div>
-    </section>
-
+    <!-- CTA Section -->
     {cta && <CTASection variant="center" data={cta} />}
 </MainLayout>

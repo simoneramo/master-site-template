@@ -57,11 +57,13 @@ const { Content } = await render(job);
                 {job.data.title}
             </h1>
 
-            {job.data.salary && (
-                <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-8">
-                    {job.data.salary}
-                </p>
-            )}
+            {
+                job.data.salary && (
+                    <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-8">
+                        {job.data.salary}
+                    </p>
+                )
+            }
         </div>
     </section>
 
@@ -86,50 +88,50 @@ const { Content } = await render(job);
                     </div>
 
                     <!-- Responsibilities -->
-                    {job.data.responsibilities && (
-                        <div>
-                            <h2
-                                class="text-xl font-bold text-black dark:text-white mb-4"
-                            >
-                                Responsibilities
-                            </h2>
-                            <ul class="space-y-3">
-                                {job.data.responsibilities.map((item) => (
-                                    <li class="flex items-start gap-3">
-                                        <span class="text-green-500 mt-1">
-                                            ✓
-                                        </span>
-                                        <span class="text-neutral-600 dark:text-neutral-400">
-                                            {item}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
+                    {
+                        job.data.responsibilities && (
+                            <div>
+                                <h2 class="text-xl font-bold text-black dark:text-white mb-4">
+                                    Responsibilities
+                                </h2>
+                                <ul class="space-y-3">
+                                    {job.data.responsibilities.map((item) => (
+                                        <li class="flex items-start gap-3">
+                                            <span class="text-green-500 mt-1">
+                                                ✓
+                                            </span>
+                                            <span class="text-neutral-600 dark:text-neutral-400">
+                                                {item}
+                                            </span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )
+                    }
 
                     <!-- Requirements -->
-                    {job.data.requirements && (
-                        <div>
-                            <h2
-                                class="text-xl font-bold text-black dark:text-white mb-4"
-                            >
-                                Requirements
-                            </h2>
-                            <ul class="space-y-3">
-                                {job.data.requirements.map((item) => (
-                                    <li class="flex items-start gap-3">
-                                        <span class="text-blue-500 mt-1">
-                                            •
-                                        </span>
-                                        <span class="text-neutral-600 dark:text-neutral-400">
-                                            {item}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
+                    {
+                        job.data.requirements && (
+                            <div>
+                                <h2 class="text-xl font-bold text-black dark:text-white mb-4">
+                                    Requirements
+                                </h2>
+                                <ul class="space-y-3">
+                                    {job.data.requirements.map((item) => (
+                                        <li class="flex items-start gap-3">
+                                            <span class="text-blue-500 mt-1">
+                                                •
+                                            </span>
+                                            <span class="text-neutral-600 dark:text-neutral-400">
+                                                {item}
+                                            </span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )
+                    }
 
                     <!-- Additional Content from Markdown -->
                     <div class="prose dark:prose-invert max-w-none">
@@ -159,22 +161,22 @@ const { Content } = await render(job);
                             Apply Now
                         </a>
 
-                        {job.data.benefits && (
-                            <div class="mt-8 pt-6 border-t border-neutral-200 dark:border-neutral-700">
-                                <h4
-                                    class="text-sm font-bold text-black dark:text-white mb-3"
-                                >
-                                    Benefits
-                                </h4>
-                                <ul class="space-y-2">
-                                    {job.data.benefits.map((benefit) => (
-                                        <li class="text-sm text-neutral-600 dark:text-neutral-400 flex items-center gap-2">
-                                            <span>🎁</span> {benefit}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
+                        {
+                            job.data.benefits && (
+                                <div class="mt-8 pt-6 border-t border-neutral-200 dark:border-neutral-700">
+                                    <h4 class="text-sm font-bold text-black dark:text-white mb-3">
+                                        Benefits
+                                    </h4>
+                                    <ul class="space-y-2">
+                                        {job.data.benefits.map((benefit) => (
+                                            <li class="text-sm text-neutral-600 dark:text-neutral-400 flex items-center gap-2">
+                                                <span>🎁</span> {benefit}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
             </div>

@@ -12,11 +12,13 @@ interface Props {
     label?: string;
     heading: string;
     description: string;
+    buttonText?: string;
+    buttonLink?: string;
   };
 }
 
 const { variant = "center", data } = Astro.props;
-const { label, heading, description } = data;
+const { label, heading, description, buttonText, buttonLink } = data;
 ---
 
 {
@@ -37,6 +39,19 @@ const { label, heading, description } = data;
         <p class="text-lg md:text-xl font-medium mb-10 text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
           {description}
         </p>
+        {buttonText && buttonLink && (
+          <a
+            href={buttonLink}
+            class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200"
+          >
+            <span class="transform transition-transform duration-300 group-hover:-translate-x-4">
+              {buttonText}
+            </span>
+            <span class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+              &rarr;
+            </span>
+          </a>
+        )}
       </div>
     </section>
   )
@@ -60,6 +75,19 @@ const { label, heading, description } = data;
         <p class="text-lg md:text-xl font-medium mb-10 text-neutral-600 dark:text-neutral-400">
           {description}
         </p>
+        {buttonText && buttonLink && (
+          <a
+            href={buttonLink}
+            class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200"
+          >
+            <span class="transform transition-transform duration-300 group-hover:-translate-x-4">
+              {buttonText}
+            </span>
+            <span class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+              &rarr;
+            </span>
+          </a>
+        )}
       </div>
     </section>
   )

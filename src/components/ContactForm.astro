@@ -1,0 +1,373 @@
+---
+const { data: contactForm, variant = "center" } = Astro.props;
+
+const isCenter = variant === "center";
+const isSplit = variant === "split";
+---
+
+<section id="contact" class="py-20">
+    <div
+        class={isCenter
+            ? "container mx-auto max-w-2xl px-8 text-center"
+            : "container mx-auto px-4 md:px-0"}
+    >
+        <div class={isSplit ? "grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8" : "contents"}>
+            <div class={isSplit ? "sticky top-24 self-start" : ""}>
+                <p
+                    class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
+                >
+                    {contactForm.sectionLabel}
+                </p>
+                <h2
+                    id="contact-heading"
+                    class={`text-6xl font-bold mb-4 dark:text-white ${isSplit ? "max-w-2xl" : ""}`}
+                >
+                    {contactForm.heading}
+                </h2>
+
+                <p
+                    class="text-lg text-neutral-600 dark:text-neutral-400 mb-6 font-medium"
+                >
+                    {contactForm.description}
+                </p>
+                <p
+                    class={`font-medium text-neutral-800 dark:text-neutral-400 ${isSplit ? "mb-12" : "mb-6"}`}
+                >
+                    Avg. response time: {contactForm.responseTime}
+                </p>
+            </div>
+
+            <form
+                class={`text-left space-y-6 dark:bg-black ${isSplit ? "border-2 border-zinc-200 dark:border-zinc-800 p-8 rounded-lg" : ""}`}
+                x-data="{
+                        name: '',
+                        email: '',
+                        subject: '',
+                        projectType: '',
+                        message: '',
+                        isSubmitting: false,
+                        showSuccess: false,
+                        showError: false,
+                        errorMessage: '',
+                        touched: {
+                            name: false,
+                            email: false,
+                            subject: false,
+                            projectType: false,
+                            message: false
+                        },
+                        errors: {
+                            name: false,
+                            email: false,
+                            subject: false,
+                            projectType: false,
+                            message: false
+                        },
+
+                        validateName() {
+                            this.errors.name = this.touched.name && this.name.trim().length < 2;
+                        },
+
+                        validateEmail() {
+                            if (!this.touched.email) return;
+                            const isValid = this.email && this.email.includes('@') && this.email.includes('.') && this.email.length > 5;
+                            this.errors.email = !isValid;
+                        },
+
+                        validateSubject() {
+                            this.errors.subject = this.touched.subject && this.subject.trim().length < 3;
+                            if (this.subject !== 'New Project') {
+                                this.projectType = '';
+                                this.touched.projectType = false;
+                                this.errors.projectType = false;
+                            }
+                        },
+
+                        validateProjectType() {
+                            if (this.subject !== 'New Project') return;
+                            this.errors.projectType = this.touched.projectType && this.projectType === '';
+                        },
+
+                        validateMessage() {
+                            this.errors.message = this.touched.message && this.message.trim().length < 40;
+                        },
+
+                        isValid(field) {
+                            return this.touched[field] && !this.errors[field];
+                        },
+
+                        formIsValid() {
+                            const nameOk = this.name.trim().length >= 2;
+                            const emailOk = this.email && this.email.includes('@') && this.email.includes('.') && this.email.length > 5;
+                            const subjectOk = this.subject.trim().length >= 3;
+                            const projectTypeOk = this.subject !== 'New Project' || this.projectType !== '';
+                            const messageOk = this.message.trim().length >= 40;
+                            return nameOk && emailOk && subjectOk && projectTypeOk && messageOk;
+                        },
+
+                        async submitForm() {
+                            this.touched.name = true;
+                            this.touched.email = true;
+                            this.touched.subject = true;
+                            this.touched.message = true;
+                            if (this.subject === 'New Project') this.touched.projectType = true;
+
+                            this.validateName();
+                            this.validateEmail();
+                            this.validateSubject();
+                            this.validateProjectType();
+                            this.validateMessage();
+
+                            if (this.errors.name || this.errors.email || this.errors.subject || this.errors.projectType || this.errors.message) {
+                                return;
+                            }
+
+                            this.isSubmitting = true;
+                            this.showError = false;
+
+                            try {
+                                const response = await fetch('/api/contact', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        name: this.name,
+                                        email: this.email,
+                                        subject: this.subject,
+                                        projectType: this.projectType,
+                                        message: this.message
+                                    })
+                                });
+
+                                const data = await response.json();
+
+                                if (response.ok) {
+                                    this.showSuccess = true;
+                                    this.name = '';
+                                    this.email = '';
+                                    this.subject = '';
+                                    this.projectType = '';
+                                    this.message = '';
+                                    this.touched = { name: false, email: false, subject: false, projectType: false, message: false };
+                                    this.errors = { name: false, email: false, subject: false, projectType: false, message: false };
+
+                                    // Redirect to thank you page after success
+                                    window.location.href = '/home-thankyou';
+                                } else {
+                                    this.showError = true;
+                                    this.errorMessage = data.error || 'Failed to send message. Please try again.';
+                                    setTimeout(() => this.showError = false, 5000);
+                                }
+                            } catch (error) {
+                                this.showError = true;
+                                this.errorMessage = 'Network error. Please check your connection and try again.';
+                                setTimeout(() => this.showError = false, 5000);
+                            } finally {
+                                this.isSubmitting = false;
+                            }
+                        }
+                    }"
+                @submit.prevent="submitForm()"
+            >
+                <div
+                    x-show="showSuccess"
+                    x-transition
+                    class="p-4 bg-green-100 border-l-4 border-green-500 text-green-700 mb-6 rounded-md"
+                    role="alert"
+                >
+                    <p class="font-bold">
+                        {contactForm.successMessage.title}
+                    </p>
+                    <p>{contactForm.successMessage.description}</p>
+                </div>
+
+                <div
+                    x-show="showError"
+                    x-transition
+                    class="p-4 bg-red-100 border-l-4 border-red-600 text-red-700 mb-6 rounded-md"
+                    role="alert"
+                >
+                    <p class="font-bold">Error sending message</p>
+                    <p x-text="errorMessage"></p>
+                </div>
+
+                <div>
+                    <label for="name" class="block font-bold mb-2"
+                        >{contactForm.nameField.label}</label
+                    >
+                    <input
+                        type="text"
+                        id="name"
+                        x-model="name"
+                        @blur="touched.name = true; validateName()"
+                        @input="touched.name && validateName()"
+                        class="w-full p-4 border-2 focus:text-black focus:border-zinc-400 dark:focus:border-zinc-500 dark:focus:text-white font-medium transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md"
+                        :class="errors.name ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : isValid('name') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                        :aria-invalid="errors.name"
+                        aria-describedby="name-error"
+                        placeholder={contactForm.nameField.placeholder}
+                    />
+                    <span
+                        id="name-error"
+                        x-show="errors.name"
+                        class="text-red-600 dark:text-red-600 font-medium mt-1 block"
+                        role="alert"
+                    >
+                        {contactForm.nameField.errorMessage}
+                    </span>
+                </div>
+
+                <div>
+                    <label for="email" class="block font-bold mb-2"
+                        >{contactForm.emailField.label}</label
+                    >
+                    <input
+                        type="email"
+                        id="email"
+                        x-model="email"
+                        @blur="touched.email = true; validateEmail()"
+                        @input="touched.email && validateEmail()"
+                        class="w-full p-4 border-2 focus:text-black focus:border-zinc-400 dark:focus:border-zinc-500 dark:focus:text-white font-medium transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md"
+                        :class="errors.email ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : isValid('email') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                        :aria-invalid="errors.email"
+                        aria-describedby="email-error"
+                        placeholder={contactForm.emailField.placeholder}
+                    />
+                    <span
+                        id="email-error"
+                        x-show="errors.email"
+                        class="text-red-600 dark:text-red-600 font-medium mt-1 block"
+                        role="alert"
+                    >
+                        {contactForm.emailField.errorMessage}
+                    </span>
+                </div>
+
+                <!-- Subject -->
+                <div>
+                    <label for="hp-subject" class="block font-bold mb-2">
+                        Subject <abbr title="required">*</abbr>
+                    </label>
+                    <div class="relative">
+                        <select
+                            id="hp-subject"
+                            name="subject"
+                            x-model="subject"
+                            @blur="touched.subject = true; validateSubject()"
+                            @change="touched.subject = true; validateSubject()"
+                            required
+                            class="w-full p-4 border-2 focus:text-black focus:border-black dark:focus:border-zinc-500 dark:focus:text-white transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md dark:text-white appearance-none"
+                            :class="errors.subject ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : isValid('subject') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                        >
+                            <option value="" disabled selected>Select a topic...</option>
+                            <option value="New Project">New Project Inquiry</option>
+                            <option value="Existing Project">Existing Project</option>
+                            <option value="General Inquiry">General Inquiry</option>
+                            <option value="Partnership">Partnership / Collaboration</option>
+                            <option value="Support">Support / Maintenance</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-neutral-500">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <p x-show="errors.subject" class="text-red-600 mt-1 font-medium">
+                        Please select a subject.
+                    </p>
+                </div>
+
+                <!-- Conditional: Project Type -->
+                <div x-show="subject === 'New Project'" x-transition>
+                    <label for="hp-projectType" class="block font-bold mb-2">
+                        Project Type <abbr title="required">*</abbr>
+                    </label>
+                    <div class="relative">
+                        <select
+                            id="hp-projectType"
+                            name="projectType"
+                            x-model="projectType"
+                            @blur="touched.projectType = true; validateProjectType()"
+                            @change="touched.projectType = true; validateProjectType()"
+                            class="w-full p-4 border-2 focus:text-black focus:border-black dark:focus:border-zinc-500 dark:focus:text-white transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md dark:text-white appearance-none"
+                            :class="errors.projectType ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : (touched.projectType && projectType !== '') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                        >
+                            <option value="" disabled selected>Select a project type...</option>
+                            <option value="Landing Page">Landing Page</option>
+                            <option value="One-Pager">One-Pager</option>
+                            <option value="Full Website">Full Website</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-neutral-500">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <p x-show="errors.projectType" class="text-red-600 mt-1 font-medium">
+                        Please select a project type.
+                    </p>
+                </div>
+
+                <div>
+                    <label for="message" class="block font-bold mb-2"
+                        >{contactForm.messageField.label}</label
+                    >
+                    <textarea
+                        id="message"
+                        rows="4"
+                        x-model="message"
+                        @blur="touched.message = true; validateMessage()"
+                        @input="touched.message && validateMessage()"
+                        class="w-full p-4 border-2 focus:text-black focus:border-zinc-400 dark:focus:border-zinc-500 dark:focus:text-white font-medium transition-colors outline-none focus:ring-0 placeholder-neutral-500 rounded-md"
+                        :class="errors.message ? 'border-red-500 bg-red-50 dark:bg-red-950/30' : isValid('message') ? 'border-green-500 bg-green-50 dark:bg-green-950/30' : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black'"
+                        :aria-invalid="errors.message"
+                        aria-describedby="message-error"
+                        placeholder={contactForm.messageField.placeholder}
+                    ></textarea>
+                    <span
+                        id="message-error"
+                        x-show="errors.message"
+                        class="text-red-600 dark:text-red-600 font-medium mt-1 block"
+                        role="alert"
+                    >
+                        {contactForm.messageField.errorMessage}
+                    </span>
+                </div>
+
+                <button
+                    type="submit"
+                    :disabled="isSubmitting || !formIsValid()"
+                    class="w-full py-4 group relative overflow-hidden bg-black text-white dark:bg-white dark:text-black font-bold tracking-wider transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:saturate-0 flex justify-center items-center rounded-md cursor-pointer"
+                >
+                    <div
+                        x-show="!isSubmitting"
+                        class="relative flex items-center justify-center px-10"
+                    >
+                        <span
+                            class="transform transition-transform duration-300 group-hover:-translate-x-4"
+                        >
+                            {contactForm.submitButton.text}
+                        </span>
+                        <span
+                            class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                        >
+                            &rarr;
+                        </span>
+                    </div>
+
+                    <span x-show="isSubmitting"
+                        >{contactForm.submitButton.loadingText}</span
+                    >
+                </button>
+                <p
+                    class="text-sm text-center font-medium text-black dark:text-neutral-600 mt-4"
+                >
+                    {contactForm.privacyNote}
+                </p>
+            </form>
+        </div>
+    </div>
+</section>

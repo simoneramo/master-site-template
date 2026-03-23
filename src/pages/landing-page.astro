@@ -1,18 +1,83 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import HeroSection from "../components/HeroSection.astro";
+import FAQ from "../components/FAQ.astro";
 import CTASection from "../components/CTASection.astro";
+import TestimonialsMarquee from "../components/TestimonialsMarquee.astro";
 import { getEntry } from "astro:content";
+
+const contactPage = await getEntry("contact", "index");
 
 const landingPage = await getEntry("landingPage", "index");
 if (!landingPage) {
     throw new Error("Landing page data is missing");
 }
 const { hero, cta } = landingPage.data;
+
+const servicesPage = await getEntry("services", "index");
+if (!servicesPage) {
+    throw new Error("Services page data not found");
+}
+
+const homepage = await getEntry("homepage", "index");
+if (!homepage) throw new Error("Homepage data not found");
+const { testimonials } = homepage.data;
+
+const { faq } = contactPage.data;
+
+const { mainServices } = servicesPage.data;
 ---
 
-<MainLayout title="Landing Page" hideMenu={true} showPhoneButton={true}>
+<MainLayout title="Landing Page" headerVariant="simple" footerVariant="simple">
     {hero && <HeroSection variant="bold" data={hero} showSocialProof={true} />}
+
+    <!-- Scrolling Testimonials -->
+    {testimonials && <TestimonialsMarquee data={homepage.data.testimonials} />}
+
+    <!-- Main Services -->
+    <section class="py-20 dark:bg-zinc-900">
+        <div class="container mx-auto px-4 lg:px-0">
+            <p
+                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-2"
+            >
+                {mainServices.sectionLabel}
+            </p>
+            <h2 class="text-5xl font-bold mb-4">
+                {mainServices.heading}
+            </h2>
+            <p
+                class="text-lg text-neutral-600 dark:text-neutral-400 mb-12 max-w-3xl font-medium"
+            >
+                {mainServices.description}
+            </p>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {
+                    mainServices.items.map((service) => (
+                        <article class="relative border-2 bg-white dark:bg-black border-stone-200 dark:border-zinc-700 p-4 md:p-8 md:pb-12 rounded-lg transition-colors group">
+                            <div class="text-4xl mb-6">{service.icon}</div>
+                            <h3 class="text-xl font-bold mb-2">
+                                {service.title}
+                            </h3>
+                            <p class="leading-relaxed text-neutral-600 dark:text-neutral-400 font-medium mb-6">
+                                {service.description}
+                            </p>
+
+                            <a
+                                href={service.linkUrl}
+                                class="inline-block font-bold border-b-2 border-current hover:border-transparent after:absolute after:inset-0"
+                            >
+                                Learn more &rarr;
+                            </a>
+                        </article>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    {faq && <FAQ variant="center" data={faq} />}
 
     {cta && <CTASection variant={cta.variant || "center"} data={cta} />}
 </MainLayout>

@@ -17,6 +17,8 @@ values:
     - icon: "\U0001F511"
       title: Total ownership
       description: 'We believe you should own your digital property, not rent it. Unlike proprietary platforms, we provide 100% code ownership so you are never locked into a single provider.'
+      linkText: ''
+      linkUrl: ''
     - icon: ⚡️
       title: Enterprise performance
       description: 'High-end headless technology shouldn''t be reserved for big brands. We bring lightning-fast, mobile-first websites to businesses of all sizes.'

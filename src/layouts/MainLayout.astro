@@ -11,15 +11,19 @@ interface Props {
     hideMenu?: boolean;
     showPhoneButton?: boolean;
     hideCTA?: boolean;
+    headerVariant?: "full" | "simple";
+    footerVariant?: "full" | "simple";
 }
 
 const {
     title = "Your Business Name | Your Tagline Here",
     description = "A short, compelling description of your business that will appear in search results. Keep it under 160 characters.",
-    hideMenu = false,
-    showPhoneButton = false,
-    hideCTA = false,
+    hideMenu,
+    showPhoneButton,
+    hideCTA,
     mainPadding = true,
+    headerVariant = "full",
+    footerVariant = "full",
 } = Astro.props;
 
 // Gracefully handle missing site config (e.g. local dev without site set)
@@ -99,6 +103,7 @@ const ogImage = new URL("/images/og-image.jpg", siteBase);
         </a>
 
         <Header
+            variant={headerVariant}
             hideMenu={hideMenu}
             showPhoneButton={showPhoneButton}
             hideCTA={hideCTA}
@@ -108,7 +113,7 @@ const ogImage = new URL("/images/og-image.jpg", siteBase);
             <slot />
         </main>
 
-        <Footer />
+        <Footer variant={footerVariant} />
         <!-- 💬 Add your live chat script here (e.g. Tawk.to, Crisp, Intercom) -->
     </body>
 </html>

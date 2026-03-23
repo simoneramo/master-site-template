@@ -1,5 +1,6 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import PageHeroSection from "@/components/PageHeroSection.astro";
 import { getEntry } from "astro:content";
 
 // Get contact page thank you content from TinaCMS
@@ -39,6 +40,8 @@ const thankyou = contactPage?.data?.thankyou;
             </a>
         </section>
     </div>
+
+    {thankyou && <PageHeroSection variant="center" data={thankyou} />}
 </MainLayout>
 
 <script lang="ts">

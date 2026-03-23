@@ -1,0 +1,34 @@
+---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import BlockRenderer from "../../components/BlockRenderer.astro";
+
+export async function getStaticPaths() {
+  const pages = await getCollection("flexiblePages");
+
+  if (!pages || pages.length === 0) {
+    return [];
+  }
+
+  return pages.map((page) => ({
+    params: { slug: page.id },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+
+if (!page) {
+  return Astro.redirect("/404");
+}
+
+const title = page.data?.title || "Page";
+const description = page.data?.description || "";
+const blocks = page.data?.blocks || [];
+---
+
+<MainLayout title={title} description={description}>
+  <BlockRenderer blocks={blocks} />
+</MainLayout>

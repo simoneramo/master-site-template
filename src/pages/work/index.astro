@@ -5,22 +5,30 @@
 
 import { getEntry, getCollection } from "astro:content";
 import PageHeroSection from "../../components/PageHeroSection.astro";
+import WorkGrid from "../../components/WorkGrid.astro";
 import CTASection from "../../components/CTASection.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 
-// Get work page hero content from TinaCMS
+// Get work page content from TinaCMS (hero, grid section data, cta)
 const workContent = await getEntry("work", "index");
 const hero = workContent?.data?.hero;
+const workGrid = workContent?.data?.workGrid;
 const cta = workContent?.data?.cta;
 
-// Get work posts (portfolio projects) from TinaCMS
-const allPosts = await getCollection("workPosts");
-
-// Filter and sort projects
-const projects = allPosts
+// Get work posts from TinaCMS workPosts collection
+const allWorkPosts = await getCollection("workPosts");
+const workProjects = allWorkPosts
     .filter((p) => p.data.isActive !== false)
-    .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
-const featuredProjects = projects.filter((p) => p.data.isFeatured);
+    .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0))
+    .map((post) => ({
+        slug: post.data.slug ?? post.id,
+        data: {
+            title: post.data.title,
+            description: post.data.description,
+            category: post.data.category,
+            image: post.data.image,
+        },
+    }));
 ---
 
 <MainLayout
@@ -28,71 +36,11 @@ const featuredProjects = projects.filter((p) => p.data.isFeatured);
     description="Explore our portfolio of successful projects and see how we've helped businesses achieve their goals."
 >
     <!-- Page Hero Section -->
-    <PageHeroSection variant="center" data={hero} />
+    {hero && <PageHeroSection variant="center" data={hero} />}
 
-    <!-- Portfolio Grid from CMS -->
-    <section class="pb-24 lg:pb-32">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {
-                projects.length > 0 ? (
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {projects.map((project) => (
-                            <a
-                                href={`/work/${project.data.slug}`}
-                                class="group border-2 border-neutral-200 dark:border-neutral-800 rounded-lg overflow-hidden hover:border-black dark:hover:border-white transition-colors block"
-                            >
-                                <div class="aspect-video bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden">
-                                    {project.data.image ? (
-                                        <img
-                                            src={project.data.image}
-                                            alt={project.data.title}
-                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                        />
-                                    ) : (
-                                        <span class="text-4xl">🏗️</span>
-                                    )}
-                                </div>
-                                <div class="p-6">
-                                    <h3 class="text-xl font-bold text-black dark:text-white mb-2">
-                                        {project.data.title}
-                                    </h3>
-                                    <p class="text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-2">
-                                        {project.data.description}
-                                    </p>
-                                    <span class="text-sm font-bold text-neutral-500 uppercase tracking-wider">
-                                        {project.data.category}
-                                    </span>
-                                </div>
-                            </a>
-                        ))}
-                    </div>
-                ) : (
-                    <div class="text-center py-16 border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg">
-                        <p class="text-neutral-500">No projects added yet.</p>
-                    </div>
-                )
-            }
-
-            <!-- Developer Note -->
-            <div
-                class="mt-16 p-6 bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-800 rounded-lg"
-            >
-                <p class="text-amber-800 dark:text-amber-200 font-medium">
-                    <strong>💡 Developer Note:</strong> This page uses TinaCMS content.
-                </p>
-                <ul
-                    class="mt-2 ml-4 list-disc text-amber-700 dark:text-amber-300"
-                >
-                    <li>Manage hero in TinaCMS under "Work Page"</li>
-                    <li>Manage projects in TinaCMS under "Work Posts"</li>
-                    <li>Upload project images via media manager</li>
-                    <li>Mark featured projects to highlight them</li>
-                    <li>Set display order to control project sorting</li>
-                </ul>
-            </div>
-        </div>
-    </section>
+    <!-- Work Grid Section -->
+    {workGrid && <WorkGrid data={workGrid} projects={workProjects} />}
 
     <!-- CTA Section -->
-    {cta && <CTASection variant={cta.variant || "center"} data={cta} />}
+    {cta && <CTASection variant="center" data={cta} />}
 </MainLayout>

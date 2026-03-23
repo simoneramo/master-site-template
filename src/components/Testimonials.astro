@@ -1,6 +1,4 @@
 ---
-import { getEntry } from "astro:content";
-
 interface Props {
     data?: {
         sectionLabel: string;
@@ -17,14 +15,6 @@ interface Props {
 }
 
 let { data } = Astro.props;
-
-// If no data passed, fetch from global testimonials
-if (!data) {
-    const testimonials = await getEntry("globals", "testimonials");
-    if (testimonials && testimonials.data) {
-        data = testimonials.data;
-    }
-}
 ---
 
 {

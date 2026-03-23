@@ -188,25 +188,6 @@ const pastEvents = allEvents
         )
     }
 
-    <!-- Developer Note -->
-    <div
-        class="my-16 p-6 bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-800 rounded-lg"
-    >
-        <p class="text-amber-800 dark:text-amber-200 font-medium">
-            <strong>💡 Developer Note:</strong> This page uses TinaCMS content.
-        </p>
-        <ul class="mt-2 ml-4 list-disc text-amber-700 dark:text-amber-300">
-            <li>Manage events in TinaCMS under "Events"</li>
-            <li>
-                Create individual event pages at <code
-                    >src/pages/events/[slug].astro</code
-                >
-            </li>
-            <li>Toggle isUpcoming to move events to "Past Events"</li>
-            <li>Add registration links or embed forms</li>
-        </ul>
-    </div>
-
     <!-- CTA Section -->
     {cta && <CTASection variant={cta.variant || "center"} data={cta} />}
 </MainLayout>

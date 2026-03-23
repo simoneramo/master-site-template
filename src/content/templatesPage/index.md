@@ -1,7 +1,7 @@
 ---
 hero:
   sectionLabel: 100+ custom designed starter templates
-  heading: Design blueprints
+  heading: Heading of some sort
   description: >-
     Browse our collection of accessible, high-performance templates designed to
     get you started fast.

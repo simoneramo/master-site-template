@@ -7,31 +7,107 @@
       "name": "Core Pages (Always Included)",
       "description": "Essential pages that every site needs",
       "pages": [
-        { "path": "src/pages/index.astro", "name": "Homepage", "required": true },
-        { "path": "src/pages/about/index.astro", "name": "About", "required": true },
-        { "path": "src/pages/contact.astro", "name": "Contact", "required": true },
-        { "path": "src/pages/contact-thankyou.astro", "name": "Contact Thank You", "required": true },
-        { "path": "src/pages/home-thankyou.astro", "name": "Home Thank You", "required": true },
-        { "path": "src/pages/privacy-policy.astro", "name": "Privacy Policy", "required": true },
-        { "path": "src/pages/terms-and-conditions.astro", "name": "Terms & Conditions", "required": true },
-        { "path": "src/pages/404.astro", "name": "404 Error Page", "required": true }
+        {
+          "path": "src/pages/index.astro",
+          "name": "Homepage",
+          "required": true
+        },
+        {
+          "path": "src/pages/about/index.astro",
+          "name": "About",
+          "required": true
+        },
+        {
+          "path": "src/pages/contact.astro",
+          "name": "Contact",
+          "required": true
+        },
+        {
+          "path": "src/pages/contact-thankyou.astro",
+          "name": "Contact Thank You",
+          "required": true
+        },
+        {
+          "path": "src/pages/home-thankyou.astro",
+          "name": "Home Thank You",
+          "required": true
+        },
+        {
+          "path": "src/pages/privacy-policy.astro",
+          "name": "Privacy Policy",
+          "required": true
+        },
+        {
+          "path": "src/pages/terms-and-conditions.astro",
+          "name": "Terms & Conditions",
+          "required": true
+        },
+        {
+          "path": "src/pages/404.astro",
+          "name": "404 Error Page",
+          "required": true
+        }
       ]
     },
     "tier2": {
       "name": "Common Pages (Usually Included)",
       "description": "Standard business pages that most clients need",
       "pages": [
-        { "path": "src/pages/quote.astro", "name": "Get a Quote", "default": false },
-        { "path": "src/pages/quote-thankyou.astro", "name": "Quote Thank You", "default": false },
-        { "path": "src/pages/services/index.astro", "name": "Services", "default": true },
-        { "path": "src/pages/services/[slug].astro", "name": "Service Detail Pages", "default": true },
-        { "path": "src/pages/pricing/index.astro", "name": "Pricing", "default": false },
-        { "path": "src/pages/insights/index.astro", "name": "Blog/Insights", "default": true },
-        { "path": "src/pages/insights/[...slug].astro", "name": "Blog Post Pages", "default": true },
-        { "path": "src/pages/faq.astro", "name": "FAQ Page", "default": true },
-        { "path": "src/pages/team/index.astro", "name": "Team Page", "default": false },
-        { "path": "src/pages/process/index.astro", "name": "Process Overview", "default": true },
-        { "path": "src/pages/process/[slug].astro", "name": "Process Step Pages", "default": true }
+        {
+          "path": "src/pages/quote.astro",
+          "name": "Get a Quote",
+          "default": false
+        },
+        {
+          "path": "src/pages/quote-thankyou.astro",
+          "name": "Quote Thank You",
+          "default": false
+        },
+        {
+          "path": "src/pages/services/index.astro",
+          "name": "Services",
+          "default": true
+        },
+        {
+          "path": "src/pages/services/[slug].astro",
+          "name": "Service Detail Pages",
+          "default": true
+        },
+        {
+          "path": "src/pages/pricing/index.astro",
+          "name": "Pricing",
+          "default": false
+        },
+        {
+          "path": "src/pages/insights/index.astro",
+          "name": "Blog/Insights",
+          "default": true
+        },
+        {
+          "path": "src/pages/insights/[...slug].astro",
+          "name": "Blog Post Pages",
+          "default": true
+        },
+        {
+          "path": "src/pages/faq.astro",
+          "name": "FAQ Page",
+          "default": true
+        },
+        {
+          "path": "src/pages/team/index.astro",
+          "name": "Team Page",
+          "default": false
+        },
+        {
+          "path": "src/pages/process/index.astro",
+          "name": "Process Overview",
+          "default": true
+        },
+        {
+          "path": "src/pages/process/[slug].astro",
+          "name": "Process Step Pages",
+          "default": true
+        }
       ]
     },
     "tier3": {
@@ -108,17 +184,18 @@
           "description": "Appointment booking and scheduling",
           "default": false
         },
-        {
-          "path": "src/pages/design-blueprints/index.astro",
-          "name": "Design Blueprints",
-          "description": "Pre-built design templates and blueprints",
-          "default": false
-        }
       ]
     }
   },
   "contentCollections": {
-    "required": ["homepage", "about", "globals", "contact", "legalPages", "notFoundPage"],
+    "required": [
+      "homepage",
+      "about",
+      "globals",
+      "contact",
+      "legalPages",
+      "notFoundPage"
+    ],
     "optional": [
       "insights",
       "insightsPage",
@@ -149,20 +226,50 @@
     ]
   },
   "pageContentMapping": {
-    "src/pages/services/index.astro": ["src/content/services", "src/content/offerings"],
-    "src/pages/insights/index.astro": ["src/content/insights"],
-    "src/pages/process/index.astro": ["src/content/process", "src/content/processSteps"],
-    "src/pages/tech/index.astro": ["src/content/tech"],
-    "src/pages/resources/glossary.astro": ["src/content/common-web-terms"],
-    "src/pages/work/index.astro": ["src/content/portfolio"],
-    "src/pages/careers/index.astro": ["src/content/jobs"],
-    "src/pages/events/index.astro": ["src/content/events"],
-    "src/pages/partners/index.astro": ["src/content/partners"],
-    "src/pages/reviews/index.astro": ["src/content/testimonials"],
-    "src/pages/quote.astro": ["src/content/quote"],
-    "src/pages/landing-page.astro": ["src/content/landingPage"],
-    "src/pages/services/[slug].astro": ["src/content/offerings"],
-    "src/pages/process/[slug].astro": ["src/content/processSteps"]
+    "src/pages/services/index.astro": [
+      "src/content/services",
+      "src/content/offerings"
+    ],
+    "src/pages/insights/index.astro": [
+      "src/content/insights"
+    ],
+    "src/pages/process/index.astro": [
+      "src/content/process",
+      "src/content/processSteps"
+    ],
+    "src/pages/tech/index.astro": [
+      "src/content/tech"
+    ],
+    "src/pages/resources/glossary.astro": [
+      "src/content/common-web-terms"
+    ],
+    "src/pages/work/index.astro": [
+      "src/content/portfolio"
+    ],
+    "src/pages/careers/index.astro": [
+      "src/content/jobs"
+    ],
+    "src/pages/events/index.astro": [
+      "src/content/events"
+    ],
+    "src/pages/partners/index.astro": [
+      "src/content/partners"
+    ],
+    "src/pages/reviews/index.astro": [
+      "src/content/testimonials"
+    ],
+    "src/pages/quote.astro": [
+      "src/content/quote"
+    ],
+    "src/pages/landing-page.astro": [
+      "src/content/landingPage"
+    ],
+    "src/pages/services/[slug].astro": [
+      "src/content/offerings"
+    ],
+    "src/pages/process/[slug].astro": [
+      "src/content/processSteps"
+    ]
   },
   "pageConfigMapping": {
     "src/pages/services/index.astro": "src/content/pages/services.md",

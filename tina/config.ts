@@ -37,6 +37,7 @@ export default defineConfig({
   // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/schema/
   schema: {
     collections: [
+      // Home
       {
         name: "homepage",
         label: "Homepage",
@@ -496,53 +497,6 @@ export default defineConfig({
           },
           {
             type: "object",
-            name: "templates",
-            label: "Design Blueprints Section",
-            description: "Showcase of available design blueprints",
-            fields: [
-              {
-                type: "string",
-                name: "sectionLabel",
-                label: "Section Label",
-                description: "Description put in here",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "heading",
-                label: "Heading",
-                description: "Description put in here",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "description",
-                label: "Description",
-                required: true,
-                ui: {
-                  component: "textarea",
-                },
-                description: "Description put in here",
-              },
-
-              {
-                type: "string",
-                name: "ctaText",
-                label: "CTA Button Text",
-                description: "Description put in here",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "ctaLink",
-                label: "CTA Button Link",
-                description: "Description put in here",
-                required: true,
-              },
-            ],
-          },
-          {
-            type: "object",
             name: "faq",
             label: "FAQ Section",
             description: "Frequently asked questions",
@@ -595,6 +549,52 @@ export default defineConfig({
                     description: "Description put in here",
                   },
                 ],
+              },
+            ],
+          },
+          {
+            type: "object",
+            name: "workGrid",
+            label: "Work Grid Section",
+            description: "Portfolio/work projects showcase",
+            fields: [
+              {
+                type: "string",
+                name: "sectionLabel",
+                label: "Section Label",
+                description: "Small text above the heading",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "heading",
+                label: "Heading",
+                description: "Main heading for the work grid section",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "description",
+                label: "Description",
+                description: "Description text below the heading",
+                required: false,
+                ui: {
+                  component: "textarea",
+                },
+              },
+              {
+                type: "string",
+                name: "ctaText",
+                label: "CTA Text",
+                description: "Text for the call-to-action link",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "ctaLink",
+                label: "CTA Link",
+                description: "URL for the call-to-action link",
+                required: false,
               },
             ],
           },
@@ -772,6 +772,12 @@ export default defineConfig({
             fields: [
               {
                 type: "string",
+                name: "sectionLabel",
+                label: "Section Label",
+                required: false,
+              },
+              {
+                type: "string",
                 name: "heading",
                 label: "Heading",
                 required: true,
@@ -789,13 +795,13 @@ export default defineConfig({
                 type: "string",
                 name: "buttonText",
                 label: "Button Text",
-                required: true,
+                required: false,
               },
               {
                 type: "string",
                 name: "buttonLink",
                 label: "Button Link",
-                required: true,
+                required: false,
               },
             ],
           },
@@ -844,6 +850,18 @@ export default defineConfig({
                 ui: {
                   component: "textarea",
                 },
+              },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
               },
             ],
           },
@@ -993,6 +1011,18 @@ export default defineConfig({
                     ui: {
                       component: "textarea",
                     },
+                  },
+                  {
+                    type: "string",
+                    name: "linkText",
+                    label: "Link Text",
+                    required: false,
+                  },
+                  {
+                    type: "string",
+                    name: "linkUrl",
+                    label: "Link URL",
+                    required: false,
                   },
                 ],
               },
@@ -1201,58 +1231,17 @@ export default defineConfig({
                   component: "textarea",
                 },
               },
-            ],
-          },
-          {
-            type: "object",
-            name: "faq",
-            label: "FAQ Section",
-            description: "Frequently asked questions",
-            fields: [
               {
                 type: "string",
-                name: "sectionLabel",
-                label: "Section Label",
+                name: "buttonText",
+                label: "Button Text",
                 required: false,
               },
               {
                 type: "string",
-                name: "heading",
-                label: "Heading",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "description",
-                label: "Description",
+                name: "buttonLink",
+                label: "Button Link",
                 required: false,
-                ui: {
-                  component: "textarea",
-                },
-              },
-              {
-                type: "object",
-                name: "items",
-                label: "FAQ Items",
-                description: "List of questions and answers",
-                list: true,
-                fields: [
-                  {
-                    type: "string",
-                    name: "question",
-                    label: "Question",
-                    required: true,
-                  },
-                  {
-                    type: "string",
-                    name: "answer",
-                    label: "Answer",
-                    required: true,
-                    ui: {
-                      component: "textarea",
-                    },
-                  },
-                ],
               },
             ],
           },
@@ -1414,6 +1403,18 @@ export default defineConfig({
                   component: "textarea",
                 },
               },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
+              },
             ],
           },
           {
@@ -1530,24 +1531,16 @@ export default defineConfig({
                 },
               },
               {
-                type: "object",
-                name: "primaryBtn",
-                label: "Primary Button",
-                description: "Description put in here",
-                fields: [
-                  {
-                    type: "string",
-                    name: "text",
-                    label: "Text",
-                    required: true,
-                  },
-                  {
-                    type: "string",
-                    name: "link",
-                    label: "Link",
-                    required: true,
-                  },
-                ],
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: true,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: true,
               },
 
             ],
@@ -1715,16 +1708,13 @@ export default defineConfig({
           },
         ],
       },
-
-
-
       // ============================================
       // 💡 OPTIONAL COLLECTIONS
       // Project Starter comments/uncomments these based on page selection
       // To manually re-enable: Uncomment the collection block
       // ============================================
 
-      // HIDDEN_BY_PROJECT_STARTER: careersPage
+      // HIDDEN_BY_PROJECT_STARTER: careers/jobs Page
       // --- JOBS / CAREERS (Used by src/pages/careers/) ---
       // Jobs / Careers Page
       {
@@ -1769,6 +1759,18 @@ export default defineConfig({
                   component: "textarea",
                 },
               },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
+              },
             ],
           },
           {
@@ -1776,6 +1778,30 @@ export default defineConfig({
             name: "values",
             label: "Values / Why Join Us",
             fields: [
+              {
+                type: "string",
+                name: "sectionLabel",
+                label: "Section Label",
+                description: "Small text above heading (e.g., 'Our Values')",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "heading",
+                label: "Heading",
+                description: "Main heading for the section",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "description",
+                label: "Description",
+                description: "Description text below the heading",
+                required: false,
+                ui: {
+                  component: "textarea",
+                },
+              },
               {
                 type: "object",
                 name: "items",
@@ -1880,7 +1906,7 @@ export default defineConfig({
           },
         ],
       },
-      // HIDDEN_BY_PROJECT_STARTER: careers
+      // HIDDEN_BY_PROJECT_STARTER: careers/jobs Posts
       {
         name: "careers",
         label: "Jobs Posts",
@@ -2004,6 +2030,18 @@ export default defineConfig({
                   component: "textarea",
                 },
               },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
+              },
             ],
           },
           {
@@ -2117,7 +2155,7 @@ export default defineConfig({
           },
         ],
       },
-      // HIDDEN_BY_PROJECT_STARTER: events
+      // HIDDEN_BY_PROJECT_STARTER: Events Posts
       {
         name: "events",
         label: "Events Posts",
@@ -2246,6 +2284,18 @@ export default defineConfig({
                 ui: {
                   component: "textarea",
                 },
+              },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
               },
             ],
           },
@@ -2456,6 +2506,18 @@ export default defineConfig({
                   component: "textarea",
                 },
               },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
+              },
             ],
           },
           {
@@ -2502,7 +2564,7 @@ export default defineConfig({
           },
         ],
       },
-      // HIDDEN_BY_PROJECT_STARTER: partners
+      // HIDDEN_BY_PROJECT_STARTER: Partners Posts
       {
         name: "partners",
         label: "Partners Posts",
@@ -2605,6 +2667,18 @@ export default defineConfig({
                   component: "textarea",
                 },
               },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
+              },
             ],
           },
           {
@@ -2648,6 +2722,294 @@ export default defineConfig({
                 required: true,
               },
             ],
+          },
+        ],
+      },
+      // HIDDEN_BY_PROJECT_STARTER: Reviews Posts
+      {
+        name: "testimonials",
+        label: "Reviews Posts",
+        path: "src/content/testimonials",
+        format: "md",
+        fields: [
+          {
+            type: "boolean",
+            name: "isActive",
+            label: "Active",
+            description: "Show this testimonial on the reviews page",
+          },
+          {
+            type: "string",
+            name: "authorName",
+            label: "Author Name",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "string",
+            name: "authorTitle",
+            label: "Author Title",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "authorCompany",
+            label: "Company",
+          },
+          {
+            type: "image",
+            name: "authorImage",
+            label: "Author Photo",
+          },
+          {
+            type: "number",
+            name: "rating",
+            label: "Rating (1-5)",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "quote",
+            label: "Testimonial Quote",
+            ui: { component: "textarea" },
+            required: true,
+          },
+          {
+            type: "boolean",
+            name: "isFeatured",
+            label: "Featured",
+          },
+          {
+            type: "number",
+            name: "order",
+            label: "Display Order",
+          },
+        ],
+      },
+      // --- PORTFOLIO / WORK (Used by src/pages/work/) ---
+      // HIDDEN_BY_PROJECT_STARTER: work
+      {
+        name: "work",
+        label: "Work Page",
+        path: "src/content/work",
+        format: "md",
+        ui: {
+          allowedActions: {
+            create: false,
+            delete: false,
+          },
+        },
+        fields: [
+          {
+            type: "object",
+            name: "hero",
+            label: "Hero Section",
+            description: "Main hero section at the top of the page",
+            fields: [
+              {
+                type: "string",
+                name: "label",
+                label: "Label",
+                description: "Small text above heading (e.g., 'Portfolio')",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "heading",
+                label: "Heading",
+                description: "Main heading for the hero section",
+                required: true,
+              },
+              {
+                type: "string",
+                name: "description",
+                label: "Description",
+                description: "Description text for the hero section",
+                required: true,
+                ui: {
+                  component: "textarea",
+                },
+              },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
+              },
+            ],
+          },
+          {
+            type: "object",
+            name: "workGrid",
+            label: "Work Grid Section",
+            description: "Portfolio/work projects showcase",
+            fields: [
+              {
+                type: "string",
+                name: "sectionLabel",
+                label: "Section Label",
+                description: "Small text above the heading",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "heading",
+                label: "Heading",
+                description: "Main heading for the work grid section",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "description",
+                label: "Description",
+                description: "Description text below the heading",
+                required: false,
+                ui: {
+                  component: "textarea",
+                },
+              },
+              {
+                type: "string",
+                name: "ctaText",
+                label: "CTA Text",
+                description: "Text for the call-to-action link",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "ctaLink",
+                label: "CTA Link",
+                description: "URL for the call-to-action link",
+                required: false,
+              },
+            ],
+          },
+          {
+            type: "object",
+            name: "cta",
+            label: "CTA Section",
+            description: "Call to Action section at the bottom of the page",
+            fields: [
+              {
+                type: "string",
+                name: "sectionLabel",
+                label: "Section Label",
+                description: "Small text above heading",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "heading",
+                label: "Heading",
+                required: true,
+              },
+              {
+                type: "string",
+                name: "description",
+                label: "Description",
+                required: true,
+                ui: {
+                  component: "textarea",
+                },
+              },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: true,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: true,
+              },
+            ],
+          },
+        ],
+      },
+      // HIDDEN_BY_PROJECT_STARTER: workPosts
+      // Work Posts (Portfolio Projects)
+      {
+        name: "workPosts",
+        label: "Work Posts",
+        path: "src/content/workPosts",
+        format: "md",
+        fields: [
+          {
+            type: "string",
+            name: "slug",
+            label: "Slug",
+            description: "URL-friendly identifier (e.g., 'website-redesign')",
+            required: true,
+          },
+          {
+            type: "boolean",
+            name: "isActive",
+            label: "Active",
+            description: "Show this project on the work page",
+          },
+          {
+            type: "string",
+            name: "title",
+            label: "Project Title",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "string",
+            name: "client",
+            label: "Client Name",
+          },
+          {
+            type: "string",
+            name: "category",
+            label: "Category",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "industry",
+            label: "Industry",
+          },
+          {
+            type: "string",
+            name: "description",
+            label: "Description",
+            ui: { component: "textarea" },
+            required: true,
+          },
+          {
+            type: "image",
+            name: "image",
+            label: "Project Image",
+          },
+          {
+            type: "string",
+            name: "link",
+            label: "Project Link",
+          },
+          {
+            type: "boolean",
+            name: "isFeatured",
+            label: "Featured Project",
+          },
+          {
+            type: "number",
+            name: "order",
+            label: "Display Order",
+          },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Body",
+            isBody: true,
           },
         ],
       },
@@ -2695,6 +3057,18 @@ export default defineConfig({
                   component: "textarea",
                 },
               },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
+              },
             ],
           },
           {
@@ -2714,13 +3088,13 @@ export default defineConfig({
                 type: "string",
                 name: "heading",
                 label: "Heading",
-                required: true,
+                required: false,
               },
               {
                 type: "string",
                 name: "description",
                 label: "Description",
-                required: true,
+                required: false,
                 ui: {
                   component: "textarea",
                 },
@@ -2942,7 +3316,7 @@ export default defineConfig({
       },
       // HIDDEN_BY_PROJECT_STARTER: faq
       // FAQ Page
-        {
+      {
         name: "faqPage",
         label: "FAQ Page",
         path: "src/content/faqPage",
@@ -2983,6 +3357,18 @@ export default defineConfig({
                 ui: {
                   component: "textarea",
                 },
+              },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
               },
             ],
           },
@@ -3073,6 +3459,18 @@ export default defineConfig({
                 ui: {
                   component: "textarea",
                 },
+              },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
               },
             ],
           },
@@ -3301,414 +3699,6 @@ export default defineConfig({
           },
         ],
       },
-      // HIDDEN_BY_PROJECT_STARTER: reviews
-      {
-        name: "testimonials",
-        label: "Reviews Posts",
-        path: "src/content/testimonials",
-        format: "md",
-        fields: [
-          {
-            type: "boolean",
-            name: "isActive",
-            label: "Active",
-            description: "Show this testimonial on the reviews page",
-          },
-          {
-            type: "string",
-            name: "authorName",
-            label: "Author Name",
-            isTitle: true,
-            required: true,
-          },
-          {
-            type: "string",
-            name: "authorTitle",
-            label: "Author Title",
-            required: true,
-          },
-          {
-            type: "string",
-            name: "authorCompany",
-            label: "Company",
-          },
-          {
-            type: "image",
-            name: "authorImage",
-            label: "Author Photo",
-          },
-          {
-            type: "number",
-            name: "rating",
-            label: "Rating (1-5)",
-            required: true,
-          },
-          {
-            type: "string",
-            name: "quote",
-            label: "Testimonial Quote",
-            ui: { component: "textarea" },
-            required: true,
-          },
-          {
-            type: "boolean",
-            name: "isFeatured",
-            label: "Featured",
-          },
-          {
-            type: "number",
-            name: "order",
-            label: "Display Order",
-          },
-        ],
-      },
-
-      // --- PORTFOLIO / WORK (Used by src/pages/work/) ---
-      // HIDDEN_BY_PROJECT_STARTER: work
-      {
-        name: "work",
-        label: "Work Page",
-        path: "src/content/work",
-        format: "md",
-        ui: {
-          allowedActions: {
-            create: false,
-            delete: false,
-          },
-        },
-        fields: [
-          {
-            type: "object",
-            name: "hero",
-            label: "Hero Section",
-            description: "Main hero section at the top of the page",
-            fields: [
-              {
-                type: "string",
-                name: "label",
-                label: "Label",
-                description: "Small text above heading (e.g., 'Portfolio')",
-                required: false,
-              },
-              {
-                type: "string",
-                name: "heading",
-                label: "Heading",
-                description: "Main heading for the hero section",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "description",
-                label: "Description",
-                description: "Description text for the hero section",
-                required: true,
-                ui: {
-                  component: "textarea",
-                },
-              },
-            ],
-          },
-          {
-            type: "object",
-            name: "cta",
-            label: "CTA Section",
-            description: "Call to Action section at the bottom of the page",
-            fields: [
-              {
-                type: "string",
-                name: "label",
-                label: "Label",
-                description: "Small text above heading",
-                required: false,
-              },
-              {
-                type: "string",
-                name: "heading",
-                label: "Heading",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "description",
-                label: "Description",
-                required: true,
-                ui: {
-                  component: "textarea",
-                },
-              },
-              {
-                type: "string",
-                name: "buttonText",
-                label: "Button Text",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "buttonLink",
-                label: "Button Link",
-                required: true,
-              },
-            ],
-          },
-        ],
-      },
-      // HIDDEN_BY_PROJECT_STARTER: workPosts
-      // Work Posts (Portfolio Projects)
-      {
-        name: "workPosts",
-        label: "Work Posts",
-        path: "src/content/workPosts",
-        format: "md",
-        fields: [
-          {
-            type: "string",
-            name: "slug",
-            label: "Slug",
-            description: "URL-friendly identifier (e.g., 'website-redesign')",
-            required: true,
-          },
-          {
-            type: "boolean",
-            name: "isActive",
-            label: "Active",
-            description: "Show this project on the work page",
-          },
-          {
-            type: "string",
-            name: "title",
-            label: "Project Title",
-            isTitle: true,
-            required: true,
-          },
-          {
-            type: "string",
-            name: "client",
-            label: "Client Name",
-          },
-          {
-            type: "string",
-            name: "category",
-            label: "Category",
-            required: true,
-          },
-          {
-            type: "string",
-            name: "industry",
-            label: "Industry",
-          },
-          {
-            type: "string",
-            name: "description",
-            label: "Description",
-            ui: { component: "textarea" },
-            required: true,
-          },
-          {
-            type: "image",
-            name: "image",
-            label: "Project Image",
-          },
-          {
-            type: "string",
-            name: "link",
-            label: "Project Link",
-          },
-          {
-            type: "boolean",
-            name: "isFeatured",
-            label: "Featured Project",
-          },
-          {
-            type: "number",
-            name: "order",
-            label: "Display Order",
-          },
-          {
-            type: "rich-text",
-            name: "body",
-            label: "Body",
-            isBody: true,
-          },
-        ],
-      },
-      // HIDDEN_BY_PROJECT_STARTER: design-blueprints-content
-      {
-        name: "templates",
-        label: "Design Blueprints",
-        path: "src/content/templates",
-        format: "md",
-        ui: {
-          filename: {
-            readonly: false,
-          },
-        },
-        fields: [
-          {
-            type: "string",
-            name: "title",
-            label: "Title",
-            required: true,
-          },
-          {
-            type: "string",
-            name: "subtitle",
-            label: "Subtitle",
-            required: true,
-            ui: {
-              component: "textarea",
-            },
-          },
-          {
-            type: "string",
-            name: "category",
-            label: "Category",
-            list: true,
-            required: true,
-            options: [
-              "Accountants",
-              "Architects",
-              "Art Galleries",
-              "Barbers",
-              "Bars",
-              "Beauty Salons",
-              "Bistros",
-              "Bookkeepers",
-              "Boutiques",
-              "Builders",
-              "Building Inspectors",
-              "Business Coaches",
-              "Business Consultants",
-              "Cafes",
-              "Catering",
-              "Chiropractors",
-              "Civil Engineers",
-              "Cleaners",
-              "Commercial Printing",
-              "Conveyancers",
-              "Dental Clinics",
-              "Dentists",
-              "Detailers",
-              "Dry Cleaners",
-              "Electricians",
-              "Event Planners",
-              "Financial Advisors",
-              "Financial Planners",
-              "Florists",
-              "Freight",
-              "Garden Designers",
-              "Gas Fitters",
-              "General Building Contractors",
-              "General Practitioners",
-              "Gift Shops",
-              "GPs",
-              "Guttering",
-              "Gyms",
-              "Hair Salons",
-              "Handyman",
-              "Hotels",
-              "HR Agencies",
-              "HVAC Technicians",
-              "Industrial Safety Equipment",
-              "Insurance Brokers",
-              "Interior Designers",
-              "IT Support",
-              "Landscapers",
-              "Lawyers",
-              "Locksmiths",
-              "Logistics",
-              "Manufacturers",
-              "Marketing Agencies",
-              "Mechanics",
-              "Medical Centres",
-              "Medical Specialists",
-              "Migration Agents",
-              "Naturopaths",
-              "Nightclubs",
-              "Optometrists",
-              "Orthodontists",
-              "Osteopaths",
-              "Packaging",
-              "Pest Control",
-              "Pet Grooming",
-              "Physiotherapists",
-              "Plumbers",
-              "Podiatrists",
-              "Pool Maintenance",
-              "PR Agencies",
-              "Property Developers",
-              "Psychologists",
-              "Raw Materials",
-              "Real Estate",
-              "Recruiters",
-              "Restaurants",
-              "Roofers",
-              "SaaS Providers",
-              "Safety Equipment",
-              "Security Installers",
-              "Signage",
-              "Solar Installers",
-              "Solicitors",
-              "Spas",
-              "Surveyors",
-              "Therapists",
-              "Tour Operators",
-              "Urban Planners",
-              "Veterinary Clinics",
-              "Vets",
-              "Warehousing",
-              "Wedding Venues",
-              "Wholesalers",
-              "Yoga Studios",
-            ],
-          },
-          {
-            type: "image",
-            name: "image",
-            label: "Template Image",
-            required: true,
-          },
-          {
-            type: "string",
-            name: "link",
-            label: "Preview Link",
-            required: true,
-          },
-          {
-            type: "string",
-            name: "aboutText",
-            label: "About Text",
-            ui: {
-              component: "textarea",
-            },
-          },
-          {
-            type: "string",
-            name: "features",
-            label: "Features List",
-            description: "Description put in here",
-            list: true,
-          },
-          {
-            type: "string",
-            name: "lastUpdated",
-            label: "Last Updated",
-            description: "e.g. 'December 2025'",
-          },
-          {
-            type: "string",
-            name: "format",
-            label: "Format",
-            description: "e.g. 'Astro / Tailwind CSS'",
-          },
-          {
-            type: "number",
-            name: "order",
-            label: "Display Order",
-            description: "Description put in here",
-          },
-        ],
-      },
       // HIDDEN_BY_PROJECT_STARTER: quote
       {
         name: "quote",
@@ -3748,6 +3738,18 @@ export default defineConfig({
                   component: "textarea",
                 },
               },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
+              },
             ],
           },
           {
@@ -3755,6 +3757,12 @@ export default defineConfig({
             name: "thankYou",
             label: "Thank You Message",
             fields: [
+              {
+                type: "string",
+                name: "sectionLabel",
+                label: "Section Label",
+                required: false,
+              },
               {
                 type: "string",
                 name: "heading",
@@ -3774,12 +3782,288 @@ export default defineConfig({
                 type: "string",
                 name: "buttonText",
                 label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
+              },
+            ],
+          },
+        ],
+      },
+      // About Page
+      {
+        name: "about",
+        label: "About Page",
+        path: "src/content/about",
+        format: "md",
+        ui: {
+          allowedActions: {
+            create: false,
+            delete: false,
+          },
+        },
+        fields: [
+          {
+            type: "object",
+            name: "hero",
+            label: "Hero Section",
+            description: "Main hero section at the top of the page",
+            fields: [
+              {
+                type: "string",
+                name: "label",
+                label: "Label",
+                description: "Small text above heading (e.g., 'ABOUT US')",
+                required: true,
+              },
+              {
+                type: "string",
+                name: "heading",
+                label: "Heading",
+                required: true,
+                ui: {
+                  component: "textarea",
+                },
+              },
+              {
+                type: "string",
+                name: "description",
+                label: "Description",
+                required: true,
+                ui: {
+                  component: "textarea",
+                },
+              },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
+              },
+            ],
+          },
+
+          {
+            type: "object",
+            name: "values",
+            label: "Values Section",
+            description: "Company values and beliefs",
+            fields: [
+              {
+                type: "string",
+                name: "sectionLabel",
+                label: "Section Label",
+                required: true,
+              },
+              {
+                type: "string",
+                name: "heading",
+                label: "Heading",
+                description: "What we believe",
+                required: true,
+              },
+              {
+                type: "string",
+                name: "description",
+                label: "Description",
+                description: "Description put in here",
+                required: true,
+                ui: {
+                  component: "textarea",
+                },
+              },
+              {
+                type: "object",
+                name: "items",
+                label: "Value Cards",
+                description: "Description put in here",
+                list: true,
+                fields: [
+                  {
+                    type: "string",
+                    name: "icon",
+                    label: "Icon (Emoji)",
+                    required: true,
+                  },
+                  {
+                    type: "string",
+                    name: "title",
+                    label: "Title",
+                    description: "Description put in here",
+                    required: true,
+                  },
+                  {
+                    type: "string",
+                    name: "description",
+                    label: "Description",
+                    description: "Description put in here",
+                    required: true,
+                    ui: {
+                      component: "textarea",
+                    },
+                  },
+                  {
+                    type: "string",
+                    name: "linkText",
+                    label: "Link Text",
+                    required: false,
+                  },
+                  {
+                    type: "string",
+                    name: "linkUrl",
+                    label: "Link URL",
+                    required: false,
+                  },
+                ],
+              },
+
+
+            ],
+          },
+          {
+            type: "object",
+            name: "story",
+            label: "Story Section",
+            description: "The company story and history",
+            fields: [
+              {
+                type: "string",
+                name: "sectionLabel",
+                label: "Section Label",
+                required: true,
+              },
+              {
+                type: "string",
+                name: "heading",
+                label: "Heading",
+                description: "Description put in here",
+                required: true,
+              },
+              {
+                type: "object",
+                name: "items",
+                label: "Story Description",
+                description: "Description put in here",
+                list: true,
+                fields: [
+                  {
+                    type: "string",
+                    name: "description",
+                    label: "Description",
+                    description: "Description put in here",
+                    required: true,
+                    ui: {
+                      component: "textarea",
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+
+          {
+            type: "object",
+            name: "faq",
+            label: "FAQ Section",
+            description: "Frequently asked questions",
+            fields: [
+              {
+                type: "string",
+                name: "sectionLabel",
+                label: "Section Label",
+                required: true,
+              },
+              {
+                type: "string",
+                name: "heading",
+                label: "Heading",
+                required: true,
+              },
+              {
+                type: "string",
+                name: "description",
+                label: "Description",
+                required: true,
+                ui: {
+                  component: "textarea",
+                },
+              },
+              {
+                type: "object",
+                name: "items",
+                label: "FAQ Items",
+                list: true,
+                fields: [
+                  {
+                    type: "string",
+                    name: "question",
+                    label: "Question",
+                    required: true,
+                  },
+                  {
+                    type: "string",
+                    name: "answer",
+                    label: "Answer",
+                    required: true,
+                    ui: {
+                      component: "textarea",
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: "object",
+            name: "cta",
+            label: "CTA Section",
+            description: "Call to action section",
+            fields: [
+              {
+                type: "string",
+                name: "sectionLabel",
+                label: "Section Label",
+                required: true,
+              },
+              {
+                type: "string",
+                name: "heading",
+                label: "Heading",
+                description: "Description put in here",
+                required: true,
+              },
+              {
+                type: "string",
+                name: "description",
+                label: "Description",
+                description: "Description put in here",
+                required: true,
+                ui: {
+                  component: "textarea",
+                },
+              },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                description: "Description put in here",
                 required: true,
               },
               {
                 type: "string",
                 name: "buttonLink",
                 label: "Button Link",
+                description: "Description put in here",
                 required: true,
               },
             ],
@@ -3886,6 +4170,7 @@ export default defineConfig({
           },
         ],
       },
+      // Globals
       {
         name: "globals",
         label: "Globals",
@@ -4328,6 +4613,7 @@ export default defineConfig({
           },
         ],
       },
+      // Contact Page
       {
         name: "contact",
         label: "Contact Page",
@@ -4370,6 +4656,18 @@ export default defineConfig({
                 ui: {
                   component: "textarea",
                 },
+              },
+              {
+                type: "string",
+                name: "buttonText",
+                label: "Button Text",
+                required: false,
+              },
+              {
+                type: "string",
+                name: "buttonLink",
+                label: "Button Link",
+                required: false,
               },
             ],
           },
@@ -4578,6 +4876,13 @@ export default defineConfig({
             fields: [
               {
                 type: "string",
+                name: "sectionLabel",
+                label: "Section Label",
+                description: "Section lanbel for thank you page",
+                required: false,
+              },
+              {
+                type: "string",
                 name: "heading",
                 label: "Heading",
                 description: "Main heading for thank you page",
@@ -4667,258 +4972,6 @@ export default defineConfig({
           },
         ],
       },
-
-      {
-        name: "about",
-        label: "About Page",
-        path: "src/content/about",
-        format: "md",
-        ui: {
-          allowedActions: {
-            create: false,
-            delete: false,
-          },
-        },
-        fields: [
-          {
-            type: "object",
-            name: "hero",
-            label: "Hero Section",
-            description: "Main hero section at the top of the page",
-            fields: [
-              {
-                type: "string",
-                name: "label",
-                label: "Label",
-                description: "Small text above heading (e.g., 'ABOUT US')",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "heading",
-                label: "Heading",
-                required: true,
-                ui: {
-                  component: "textarea",
-                },
-              },
-              {
-                type: "string",
-                name: "description",
-                label: "Description",
-                required: true,
-                ui: {
-                  component: "textarea",
-                },
-              },
-            ],
-          },
-
-          {
-            type: "object",
-            name: "values",
-            label: "Values Section",
-            description: "Company values and beliefs",
-            fields: [
-              {
-                type: "string",
-                name: "sectionLabel",
-                label: "Section Label",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "heading",
-                label: "Heading",
-                description: "What we believe",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "description",
-                label: "Description",
-                description: "Description put in here",
-                required: true,
-                ui: {
-                  component: "textarea",
-                },
-              },
-              {
-                type: "object",
-                name: "items",
-                label: "Value Cards",
-                description: "Description put in here",
-                list: true,
-                fields: [
-                  {
-                    type: "string",
-                    name: "icon",
-                    label: "Icon (Emoji)",
-                    required: true,
-                  },
-                  {
-                    type: "string",
-                    name: "title",
-                    label: "Title",
-                    description: "Description put in here",
-                    required: true,
-                  },
-                  {
-                    type: "string",
-                    name: "description",
-                    label: "Description",
-                    description: "Description put in here",
-                    required: true,
-                    ui: {
-                      component: "textarea",
-                    },
-                  },
-                ],
-              },
-
-
-            ],
-          },
-          {
-            type: "object",
-            name: "story",
-            label: "Story Section",
-            description: "The company story and history",
-            fields: [
-              {
-                type: "string",
-                name: "sectionLabel",
-                label: "Section Label",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "heading",
-                label: "Heading",
-                description: "Description put in here",
-                required: true,
-              },
-              {
-                type: "object",
-                name: "items",
-                label: "Story Description",
-                description: "Description put in here",
-                list: true,
-                fields: [
-                  {
-                    type: "string",
-                    name: "description",
-                    label: "Description",
-                    description: "Description put in here",
-                    required: true,
-                    ui: {
-                      component: "textarea",
-                    },
-                  },
-                ],
-              },
-            ],
-          },
-
-          {
-            type: "object",
-            name: "faq",
-            label: "FAQ Section",
-            description: "Frequently asked questions",
-            fields: [
-              {
-                type: "string",
-                name: "sectionLabel",
-                label: "Section Label",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "heading",
-                label: "Heading",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "description",
-                label: "Description",
-                required: true,
-                ui: {
-                  component: "textarea",
-                },
-              },
-              {
-                type: "object",
-                name: "items",
-                label: "FAQ Items",
-                list: true,
-                fields: [
-                  {
-                    type: "string",
-                    name: "question",
-                    label: "Question",
-                    required: true,
-                  },
-                  {
-                    type: "string",
-                    name: "answer",
-                    label: "Answer",
-                    required: true,
-                    ui: {
-                      component: "textarea",
-                    },
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            type: "object",
-            name: "cta",
-            label: "CTA Section",
-            description: "Call to action section",
-            fields: [
-              {
-                type: "string",
-                name: "sectionLabel",
-                label: "Section Label",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "heading",
-                label: "Heading",
-                description: "Description put in here",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "description",
-                label: "Description",
-                description: "Description put in here",
-                required: true,
-                ui: {
-                  component: "textarea",
-                },
-              },
-              {
-                type: "string",
-                name: "buttonText",
-                label: "Button Text",
-                description: "Description put in here",
-                required: true,
-              },
-              {
-                type: "string",
-                name: "buttonLink",
-                label: "Button Link",
-                description: "Description put in here",
-                required: true,
-              },
-            ],
-          },
-        ],
-      },
       // Legal Pages
       {
         name: "legalPages",
@@ -4951,6 +5004,222 @@ export default defineConfig({
             name: "body",
             label: "Body content",
             isBody: true,
+          },
+        ],
+      },
+      // FLEXIBLE PAGE WITH EXISTING BLOCKS
+      {
+        name: "flexiblePage",
+        label: "Flexible Pages",
+        path: "src/content/flexiblePages",
+        format: "md",
+        fields: [
+          {
+            type: "string",
+            name: "title",
+            label: "Page Title",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "string",
+            name: "description",
+            label: "Meta Description",
+            ui: {
+              component: "textarea",
+            },
+          },
+          {
+            type: "object",
+            name: "blocks",
+            label: "Page Blocks",
+            list: true,
+            templates: [
+              {
+                name: "hero",
+                label: "Hero Section",
+                fields: [
+                  {
+                    type: "string",
+                    name: "variant",
+                    label: "Layout Variant",
+                    options: [
+                      { label: "Center", value: "center" },
+                      { label: "Left", value: "left" },
+                    ],
+                  },
+                  {
+                    type: "string",
+                    name: "label",
+                    label: "Label",
+                    description: "Small text above heading",
+                    required: false,
+                  },
+                  {
+                    type: "string",
+                    name: "heading",
+                    label: "Heading",
+                    required: false,
+                  },
+                  {
+                    type: "string",
+                    name: "description",
+                    label: "Description",
+                    ui: { component: "textarea" },
+                    required: false,
+                  },
+                  {
+                    type: "string",
+                    name: "buttonText",
+                    label: "Button Text",
+                    required: false,
+                  },
+                  {
+                    type: "string",
+                    name: "buttonLink",
+                    label: "Button Link",
+                    required: false,
+                  },
+                ],
+              },
+              {
+                name: "features",
+                label: "Features / Card Grid",
+                fields: [
+                  {
+                    type: "string",
+                    name: "variant",
+                    label: "Layout Variant",
+                    options: [
+                      { label: "Center", value: "center" },
+                      { label: "Left", value: "left" },
+                    ],
+                  },
+                  {
+                    type: "number",
+                    name: "columns",
+                    label: "Columns",
+                    description: "Number of columns (2, 3, or 4)",
+                  },
+                  {
+                    type: "string",
+                    name: "sectionLabel",
+                    label: "Section Label",
+                    required: false,
+                  },
+                  {
+                    type: "string",
+                    name: "heading",
+                    label: "Heading",
+                    required: false,
+                  },
+                  {
+                    type: "string",
+                    name: "description",
+                    label: "Description",
+                    ui: { component: "textarea" },
+                    required: false,
+                  },
+                  {
+                    type: "object",
+                    name: "items",
+                    label: "Feature Items",
+                    list: true,
+                    fields: [
+                      {
+                        type: "string",
+                        name: "icon",
+                        label: "Icon (Emoji)",
+                        required: true,
+                      },
+                      {
+                        type: "string",
+                        name: "title",
+                        label: "Title",
+                        required: true,
+                      },
+                      {
+                        type: "string",
+                        name: "description",
+                        label: "Description",
+                        ui: { component: "textarea" },
+                        required: true,
+                      },
+                      {
+                        type: "string",
+                        name: "linkText",
+                        label: "Link Text",
+                        required: false,
+                      },
+                      {
+                        type: "string",
+                        name: "linkUrl",
+                        label: "Link URL",
+                        required: false,
+                      },
+                    ],
+                  },
+                  {
+                    type: "string",
+                    name: "ctaText",
+                    label: "CTA Text",
+                    required: false,
+                  },
+                  {
+                    type: "string",
+                    name: "ctaLink",
+                    label: "CTA Link",
+                    required: false,
+                  },
+                ],
+              },
+              {
+                name: "cta",
+                label: "Call to Action",
+                fields: [
+                  {
+                    type: "string",
+                    name: "variant",
+                    label: "Layout Variant",
+                    options: [
+                      { label: "Center", value: "center" },
+                      { label: "Left", value: "left" },
+                    ],
+                  },
+                  {
+                    type: "string",
+                    name: "sectionLabel",
+                    label: "Section Label",
+                    required: false,
+                  },
+                  {
+                    type: "string",
+                    name: "heading",
+                    label: "Heading",
+                    required: false,
+                  },
+                  {
+                    type: "string",
+                    name: "description",
+                    label: "Description",
+                    ui: { component: "textarea" },
+                    required: false,
+                  },
+                  {
+                    type: "string",
+                    name: "buttonText",
+                    label: "Button Text",
+                    required: false,
+                  },
+                  {
+                    type: "string",
+                    name: "buttonLink",
+                    label: "Button Link",
+                    required: false,
+                  },
+                ],
+              },
+            ],
           },
         ],
       },

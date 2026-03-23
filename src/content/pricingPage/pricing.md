@@ -2,28 +2,20 @@
 hero:
   label: Investment
   heading: Transparent pricing
-  description: >-
-    No hidden fees, no surprise costs. Just clear, upfront pricing for
-    high-performance digital assets.
+  description: 'No hidden fees, no surprise costs. Just clear, upfront pricing for high-performance digital assets.'
 pricingTiers:
   sectionLabel: Pricing
-  heading: WeMakeSmall Pricing & Service Tiers
-  description: >-
-    All projects are built for extreme speed (0.8s load times) and include
-    **100% ownership** of your code. We follow a 50% deposit / 50% on launch
-    payment structure.
-  footerNote: >-
-    * Listed prices are considered a starting point. Final costs may vary
-    depending on requested features, design complexity, and specific build
-    requirements of your project.
+  heading: Listed prices are considered a starting point.
+  description: '* Listed prices are considered a starting point. Final costs may vary depending on requested features, design complexity, and specific build requirements of your project.'
+  footerNote: '* Listed prices are considered a starting point. Final costs may vary depending on requested features, design complexity, and specific build requirements of your project.'
   ctaText: Get a detailed quote
   ctaLink: /quote
   tiers:
     - name: The Landing Page
-      description: Specific campaigns, lead magnets, or "Coming Soon" pages.
+      description: 'Specific campaigns, lead magnets, or "Coming Soon" pages.'
       price: $500*
       priceLabel: Starting at
-      isPopular: false
+      isPopular: true
       buttonText: Get Started
       buttonLink: /contact?subject=New+Project&projectType=Landing+Page
       learnMoreLink: /pricing/landing-page
@@ -47,7 +39,7 @@ pricingTiers:
           value: Contact
           included: true
         - label: Payments
-          value: No
+          value: 'No'
           included: false
         - label: Training
           value: 15-min Video Guide
@@ -87,7 +79,7 @@ pricingTiers:
           included: true
     - name: The Full Website
       description: Growing businesses requiring a full authority-building presence.
-      price: $1,000*
+      price: '$1,000*'
       priceLabel: Starting at
       isPopular: false
       buttonText: Get Started
@@ -121,53 +113,31 @@ pricingTiers:
 features:
   sectionLabel: Standard Features
   heading: What's Included in Every Build
-  description: >-
-    Every website we build comes fully loaded with premium features. We don't
-    believe in charging extra for fundamental best practices and
-    high-performance infrastructure.
+  description: Every website we build comes fully loaded with premium features. We don't believe in charging extra for fundamental best practices and high-performance infrastructure.
   items:
-    - icon: 📱
+    - icon: "\U0001F4F1"
       title: Mobile-First Design
-      description: >-
-        All projects are natively designed mobile-first. We thoroughly test on
-        real devices to guarantee a seamless, ultra-responsive experience for
-        everyone.
+      description: 'All projects are natively designed mobile-first. We thoroughly test on real devices to guarantee a seamless, ultra-responsive experience for everyone.'
     - icon: ⚡️
       title: Zero-JS Speed
-      description: >-
-        We build with Astro to guarantee near-instant loading times. Your
-        website will feel lightning-fast and responsive, even on poor 4G mobile
-        connections.
+      description: 'We build with Astro to guarantee near-instant loading times. Your website will feel lightning-fast and responsive, even on poor 4G mobile connections.'
     - icon: ▲
       title: Vercel Hosting Setup
-      description: >-
-        We leverage Vercel's global edge network for military-grade security
-        and speed. We handle all deployment and maintenance so you never need
-        to worry.
-    - icon: 📍
+      description: We leverage Vercel's global edge network for military-grade security and speed. We handle all deployment and maintenance so you never need to worry.
+    - icon: "\U0001F4CD"
       title: Local SEO
-      description: >-
-        We build technical SEO excellence directly into your code's foundation.
-        This strategic optimisation ensures Google ranks your local business
-        higher.
-    - icon: 🔑
+      description: We build technical SEO excellence directly into your code's foundation. This strategic optimisation ensures Google ranks your local business higher.
+    - icon: "\U0001F511"
       title: 100% Ownership
-      description: >-
-        We believe you should unconditionally own your digital property. We
-        provide full code ownership without locks, so you are never tied to a
-        platform.
+      description: 'We believe you should unconditionally own your digital property. We provide full code ownership without locks, so you are never tied to a platform.'
     - icon: ♿️
       title: WCAG Accessibility
-      description: >-
-        Every build includes integrated accessibility best practices. We ensure
-        your website meets strict compliance guidelines to be usable for all
-        visitors.
+      description: Every build includes integrated accessibility best practices. We ensure your website meets strict compliance guidelines to be usable for all visitors.
 cta:
   label: Get started
   heading: Ready to build something great?
-  description: >-
-    Join thousands of developers building accessible, high-performance
-    websites!
+  description: 'Join thousands of developers building accessible, high-performance websites!'
   buttonText: Get your free audit
   buttonLink: /audit
 ---
+

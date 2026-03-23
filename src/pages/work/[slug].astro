@@ -12,16 +12,16 @@ export async function getStaticPaths() {
     const posts = await getCollection("workPosts");
 
     return posts
-        .filter((post) => post.data.isActive !== false && post.data.slug)
+        .filter((post) => post.data.isActive !== false)
         .map((post) => ({
-            params: { slug: post.data.slug },
+            params: { slug: post.data.slug ?? post.id },
             props: { post: post.data },
         }));
 }
 
 const { post } = Astro.props;
 
-// Get CTA from work page content
+// Get CTA from work page content (already fetched in getStaticPaths, but needed here too)
 const workPage = await getEntry("work", "index");
 const cta = workPage?.data?.cta;
 ---

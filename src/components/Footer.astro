@@ -1,6 +1,12 @@
 ---
 import { getEntry } from "astro:content";
 
+interface Props {
+    variant?: "full" | "simple";
+}
+
+const { variant = "full" } = Astro.props;
+
 const globals = await getEntry("globals", "footer");
 if (!globals) {
     throw new Error("Globals data not found");
@@ -44,37 +50,41 @@ const { socials, columns, copyright, legalLinks } = globals.data;
             </div>
         </div>
 
-        <hr class="mb-10 border-t border-zinc-300 dark:border-zinc-800" />
+        {variant === "full" && (
+            <>
+                <hr class="mb-10 border-t border-zinc-300 dark:border-zinc-800" />
 
-        <!-- Middle Section: Links Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12 mb-20">
-            {
-                columns.map((column) => (
-                    <div>
-                        <h4 class="font-bold text-black dark:text-white mb-2 text-xl">
-                            {column.heading}
-                        </h4>
-                        {column.description && (
-                            <p class="text-sm font-medium text-neutral-500 dark:text-neutral-400 mb-8">
-                                {column.description}
-                            </p>
-                        )}
-                        <ul class="space-y-6 text-neutral-700 dark:text-neutral-400 font-medium">
-                            {column.links.map((link) => (
-                                <li>
-                                    <a
-                                        href={link.url}
-                                        class="hover:text-black dark:hover:text-white transition-colors relative inline-block hover:after:content-[''] hover:after:absolute hover:after:left-0 hover:after:bottom-0 hover:after:w-full hover:after:h-[2px] hover:after:bg-black dark:hover:after:bg-white"
-                                    >
-                                        {link.label}
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ))
-            }
-        </div>
+                <!-- Middle Section: Links Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12 mb-20">
+                    {
+                        columns.map((column) => (
+                            <div>
+                                <h4 class="font-bold text-black dark:text-white mb-2 text-xl">
+                                    {column.heading}
+                                </h4>
+                                {column.description && (
+                                    <p class="text-sm font-medium text-neutral-500 dark:text-neutral-400 mb-8">
+                                        {column.description}
+                                    </p>
+                                )}
+                                <ul class="space-y-6 text-neutral-700 dark:text-neutral-400 font-medium">
+                                    {column.links.map((link) => (
+                                        <li>
+                                            <a
+                                                href={link.url}
+                                                class="hover:text-black dark:hover:text-white transition-colors relative inline-block hover:after:content-[''] hover:after:absolute hover:after:left-0 hover:after:bottom-0 hover:after:w-full hover:after:h-[2px] hover:after:bg-black dark:hover:after:bg-white"
+                                            >
+                                                {link.label}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))
+                    }
+                </div>
+            </>
+        )}
 
         <hr class="mb-6 border-t border-zinc-300 dark:border-zinc-800" />
 

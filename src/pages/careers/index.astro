@@ -5,6 +5,7 @@
 
 import { getCollection, getEntry } from "astro:content";
 import PageHeroSection from "../../components/PageHeroSection.astro";
+import CardGrid from "../../components/CardGrid.astro";
 import CTASection from "../../components/CTASection.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 
@@ -27,32 +28,11 @@ jobs.sort((a, b) => a.data.order - b.data.order);
 
     <PageHeroSection variant="center" data={hero} />
 
-    <!-- Values/Why Join Us -->
-    {values?.items && values.items.length > 0 && (
-        <section class="pb-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {values.items.map((item: any) => (
-                        <div class="text-center p-6">
-                            <div
-                                class="w-16 h-16 mx-auto mb-4 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center text-2xl"
-                            >
-                                {item.icon}
-                            </div>
-                            <h3
-                                class="text-lg font-bold text-black dark:text-white mb-2"
-                            >
-                                {item.title}
-                            </h3>
-                            <p class="text-neutral-600 dark:text-neutral-400">
-                                {item.description}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    )}
+ 
+     <!-- Values Section -->
+    <CardGrid data={values} variant="left" columns={3} />
+
+
 
     <!-- Job Listings -->
     <section class="pb-24 lg:pb-32">
@@ -112,26 +92,6 @@ jobs.sort((a, b) => a.data.order - b.data.order);
                 </div>
             )}
 
-            <!-- Developer Note -->
-            <div
-                class="mt-16 p-6 bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-800 rounded-lg"
-            >
-                <p class="text-amber-800 dark:text-amber-200 font-medium">
-                    <strong>💡 Developer Note:</strong> This page uses TinaCMS content.
-                </p>
-                <ul
-                    class="mt-2 ml-4 list-disc text-amber-700 dark:text-amber-300"
-                >
-                    <li>
-                        Manage job listings in TinaCMS under "Jobs / Careers"
-                    </li>
-                    <li>
-                        Create individual job pages at <code>src/pages/careers/[slug].astro</code>
-                    </li>
-                    <li>Add application form at <code>/careers/[slug]/apply.astro</code></li>
-                    <li>Inactive jobs are hidden automatically (isActive: false)</li>
-                </ul>
-            </div>
         </div>
     </section>
 

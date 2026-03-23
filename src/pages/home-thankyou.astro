@@ -1,6 +1,7 @@
 ---
 import { getEntry } from "astro:content";
 import MainLayout from "../layouts/MainLayout.astro";
+import PageHeroSection from "../components/PageHeroSection.astro";
 
 const entry = await getEntry("homepage", "index");
 
@@ -8,39 +9,12 @@ if (!entry || !entry.data.thankYou) {
     throw new Error("Homepage thank you content not found.");
 }
 
-const { heading, description, buttonText, buttonLink } = entry.data.thankYou;
+const thankYou = entry.data.thankYou;
+const { heading, description, buttonText, buttonLink } = thankYou;
 ---
 
 <MainLayout title={heading}>
-    <div
-        class="grow flex items-center justify-center min-h-[60vh] bg-stone-50 dark:bg-black"
-    >
-        <section class="py-20 px-6 text-center">
-            <h1
-                class="text-4xl md:text-6xl font-bold mb-6 text-black dark:text-white"
-            >
-                {heading}
-            </h1>
-            <p
-                class="text-xl mb-10 max-w-2xl mx-auto text-neutral-600 dark:text-neutral-400"
-            >
-                {description}
-            </p>
-            <a
-                href={buttonLink}
-                class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200"
-            >
-                <span
-                    class="transform transition-transform duration-300 group-hover:-translate-x-4"
-                    >{buttonText}</span
-                >
-                <span
-                    class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
-                    >&rarr;</span
-                >
-            </a>
-        </section>
-    </div>
+    <PageHeroSection variant="center" data={thankYou} />
 </MainLayout>
 
 <script>

@@ -1,6 +1,7 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
 import PageHeroSection from "../../components/PageHeroSection.astro";
+import CardGrid from "@/components/CardGrid.astro";
 import FAQ from "../../components/FAQ.astro";
 import CTASection from "../../components/CTASection.astro";
 
@@ -20,86 +21,10 @@ const { hero, steps, difference, faq, cta } = processPage.data;
     {hero && <PageHeroSection variant="center" data={hero} />}
 
     <!-- Process Steps -->
-    <section class="py-20">
-        <div class="container mx-auto px-4 md:px-0">
-            <div class="text-center mb-8">
-                <p
-                    class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
-                >
-                    {steps.sectionLabel}
-                </p>
-                <h2 class="text-5xl font-bold mb-4">
-                    {steps.heading}
-                </h2>
-                <p
-                    class="text-lg font-medium text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto"
-                >
-                    {steps.description}
-                </p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                {
-                    steps.items.map((step) => {
-                        return (
-                            <article class="relative border-2 border-zinc-200 dark:border-zinc-900 hover:border-pink-500 dark:hover:bg-black dark:hover:border-green-900  p-8 rounded-xl transition-colors group">
-                                <div class="text-4xl mb-6">{step.icon}</div>
-                                <h3 class="text-xl font-bold mb-2">
-                                    {step.title}
-                                </h3>
-                                <p class="leading-relaxed text-neutral-600 dark:text-neutral-400 font-medium mb-6">
-                                    {step.description}
-                                </p>
-                                <div class="">
-                                    {step.linkUrl && (
-                                        <a
-                                            href={step.linkUrl}
-                                            class="inline-block font-bold border-b-2 border-black dark:border-white hover:border-transparent after:absolute after:inset-0 text-black dark:text-white"
-                                        >
-                                            {step.linkText || "Learn more"}{" "}
-                                            &rarr;
-                                        </a>
-                                    )}
-                                </div>
-                            </article>
-                        );
-                    })
-                }
-            </div>
-        </div>
-    </section>
+    <CardGrid id="steps" data={steps} variant="center" columns={3} />
 
     <!-- Values Section -->
-    <section class="py-20">
-        <div class="container mx-auto px-4 md:px-0">
-            <p
-                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
-            >
-                {difference.sectionLabel}
-            </p>
-            <h2 class="text-5xl font-bold mb-2">{difference.heading}</h2>
-            <p
-                class="text-lg leading-relaxed mb-6 max-w-4xl text-neutral-700 dark:text-neutral-400"
-            >
-                {difference.description}
-            </p>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {
-                    difference.items.map((difference) => (
-                        <article class="border-2 bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-900 p-8 rounded-xl">
-                            <div class="text-4xl mb-6">{difference.icon}</div>
-                            <h3 class="text-lg md:text-xl font-bold mb-4">
-                                {difference.title}
-                            </h3>
-                            <p class="leading-relaxed font-medium text-neutral-700 dark:text-neutral-300">
-                                {difference.description}
-                            </p>
-                        </article>
-                    ))
-                }
-            </div>
-        </div>
-    </section>
+    <CardGrid id="values" data={difference} variant="left" columns={3} />
 
     {faq && <FAQ data={faq} />}
 

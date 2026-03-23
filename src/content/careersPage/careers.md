@@ -4,11 +4,14 @@ hero:
   heading: Jobs / Careers
   description: We're always looking for talented people to join our growing team.
 values:
+  sectionLabel: ''
+  heading: ''
+  description: ''
   items:
-    - icon: 🚀
+    - icon: "\U0001F680"
       title: Growth Opportunities
       description: Continuous learning and career advancement
-    - icon: 🤝
+    - icon: "\U0001F91D"
       title: Great Culture
       description: Collaborative and inclusive work environment
     - icon: ⚖️
@@ -21,7 +24,8 @@ generalApplication:
 cta:
   label: Label
   heading: Heading
-  description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
+  description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.'
   buttonText: Call to action
   buttonLink: /link
 ---
+

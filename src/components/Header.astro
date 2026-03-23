@@ -40,13 +40,11 @@ const navLinks: NavLink[] = [
             { label: "Support & Optimisation", url: "/process/support-and-optimisation" }
         ]
     },
+    // 💡 OPTIONAL: Uncomment if using Portfolio/Work page
     { 
-        label: "Showcase", 
-        url: "/showcase",
+        label: "Our Work", 
+        url: "/work",
         children: [
-  
-            // 💡 OPTIONAL: Uncomment if using Portfolio/Work page
-            { label: "Our Work", url: "/work" },
             // 💡 OPTIONAL: Uncomment if using Partners page
             { label: "Partners", url: "/partners" },
         ]
@@ -56,17 +54,16 @@ const navLinks: NavLink[] = [
         url: "/about",
         children: [
             { label: "About Us", url: "/about" },
-            { label: "Team", url: "/about/team" },
+            { label: "Team", url: "/team" },
             { label: "Pricing", url: "/pricing" },
             // 💡 OPTIONAL: Uncomment if using Careers page
             { label: "Careers", url: "/careers" },
         ]
     },
     { 
-        label: "Resources", 
-        url: "/resources",
+        label: "Insights", 
+        url: "/insights",
         children: [
-            { label: "Insights", url: "/insights" },
             // 💡 OPTIONAL: Uncomment if using Events page
             { label: "Events", url: "/events" },
         ]
@@ -86,7 +83,26 @@ const navLinks: NavLink[] = [
 ];
 
 const ctaButton = { text: "Get a quote", url: "/quote" };
-const { hideMenu = false, showPhoneButton = false, hideCTA = false } = Astro.props;
+
+interface Props {
+    variant?: "full" | "simple";
+    hideMenu?: boolean;
+    showPhoneButton?: boolean;
+    hideCTA?: boolean;
+}
+
+const { variant = "full", hideMenu, showPhoneButton, hideCTA } = Astro.props;
+
+// Variant presets
+const variantConfig = {
+    full: { hideMenu: false, showPhoneButton: false, hideCTA: false },
+    simple: { hideMenu: true, showPhoneButton: true, hideCTA: true },
+};
+
+// Use explicit prop if provided, otherwise fall back to variant default
+const finalHideMenu = hideMenu !== undefined ? hideMenu : variantConfig[variant].hideMenu;
+const finalShowPhoneButton = showPhoneButton !== undefined ? showPhoneButton : variantConfig[variant].showPhoneButton;
+const finalHideCTA = hideCTA !== undefined ? hideCTA : variantConfig[variant].hideCTA;
 ---
 
 <header
@@ -119,7 +135,7 @@ const { hideMenu = false, showPhoneButton = false, hideCTA = false } = Astro.pro
         </div>
 
         {
-            !hideMenu && (
+            !finalHideMenu && (
                 <nav class="hidden md:flex font-bold justify-center items-center gap-6 sm:gap-4 lg:gap-8 w-2/4">
                     {navLinks.map(({ url, label, children }) => {
                         const isActive =
@@ -344,55 +360,55 @@ const { hideMenu = false, showPhoneButton = false, hideCTA = false } = Astro.pro
                 }
             </script>
 
-                    {
-                        !hideCTA && (
-                            <a
-                                href={ctaButton.url}
-                                class="flex group relative items-center justify-center overflow-hidden bg-black dark:bg-white text-white dark:text-black font-bold px-4 lg:px-6 py-2 lg:py-2.5 rounded-md transition-all duration-300 hover:w-auto"
-                            >
-                                <span
-                                    class="transform transition-transform duration-300 group-hover:-translate-x-4"
-                                >
-                                    {ctaButton.text}
-                                </span>
-                                <span
-                                    class="absolute right-4 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
-                                >
-                                    &rarr;
-                                </span>
-                            </a>
-                        )
-                    }
-
-                    {
-                        showPhoneButton && (
-                            <a
-                                href="tel:0400000000"
-                                class="hidden md:flex group relative items-center justify-center overflow-hidden bg-black dark:bg-white text-white dark:text-black font-bold px-2 lg:px-6 py-2 lg:py-2.5 rounded-md transition-all duration-300 hover:bg-zinc-800 dark:hover:bg-zinc-200"
-                            >
-                                <span class="flex items-center gap-2">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="18"
-                                        height="18"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                                    </svg>
-                                    {/* ☎️ Replace with your phone number */}
-                                    0400 000 000
-                                </span>
-                            </a>
-                        )
-                    }
+            {
+                !finalHideCTA && (
+                    <a
+                        href={ctaButton.url}
+                        class="flex group relative items-center justify-center overflow-hidden bg-black dark:bg-white text-white dark:text-black font-bold px-4 lg:px-6 py-2 lg:py-2.5 rounded-md transition-all duration-300 hover:w-auto"
+                    >
+                        <span
+                            class="transform transition-transform duration-300 group-hover:-translate-x-4"
+                        >
+                            {ctaButton.text}
+                        </span>
+                        <span
+                            class="absolute right-4 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                        >
+                            &rarr;
+                        </span>
+                    </a>
+                )
+            }
 
             {
-                !hideMenu && (
+                finalShowPhoneButton && (
+                    <a
+                        href="tel:0400000000"
+                        class="hidden md:flex group relative items-center justify-center overflow-hidden bg-black dark:bg-white text-white dark:text-black font-bold px-2 lg:px-6 py-2 lg:py-2.5 rounded-md transition-all duration-300 hover:bg-zinc-800 dark:hover:bg-zinc-200"
+                    >
+                        <span class="flex items-center gap-2">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                            {/* ☎️ Replace with your phone number */}
+                            0400 000 000
+                        </span>
+                    </a>
+                )
+            }
+
+            {
+                !finalHideMenu && (
                     <button
                         @click="mobileMenuOpen = !mobileMenuOpen"
                         class="md:hidden p-2 rounded-md border-2 border-black dark:border-white group"
@@ -419,7 +435,7 @@ const { hideMenu = false, showPhoneButton = false, hideCTA = false } = Astro.pro
     </div>
 
     {
-        !hideMenu && (
+        !finalHideMenu && (
             <div
                 x-show="mobileMenuOpen"
                 x-transition:enter="transition ease-out duration-200"

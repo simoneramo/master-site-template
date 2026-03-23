@@ -1,6 +1,7 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
 import PageHeroSection from "../../components/PageHeroSection.astro";
+import CardGrid from "@/components/CardGrid.astro";
 import FAQ from "../../components/FAQ.astro";
 import CTASection from "../../components/CTASection.astro";
 
@@ -18,47 +19,8 @@ const { hero, mainServices, targetIndustries, faq, cta } = servicesPage.data;
     <!-- Hero Section -->
     {hero && <PageHeroSection variant="center" data={hero} />}
 
-    <!-- Main Services -->
-    <section class="py-20 dark:bg-zinc-900">
-        <div class="container mx-auto px-4 lg:px-0">
-            <p
-                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-2"
-            >
-                {mainServices.sectionLabel}
-            </p>
-            <h2 class="text-5xl font-bold mb-4">
-                {mainServices.heading}
-            </h2>
-            <p
-                class="text-lg text-neutral-600 dark:text-neutral-400 mb-12 max-w-3xl font-medium"
-            >
-                {mainServices.description}
-            </p>
-
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {
-                    mainServices.items.map((service) => (
-                        <article class="relative border-2 bg-white dark:bg-black border-stone-200 dark:border-zinc-700 p-4 md:p-8 md:pb-12 rounded-lg transition-colors group">
-                            <div class="text-4xl mb-6">{service.icon}</div>
-                            <h3 class="text-xl font-bold mb-2">
-                                {service.title}
-                            </h3>
-                            <p class="leading-relaxed text-neutral-600 dark:text-neutral-400 font-medium mb-6">
-                                {service.description}
-                            </p>
-
-                            <a
-                                href={service.linkUrl}
-                                class="inline-block font-bold border-b-2 border-current hover:border-transparent after:absolute after:inset-0"
-                            >
-                                Learn more &rarr;
-                            </a>
-                        </article>
-                    ))
-                }
-            </div>
-        </div>
-    </section>
+    <!-- Values Section -->
+    <CardGrid id="services" data={mainServices} variant="left" columns={3} />
 
     <!-- Target Industries -->
     <section class="py-20 bg-white dark:bg-black">
@@ -96,42 +58,7 @@ const { hero, mainServices, targetIndustries, faq, cta } = servicesPage.data;
         </div>
     </section>
 
-    <!-- FAQ Section (Reused from About page) -->
     {faq && <FAQ data={faq} />}
-
-    <!-- CTA Section -->
-    <section class="pb-32 container mx-auto px-4 md:px-0">
-        <div
-            class="bg-zinc-200 dark:bg-zinc-900 p-16 md:p-32 text-center rounded-xl"
-        >
-            <p
-                class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4"
-            >
-                {cta.sectionLabel}
-            </p>
-            <h2 class="text-4xl md:text-5xl font-bold mb-6">
-                {cta.heading}
-            </h2>
-            <p class="text-lg font-medium mb-10">
-                {cta.description}
-            </p>
-            <a
-                href={cta.primaryBtn.link}
-                class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-black bg-white dark:bg-green-600 dark:text-white transition-all duration-300 text-lg rounded-md hover:bg-white dark:hover:bg-black"
-            >
-                <span
-                    class="transform transition-transform duration-300 group-hover:-translate-x-4"
-                >
-                    {cta.primaryBtn.text}
-                </span>
-                <span
-                    class="absolute right-6 transform translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
-                >
-                    &rarr;
-                </span>
-            </a>
-        </div>
-    </section>
 
     {cta && <CTASection variant="center" data={cta} />}
 </MainLayout>

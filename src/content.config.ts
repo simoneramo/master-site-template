@@ -1,9 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 
 // Config definitions
-
-
-
 const homepage = defineCollection({
 	type: 'content',
 	schema: z.object({
@@ -41,19 +38,18 @@ const homepage = defineCollection({
 				description: z.string(),
 			})),
 		}),
-
-
 		process: z.object({
 			sectionLabel: z.string(),
 			heading: z.string(),
 			description: z.string(),
+			ctaText: z.string().optional(),
+			ctaLink: z.string().optional(),
 			steps: z.array(z.object({
 				title: z.string(),
 				icon: z.string(),
 				description: z.string(),
 			})),
 		}),
-
 		testimonials: z.object({
 			sectionLabel: z.string(),
 			heading: z.string(),
@@ -79,13 +75,13 @@ const homepage = defineCollection({
 				websiteBuilder: z.string(),
 			})),
 		}),
-		templates: z.object({
+		workGrid: z.object({
 			sectionLabel: z.string(),
 			heading: z.string(),
 			description: z.string(),
 			ctaText: z.string(),
 			ctaLink: z.string(),
-		}),
+		}).optional(),
 		faq: z.object({
 			sectionLabel: z.string(),
 			heading: z.string(),
@@ -126,10 +122,11 @@ const homepage = defineCollection({
 			privacyNote: z.string(),
 		}),
 		thankYou: z.object({
+			sectionLabel: z.string().optional(),
 			heading: z.string(),
 			description: z.string(),
-			buttonText: z.string(),
-			buttonLink: z.string(),
+			buttonText: z.string().optional(),
+			buttonLink: z.string().optional(),
 		}).optional(),
 	}),
 });
@@ -141,6 +138,8 @@ const about = defineCollection({
 			label: z.string(),
 			heading: z.string(),
 			description: z.string(),
+			buttonText: z.string().optional(),
+			buttonLink: z.string().optional(),
 		}),
 		mission: z.object({
 			sectionLabel: z.string().optional(),
@@ -156,6 +155,8 @@ const about = defineCollection({
 				icon: z.string(),
 				title: z.string(),
 				description: z.string(),
+				linkText: z.string().optional(),
+				linkUrl: z.string().optional(),
 			})),
 		}),
 		story: z.object({
@@ -192,6 +193,8 @@ const contact = defineCollection({
 			label: z.string(),
 			heading: z.string(),
 			description: z.string(),
+			buttonText: z.string().optional(),
+			buttonLink: z.string().optional(),
 		}),
 		form: z.object({
 			sectionLabel: z.string().optional(),
@@ -227,6 +230,7 @@ const contact = defineCollection({
 			})),
 		}),
 		thankyou: z.object({
+			sectionLabel: z.string().optional(),
 			heading: z.string(),
 			description: z.string(),
 			buttonText: z.string(),
@@ -250,6 +254,8 @@ const process = defineCollection({
 			label: z.string(),
 			heading: z.string(),
 			description: z.string(),
+			buttonText: z.string().optional(),
+			buttonLink: z.string().optional(),
 		}),
 		steps: z.object({
 			sectionLabel: z.string().optional(),
@@ -273,6 +279,8 @@ const process = defineCollection({
 				icon: z.string(),
 				title: z.string(),
 				description: z.string(),
+				linkText: z.string().optional(),
+				linkUrl: z.string().optional(),
 			})),
 		}),
 		faq: z.object({
@@ -301,12 +309,15 @@ const quote = defineCollection({
 			label: z.string(),
 			heading: z.string(),
 			description: z.string(),
+			buttonText: z.string().optional(),
+			buttonLink: z.string().optional(),
 		}),
 		thankYou: z.object({
+			sectionLabel: z.string().optional(),
 			heading: z.string(),
 			description: z.string(),
-			buttonText: z.string(),
-			buttonLink: z.string(),
+			buttonText: z.string().optional(),
+			buttonLink: z.string().optional(),
 		}).optional(),
 	}),
 });
@@ -318,6 +329,8 @@ const templatesPage = defineCollection({
 			sectionLabel: z.string(),
 			heading: z.string(),
 			description: z.string(),
+			buttonText: z.string().optional(),
+			buttonLink: z.string().optional(),
 		}),
 		cta: z.object({
 			heading: z.string(),
@@ -327,29 +340,6 @@ const templatesPage = defineCollection({
 				link: z.string(),
 			}),
 
-		}),
-	}),
-});
-
-const commonWebTerms = defineCollection({
-	type: 'content',
-	schema: z.object({
-		hero: z.object({
-			label: z.string(),
-			heading: z.string(),
-			description: z.string(),
-		}),
-		terms: z.array(z.object({
-			icon: z.string(),
-			term: z.string(),
-			definition: z.string(),
-		})),
-		cta: z.object({
-			sectionLabel: z.string().optional(),
-			heading: z.string(),
-			description: z.string(),
-			buttonText: z.string(),
-			buttonLink: z.string(),
 		}),
 	}),
 });
@@ -373,6 +363,8 @@ const services = defineCollection({
 			label: z.string(),
 			heading: z.string(),
 			description: z.string(),
+			buttonText: z.string().optional(),
+			buttonLink: z.string().optional(),
 		}),
 		mainServices: z.object({
 			sectionLabel: z.string().optional(),
@@ -388,41 +380,32 @@ const services = defineCollection({
 			})),
 		}),
 
-		industryFocus: z.object({
+		targetIndustries: z.object({
 			sectionLabel: z.string().optional(),
 			heading: z.string(),
 			description: z.string(),
-			items: z.array(z.object({
+			groups: z.array(z.object({
 				category: z.string(),
-				industries: z.array(z.string()),
+				description: z.string().optional(),
+				items: z.array(z.string()),
 			})),
 		}),
 		cta: z.object({
 			sectionLabel: z.string(),
 			heading: z.string(),
 			description: z.string(),
-			primaryBtn: z.object({
-				text: z.string(),
-				link: z.string(),
-			}),
-
+			buttonText: z.string(),
+			buttonLink: z.string(),
 		}),
-	}),
-});
-
-const templates = defineCollection({
-	type: 'content',
-	schema: z.object({
-		title: z.string(),
-		subtitle: z.string(),
-		category: z.union([z.string(), z.array(z.string())]),
-		image: z.string(),
-		link: z.string(),
-		order: z.number().optional(),
-		aboutText: z.string().optional(),
-		features: z.array(z.string()).optional(),
-		lastUpdated: z.string().optional(),
-		format: z.string().optional(),
+		faq: z.object({
+			sectionLabel: z.string().optional(),
+			heading: z.string(),
+			description: z.string().optional(),
+			items: z.array(z.object({
+				question: z.string(),
+				answer: z.string(),
+			})),
+		}).optional(),
 	}),
 });
 
@@ -636,6 +619,8 @@ const bookPage = defineCollection({
 			label: z.string().optional(),
 			heading: z.string(),
 			description: z.string(),
+			buttonText: z.string().optional(),
+			buttonLink: z.string().optional(),
 		}),
 		cta: z.object({
 			label: z.string().optional(),
@@ -654,9 +639,18 @@ const work = defineCollection({
 			label: z.string().optional(),
 			heading: z.string(),
 			description: z.string(),
+			buttonText: z.string().optional(),
+			buttonLink: z.string().optional(),
 		}),
+		workGrid: z.object({
+			sectionLabel: z.string(),
+			heading: z.string(),
+			description: z.string(),
+			ctaText: z.string(),
+			ctaLink: z.string(),
+		}).optional(),
 		cta: z.object({
-			label: z.string().optional(),
+			sectionLabel: z.string().optional(),
 			heading: z.string(),
 			description: z.string(),
 			buttonText: z.string(),
@@ -678,6 +672,111 @@ const work = defineCollection({
 	}),
 });
 
+const workPosts = defineCollection({
+	type: 'content',
+	schema: z.object({
+		slug: z.string().optional(),
+		isActive: z.boolean().default(true),
+		title: z.string(),
+		client: z.string().optional(),
+		category: z.string(),
+		industry: z.string().optional(),
+		description: z.string(),
+		image: z.string().optional(),
+		link: z.string().optional(),
+		isFeatured: z.boolean().default(false),
+		order: z.number().default(0),
+	}),
+});
+
+const pricingPage = defineCollection({
+	type: 'content',
+	schema: z.object({
+		hero: z.object({
+			label: z.string().optional(),
+			heading: z.string(),
+			description: z.string(),
+			buttonText: z.string().optional(),
+			buttonLink: z.string().optional(),
+		}),
+		pricingTiers: z.object({
+			sectionLabel: z.string().optional(),
+			heading: z.string().optional(),
+			description: z.string().optional(),
+			footerNote: z.string().optional(),
+			ctaText: z.string().optional(),
+			ctaLink: z.string().optional(),
+			tiers: z.array(z.object({
+				name: z.string(),
+				description: z.string(),
+				price: z.string(),
+				priceLabel: z.string().optional(),
+				isPopular: z.boolean().default(false),
+				buttonText: z.string(),
+				buttonLink: z.string(),
+				learnMoreLink: z.string().optional(),
+				features: z.array(z.object({
+					label: z.string(),
+					value: z.string(),
+					included: z.boolean(),
+				})),
+			})),
+		}),
+		features: z.object({
+			sectionLabel: z.string().optional(),
+			heading: z.string(),
+			description: z.string(),
+			items: z.array(z.object({
+				icon: z.string(),
+				title: z.string(),
+				description: z.string(),
+			})),
+		}),
+		cta: z.object({
+			label: z.string().optional(),
+			heading: z.string(),
+			description: z.string(),
+			buttonText: z.string(),
+			buttonLink: z.string(),
+		}).optional(),
+	}),
+});
+
+const careersPage = defineCollection({
+	type: 'content',
+	schema: z.object({
+		hero: z.object({
+			label: z.string().optional(),
+			heading: z.string(),
+			description: z.string(),
+			buttonText: z.string().optional(),
+			buttonLink: z.string().optional(),
+		}),
+		values: z.object({
+			sectionLabel: z.string().optional(),
+			heading: z.string().optional(),
+			description: z.string().optional(),
+			items: z.array(z.object({
+				icon: z.string(),
+				title: z.string(),
+				description: z.string(),
+			})),
+		}),
+		generalApplication: z.object({
+			description: z.string(),
+			buttonText: z.string(),
+			buttonLink: z.string(),
+		}).optional(),
+		cta: z.object({
+			label: z.string().optional(),
+			heading: z.string(),
+			description: z.string(),
+			buttonText: z.string(),
+			buttonLink: z.string(),
+		}).optional(),
+	}),
+});
+
 const legalPages = defineCollection({
 	type: 'content',
 	schema: z.object({
@@ -686,18 +785,65 @@ const legalPages = defineCollection({
 	}),
 });
 
+const flexiblePages = defineCollection({
+	type: 'content',
+	schema: z.object({
+		title: z.string(),
+		description: z.string().optional(),
+		blocks: z.array(z.discriminatedUnion('_template', [
+			z.object({
+				_template: z.literal('hero'),
+				variant: z.enum(['center', 'left']).optional(),
+				label: z.string().optional(),
+				heading: z.string(),
+				description: z.string(),
+				buttonText: z.string().optional(),
+				buttonLink: z.string().optional(),
+			}),
+			z.object({
+				_template: z.literal('features'),
+				variant: z.enum(['center', 'left']).optional(),
+				columns: z.number().optional(),
+				sectionLabel: z.string().optional(),
+				heading: z.string().optional(),
+				description: z.string().optional(),
+				items: z.array(z.object({
+					icon: z.string(),
+					title: z.string(),
+					description: z.string(),
+					linkText: z.string().optional(),
+					linkUrl: z.string().optional(),
+				})).optional(),
+				ctaText: z.string().optional(),
+				ctaLink: z.string().optional(),
+			}),
+			z.object({
+				_template: z.literal('cta'),
+				variant: z.enum(['center', 'left']).optional(),
+				sectionLabel: z.string().optional(),
+				heading: z.string().optional(),
+				description: z.string().optional(),
+				buttonText: z.string().optional(),
+				buttonLink: z.string().optional(),
+			}),
+		])).optional(),
+	}),
+});
+
 export const collections = {
-	insights, homepage, about, contact, process, quote, templates, globals, templatesPage, components, offerings, processSteps, "common-web-terms": commonWebTerms,
-	services,
-	tech: techCollection,
+	insights, homepage, about, contact, process, quote, globals, components, offerings, processSteps, services, tech: techCollection,
 	// 💡 Page config — controls which optional pages are live (isActive toggle)
 	pages,
 	// 💡 Optional collections - can be removed if not needed
 	careers,
+	careersPage,
 	events,
 	partners,
+	pricingPage,
 	testimonials,
 	work,
+	workPosts,
 	bookPage,
 	legalPages,
+	flexiblePages,
 };

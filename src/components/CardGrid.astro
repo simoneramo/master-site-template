@@ -1,0 +1,103 @@
+---
+interface Props {
+    id?: string;
+    data?: {
+        sectionLabel?: string;
+        heading?: string;
+        description?: string;
+        ctaText?: string;
+        ctaLink?: string;
+        items?: {
+            icon: string;
+            title: string;
+            description: string;
+        }[];
+        steps?: {
+            icon: string;
+            title: string;
+            description: string;
+        }[];
+        [key: string]: any;
+    };
+    variant?: "left" | "center";
+    columns?: 2 | 3 | 4;
+}
+
+const { id, data, variant = "left", columns = 3 } = Astro.props;
+
+// Get CTA from data props or data object
+const ctaText = data?.ctaText;
+const ctaLink = data?.ctaLink;
+
+const isCenter = variant === "center";
+const gridCols = {
+    2: "md:grid-cols-2",
+    3: "md:grid-cols-3",
+    4: "md:grid-cols-2 lg:grid-cols-4",
+}[columns];
+
+// Get items array - support both 'items' and 'steps' (and any other key)
+const items = data?.items || data?.steps || [];
+---
+
+{
+    data && (
+        <section id={id} class="py-20">
+            <div class="container mx-auto px-4 md:px-0">
+                <div class={`mb-12 ${isCenter ? "text-center" : ""}`}>
+                    {data.sectionLabel && (
+                        <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
+                            {data.sectionLabel}
+                        </p>
+                    )}
+                    {data.heading && (
+                        <h2 class="text-5xl font-bold mb-4 dark:text-zinc-200">
+                            {data.heading}
+                        </h2>
+                    )}
+                    {data.description && (
+                        <p
+                            class={`text-lg text-neutral-600 dark:text-zinc-400 font-medium ${isCenter ? "max-w-3xl mx-auto" : "max-w-3xl"}`}
+                        >
+                            {data.description}
+                        </p>
+                    )}
+                </div>
+
+                <div class={`grid ${gridCols} gap-8 relative z-10`}>
+                    {items.map((item: any) => (
+                        <div class="bg-white dark:bg-black p-4 md:p-8 border-2 border-zinc-200 dark:border-zinc-800 rounded-xl flex flex-col items-start transition-transform duration-300">
+                            <div class="text-4xl mb-4">{item.icon}</div>
+                            <h3 class="text-xl md:text-2xl dark:text-zinc-200 font-bold mb-2">
+                                {item.title}
+                            </h3>
+                            <p class="text-lg text-neutral-600 dark:text-zinc-400 leading-relaxed font-medium grow">
+                                {item.description}
+                            </p>
+
+                            {(item.linkUrl || item.linkText) && (
+                                <a
+                                    href={item.linkUrl || "#"}
+                                    class="inline-block font-bold border-b-2 border-black dark:border-white hover:border-transparent transition-colors mt-4"
+                                >
+                                    {item.linkText || "Learn more"} &rarr;
+                                </a>
+                            )}
+                        </div>
+                    ))}
+                </div>
+
+                {ctaText && ctaLink && (
+                    <div class="mt-6">
+                        <a
+                            href={ctaLink}
+                            class="font-bold border-b-2 border-black dark:border-white hover:border-transparent transition-colors text-black dark:text-white"
+                        >
+                            {ctaText} &rarr;
+                        </a>
+                    </div>
+                )}
+            </div>
+        </section>
+    )
+}
