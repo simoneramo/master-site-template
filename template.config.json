@@ -183,7 +183,7 @@
           "name": "Book / Schedule",
           "description": "Appointment booking and scheduling",
           "default": false
-        },
+        }
       ]
     }
   },
