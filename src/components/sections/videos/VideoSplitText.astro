@@ -1,0 +1,129 @@
+---
+/**
+ * VideoSplitText — Split with Text
+ * Two-column: text and CTA left, video right.
+ */
+import type { VideoData } from '../../../data/sample-data';
+
+interface Props { data: VideoData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, videoUrl, thumbnailImage } = data;
+
+const getEmbedUrl = (url: string, autoplay = false) => {
+  if (!url || url === '#') return '';
+  let embedUrl = url;
+  const watchMatch = url.match(/youtube\.com\/watch\?v=([^&]+)/);
+  if (watchMatch) embedUrl = `https://www.youtube.com/embed/${watchMatch[1]}`;
+  const shortMatch = url.match(/youtu\.be\/([^?]+)/);
+  if (shortMatch) embedUrl = `https://www.youtube.com/embed/${shortMatch[1]}`;
+  if (autoplay && embedUrl.includes('youtube.com/embed')) {
+    embedUrl = embedUrl.includes('?') ? `${embedUrl}&autoplay=1` : `${embedUrl}?autoplay=1`;
+  }
+  return embedUrl;
+};
+
+// Extract YouTube thumbnail if custom image not provided
+const getYoutubeThumbnail = (url: string) => {
+  if (!url || url === '#') return '';
+  const watchMatch = url.match(/youtube\.com\/watch\?v=([^&]+)/);
+  if (watchMatch) return `https://img.youtube.com/vi/${watchMatch[1]}/maxresdefault.jpg`;
+  const shortMatch = url.match(/youtu\.be\/([^?]+)/);
+  if (shortMatch) return `https://img.youtube.com/vi/${shortMatch[1]}/maxresdefault.jpg`;
+  return '';
+};
+
+const embedUrl = getEmbedUrl(videoUrl || '');
+const autoplayUrl = getEmbedUrl(videoUrl || '', true);
+const ytThumbnail = getYoutubeThumbnail(videoUrl || '');
+const hasThumbnail = !!((thumbnailImage && thumbnailImage.src) || ytThumbnail);
+const thumbnailSrc = thumbnailImage?.src || ytThumbnail || '';
+const thumbnailAlt = thumbnailImage?.alt || 'Video thumbnail';
+const uniqueId = `video-split-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<section class="py-20 md:py-32 bg-surface dark:bg-zinc-900/50">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <!-- Content -->
+      <div>
+        {eyebrow && (
+          <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+            {eyebrow}
+          </span>
+        )}
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+        {description && <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-8">{description}</p>}
+        
+        <a 
+          href="#contact"
+          class="inline-flex items-center justify-center h-14 px-10 font-bold bg-zinc-950 text-white dark:bg-white dark:text-black rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all"
+        >
+          Get Started
+        </a>
+      </div>
+
+      <!-- Video -->
+      <video-player data-autoplay-url={autoplayUrl} class="block relative aspect-video rounded-2xl overflow-hidden bg-zinc-900 shadow-xl" id={uniqueId}>
+        {hasThumbnail && (
+          <div class="thumbnail-layer absolute inset-0 cursor-pointer z-10">
+            <img 
+              src={thumbnailSrc} 
+              alt={thumbnailAlt}
+              class="w-full h-full object-cover"
+              loading="eager"
+            />
+            <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+              <button 
+                type="button"
+                class="play-btn w-16 h-16 rounded-full bg-white/90 hover:bg-white flex items-center justify-center transition-all hover:scale-110"
+                aria-label="Play video"
+              >
+                <svg class="w-6 h-6 text-zinc-950 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        )}
+        
+        <div class="video-container w-full h-full">
+          {!hasThumbnail && embedUrl && (
+            <iframe
+              src={embedUrl}
+              class="w-full h-full"
+              title={heading}
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            />
+          )}
+        </div>
+      </video-player>
+    </div>
+  </div>
+</section>
+
+<script>
+  class VideoPlayer extends HTMLElement {
+    connectedCallback() {
+      const autoplayUrl = this.dataset.autoplayUrl;
+      const thumbnailLayer = this.querySelector('.thumbnail-layer') as HTMLElement;
+      const playBtn = this.querySelector('.play-btn');
+      const videoContainer = this.querySelector('.video-container');
+      
+      if (playBtn && thumbnailLayer && videoContainer && autoplayUrl) {
+        playBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          thumbnailLayer.style.display = 'none';
+          videoContainer.innerHTML = '<iframe src="' + autoplayUrl + '" class="w-full h-full" title="Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+        });
+      }
+    }
+  }
+
+  if (!customElements.get('video-player')) {
+    customElements.define('video-player', VideoPlayer);
+  }
+</script>

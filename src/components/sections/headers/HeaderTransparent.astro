@@ -1,0 +1,100 @@
+---
+/**
+ * HeaderTransparent — Transparent Overlay Header
+ * Pattern key: transparent
+ * Section: Navigation / Header
+ *
+ * Transparent header overlaying hero content. Transitions to solid on scroll.
+ * White text initially, switches to dark text when solid background appears.
+ */
+import type { HeaderData } from '../../../data/sample-data';
+
+interface Props {
+  data: HeaderData;
+}
+
+const { data } = Astro.props;
+const { logo, navLinks, cta } = data;
+---
+
+<header
+  class="w-full z-50 transition-all duration-500"
+  x-data="{ scrollY: 0, mobileOpen: false }"
+  @scroll.window="scrollY = window.scrollY"
+  :class="scrollY > 100
+    ? 'fixed top-0 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md shadow-sm border-b border-zinc-200 dark:border-zinc-800'
+    : 'absolute top-0 bg-transparent'"
+>
+  <div class="container mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
+    <a
+      href="/"
+      class="text-xl font-bold shrink-0 transition-colors duration-300"
+      :class="scrollY > 100 ? 'text-black dark:text-white' : 'text-white'"
+    >
+      {logo}
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8">
+      {navLinks.map((link) => (
+        <a
+          href={link.url}
+          class="text-sm font-bold transition-colors duration-300"
+          :class="scrollY > 100
+            ? 'text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white'
+            : 'text-white/80 hover:text-white'"
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <a
+        href={cta.url}
+        class="hidden md:inline-flex group relative items-center justify-center overflow-hidden font-bold px-6 py-2.5 rounded-lg transition-all duration-300"
+        :class="scrollY > 100
+          ? 'bg-black dark:bg-white text-white dark:text-black hover:bg-zinc-800 dark:hover:bg-zinc-200'
+          : 'bg-white text-black hover:bg-zinc-100'"
+      >
+        <span class="transform transition-transform duration-300 group-hover:-translate-x-3">{cta.text}</span>
+        <span class="absolute right-4 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">→</span>
+      </a>
+
+      <button
+        @click="mobileOpen = !mobileOpen"
+        class="md:hidden p-2 rounded-lg border-2 transition-colors duration-300"
+        :class="scrollY > 100 ? 'border-zinc-300 dark:border-zinc-700' : 'border-white/40'"
+        aria-label="Toggle menu"
+      >
+        <div class="w-5 h-4 flex flex-col justify-between">
+          <span class="block w-full h-0.5 transition-all origin-left" :class="[scrollY > 100 ? 'bg-black dark:bg-white' : 'bg-white', mobileOpen ? 'rotate-45 translate-x-0.5' : '']" />
+          <span class="block w-full h-0.5 transition-all" :class="[scrollY > 100 ? 'bg-black dark:bg-white' : 'bg-white', mobileOpen ? 'opacity-0' : '']" />
+          <span class="block w-full h-0.5 transition-all origin-left" :class="[scrollY > 100 ? 'bg-black dark:bg-white' : 'bg-white', mobileOpen ? '-rotate-45 translate-x-0.5' : '']" />
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    x-show="mobileOpen"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 -translate-y-4"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 translate-y-0"
+    x-transition:leave-end="opacity-0 -translate-y-4"
+    class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800"
+  >
+    <nav class="px-8 py-6 flex flex-col space-y-4">
+      {navLinks.map((link) => (
+        <a href={link.url} @click="mobileOpen = false" class="block py-2 font-bold text-lg text-black dark:text-white hover:translate-x-1 transition-transform">
+          {link.label}
+        </a>
+      ))}
+      <a href={cta.url} class="inline-flex items-center justify-center h-12 bg-black dark:bg-white text-white dark:text-black font-bold rounded-lg mt-4">
+        {cta.text}
+      </a>
+    </nav>
+  </div>
+</header>

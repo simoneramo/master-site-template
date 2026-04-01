@@ -1,0 +1,89 @@
+---
+/**
+ * ProcessRoadmap — Journey Roadmap
+ * Winding horizontal path with stops at each process step.
+ */
+import type { ProcessData } from '../../../data/sample-data';
+
+interface Props { data: ProcessData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, steps } = data;
+---
+
+<section class="py-20 md:py-32 overflow-hidden">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    {/* Roadmap - Desktop */}
+    <div class="hidden lg:block relative">
+      {/* Winding Path SVG */}
+      <svg class="absolute top-1/2 left-0 w-full h-24 -translate-y-1/2" viewBox="0 0 1200 100" fill="none" preserveAspectRatio="none">
+        <path d="M0 50 Q 150 0, 300 50 T 600 50 T 900 50 T 1200 50" stroke="currentColor" stroke-width="4" class="text-zinc-200 dark:text-zinc-800" stroke-dasharray="8 8"/>
+      </svg>
+
+      <div class="relative grid grid-cols-4 gap-8">
+        {steps.map((step, index) => {
+          const isTop = index % 2 === 0;
+          return (
+            <div class="relative" style={`transform: translateY(${isTop ? '-20px' : '20px'})`}>
+              <div class:list={["text-center", isTop ? "pb-16" : "pt-16 mt-8"]}>
+                {isTop ? (
+                  <>
+                    <div class="mb-4">
+                      {step.icon && <div class="text-4xl mb-2">{step.icon}</div>}
+                      <h3 class="text-xl font-bold">{step.heading}</h3>
+                      <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-2">{step.description}</p>
+                    </div>
+                    <div class="w-6 h-6 rounded-full bg-accent border-4 border-white dark:border-zinc-950 mx-auto" />
+                  </>
+                ) : (
+                  <>
+                    <div class="w-6 h-6 rounded-full bg-accent border-4 border-white dark:border-zinc-950 mx-auto mb-4" />
+                    <div>
+                      {step.icon && <div class="text-4xl mb-2">{step.icon}</div>}
+                      <h3 class="text-xl font-bold">{step.heading}</h3>
+                      <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-2">{step.description}</p>
+                    </div>
+                  </>
+                )}
+              </div>
+              {/* Step Number */}
+              <span class="absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-zinc-950 dark:bg-white text-white dark:text-black flex items-center justify-center font-bold text-sm" class:list={isTop ? "bottom-4" : "top-4"}>
+                {step.number}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    {/* Roadmap - Mobile/Tablet */}
+    <div class="lg:hidden relative max-w-2xl mx-auto">
+      <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-zinc-200 dark:bg-zinc-800" />
+      
+      <div class="space-y-8">
+        {steps.map((step) => (
+          <div class="relative flex gap-6 pl-4">
+            <div class="relative z-10 w-8 h-8 rounded-full bg-accent border-4 border-white dark:border-zinc-950 flex items-center justify-center shrink-0">
+              <span class="text-xs font-bold text-white">{step.number}</span>
+            </div>
+            <div class="bg-surface dark:bg-zinc-900/50 rounded-xl p-5 flex-1 border-2 border-zinc-200 dark:border-zinc-800">
+              {step.icon && <div class="text-3xl mb-2">{step.icon}</div>}
+              <h3 class="text-lg font-bold mb-2">{step.heading}</h3>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">{step.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

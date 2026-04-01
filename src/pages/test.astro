@@ -1,0 +1,50 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+
+// 1. Pick your layouts from the library
+import HeroSplitLR from "../components/sections/heroes/HeroSplitLR.astro";
+import TestimonialsFeatured from "../components/sections/testimonials/TestimonialsFeatured.astro";
+import ServicesBento from "../components/sections/services/ServicesBento.astro";
+import FaqAccordion from "../components/sections/faqs/FaqAccordion.astro";
+import CtaForm from "../components/sections/ctas/CtaForm.astro";
+
+// 2. Import adapters to transform CMS data
+import {
+  adaptHero,
+  adaptTestimonials,
+  adaptServices,
+  adaptFaq,
+  adaptContactForm,
+} from "../lib/adapters";
+
+import { getEntry } from "astro:content";
+
+// 3. Get CMS data (same as before — nothing changes here)
+const landingPage = await getEntry("landingPage", "index");
+const { hero, cta } = landingPage.data;
+
+const servicesPage = await getEntry("services", "index");
+const { mainServices } = servicesPage.data;
+
+const homepage = await getEntry("homepage", "index");
+const { testimonials } = homepage.data;
+
+const contactPage = await getEntry("contact", "index");
+const { faq } = contactPage.data;
+
+// 4. Transform CMS data → Component data (one line per section)
+const heroData = adaptHero(hero);
+const testimonialsData = adaptTestimonials(testimonials);
+const servicesData = adaptServices(mainServices);
+const faqData = adaptFaq(faq);
+const ctaData = adaptContactForm(cta);
+---
+
+<MainLayout>
+  <!-- 5. Drop in components — clean, one-liner per section -->
+  <HeroSplitLR data={heroData} />
+  <TestimonialsFeatured data={testimonialsData} />
+  <ServicesBento data={servicesData} />
+  <FaqAccordion data={faqData} />
+  <CtaForm data={ctaData} />
+</MainLayout>

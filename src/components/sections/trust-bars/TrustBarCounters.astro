@@ -1,0 +1,48 @@
+---
+import type { TrustBarData } from '../../../data/sample-data';
+interface Props { data: TrustBarData; }
+const { data } = Astro.props;
+const { stats = [] } = data;
+---
+<section class="py-16 bg-zinc-50 dark:bg-zinc-900">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8" x-data="{ shown: false }" x-intersect.once="shown = true">
+      {stats.map((stat, i) => (
+        <div class="text-center" x-show="true">
+          <div
+            class="text-4xl md:text-5xl font-bold mb-1 tabular-nums"
+            x-data={`{
+              target: '${stat.value}',
+              current: '0',
+              init() {
+                if (this.shown) this.count();
+                this.$watch('shown', v => { if (v) this.count(); });
+              },
+              count() {
+                const match = this.target.match(/^([^0-9]*)([\\.0-9]+)(.*)/);
+                if (!match) { this.current = this.target; return; }
+                const prefix = match[1];
+                const numStr = match[2];
+                const suffix = match[3];
+                const num = parseFloat(numStr);
+                const isDecimal = numStr.includes('.');
+                const decimals = isDecimal ? (numStr.split('.')[1] || '').length : 0;
+                let c = 0;
+                const step = isDecimal ? num / 40 : Math.max(1, Math.floor(num / 40));
+                const interval = setInterval(() => {
+                  c = Math.min(c + step, num);
+                  this.current = prefix + (isDecimal ? c.toFixed(decimals) : Math.round(c)) + suffix;
+                  if (c >= num) clearInterval(interval);
+                }, 30);
+              }
+            }`}
+            x-text="shown ? current : '0'"
+          >
+            0
+          </div>
+          <div class="text-sm font-medium text-neutral-500 dark:text-neutral-400">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+---
+/**
+ * BenefitsIconList — Icon List
+ * Two-column grid of benefit items with icons, headings, and descriptions.
+ */
+import type { BenefitsData } from '../../../data/sample-data';
+
+interface Props { data: BenefitsData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, benefits } = data;
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
+      {benefits.map((benefit) => (
+        <div class="flex gap-5">
+          {benefit.icon && (
+            <div class="w-14 h-14 rounded-2xl bg-accent/10 dark:bg-accent/20 flex items-center justify-center text-3xl shrink-0">
+              {benefit.icon}
+            </div>
+          )}
+          <div>
+            <h3 class="text-xl font-bold mb-2">{benefit.heading}</h3>
+            <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              {benefit.description}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

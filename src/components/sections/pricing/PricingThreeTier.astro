@@ -1,0 +1,98 @@
+---
+/**
+ * PricingThreeTier — 3-Tier Cards
+ * Three pricing cards, middle highlighted as recommended.
+ */
+import type { PricingData } from '../../../data/sample-data';
+
+interface Props { data: PricingData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, tiers } = data;
+---
+
+<section class="py-20 md:py-32 bg-surface dark:bg-zinc-900/50">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto items-stretch">
+      {tiers.map((tier, index) => (
+        <div 
+          class:list={[
+            "relative flex flex-col rounded-2xl p-6 lg:p-8 transition-all",
+            tier.recommended 
+              ? "bg-zinc-950 text-white dark:bg-white dark:text-black shadow-xl scale-105 z-10"
+              : "bg-white dark:bg-zinc-950 border-2 border-zinc-200 dark:border-zinc-800"
+          ]}
+        >
+          {tier.recommended && (
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center px-4 py-1 rounded-full bg-accent text-white text-xs font-bold uppercase tracking-wider">
+              Recommended
+            </span>
+          )}
+          
+          <div class="mb-6">
+            <h3 class="text-xl font-bold mb-2">{tier.name}</h3>
+            <p class:list={[
+              "text-sm",
+              tier.recommended ? "text-white/70 dark:text-black/60" : "text-neutral-600 dark:text-neutral-400"
+            ]}>
+              {tier.description}
+            </p>
+          </div>
+
+          <div class="mb-6">
+            <span class="text-5xl font-bold">{tier.price}</span>
+            <span class:list={[
+              "text-base",
+              tier.recommended ? "text-white/60 dark:text-black/50" : "text-neutral-500 dark:text-neutral-500"
+            ]}>{tier.period}</span>
+          </div>
+
+          <ul class="space-y-4 mb-8 flex-1">
+            {tier.features.map((feature) => (
+              <li class="flex items-start gap-3">
+                <span class:list={[
+                  "shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-sm",
+                  feature.included 
+                    ? tier.recommended ? "bg-white text-black dark:bg-black dark:text-white" : "bg-zinc-950 text-white dark:bg-white dark:text-black"
+                    : tier.recommended ? "bg-white/10 text-white/30 dark:bg-black/10 dark:text-black/30" : "bg-zinc-200 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-600"
+                ]}>
+                  {feature.included ? '✓' : '×'}
+                </span>
+                <span class:list={[
+                  "text-sm",
+                  feature.included 
+                    ? tier.recommended ? "text-white/90 dark:text-black/90" : "text-neutral-700 dark:text-neutral-300"
+                    : tier.recommended ? "text-white/40 dark:text-black/40" : "text-neutral-400 dark:text-neutral-600"
+                ]}>
+                  {feature.text}
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <a 
+            href={tier.cta.url}
+            class:list={[
+              "inline-flex items-center justify-center h-14 px-8 font-bold rounded-lg transition-all",
+              tier.recommended
+                ? "bg-white text-black dark:bg-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900"
+                : "bg-zinc-950 text-white dark:bg-white dark:text-black hover:bg-zinc-800 dark:hover:bg-zinc-200"
+            ]}
+          >
+            {tier.cta.text}
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

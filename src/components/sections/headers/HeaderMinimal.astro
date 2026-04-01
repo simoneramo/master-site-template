@@ -1,0 +1,84 @@
+---
+/**
+ * HeaderMinimal — Minimal (Logo + Burger)
+ * Pattern key: minimal
+ * Section: Navigation / Header
+ *
+ * Logo left, hamburger right on all screens. Full-screen overlay menu.
+ */
+import type { HeaderData } from '../../../data/sample-data';
+
+interface Props {
+  data: HeaderData;
+}
+
+const { data } = Astro.props;
+const { logo, navLinks, cta } = data;
+---
+
+<header
+  class="w-full z-50 transition-all duration-300"
+  x-data="{ scrollY: 0, menuOpen: false }"
+  @scroll.window="scrollY = window.scrollY"
+  :class="scrollY > 100 ? 'fixed top-0 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md shadow-sm' : 'absolute top-0 bg-transparent'"
+>
+  <div class="container mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
+    <a href="/" class="text-xl font-bold text-black dark:text-white shrink-0 relative z-60">
+      {logo}
+    </a>
+
+    <!-- Hamburger (always visible) -->
+    <button
+      @click="menuOpen = !menuOpen"
+      class="relative z-60 p-2 rounded-lg border-2 border-zinc-300 dark:border-zinc-700"
+      :class="menuOpen ? 'border-white/40' : ''"
+      aria-label="Toggle menu"
+    >
+      <div class="w-6 h-5 flex flex-col justify-between">
+        <span class="block w-full h-0.5 transition-all duration-300 origin-left" :class="menuOpen ? 'rotate-45 translate-x-0.5 bg-white' : 'bg-black dark:bg-white'" />
+        <span class="block w-full h-0.5 transition-all duration-300" :class="menuOpen ? 'opacity-0 bg-white' : 'bg-black dark:bg-white'" />
+        <span class="block w-full h-0.5 transition-all duration-300 origin-left" :class="menuOpen ? '-rotate-45 translate-x-0.5 bg-white' : 'bg-black dark:bg-white'" />
+      </div>
+    </button>
+  </div>
+
+  <!-- Full-Screen Overlay Menu -->
+  <div
+    x-show="menuOpen"
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    class="fixed inset-0 z-50 bg-zinc-900 flex items-center justify-center"
+    @keydown.escape.window="menuOpen = false"
+  >
+    <nav class="text-center">
+      {navLinks.map((link, i) => (
+        <a
+          href={link.url}
+          @click="menuOpen = false"
+          class="block text-white text-4xl md:text-6xl font-bold py-3 md:py-4 hover:text-indigo-400 transition-colors"
+          x-show="menuOpen"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 translate-y-4"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          style={`transition-delay: ${(i + 1) * 75}ms`}
+        >
+          {link.label}
+        </a>
+      ))}
+
+      <div class="mt-10 pt-10 border-t border-white/20">
+        <a
+          href={cta.url}
+          @click="menuOpen = false"
+          class="inline-flex items-center justify-center h-16 px-12 bg-white text-black font-bold text-xl rounded-lg hover:bg-zinc-200 transition-colors"
+        >
+          {cta.text} →
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>

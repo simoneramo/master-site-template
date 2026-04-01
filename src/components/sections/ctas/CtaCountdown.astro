@@ -1,0 +1,63 @@
+---
+/**
+ * CtaCountdown — Countdown CTA
+ * Urgency heading with live countdown timer and CTA button.
+ */
+import type { CtaData } from '../../../data/sample-data';
+
+interface Props { data: CtaData; }
+
+const { data } = Astro.props;
+const { heading, description, primaryCta, countdownTarget } = data;
+---
+
+<section class="py-20 md:py-32 bg-zinc-950 text-white dark:bg-white dark:text-black">
+  <div
+    class="container mx-auto px-4 md:px-8 max-w-3xl text-center"
+    x-data={`{
+      target: new Date('${countdownTarget ?? new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()}'),
+      days: 0, hours: 0, minutes: 0, seconds: 0,
+      init() { this.tick(); setInterval(() => this.tick(), 1000); },
+      tick() {
+        const diff = Math.max(0, this.target - Date.now());
+        this.days = Math.floor(diff / 86400000);
+        this.hours = Math.floor((diff % 86400000) / 3600000);
+        this.minutes = Math.floor((diff % 3600000) / 60000);
+        this.seconds = Math.floor((diff % 60000) / 1000);
+      }
+    }`}
+  >
+    <h2 class="text-3xl md:text-5xl font-bold leading-tight mb-6">{heading}</h2>
+    <p class="text-lg text-white/70 dark:text-black/60 mb-10 leading-relaxed">{description}</p>
+
+    <!-- Countdown Timer -->
+    <div class="flex items-center justify-center gap-4 md:gap-6 mb-12">
+      <div class="text-center">
+        <div class="w-20 h-20 md:w-24 md:h-24 bg-white/10 dark:bg-black/10 rounded-2xl flex items-center justify-center text-3xl md:text-4xl font-bold" x-text="String(days).padStart(2, '0')">00</div>
+        <div class="text-xs font-bold uppercase tracking-wider mt-2 text-white/40 dark:text-black/40">Days</div>
+      </div>
+      <span class="text-2xl font-bold text-white/30 dark:text-black/30 mt-[-1rem]">:</span>
+      <div class="text-center">
+        <div class="w-20 h-20 md:w-24 md:h-24 bg-white/10 dark:bg-black/10 rounded-2xl flex items-center justify-center text-3xl md:text-4xl font-bold" x-text="String(hours).padStart(2, '0')">00</div>
+        <div class="text-xs font-bold uppercase tracking-wider mt-2 text-white/40 dark:text-black/40">Hours</div>
+      </div>
+      <span class="text-2xl font-bold text-white/30 dark:text-black/30 mt-[-1rem]">:</span>
+      <div class="text-center">
+        <div class="w-20 h-20 md:w-24 md:h-24 bg-white/10 dark:bg-black/10 rounded-2xl flex items-center justify-center text-3xl md:text-4xl font-bold" x-text="String(minutes).padStart(2, '0')">00</div>
+        <div class="text-xs font-bold uppercase tracking-wider mt-2 text-white/40 dark:text-black/40">Minutes</div>
+      </div>
+      <span class="text-2xl font-bold text-white/30 dark:text-black/30 mt-[-1rem]">:</span>
+      <div class="text-center">
+        <div class="w-20 h-20 md:w-24 md:h-24 bg-white/10 dark:bg-black/10 rounded-2xl flex items-center justify-center text-3xl md:text-4xl font-bold" x-text="String(seconds).padStart(2, '0')">00</div>
+        <div class="text-xs font-bold uppercase tracking-wider mt-2 text-white/40 dark:text-black/40">Seconds</div>
+      </div>
+    </div>
+
+    {primaryCta && (
+      <a href={primaryCta.url} class="group relative inline-flex items-center justify-center overflow-hidden h-16 px-14 font-bold bg-white text-black dark:bg-black dark:text-white text-lg rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all">
+        <span class="transform transition-transform duration-300 group-hover:-translate-x-3">{primaryCta.text}</span>
+        <span class="absolute right-8 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">→</span>
+      </a>
+    )}
+  </div>
+</section>

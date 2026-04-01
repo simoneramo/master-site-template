@@ -1,0 +1,74 @@
+---
+/**
+ * HeaderSidebar — Sidebar Navigation
+ * Pattern key: sidebar
+ * Section: Navigation / Header
+ *
+ * Vertical sidebar fixed to the left. Main content shifts right.
+ * Collapses to a thin icon bar on smaller screens.
+ * Note: This variant is best used as a layout wrapper, not just a header.
+ */
+import type { HeaderData } from '../../../data/sample-data';
+
+interface Props {
+  data: HeaderData;
+}
+
+const { data } = Astro.props;
+const { logo, navLinks, cta } = data;
+---
+
+<aside
+  class="fixed left-0 top-0 h-screen z-50 flex flex-col bg-white dark:bg-zinc-950 border-r-2 border-zinc-200 dark:border-zinc-800 transition-all duration-300"
+  x-data="{ expanded: true, mobileOpen: false }"
+  :class="expanded ? 'w-64' : 'w-20'"
+>
+  <!-- Logo + Collapse Toggle -->
+  <div class="h-20 flex items-center justify-between px-5 border-b border-zinc-200 dark:border-zinc-800 shrink-0">
+    <a href="/" class="font-bold text-black dark:text-white shrink-0 overflow-hidden" :class="expanded ? 'text-lg' : 'text-sm text-center w-full'">
+      <span x-show="expanded">{logo}</span>
+      <span x-show="!expanded">🚀</span>
+    </a>
+    <button
+      @click="expanded = !expanded"
+      class="hidden md:flex items-center justify-center w-8 h-8 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
+      :class="expanded ? '' : 'absolute -right-3 top-6 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-sm'"
+      aria-label="Toggle sidebar"
+    >
+      <svg class="w-4 h-4 transition-transform" :class="expanded ? '' : 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="flex-1 overflow-y-auto py-4 px-3">
+    {navLinks.map((link) => (
+      <a
+        href={link.url}
+        class="flex items-center gap-3 px-3 py-3 rounded-xl text-neutral-600 dark:text-neutral-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-black dark:hover:text-white transition-all mb-1 group"
+      >
+        <span class="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-sm shrink-0 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900/30 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+          {link.label.charAt(0)}
+        </span>
+        <span x-show="expanded" class="text-sm font-bold whitespace-nowrap overflow-hidden">
+          {link.label}
+        </span>
+      </a>
+    ))}
+  </nav>
+
+  <!-- Bottom CTA -->
+  <div class="p-4 border-t border-zinc-200 dark:border-zinc-800 shrink-0">
+    <a
+      href={cta.url}
+      class="flex items-center justify-center gap-2 h-12 bg-black dark:bg-white text-white dark:text-black font-bold rounded-xl hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors overflow-hidden"
+    >
+      <span x-show="expanded">{cta.text}</span>
+      <span x-show="!expanded">→</span>
+    </a>
+  </div>
+</aside>
+
+<!-- Spacer to push main content right -->
+<div class="transition-all duration-300" :class="expanded ? 'ml-64' : 'ml-20'" />

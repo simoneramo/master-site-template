@@ -1,0 +1,50 @@
+---
+/**
+ * ProcessIconCards — Icon Step Cards
+ * Card per step with step number, large icon, heading, description.
+ */
+import type { ProcessData } from '../../../data/sample-data';
+
+interface Props { data: ProcessData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, steps } = data;
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {steps.map((step) => (
+        <div class="bg-surface dark:bg-zinc-900/50 rounded-2xl p-6 lg:p-8 border-2 border-zinc-200 dark:border-zinc-800 relative">
+          {/* Step Number Badge */}
+          <span class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center font-bold text-sm">
+            {step.number}
+          </span>
+          
+          {/* Icon */}
+          {step.icon && (
+            <div class="w-16 h-16 rounded-2xl bg-zinc-950 dark:bg-white text-white dark:text-black flex items-center justify-center text-3xl mb-6">
+              {step.icon}
+            </div>
+          )}
+          
+          {/* Content */}
+          <h3 class="text-xl font-bold mb-3">{step.heading}</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">
+            {step.description}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

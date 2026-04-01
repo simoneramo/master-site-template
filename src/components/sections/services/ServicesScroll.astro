@@ -1,0 +1,99 @@
+---
+/**
+ * ServicesScroll — Horizontal Scroll
+ * Horizontally scrolling card row with snap scrolling.
+ */
+import type { ServicesData } from '../../../data/sample-data';
+
+interface Props { data: ServicesData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, services } = data;
+---
+
+<section class="py-20 md:py-32 overflow-hidden">
+  <div class="container mx-auto px-4 md:px-8 mb-12">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+      <div class="max-w-2xl">
+        {eyebrow && (
+          <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+            {eyebrow}
+          </span>
+        )}
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+        {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+      </div>
+      
+      <!-- Scroll Indicators -->
+      <div class="hidden md:flex items-center gap-2">
+        <button 
+          class="w-12 h-12 rounded-full border-2 border-zinc-300 dark:border-zinc-700 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
+          onclick="document.getElementById('services-scroll').scrollBy({ left: -400, behavior: 'smooth' })"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button 
+          class="w-12 h-12 rounded-full border-2 border-zinc-300 dark:border-zinc-700 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
+          onclick="document.getElementById('services-scroll').scrollBy({ left: 400, behavior: 'smooth' })"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Container -->
+  <div 
+    id="services-scroll"
+    class="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide px-4 md:px-8 pb-4"
+    style="scrollbar-width: none; -ms-overflow-style: none;"
+  >
+    {services.map((service) => (
+      <div class="snap-start shrink-0 w-[85vw] md:w-[400px] lg:w-[450px]">
+        <div class="bg-surface dark:bg-zinc-900 rounded-2xl overflow-hidden border-2 border-zinc-200 dark:border-zinc-800 h-full">
+          {service.image ? (
+            <div class="aspect-16/10 overflow-hidden">
+              <img 
+                src={service.image.src} 
+                alt={service.image.alt}
+                class="w-full h-full object-cover"
+              />
+            </div>
+          ) : (
+            <div class="aspect-16/10 bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center">
+              {service.icon && <span class="text-5xl">{service.icon}</span>}
+            </div>
+          )}
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">{service.heading}</h3>
+            <p class="text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-2">{service.description}</p>
+            {service.link && (
+              <a 
+                href={service.link.url}
+                class="inline-flex items-center gap-2 font-bold text-sm hover:gap-3 transition-all"
+              >
+                {service.link.text}
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+    
+    <!-- End spacer for scroll -->
+    <div class="snap-start shrink-0 w-4 md:w-8" />
+  </div>
+</section>
+
+<style>
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+</style>

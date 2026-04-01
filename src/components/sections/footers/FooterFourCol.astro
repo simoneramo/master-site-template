@@ -1,0 +1,78 @@
+---
+/**
+ * FooterFourCol — 4-Column Footer
+ * Pattern key: fourCol
+ * Section: Footer
+ *
+ * Logo + tagline + socials, 2–3 nav columns, contact info. Copyright bar below.
+ */
+import type { FooterData } from '../../../data/sample-data';
+
+interface Props {
+  data: FooterData;
+}
+
+const { data } = Astro.props;
+const { logo, tagline, columns, socials, copyright, legalLinks } = data;
+---
+
+<footer class="bg-zinc-950 text-white pt-16 pb-8">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="grid md:grid-cols-2 lg:grid-cols-12 gap-12 mb-12">
+
+      <!-- Brand Column -->
+      <div class="lg:col-span-4">
+        <a href="/" class="text-2xl font-bold">{logo}</a>
+        {tagline && (
+          <p class="mt-4 text-sm text-neutral-400 leading-relaxed max-w-xs">
+            {tagline}
+          </p>
+        )}
+
+        <!-- Socials -->
+        <div class="flex items-center gap-3 mt-6">
+          {socials.map((social) => (
+            <a
+              href={social.url}
+              class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-neutral-400 hover:bg-indigo-600 hover:text-white transition-all"
+              aria-label={social.platform}
+            >
+              {social.icon}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Nav Columns -->
+      {columns.map((col) => (
+        <div class="lg:col-span-2">
+          <h3 class="font-bold text-sm uppercase tracking-wider mb-4 text-white">{col.heading}</h3>
+          <ul class="space-y-3">
+            {col.links.map((link) => (
+              <li>
+                <a
+                  href={link.url}
+                  class="text-sm text-neutral-400 hover:text-white transition-colors hover:translate-x-1 inline-block"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <!-- Copyright Bar -->
+    <div class="border-t border-zinc-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-xs text-neutral-500">{copyright}</p>
+      <div class="flex items-center gap-6">
+        {legalLinks.map((link) => (
+          <a href={link.url} class="text-xs text-neutral-500 hover:text-white transition-colors">
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</footer>

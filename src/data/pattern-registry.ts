@@ -1,0 +1,311 @@
+/**
+ * Pattern Registry — Single source of truth for all section patterns.
+ * Maps section types to their available layout variants and component files.
+ *
+ * Used by:
+ * - Component browser (_component-library pages)
+ * - Future: Prompt Builder integration
+ * - Future: Tina CMS schema generation
+ */
+
+export interface PatternVariant {
+  key: string;
+  label: string;
+  component: string;
+  brief: string;
+  status: 'ready' | 'wip' | 'planned';
+  preview?: string; // Path to thumbnail image (e.g., /previews/heroes/hero-split-lr.webp)
+}
+
+export interface SectionDefinition {
+  slug: string;
+  label: string;
+  icon: string;
+  dataKey: string;
+  variants: PatternVariant[];
+}
+
+export const PATTERN_REGISTRY: SectionDefinition[] = [
+  {
+    slug: 'headers',
+    label: 'Navigation / Header',
+    icon: '🧭',
+    dataKey: 'SAMPLE_HEADER',
+    variants: [
+      { key: 'standard', label: 'Standard', component: 'HeaderStandard', brief: 'Sticky header with logo left, nav right, CTA far right. Mobile hamburger with slide-out drawer.', status: 'ready' },
+      { key: 'withPhone', label: 'With Phone', component: 'HeaderWithPhone', brief: 'Sticky header with phone number displayed before the CTA button. Mobile: tap-to-call icon.', status: 'ready' },
+      { key: 'centeredLogo', label: 'Centered Logo', component: 'HeaderCenteredLogo', brief: 'Logo centered, nav links split evenly on either side. CTA far right.', status: 'ready' },
+      { key: 'transparent', label: 'Transparent Overlay', component: 'HeaderTransparent', brief: 'Transparent header overlaying hero. Transitions to solid on scroll.', status: 'ready' },
+      { key: 'topBarNav', label: 'Top Bar + Nav', component: 'HeaderTopBarNav', brief: 'Two-tier: thin info strip on top, main nav below. Top bar hides on scroll.', status: 'ready' },
+      { key: 'megaMenu', label: 'Mega Menu', component: 'HeaderMegaMenu', brief: 'Full-width mega menu dropdown with multi-column content on hover/click.', status: 'ready' },
+      { key: 'minimal', label: 'Minimal (Logo + Burger)', component: 'HeaderMinimal', brief: 'Logo left, hamburger right on all screens. Full-screen overlay menu.', status: 'ready' },
+      { key: 'sidebar', label: 'Sidebar Navigation', component: 'HeaderSidebar', brief: 'Vertical sidebar fixed to the left. Main content shifts right.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'heroes',
+    label: 'Hero',
+    icon: '🦸',
+    dataKey: 'SAMPLE_HERO',
+    variants: [
+      { key: 'splitLR', label: 'Copy Left / Image Right', component: 'HeroSplitLR', brief: 'Two-column (55/45). Text left with eyebrow, headline, CTAs. Image right with floating trust badge.', status: 'ready' },
+      { key: 'splitRL', label: 'Image Left / Copy Right', component: 'HeroSplitRL', brief: 'Two-column (45/55). Image left, text content right.', status: 'ready' },
+      { key: 'centered', label: 'Centered', component: 'HeroCentered', brief: 'Full-width centered layout. Eyebrow, headline, CTAs, then large image below.', status: 'ready' },
+      { key: 'fullBleed', label: 'Full-Bleed Image', component: 'HeroFullBleed', brief: 'Full-viewport background image with dark gradient overlay. Text over image.', status: 'ready' },
+      { key: 'video', label: 'Video Background', component: 'HeroVideo', brief: 'Full-viewport background video (muted, autoplay, loop). Dark overlay with text.', status: 'ready' },
+      { key: 'splitForm', label: 'Split with Form', component: 'HeroSplitForm', brief: 'Text left with trust indicators. Lead capture form card on the right.', status: 'ready' },
+      { key: 'animatedText', label: 'Animated Text Hero', component: 'HeroAnimatedText', brief: 'Centered headline with one rotating/typed word cycling through keywords.', status: 'ready' },
+      { key: 'slider', label: 'Hero Slider / Carousel', component: 'HeroSlider', brief: 'Full-viewport carousel auto-advancing through 3–4 slides with unique content.', status: 'ready' },
+      { key: 'parallax', label: 'Parallax', component: 'HeroParallax', brief: 'Full-viewport hero with parallax background image scrolling at slower rate.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'trust-bars',
+    label: 'Trust Bar',
+    icon: '🤝',
+    dataKey: 'SAMPLE_TRUST_BAR',
+    variants: [
+      { key: 'logoStrip', label: 'Logo Strip', component: 'TrustBarLogoStrip', brief: 'Horizontal row of grayscale logos with hover-to-color transition.', status: 'ready' },
+      { key: 'statsBar', label: 'Stats Bar', component: 'TrustBarStats', brief: 'Three or four key statistics in a horizontal row with vertical dividers.', status: 'ready' },
+      { key: 'badgeRow', label: 'Badge Row', component: 'TrustBarBadges', brief: 'Pill-shaped trust badges in a centered row (icon + text each).', status: 'ready' },
+      { key: 'testimonialSnippet', label: 'Testimonial Snippet', component: 'TrustBarTestimonial', brief: 'Logos on left, mini testimonial quote with photo on right.', status: 'ready' },
+      { key: 'animatedCounters', label: 'Animated Counters', component: 'TrustBarCounters', brief: 'Four metrics that count up from 0 when scrolled into view.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'problems',
+    label: 'Problem / Agitation',
+    icon: '⚡',
+    dataKey: 'SAMPLE_PROBLEM',
+    variants: [
+      { key: 'splitLR', label: 'Split Layout', component: 'ProblemSplit', brief: 'Text left with pain points, relevant problem image on right.', status: 'ready' },
+      { key: 'centeredIcons', label: 'Centered with Icons', component: 'ProblemCenteredIcons', brief: 'Centered heading with 3 icon cards below, each showing a pain point.', status: 'ready' },
+      { key: 'fullWidth', label: 'Full-Width Statement', component: 'ProblemFullWidth', brief: 'Large bold statement spanning full width with supporting bullet points.', status: 'ready' },
+      { key: 'comparison', label: 'Comparison Table', component: 'ProblemComparison', brief: 'Two-column comparison: "Without Us" (red) vs "With Us" (green).', status: 'ready' },
+      { key: 'stackedCards', label: 'Stacked Pain Cards', component: 'ProblemStackedCards', brief: 'Vertical stack of full-width cards with progressive visual intensity.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'solutions',
+    label: 'Solution',
+    icon: '💡',
+    dataKey: 'SAMPLE_SOLUTION',
+    variants: [
+      { key: 'splitRL', label: 'Image Left / Copy Right', component: 'SolutionSplitRL', brief: 'Bright image left, solution text with benefits on right.', status: 'ready' },
+      { key: 'centered', label: 'Centered Feature', component: 'SolutionCentered', brief: 'Centered heading, feature image/mockup, benefit grid below.', status: 'ready' },
+      { key: 'beforeAfter', label: 'Before / After', component: 'SolutionBeforeAfter', brief: 'Side-by-side before (muted) and after (vibrant) comparison.', status: 'ready' },
+      { key: 'featureShowcase', label: 'Feature Showcase', component: 'SolutionShowcase', brief: 'Central image/mockup with floating annotation cards pointing to features.', status: 'ready' },
+      { key: 'tabbed', label: 'Tabbed Solutions', component: 'SolutionTabbed', brief: 'Horizontal tabs revealing tailored content per solution aspect.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'services',
+    label: 'Services Grid',
+    icon: '🔧',
+    dataKey: 'SAMPLE_SERVICES',
+    variants: [
+      { key: 'threeCol', label: '3-Column Cards', component: 'ServicesThreeCol', brief: 'Three cards per row with icon, heading, description, and optional link.', status: 'ready' },
+      { key: 'altRows', label: 'Alternating Rows', component: 'ServicesAltRows', brief: 'Full-width rows alternating image position left/right.', status: 'ready' },
+      { key: 'featureCards', label: 'Large Feature Cards', component: 'ServicesFeatureCards', brief: 'Two-column grid of tall cards with background images and overlay text.', status: 'ready' },
+      { key: 'bento', label: 'Bento Grid', component: 'ServicesBento', brief: 'Asymmetric grid with one large tile spanning 2 columns/rows.', status: 'ready' },
+      { key: 'scroll', label: 'Horizontal Scroll', component: 'ServicesScroll', brief: 'Horizontally scrolling card row with snap scrolling.', status: 'ready' },
+      { key: 'tabbed', label: 'Tabbed Services', component: 'ServicesTabbed', brief: 'Tab navigation at top, each tab reveals service content below.', status: 'ready' },
+      { key: 'iconOnly', label: 'Compact Icon Grid', component: 'ServicesIconGrid', brief: 'Dense 4-column grid of icon + label tiles. Hover reveals description.', status: 'ready' },
+      { key: 'accordion', label: 'Accordion Services', component: 'ServicesAccordion', brief: 'Vertical accordion list, click to expand description and image.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'features',
+    label: 'Features Grid',
+    icon: '✨',
+    dataKey: 'SAMPLE_FEATURES',
+    variants: [
+      { key: 'threeCol', label: '3-Column Grid', component: 'FeaturesThreeCol', brief: 'Three features per row with icon, heading, and description.', status: 'ready' },
+      { key: 'twoColImage', label: '2-Column with Image', component: 'FeaturesTwoColImage', brief: 'Large image left, stacked feature list right.', status: 'ready' },
+      { key: 'checklist', label: 'Checklist Style', component: 'FeaturesChecklist', brief: 'Vertical list with checkmark icons and feature descriptions.', status: 'ready' },
+      { key: 'fourColGrid', label: '4-Column Icon Grid', component: 'FeaturesFourCol', brief: 'Four features per row with centered icons on tinted backgrounds.', status: 'ready' },
+      { key: 'tabbed', label: 'Tabbed Features', component: 'FeaturesTabbed', brief: 'Tab row at top, each tab shows mockup + feature list.', status: 'ready' },
+      { key: 'stickyScroll', label: 'Sticky Scroll', component: 'FeaturesStickyScroll', brief: 'Scrolling feature list left, sticky image right that changes per feature.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'benefits',
+    label: 'Benefits',
+    icon: '🎯',
+    dataKey: 'SAMPLE_BENEFITS',
+    variants: [
+      { key: 'iconList', label: 'Icon List', component: 'BenefitsIconList', brief: 'Two-column grid of benefit items with icons, headings, and descriptions.', status: 'ready' },
+      { key: 'altRows', label: 'Alternating Rows', component: 'BenefitsAltRows', brief: 'Full-width rows alternating image/text for storytelling flow.', status: 'ready' },
+      { key: 'numbered', label: 'Numbered Benefits', component: 'BenefitsNumbered', brief: 'Numbered list with large styled numbers in accent color.', status: 'ready' },
+      { key: 'vsComparison', label: 'Us vs. Competitors', component: 'BenefitsComparison', brief: 'Comparison table with your business highlighted against competitors.', status: 'ready' },
+      { key: 'splitShowcase', label: 'Split Showcase', component: 'BenefitsSplitShowcase', brief: 'Large image left, stacked benefits with icons on right.', status: 'ready' },
+      { key: 'timeline', label: 'Benefits Timeline', component: 'BenefitsTimeline', brief: 'Horizontal timeline with benefit stops alternating above/below.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'videos',
+    label: 'Video / Demo',
+    icon: '🎬',
+    dataKey: 'SAMPLE_VIDEO',
+    variants: [
+      { key: 'centered', label: 'Centered Video', component: 'VideoCentered', brief: 'Centered heading above video embed/thumbnail with play button overlay.', status: 'ready' },
+      { key: 'splitText', label: 'Split with Text', component: 'VideoSplitText', brief: 'Two-column: text and CTA left, video right.', status: 'ready' },
+      { key: 'fullWidth', label: 'Full-Width', component: 'VideoFullWidth', brief: 'Full-width video with minimal padding. Heading above.', status: 'ready' },
+      { key: 'multiVideo', label: 'Video Tabs / Gallery', component: 'VideoGallery', brief: 'Tab/thumbnail strip with multiple videos. Click to swap main player.', status: 'ready' },
+      { key: 'testimonialVideo', label: 'Video Testimonial', component: 'VideoTestimonial', brief: 'Customer testimonial video with name, title, and star rating below.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'testimonials',
+    label: 'Testimonials / Reviews',
+    icon: '⭐',
+    dataKey: 'SAMPLE_TESTIMONIALS',
+    variants: [
+      { key: 'threeCol', label: '3-Column Cards', component: 'TestimonialsThreeCol', brief: 'Three cards with star rating, quote, customer name, and optional avatar.', status: 'ready' },
+      { key: 'featured', label: 'Single Featured', component: 'TestimonialsFeatured', brief: 'One large centered testimonial with decorative quote marks and photo.', status: 'ready' },
+      { key: 'carousel', label: 'Carousel / Slider', component: 'TestimonialsCarousel', brief: 'Single testimonial visible, auto-advances with arrows and dots.', status: 'ready' },
+      { key: 'masonry', label: 'Masonry Grid', component: 'TestimonialsMasonry', brief: 'Mixed-size cards in masonry layout for organic visual rhythm.', status: 'ready' },
+      { key: 'logoQuote', label: 'Logo + Quote', component: 'TestimonialsLogoQuote', brief: 'Wide horizontal cards: company logo, quote text, customer info.', status: 'ready' },
+      { key: 'socialEmbed', label: 'Social Proof Wall', component: 'TestimonialsSocialWall', brief: 'Grid styled as social media posts with platform icons.', status: 'ready' },
+      { key: 'ratingBreakdown', label: 'Rating Breakdown', component: 'TestimonialsRatingBreakdown', brief: 'Large average rating with bar chart breakdown and quote snippets.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'portfolios',
+    label: 'Portfolio / Gallery',
+    icon: '🖼️',
+    dataKey: 'SAMPLE_PORTFOLIO',
+    variants: [
+      { key: 'masonry', label: 'Masonry Grid', component: 'PortfolioMasonry', brief: 'Asymmetric image grid with hover overlays showing project title.', status: 'ready' },
+      { key: 'uniform', label: 'Uniform Grid', component: 'PortfolioUniform', brief: 'Even grid with consistent aspect ratios and hover overlays.', status: 'ready' },
+      { key: 'featuredGrid', label: 'Featured + Grid', component: 'PortfolioFeatured', brief: 'One large hero image at top, smaller grid below.', status: 'ready' },
+      { key: 'scroll', label: 'Horizontal Scroll', component: 'PortfolioScroll', brief: 'Large horizontally scrolling images with scroll-snap.', status: 'ready' },
+      { key: 'filtered', label: 'Filtered Gallery', component: 'PortfolioFiltered', brief: 'Category filter pills at top, grid filters with smooth transitions.', status: 'ready' },
+      { key: 'lightbox', label: 'Lightbox Gallery', component: 'PortfolioLightbox', brief: 'Thumbnail grid, click opens full-screen lightbox with navigation.', status: 'ready' },
+      { key: 'caseStudy', label: 'Case Study Cards', component: 'PortfolioCaseStudy', brief: 'Two-column cards with image, title, description, and key metric.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'processes',
+    label: 'Process / How it Works',
+    icon: '🔄',
+    dataKey: 'SAMPLE_PROCESS',
+    variants: [
+      { key: 'numbered', label: 'Numbered Steps', component: 'ProcessNumbered', brief: 'Horizontal row of numbered circles with headings, connected by lines.', status: 'ready' },
+      { key: 'timeline', label: 'Vertical Timeline', component: 'ProcessTimeline', brief: 'Centered vertical line with steps alternating left and right.', status: 'ready' },
+      { key: 'iconCards', label: 'Icon Step Cards', component: 'ProcessIconCards', brief: 'Card per step with step number, large icon, heading, description.', status: 'ready' },
+      { key: 'interactive', label: 'Interactive Steps', component: 'ProcessInteractive', brief: 'Clickable step tabs at top revealing detailed content below.', status: 'ready' },
+      { key: 'roadmap', label: 'Journey Roadmap', component: 'ProcessRoadmap', brief: 'Winding horizontal path with stops at each process step.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'pricing',
+    label: 'Pricing',
+    icon: '💰',
+    dataKey: 'SAMPLE_PRICING',
+    variants: [
+      { key: 'threeCol', label: '3-Tier Cards', component: 'PricingThreeTier', brief: 'Three pricing cards, middle highlighted as recommended.', status: 'ready' },
+      { key: 'twoCol', label: '2-Plan Comparison', component: 'PricingTwoCol', brief: 'Two plans side by side with optional feature comparison table below.', status: 'ready' },
+      { key: 'single', label: 'Single Plan', component: 'PricingSingle', brief: 'One centered plan card with feature checklist and CTA.', status: 'ready' },
+      { key: 'toggleBilling', label: 'Toggle Monthly / Annual', component: 'PricingToggle', brief: 'Monthly/Annual toggle switch above pricing cards with animated price swap.', status: 'ready' },
+      { key: 'featureMatrix', label: 'Feature Comparison Matrix', component: 'PricingMatrix', brief: 'Plans as column headers on a feature comparison table with checkmarks.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'faqs',
+    label: 'FAQ',
+    icon: '❓',
+    dataKey: 'SAMPLE_FAQ',
+    variants: [
+      { key: 'accordion', label: 'Accordion', component: 'FaqAccordion', brief: 'Vertical accordion list, one answer open at a time. Chevron rotates.', status: 'ready' },
+      { key: 'twoColGrid', label: 'Two-Column Grid', component: 'FaqTwoColGrid', brief: 'All Q&As visible in a 2-column card grid. No collapsing.', status: 'ready' },
+      { key: 'sideBySide', label: 'Side-by-Side', component: 'FaqSideBySide', brief: 'Heading + CTA left, accordion right.', status: 'ready' },
+      { key: 'categorised', label: 'Categorised FAQ', component: 'FaqCategorised', brief: 'Category tabs/pills at top filtering different sets of Q&As.', status: 'ready' },
+      { key: 'searchable', label: 'Searchable FAQ', component: 'FaqSearchable', brief: 'Search input at top with real-time filtering of accordion items.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'newsletters',
+    label: 'Newsletter Signup',
+    icon: '📧',
+    dataKey: 'SAMPLE_NEWSLETTER',
+    variants: [
+      { key: 'centered', label: 'Centered', component: 'NewsletterCentered', brief: 'Centered heading, subtext, inline email input + submit button.', status: 'ready' },
+      { key: 'split', label: 'Split Layout', component: 'NewsletterSplit', brief: 'Benefits list left, form inputs right.', status: 'ready' },
+      { key: 'banner', label: 'Banner', component: 'NewsletterBanner', brief: 'Full-width bar with contrasting background. Text left, form right.', status: 'ready' },
+      { key: 'floating', label: 'Floating / Sticky', component: 'NewsletterFloating', brief: 'Sticky bottom bar appearing after 50% scroll with dismiss button.', status: 'ready' },
+      { key: 'withIncentive', label: 'With Incentive', component: 'NewsletterIncentive', brief: 'Strong offer heading ("Get 10% Off"), form, trust text below.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'ctas',
+    label: 'Final CTA',
+    icon: '🚀',
+    dataKey: 'SAMPLE_CTA',
+    variants: [
+      { key: 'centeredBanner', label: 'Centered Banner', component: 'CtaCenteredBanner', brief: 'Full-width contrasting section with centered heading, subtext, CTA button.', status: 'ready' },
+      { key: 'splitImage', label: 'Split with Image', component: 'CtaSplitImage', brief: 'Text and CTA left, emotional image right.', status: 'ready' },
+      { key: 'cardCta', label: 'Card CTA', component: 'CtaCard', brief: 'Centered floating card with heading, subtext, CTA on contrasting background.', status: 'ready' },
+      { key: 'formCta', label: 'Form CTA', component: 'CtaForm', brief: 'Persuasive text and trust badges left, lead form right.', status: 'ready' },
+      { key: 'statsCta', label: 'Stats + CTA', component: 'CtaStats', brief: 'Key statistics row above centered heading and CTA button.', status: 'ready' },
+      { key: 'countdownCta', label: 'Countdown CTA', component: 'CtaCountdown', brief: 'Urgency heading with live countdown timer and CTA button.', status: 'ready' },
+      { key: 'testimonialCta', label: 'Testimonial + CTA', component: 'CtaTestimonial', brief: 'Customer quote left, persuasive heading and CTA right.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'footers',
+    label: 'Footer',
+    icon: '📋',
+    dataKey: 'SAMPLE_FOOTER',
+    variants: [
+      { key: 'fourCol', label: '4-Column', component: 'FooterFourCol', brief: 'Logo + tagline + socials, 2 nav columns, contact info. Copyright bar below.', status: 'ready' },
+      { key: 'minimal', label: 'Minimal', component: 'FooterMinimal', brief: 'Single row: logo left, links center, socials right. Copyright below.', status: 'ready' },
+      { key: 'newsletterLinks', label: 'Newsletter + Links', component: 'FooterNewsletter', brief: 'Newsletter signup at top, multi-column links below, copyright bar.', status: 'ready' },
+      { key: 'fatFooter', label: 'Fat Footer', component: 'FooterFat', brief: 'Large content-rich footer with 5–6 columns, certifications, payment icons.', status: 'ready' },
+      { key: 'centered', label: 'Centered Simple', component: 'FooterCentered', brief: 'Everything centered: logo, nav links, socials, copyright.', status: 'ready' },
+    ],
+  },
+];
+
+/** Helper: get a section by slug */
+export function getSection(slug: string): SectionDefinition | undefined {
+  return PATTERN_REGISTRY.find((s) => s.slug === slug);
+}
+
+/** Helper: get all sections as a flat list of { section, variant } */
+export function getAllPatterns() {
+  return PATTERN_REGISTRY.flatMap((section) =>
+    section.variants.map((variant) => ({
+      section: section.label,
+      sectionSlug: section.slug,
+      ...variant,
+    }))
+  );
+}
+
+/** Helper: count totals */
+export function getStats() {
+  const totalSections = PATTERN_REGISTRY.length;
+  const totalPatterns = PATTERN_REGISTRY.reduce((sum, s) => sum + s.variants.length, 0);
+  const ready = getAllPatterns().filter((p) => p.status === 'ready').length;
+  const wip = getAllPatterns().filter((p) => p.status === 'wip').length;
+  const planned = getAllPatterns().filter((p) => p.status === 'planned').length;
+  return { totalSections, totalPatterns, ready, wip, planned };
+}
+
+/** Helper: get all patterns with preview paths */
+export function getAllPatternsWithPreviews() {
+  return PATTERN_REGISTRY.flatMap((section) =>
+    section.variants.map((variant) => ({
+      section: section.label,
+      sectionSlug: section.slug,
+      ...variant,
+      preview: variant.preview || `/previews/${section.slug}/${variant.key}.png`,
+    }))
+  );
+}
+
+/** Helper: get preview path for a specific variant */
+export function getPreviewPath(sectionSlug: string, variantKey: string): string {
+  return `/previews/${sectionSlug}/${variantKey}.png`;
+}

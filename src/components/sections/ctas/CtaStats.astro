@@ -1,0 +1,38 @@
+---
+/**
+ * CtaStats — Stats + CTA
+ * Key statistics row above centered heading and CTA button.
+ */
+import type { CtaData } from '../../../data/sample-data';
+
+interface Props { data: CtaData; }
+
+const { data } = Astro.props;
+const { heading, description, primaryCta, stats } = data;
+---
+
+<section class="py-20 md:py-32 bg-zinc-950 text-white dark:bg-white dark:text-black">
+  <div class="container mx-auto px-4 md:px-8 max-w-4xl">
+    {stats && stats.length > 0 && (
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+        {stats.map((stat) => (
+          <div class="text-center">
+            <div class="text-4xl md:text-5xl font-bold mb-2">{stat.value}</div>
+            <div class="text-sm text-white/50 dark:text-black/50 font-medium">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    )}
+
+    <div class="text-center">
+      <h2 class="text-3xl md:text-5xl font-bold leading-tight mb-6">{heading}</h2>
+      <p class="text-lg text-white/70 dark:text-black/60 mb-10 max-w-xl mx-auto leading-relaxed">{description}</p>
+      {primaryCta && (
+        <a href={primaryCta.url} class="group relative inline-flex items-center justify-center overflow-hidden h-16 px-14 font-bold bg-white text-black dark:bg-black dark:text-white text-lg rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all">
+          <span class="transform transition-transform duration-300 group-hover:-translate-x-3">{primaryCta.text}</span>
+          <span class="absolute right-8 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">→</span>
+        </a>
+      )}
+    </div>
+  </div>
+</section>

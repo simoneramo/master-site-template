@@ -1,0 +1,139 @@
+---
+/**
+ * HeroSlider — Hero Slider / Carousel
+ * Pattern key: slider
+ * Section: Hero
+ *
+ * Full-viewport carousel auto-advancing through slides with unique content.
+ * Uses Alpine.js for slide management.
+ */
+import type { HeroData } from '../../../data/sample-data';
+
+interface Props {
+  data: HeroData;
+}
+
+const { data } = Astro.props;
+const { slides = [] } = data;
+
+// Fallback slides if none provided
+const heroSlides = slides.length > 0 ? slides : [
+  {
+    heading: data.heading,
+    description: data.description,
+    cta: data.primaryCta ?? { text: 'Learn More', url: '#' },
+    image: data.image ?? { src: '', alt: '' },
+  },
+];
+---
+
+<section
+  class="relative min-h-screen overflow-hidden"
+  x-data={`{
+    current: 0,
+    total: ${heroSlides.length},
+    autoplay: null,
+    init() {
+      this.autoplay = setInterval(() => this.next(), 6000);
+    },
+    next() {
+      this.current = (this.current + 1) % this.total;
+    },
+    prev() {
+      this.current = (this.current - 1 + this.total) % this.total;
+    },
+    goto(i) {
+      this.current = i;
+      clearInterval(this.autoplay);
+      this.autoplay = setInterval(() => this.next(), 6000);
+    }
+  }`}
+>
+  <!-- Slides -->
+  {heroSlides.map((slide, i) => (
+    <div
+      class="absolute inset-0 transition-opacity duration-700"
+      x-show={`current === ${i}`}
+      x-transition:enter="transition-opacity duration-700"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition-opacity duration-700"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+    >
+      <!-- Background -->
+      <img
+        src={slide.image.src}
+        alt={slide.image.alt}
+        class="absolute inset-0 w-full h-full object-cover"
+        loading={i === 0 ? 'eager' : 'lazy'}
+      />
+      <div class="absolute inset-0 bg-linear-to-r from-black/70 via-black/40 to-transparent" />
+
+      <!-- Content -->
+      <div class="relative z-10 h-full flex items-center">
+        <div class="container mx-auto px-4 md:px-8">
+          <div class="max-w-2xl text-white">
+            <h2 class="text-5xl md:text-7xl font-bold leading-tight mb-6">
+              {slide.heading}
+            </h2>
+            <p class="text-xl font-medium mb-10 text-white/80 leading-relaxed">
+              {slide.description}
+            </p>
+            <a
+              href={slide.cta.url}
+              class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-black bg-white transition-all duration-300 text-lg rounded-lg hover:bg-zinc-100"
+            >
+              <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
+                {slide.cta.text}
+              </span>
+              <span class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                →
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
+
+  <!-- Navigation Arrows -->
+  <button
+    @click="prev()"
+    class="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all"
+    aria-label="Previous slide"
+  >
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+
+  <button
+    @click="next()"
+    class="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all"
+    aria-label="Next slide"
+  >
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+
+  <!-- Dot Indicators -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+    {heroSlides.map((_, i) => (
+      <button
+        @click={`goto(${i})`}
+        class="w-3 h-3 rounded-full transition-all duration-300"
+        :class={`current === ${i} ? 'bg-white w-8' : 'bg-white/40 hover:bg-white/60'`}
+        aria-label={`Go to slide ${i + 1}`}
+      />
+    ))}
+  </div>
+
+  <!-- Slide counter -->
+  <div class="absolute top-8 right-8 z-20 text-white/60 text-sm font-bold font-mono">
+    <span x-text="String(current + 1).padStart(2, '0')">01</span>
+    <span class="mx-1">/</span>
+    <span>{String(heroSlides.length).padStart(2, '0')}</span>
+  </div>
+</section>

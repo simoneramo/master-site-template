@@ -1,0 +1,48 @@
+---
+/**
+ * ProcessNumbered — Numbered Steps
+ * Horizontal row of numbered circles with headings, connected by lines.
+ */
+import type { ProcessData } from '../../../data/sample-data';
+
+interface Props { data: ProcessData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, steps } = data;
+---
+
+<section class="py-20 md:py-32 bg-surface dark:bg-zinc-900/50">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <div class="relative">
+      {/* Connection Line - Desktop */}
+      <div class="hidden lg:block absolute top-16 left-[12.5%] right-[12.5%] h-0.5 bg-zinc-300 dark:bg-zinc-700" />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+        {steps.map((step, index) => (
+          <div class="relative text-center">
+            {/* Number Circle */}
+            <div class="relative z-10 w-16 h-16 mx-auto rounded-full bg-zinc-950 dark:bg-white text-white dark:text-black flex items-center justify-center text-2xl font-bold mb-6 ring-4 ring-surface dark:ring-zinc-900">
+              {step.icon ? <span class="text-2xl">{step.icon}</span> : <span>{step.number}</span>}
+            </div>
+            
+            {/* Content */}
+            <h3 class="text-xl font-bold mb-3">{step.heading}</h3>
+            <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">
+              {step.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

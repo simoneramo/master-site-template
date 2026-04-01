@@ -1,0 +1,90 @@
+---
+/**
+ * BenefitsComparison — Us vs. Competitors
+ * Comparison table with your business highlighted against competitors.
+ */
+import type { BenefitsData } from '../../../data/sample-data';
+
+interface Props { data: BenefitsData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, benefits } = data;
+
+// Mock comparison data
+const competitors = ['Competitor A', 'Competitor B'];
+const comparisonData = benefits.map((benefit, index) => ({
+  benefit: benefit.heading,
+  us: true,
+  competitor1: index < 2,
+  competitor2: index < 1,
+}));
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <div class="max-w-4xl mx-auto overflow-x-auto">
+      <table class="w-full border-2 border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden">
+        <thead>
+          <tr class="border-b-2 border-zinc-200 dark:border-zinc-800 bg-surface dark:bg-zinc-900/50">
+            <th class="text-left py-5 px-6 font-bold">Feature</th>
+            <th class="text-center py-5 px-6 font-bold bg-accent/10 dark:bg-accent/20 text-accent">
+              <span class="flex items-center justify-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-accent" />
+                Us
+              </span>
+            </th>
+            {competitors.map(comp => (
+              <th class="text-center py-5 px-6 font-bold text-neutral-500 dark:text-neutral-400">{comp}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {comparisonData.map((row, index) => (
+            <tr class="border-b border-zinc-200 dark:border-zinc-800 last:border-b-0">
+              <td class="py-5 px-6 font-medium">{row.benefit}</td>
+              <td class="text-center py-5 px-6 bg-accent/5 dark:bg-accent/10">
+                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-accent text-white">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                  </svg>
+                </span>
+              </td>
+              <td class="text-center py-5 px-6">
+                {row.competitor1 ? (
+                  <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </span>
+                ) : (
+                  <span class="text-zinc-300 dark:text-zinc-700 text-xl">×</span>
+                )}
+              </td>
+              <td class="text-center py-5 px-6">
+                {row.competitor2 ? (
+                  <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </span>
+                ) : (
+                  <span class="text-zinc-300 dark:text-zinc-700 text-xl">×</span>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

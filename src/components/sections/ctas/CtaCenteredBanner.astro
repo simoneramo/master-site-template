@@ -1,0 +1,47 @@
+---
+/**
+ * CtaCenteredBanner — Centered Banner CTA
+ * Full-width contrasting section with centered heading, subtext, CTA button.
+ */
+import type { CtaData } from '../../../data/sample-data';
+
+interface Props { data: CtaData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, primaryCta, secondaryCta, trustBadges } = data;
+---
+
+<section class="py-24 md:py-32 bg-zinc-950 text-white dark:bg-white dark:text-black">
+  <div class="container mx-auto px-4 md:px-8 text-center max-w-3xl">
+    {eyebrow && (
+      <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-white/20 dark:border-black/20 text-white/70 dark:text-black/70 mb-8">
+        {eyebrow}
+      </span>
+    )}
+
+    <h2 class="text-4xl md:text-6xl font-bold leading-tight mb-6">{heading}</h2>
+    <p class="text-lg text-white/70 dark:text-black/60 mb-10 leading-relaxed">{description}</p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      {primaryCta && (
+        <a href={primaryCta.url} class="group relative inline-flex items-center justify-center overflow-hidden h-16 px-12 font-bold bg-white text-black dark:bg-black dark:text-white text-lg rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all">
+          <span class="transform transition-transform duration-300 group-hover:-translate-x-3">{primaryCta.text}</span>
+          <span class="absolute right-8 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">→</span>
+        </a>
+      )}
+      {secondaryCta && (
+        <a href={secondaryCta.url} class="inline-flex items-center justify-center h-16 px-10 font-bold border-2 border-white/30 dark:border-black/30 rounded-lg hover:border-white dark:hover:border-black transition-colors text-lg">
+          {secondaryCta.text}
+        </a>
+      )}
+    </div>
+
+    {trustBadges && trustBadges.length > 0 && (
+      <div class="flex flex-wrap items-center justify-center gap-6 mt-10 text-sm text-white/50 dark:text-black/50">
+        {trustBadges.map((badge) => (
+          <span class="flex items-center gap-1.5"><span>{badge.icon}</span> {badge.text}</span>
+        ))}
+      </div>
+    )}
+  </div>
+</section>

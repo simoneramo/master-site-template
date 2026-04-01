@@ -1,0 +1,71 @@
+---
+/**
+ * ProblemComparison — Comparison Table
+ * Two-column comparison: "Without Us" (red) vs "With Us" (green).
+ */
+import type { ProblemData } from '../../../data/sample-data';
+
+interface Props { data: ProblemData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, comparison } = data;
+
+// Default comparison if not provided
+const defaultComparison = {
+  without: { heading: 'Without Us', points: ['Slow performance', 'Poor mobile experience', 'Low conversions'] },
+  with: { heading: 'With Us', points: ['Lightning fast', 'Mobile optimized', 'High conversions'] },
+};
+
+const compare = comparison || defaultComparison;
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <div class="max-w-4xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+        {/* Without Column */}
+        <div class="bg-rose-50 dark:bg-rose-950/20 rounded-2xl p-8 border-2 border-rose-200 dark:border-rose-900">
+          <h3 class="text-xl font-bold text-rose-700 dark:text-rose-400 mb-6 flex items-center gap-2">
+            <span>✕</span> {compare.without.heading}
+          </h3>
+          <ul class="space-y-4">
+            {compare.without.points.map((point) => (
+              <li class="flex items-start gap-3 text-rose-700 dark:text-rose-300">
+                <span class="mt-1">•</span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* With Column */}
+        <div class="bg-emerald-50 dark:bg-emerald-950/20 rounded-2xl p-8 border-2 border-emerald-200 dark:border-emerald-900 relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-emerald-500 text-white text-xs font-bold uppercase">
+            Recommended
+          </div>
+          <h3 class="text-xl font-bold text-emerald-700 dark:text-emerald-400 mb-6 flex items-center gap-2">
+            <span>✓</span> {compare.with.heading}
+          </h3>
+          <ul class="space-y-4">
+            {compare.with.points.map((point) => (
+              <li class="flex items-start gap-3 text-emerald-700 dark:text-emerald-300">
+                <span class="mt-1">•</span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

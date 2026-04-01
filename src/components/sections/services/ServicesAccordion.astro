@@ -1,0 +1,96 @@
+---
+/**
+ * ServicesAccordion — Accordion Services
+ * Vertical accordion list, click to expand description and image.
+ */
+import type { ServicesData } from '../../../data/sample-data';
+
+interface Props { data: ServicesData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, services } = data;
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <div class="max-w-4xl mx-auto space-y-4" x-data="{ active: null }">
+      {services.map((service, index) => (
+        <div 
+          class="border-2 border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden transition-all"
+          :class={`active === ${index} ? 'border-zinc-950 dark:border-white' : ''`}
+        >
+          {/* Accordion Header */}
+          <button
+            @click={`active = active === ${index} ? null : ${index}`}
+            class="w-full flex items-center gap-4 p-6 text-left hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+          >
+            {service.icon && (
+              <span class="w-12 h-12 rounded-xl bg-zinc-950 dark:bg-white text-white dark:text-black flex items-center justify-center text-xl shrink-0">
+                {service.icon}
+              </span>
+            )}
+            <div class="flex-1">
+              <h3 class="text-lg md:text-xl font-bold">{service.heading}</h3>
+            </div>
+            <svg 
+              class="w-6 h-6 shrink-0 transition-transform duration-300" 
+              :class={`active === ${index} ? 'rotate-180' : ''`}
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          {/* Accordion Content */}
+          <div 
+            x-show={`active === ${index}`} 
+            x-collapse
+            x-cloak
+          >
+            <div class="px-6 pb-6 pt-0">
+              <div class="grid md:grid-cols-2 gap-6 items-center">
+                {service.image && (
+                  <div class="aspect-video rounded-xl overflow-hidden bg-zinc-200 dark:bg-zinc-800">
+                    <img 
+                      src={service.image.src} 
+                      alt={service.image.alt}
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                <div class={service.image ? '' : 'md:col-span-2'}>
+                  <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">
+                    {service.description}
+                  </p>
+                  {service.link && (
+                    <a 
+                      href={service.link.url}
+                      class="inline-flex items-center gap-2 font-bold hover:gap-3 transition-all"
+                    >
+                      {service.link.text}
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                      </svg>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,106 @@
+---
+/**
+ * HeroAnimatedText — Animated Text Hero
+ * Pattern key: animatedText
+ * Section: Hero
+ *
+ * Centered headline with one rotating/typed word cycling through keywords.
+ * Uses Alpine.js for the word rotation animation.
+ */
+import type { HeroData } from '../../../data/sample-data';
+
+interface Props {
+  data: HeroData;
+}
+
+const { data } = Astro.props;
+const {
+  eyebrow,
+  heading,
+  headingAccent,
+  description,
+  primaryCta,
+  secondaryCta,
+  rotatingWords = ['drive results', 'convert visitors', 'grow brands'],
+  trustBadge,
+} = data;
+
+// The heading text before the rotating word
+const staticHeading = headingAccent ? heading.replace(headingAccent, '') : heading;
+---
+
+<section class="py-24 md:py-40">
+  <div class="container mx-auto px-4 md:px-8 text-center">
+
+    {eyebrow && (
+      <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-8">
+        {eyebrow}
+      </span>
+    )}
+
+    <!-- Animated Headline -->
+    <h1
+      class="text-5xl md:text-7xl font-bold leading-tight mb-8 max-w-5xl mx-auto"
+      x-data={`{
+        words: ${JSON.stringify(rotatingWords)},
+        currentIndex: 0,
+        currentWord: '${rotatingWords[0]}',
+        isVisible: true,
+        init() {
+          setInterval(() => {
+            this.isVisible = false;
+            setTimeout(() => {
+              this.currentIndex = (this.currentIndex + 1) % this.words.length;
+              this.currentWord = this.words[this.currentIndex];
+              this.isVisible = true;
+            }, 400);
+          }, 3000);
+        }
+      }`}
+    >
+      <span>{staticHeading}</span>
+      <span
+        class="text-indigo-600 dark:text-indigo-400 inline-block transition-all duration-400"
+        :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
+        x-text="currentWord"
+      >
+        {rotatingWords[0]}
+      </span>
+    </h1>
+
+    <p class="text-xl font-medium mb-12 text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+      {description}
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      {primaryCta && (
+        <a
+          href={primaryCta.url}
+          class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-12 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-full hover:bg-zinc-800 dark:hover:bg-zinc-200"
+        >
+          <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
+            {primaryCta.text}
+          </span>
+          <span class="absolute right-8 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+            →
+          </span>
+        </a>
+      )}
+      {secondaryCta && (
+        <a
+          href={secondaryCta.url}
+          class="inline-flex items-center justify-center h-14 px-10 font-bold border-2 border-zinc-300 dark:border-zinc-700 rounded-full hover:border-black dark:hover:border-white transition-colors text-lg"
+        >
+          {secondaryCta.text}
+        </a>
+      )}
+    </div>
+
+    {trustBadge && (
+      <div class="mt-12 flex items-center justify-center gap-2 text-sm font-bold text-neutral-400 dark:text-neutral-500">
+        <span>{trustBadge.icon}</span>
+        <span>{trustBadge.title} · {trustBadge.subtitle}</span>
+      </div>
+    )}
+  </div>
+</section>

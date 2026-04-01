@@ -1,0 +1,63 @@
+---
+/**
+ * SolutionCentered — Centered Feature
+ * Centered heading, feature image/mockup, benefit grid below.
+ */
+import type { SolutionData } from '../../../data/sample-data';
+
+interface Props { data: SolutionData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, benefits, image, primaryCta } = data;
+---
+
+<section class="py-20 md:py-32 bg-surface dark:bg-zinc-900/50">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>
+    </div>
+
+    {/* Feature Image */}
+    {image && (
+      <div class="max-w-4xl mx-auto mb-16 rounded-2xl overflow-hidden shadow-2xl">
+        <img 
+          src={image.src} 
+          alt={image.alt}
+          class="w-full h-auto"
+        />
+      </div>
+    )}
+
+    {/* Benefits Grid */}
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+      {benefits.map((benefit) => (
+        <div class="text-center p-6 bg-white dark:bg-zinc-950 rounded-xl border-2 border-zinc-200 dark:border-zinc-800">
+          {benefit.icon && (
+            <div class="w-14 h-14 mx-auto rounded-xl bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-3xl mb-4">
+              {benefit.icon}
+            </div>
+          )}
+          <h3 class="font-bold mb-2">{benefit.heading}</h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">{benefit.description}</p>
+        </div>
+      ))}
+    </div>
+
+    {primaryCta && (
+      <div class="text-center mt-12">
+        <a 
+          href={primaryCta.url}
+          class="inline-flex items-center justify-center h-14 px-10 font-bold bg-zinc-950 text-white dark:bg-white dark:text-black rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all"
+        >
+          {primaryCta.text}
+        </a>
+      </div>
+    )}
+  </div>
+</section>

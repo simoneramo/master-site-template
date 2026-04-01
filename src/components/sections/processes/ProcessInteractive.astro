@@ -1,0 +1,97 @@
+---
+/**
+ * ProcessInteractive — Interactive Steps
+ * Clickable step tabs at top revealing detailed content below.
+ */
+import type { ProcessData } from '../../../data/sample-data';
+
+interface Props { data: ProcessData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, steps } = data;
+---
+
+<section class="py-20 md:py-32 bg-surface dark:bg-zinc-900/50">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <!-- Alpine.js Interactive Steps -->
+    <div class="max-w-4xl mx-auto" x-data="{ activeStep: 0 }">
+      {/* Step Tabs */}
+      <div class="flex flex-wrap justify-center gap-3 mb-12">
+        {steps.map((step, index) => (
+          <button
+            @click={`activeStep = ${index}`}
+            class="flex items-center gap-3 px-5 py-3 rounded-xl transition-all"
+            :class={`activeStep === ${index} ? 'bg-zinc-950 text-white dark:bg-white dark:text-black shadow-lg' : 'bg-white dark:bg-zinc-950 border-2 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'`}
+          >
+            <span class:list={["w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm", index === 0 ? 'bg-accent text-white' : 'bg-zinc-200 dark:bg-zinc-800']}>{step.number}</span>
+            <span class="font-bold">{step.heading}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Step Content */}
+      <div class="relative min-h-[300px]">
+        {steps.map((step, index) => (
+          <div
+            x-show={`activeStep === ${index}`}
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 -translate-y-4"
+            class="bg-white dark:bg-zinc-950 rounded-2xl p-8 lg:p-12 border-2 border-zinc-200 dark:border-zinc-800"
+            style={`display: ${index === 0 ? 'block' : 'none'}`}
+            x-cloak
+          >
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <div class="flex items-center gap-4 mb-6">
+                  {step.icon && (
+                    <div class="w-16 h-16 rounded-2xl bg-accent/10 dark:bg-accent/20 flex items-center justify-center text-4xl">
+                      {step.icon}
+                    </div>
+                  )}
+                  <span class="text-6xl font-bold text-zinc-100 dark:text-zinc-900">0{step.number}</span>
+                </div>
+                <h3 class="text-3xl font-bold mb-4">{step.heading}</h3>
+                <p class="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
+              <div class="flex justify-center">
+                {step.image ? (
+                  <img src={step.image.src} alt={step.image.alt} class="rounded-xl" />
+                ) : (
+                  <div class="w-48 h-48 rounded-2xl bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center">
+                    {step.icon ? <span class="text-8xl">{step.icon}</span> : <span class="text-6xl font-bold text-zinc-300">0{step.number}</span>}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Progress Indicator */}
+      <div class="flex justify-center gap-2 mt-8">
+        {steps.map((_, index) => (
+          <div 
+            class="h-2 rounded-full transition-all duration-300"
+            :class={`activeStep === ${index} ? 'w-8 bg-accent' : 'w-2 bg-zinc-300 dark:bg-zinc-700'`}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

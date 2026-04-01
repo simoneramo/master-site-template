@@ -1,0 +1,120 @@
+---
+/**
+ * HeroParallax — Parallax Hero
+ * Pattern key: parallax
+ * Section: Hero
+ *
+ * Full-viewport hero with parallax background image scrolling at slower rate.
+ */
+import type { HeroData } from '../../../data/sample-data';
+
+interface Props {
+  data: HeroData;
+}
+
+const { data } = Astro.props;
+const {
+  eyebrow,
+  heading,
+  headingAccent,
+  description,
+  primaryCta,
+  secondaryCta,
+  image,
+  trustBadge,
+} = data;
+
+let headingBefore = heading;
+let headingAfter = '';
+if (headingAccent && heading.includes(headingAccent)) {
+  const idx = heading.indexOf(headingAccent);
+  headingBefore = heading.slice(0, idx);
+  headingAfter = heading.slice(idx + headingAccent.length);
+}
+
+const bgImage = image?.src ?? '';
+const bgImageStyle = bgImage ? `background-image: url('${bgImage}');` : '';
+---
+
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  {/* Parallax Background using CSS background-attachment: fixed */}
+  <div 
+    class="absolute inset-0 w-full h-full bg-cover bg-center bg-fixed"
+    style={bgImageStyle}
+  >
+    {!bgImage && (
+      <div class="w-full h-full bg-gradient-to-br from-indigo-600 to-purple-700" />
+    )}
+  </div>
+
+  <!-- Gradient Overlay -->
+  <div class="absolute inset-0 z-[1] bg-linear-to-b from-black/60 via-black/40 to-black/70 pointer-events-none" />
+
+  <!-- Content -->
+  <div class="relative z-10 container mx-auto px-4 md:px-8 py-32">
+    <div class="max-w-3xl mx-auto text-center text-white">
+      {eyebrow && (
+        <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-white/30 text-white/80 mb-8">
+          {eyebrow}
+        </span>
+      )}
+
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-8">
+        {headingAccent ? (
+          <>
+            {headingBefore}
+            <span class="text-indigo-400">{headingAccent}</span>
+            {headingAfter}
+          </>
+        ) : (
+          heading
+        )}
+      </h1>
+
+      <p class="text-xl md:text-2xl font-medium mb-12 text-white/80 leading-relaxed">
+        {description}
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        {primaryCta && (
+          <a
+            href={primaryCta.url}
+            class="group relative inline-flex items-center justify-center overflow-hidden h-16 px-12 font-bold text-black bg-white transition-all duration-300 text-lg rounded-lg hover:bg-zinc-100"
+          >
+            <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
+              {primaryCta.text}
+            </span>
+            <span class="absolute right-8 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+              →
+            </span>
+          </a>
+        )}
+        {secondaryCta && (
+          <a
+            href={secondaryCta.url}
+            class="inline-flex items-center justify-center h-16 px-10 font-bold border-2 border-white/40 text-white rounded-lg hover:border-white transition-colors text-lg"
+          >
+            {secondaryCta.text}
+          </a>
+        )}
+      </div>
+
+      {trustBadge && (
+        <div class="mt-12 flex items-center justify-center gap-2 text-sm font-bold text-white/50">
+          <span>{trustBadge.icon}</span>
+          <span>{trustBadge.title} · {trustBadge.subtitle}</span>
+        </div>
+      )}
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+    <div class="flex flex-col items-center gap-2 text-white/50">
+      <span class="text-xs font-bold uppercase tracking-widest">Scroll</span>
+      <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
+        <div class="w-1 h-2 bg-white/60 rounded-full animate-bounce" />
+      </div>
+    </div>
+  </div>
+</section>

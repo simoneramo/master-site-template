@@ -1,0 +1,301 @@
+---
+/**
+ * Component Library — Section Detail Page
+ * Shows all variants for a specific section type, rendered live with sample data.
+ * URL: /component-library/[section]  (e.g. /component-library/heroes)
+ */
+import MainLayout from '../../layouts/MainLayout.astro';
+import { PATTERN_REGISTRY, getSection } from '../../data/pattern-registry';
+
+// Generate static paths for all sections
+export function getStaticPaths() {
+  return PATTERN_REGISTRY.map((section) => ({
+    params: { section: section.slug },
+  }));
+}
+
+const { section: sectionSlug } = Astro.params;
+const section = getSection(sectionSlug);
+
+if (!section) {
+  return Astro.redirect('/404');
+}
+
+const readyVariants = section.variants.filter(v => v.status === 'ready');
+const wipVariants = section.variants.filter(v => v.status === 'wip');
+const plannedVariants = section.variants.filter(v => v.status === 'planned');
+
+// Find previous and next sections for navigation
+const currentIndex = PATTERN_REGISTRY.findIndex(s => s.slug === sectionSlug);
+const prevSection = currentIndex > 0 ? PATTERN_REGISTRY[currentIndex - 1] : null;
+const nextSection = currentIndex < PATTERN_REGISTRY.length - 1 ? PATTERN_REGISTRY[currentIndex + 1] : null;
+
+/**
+ * Dynamic component imports — maps component names to actual Astro components.
+ * As you build each variant, add its import here.
+ *
+ * We use Astro.glob to find all built components in the sections directory.
+ */
+const allComponents = await Astro.glob('../../components/sections/**/*.astro');
+
+// Build a lookup map: component filename (without extension) → module
+const componentMap: Record<string, any> = {};
+for (const mod of allComponents) {
+  // Extract filename from the file path (e.g., "HeroSplitLR" from ".../heroes/HeroSplitLR.astro")
+  const filename = mod.file?.split('/').pop()?.replace('.astro', '') ?? '';
+  if (filename) {
+    componentMap[filename] = mod.default;
+  }
+}
+
+// Import sample data
+import * as SampleData from '../../data/sample-data';
+
+// Map section slugs to their sample data
+const sampleDataMap: Record<string, any> = {
+  headers: SampleData.SAMPLE_HEADER,
+  heroes: SampleData.SAMPLE_HERO,
+  'trust-bars': SampleData.SAMPLE_TRUST_BAR,
+  problems: SampleData.SAMPLE_PROBLEM,
+  solutions: SampleData.SAMPLE_SOLUTION,
+  services: SampleData.SAMPLE_SERVICES,
+  features: SampleData.SAMPLE_FEATURES,
+  benefits: SampleData.SAMPLE_BENEFITS,
+  videos: SampleData.SAMPLE_VIDEO,
+  testimonials: SampleData.SAMPLE_TESTIMONIALS,
+  portfolios: SampleData.SAMPLE_PORTFOLIO,
+  processes: SampleData.SAMPLE_PROCESS,
+  pricing: SampleData.SAMPLE_PRICING,
+  faqs: SampleData.SAMPLE_FAQ,
+  newsletters: SampleData.SAMPLE_NEWSLETTER,
+  ctas: SampleData.SAMPLE_CTA,
+  footers: SampleData.SAMPLE_FOOTER,
+};
+
+const sampleData = sampleDataMap[sectionSlug] ?? {};
+---
+
+<MainLayout
+  title={`${section.label} Patterns — Component Library`}
+  description={`Browse all ${section.variants.length} layout variants for the ${section.label} section.`}
+  headerVariant="simple"
+  footerVariant="simple"
+>
+  <section class="py-16">
+    <div class="container mx-auto px-4 md:px-8 max-w-7xl">
+
+      <!-- Breadcrumb & Navigation -->
+      <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center gap-2 text-sm font-medium text-neutral-500 dark:text-neutral-400">
+          <a href="/component-library" class="hover:text-black dark:hover:text-white transition-colors">
+            ← Component Library
+          </a>
+          <span>/</span>
+          <span class="text-black dark:text-white">{section.label}</span>
+        </div>
+        <div class="flex items-center gap-3">
+          {prevSection && (
+            <a
+              href={`/component-library/${prevSection.slug}`}
+              class="text-sm font-bold text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+              title={prevSection.label}
+            >
+              ← {prevSection.label}
+            </a>
+          )}
+          {prevSection && nextSection && (
+            <span class="text-neutral-300 dark:text-neutral-700">|</span>
+          )}
+          {nextSection && (
+            <a
+              href={`/component-library/${nextSection.slug}`}
+              class="text-sm font-bold text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+              title={nextSection.label}
+            >
+              {nextSection.label} →
+            </a>
+          )}
+        </div>
+      </div>
+
+      <!-- Section Header -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-4xl">{section.icon}</span>
+          <h1 class="text-4xl md:text-5xl font-bold">{section.label}</h1>
+        </div>
+        <p class="text-lg text-neutral-600 dark:text-neutral-400">
+          {section.variants.length} layout variants available.
+          {readyVariants.length > 0 && <span class="text-green-600 dark:text-green-400 font-bold"> {readyVariants.length} ready.</span>}
+          {wipVariants.length > 0 && <span class="text-yellow-600 dark:text-yellow-400 font-bold"> {wipVariants.length} in progress.</span>}
+          {plannedVariants.length > 0 && <span class="text-neutral-400 font-bold"> {plannedVariants.length} planned.</span>}
+        </p>
+      </div>
+
+      <!-- Variant Quick-Nav -->
+      <div class="flex flex-wrap gap-2 mb-12 sticky top-20 z-40 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md py-4 -mx-4 px-4 border-b border-zinc-200 dark:border-zinc-800">
+        {section.variants.map((variant) => (
+          <a
+            href={`#${variant.key}`}
+            class:list={[
+              'text-xs font-bold px-3 py-1.5 rounded-full border-2 transition-all',
+              variant.status === 'ready'
+                ? 'border-green-500 bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/40'
+                : variant.status === 'wip'
+                  ? 'border-yellow-500 bg-yellow-50 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400 hover:bg-yellow-100 dark:hover:bg-yellow-900/40'
+                  : 'border-zinc-300 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400 hover:border-zinc-400 dark:hover:border-zinc-500',
+            ]}
+          >
+            {variant.label}
+          </a>
+        ))}
+      </div>
+
+      <!-- Variant Previews -->
+      <div class="space-y-16">
+        {section.variants.map((variant) => {
+          const Component = componentMap[variant.component];
+          const isBuilt = !!Component;
+
+          return (
+            <div id={variant.key} class="scroll-mt-32">
+              <!-- Variant Header -->
+              <div class="flex items-center justify-between mb-6 pb-4 border-b-2 border-zinc-200 dark:border-zinc-800">
+                <div>
+                  <div class="flex items-center gap-3">
+                    <h2 class="text-2xl font-bold">{variant.label}</h2>
+                    <span
+                      class:list={[
+                        'text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full',
+                        variant.status === 'ready'
+                          ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                          : variant.status === 'wip'
+                            ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
+                            : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400',
+                      ]}
+                    >
+                      {variant.status}
+                    </span>
+                  </div>
+                  <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
+                    <code class="text-xs bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded font-mono">
+                      {variant.component}
+                    </code>
+                    <span class="mx-2">·</span>
+                    {variant.brief}
+                  </p>
+                </div>
+
+                {isBuilt && (
+                  <span class="text-xs font-bold text-green-600 dark:text-green-400 flex items-center gap-1">
+                    <span>✓</span> Live Preview
+                  </span>
+                )}
+              </div>
+
+              <!-- Preview Area -->
+              {isBuilt ? (
+                <div data-variant={variant.key} class:list={[
+                  "border-2 border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden bg-white dark:bg-zinc-950 shadow-sm border-dashed",
+                  sectionSlug === 'headers' ? '' : 'p-4'
+                ]}>
+                  {sectionSlug === 'headers' ? (
+                    <!-- Headers: force relative positioning and show with fake page context -->
+                    <div class="header-preview-frame relative">
+                      <!-- Force header/aside to be relative so it stays in container -->
+                      <Component data={sampleData} />
+                      <!-- Fake page content below -->
+                      <div class="h-[250px] bg-linear-to-b from-zinc-100 to-zinc-200 dark:from-zinc-900 dark:to-zinc-800 p-8 pt-4 space-y-4">
+                        <div class="h-8 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-3/4 mx-auto" />
+                        <div class="h-4 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-full" />
+                        <div class="h-4 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-5/6" />
+                        <div class="h-4 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-4/6" />
+                        <div class="h-20 bg-zinc-200/50 dark:bg-zinc-800/50 rounded-lg" />
+                      </div>
+                    </div>
+                  ) : (
+                    <Component data={sampleData} />
+                  )}
+                </div>
+              ) : (
+                <div class="border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl p-16 text-center">
+                  <div class="text-4xl mb-4 opacity-30">🏗️</div>
+                  <p class="text-lg font-bold text-neutral-400 dark:text-neutral-500">
+                    Not yet built
+                  </p>
+                  <p class="text-sm text-neutral-400 dark:text-neutral-500 mt-2 max-w-md mx-auto">
+                    This variant is planned. When built, a live preview will appear here with sample data.
+                  </p>
+                  <p class="text-xs text-neutral-300 dark:text-neutral-600 mt-4 font-mono">
+                    src/components/sections/{sectionSlug}/{variant.component}.astro
+                  </p>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <!-- Bottom Navigation -->
+      <div class="flex items-center justify-between mt-16 pt-8 border-t-2 border-zinc-200 dark:border-zinc-800">
+        {prevSection ? (
+          <a
+            href={`/component-library/${prevSection.slug}`}
+            class="group flex items-center gap-2 text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+          >
+            <span class="transform group-hover:-translate-x-1 transition-transform">←</span>
+            <div>
+              <div class="text-xs font-medium uppercase tracking-wider">Previous</div>
+              <div class="font-bold">{prevSection.icon} {prevSection.label}</div>
+            </div>
+          </a>
+        ) : <div />}
+
+        <a
+          href="/component-library"
+          class="text-sm font-bold text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+        >
+          All Sections
+        </a>
+
+        {nextSection ? (
+          <a
+            href={`/component-library/${nextSection.slug}`}
+            class="group flex items-center gap-2 text-right text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+          >
+            <div>
+              <div class="text-xs font-medium uppercase tracking-wider">Next</div>
+              <div class="font-bold">{nextSection.icon} {nextSection.label}</div>
+            </div>
+            <span class="transform group-hover:translate-x-1 transition-transform">→</span>
+          </a>
+        ) : <div />}
+      </div>
+
+    </div>
+  </section>
+  
+  <!-- Header Preview Styles: Force fixed/absolute headers to be relative in the preview -->
+  <style is:global>
+    /* Create a new containing block to trap fixed positioned children */
+    .header-preview-frame {
+      transform: translateZ(0);
+    }
+    .header-preview-frame > header,
+    .header-preview-frame > aside {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      right: auto !important;
+      bottom: auto !important;
+      height: auto !important;
+      width: 100% !important;
+      max-height: none !important;
+    }
+    /* Ensure header content doesn't overflow */
+    .header-preview-frame > header > div,
+    .header-preview-frame > aside > div {
+      max-width: 100% !important;
+    }
+  </style>
+</MainLayout>

@@ -1,0 +1,68 @@
+---
+/**
+ * NewsletterFloating — Floating / Sticky
+ * Sticky bottom bar appearing after 50% scroll with dismiss button.
+ */
+import type { NewsletterData } from '../../../data/sample-data';
+
+interface Props { data: NewsletterData; }
+
+const { data } = Astro.props;
+const { heading, description, buttonText } = data;
+---
+
+<div 
+  x-data="{ show: false, dismissed: false }" 
+  x-init="window.addEventListener('scroll', () => { if (!dismissed) show = window.scrollY > (document.body.scrollHeight * 0.5); })"
+  x-show="show && !dismissed"
+  x-transition:enter="transition ease-out duration-300"
+  x-transition:enter-start="translate-y-full"
+  x-transition:enter-end="translate-y-0"
+  x-transition:leave="transition ease-in duration-200"
+  x-transition:leave-start="translate-y-0"
+  x-transition:leave-end="translate-y-full"
+  class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-zinc-950 border-t-2 border-zinc-200 dark:border-zinc-800 shadow-2xl"
+  style="display: none;"
+  x-cloak
+>
+  <div class="container mx-auto px-4 md:px-8 py-4">
+    <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+      <div class="flex-1">
+        <h3 class="font-bold text-lg">{heading}</h3>
+        {description && <p class="text-sm text-neutral-600 dark:text-neutral-400">{description}</p>}
+      </div>
+      
+      <form class="flex gap-3" onsubmit="event.preventDefault();">
+        <input 
+          type="email" 
+          placeholder="Enter your email"
+          class="h-12 px-4 rounded-lg border-2 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 focus:border-accent focus:outline-none transition-colors w-48"
+          required
+        />
+        <button 
+          type="submit"
+          class="h-12 px-6 font-bold bg-zinc-950 text-white dark:bg-white dark:text-black rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors whitespace-nowrap"
+        >
+          {buttonText || 'Subscribe'}
+        </button>
+      </form>
+      
+      <button 
+        @click="dismissed = true; localStorage.setItem('newsletterDismissed', 'true')"
+        class="absolute top-2 right-2 sm:static w-8 h-8 flex items-center justify-center text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300"
+        aria-label="Dismiss"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Check if previously dismissed
+  if (localStorage.getItem('newsletterDismissed') === 'true') {
+    document.querySelector('[x-data]')?.setAttribute('x-data', '{ show: false, dismissed: true }');
+  }
+</script>

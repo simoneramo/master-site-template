@@ -1,0 +1,169 @@
+---
+/**
+ * PricingMatrix — Feature Comparison Matrix
+ * Plans as column headers on a feature comparison table with checkmarks.
+ */
+import type { PricingData } from '../../../data/sample-data';
+
+interface Props { data: PricingData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, tiers } = data;
+
+// Get all unique features across all tiers
+const allFeatures = [...new Set(tiers.flatMap(t => t.features.map(f => f.text)))];
+
+// Organize features by category (mock categories for demo)
+const featureCategories = [
+  { name: 'Core Features', features: allFeatures.slice(0, 4) },
+  { name: 'Advanced', features: allFeatures.slice(4, 6) },
+  { name: 'Support', features: allFeatures.slice(6) },
+];
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <!-- Pricing Matrix Table -->
+    <div class="max-w-5xl mx-auto overflow-x-auto">
+      <table class="w-full min-w-[600px] border-2 border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden">
+        <thead>
+          <tr class="border-b-2 border-zinc-200 dark:border-zinc-800">
+            <th class="text-left py-6 px-6 bg-surface dark:bg-zinc-900/50 w-1/3">
+              <span class="sr-only">Features</span>
+            </th>
+            {tiers.map((tier, index) => (
+              <th class="text-center py-6 px-4 bg-surface dark:bg-zinc-900/50 min-w-[160px]">
+                <div class="mb-2">
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider" class:list={[
+                    tier.recommended ? "bg-accent text-white" : "bg-zinc-200 dark:bg-zinc-800 text-neutral-600 dark:text-neutral-400"
+                  ]}>
+                    {tier.name}
+                  </span>
+                </div>
+                <div class="text-2xl font-bold">{tier.price}</div>
+                <div class="text-sm text-neutral-500 dark:text-neutral-500">{tier.period}</div>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {featureCategories.map((category, catIndex) => (
+            <>
+              <tr class="bg-zinc-100 dark:bg-zinc-950">
+                <td colspan={tiers.length + 1} class="py-3 px-6">
+                  <span class="text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+                    {category.name}
+                  </span>
+                </td>
+              </tr>
+              {category.features.map((featureText, featureIndex) => (
+                <tr class="border-b border-zinc-200 dark:border-zinc-800 last:border-b-0">
+                  <td class="py-4 px-6 font-medium">{featureText}</td>
+                  {tiers.map(tier => {
+                    const feature = tier.features.find(f => f.text === featureText);
+                    const included = feature?.included ?? false;
+                    return (
+                      <td class="text-center py-4 px-4">
+                        {included ? (
+                          <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-zinc-950 text-white dark:bg-white dark:text-black">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                            </svg>
+                          </span>
+                        ) : (
+                          <span class="inline-flex items-center justify-center w-6 h-6 text-neutral-300 dark:text-neutral-600">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                          </span>
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </>
+          ))}
+        </tbody>
+        <tfoot>
+          <tr class="border-t-2 border-zinc-200 dark:border-zinc-800 bg-surface dark:bg-zinc-900/50">
+            <td class="py-6 px-6"></td>
+            {tiers.map((tier, index) => (
+              <td class="text-center py-6 px-4">
+                <a 
+                  href={tier.cta.url}
+                  class:list={[
+                    "inline-flex items-center justify-center h-12 px-6 font-bold rounded-lg transition-all text-sm",
+                    tier.recommended
+                      ? "bg-accent text-white hover:bg-accent/90"
+                      : "bg-zinc-950 text-white dark:bg-white dark:text-black hover:bg-zinc-800 dark:hover:bg-zinc-200"
+                  ]}
+                >
+                  {tier.cta.text}
+                </a>
+              </td>
+            ))}
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <!-- Mobile: Card View Alternative -->
+    <div class="md:hidden mt-8 space-y-6">
+      {tiers.map((tier) => (
+        <div class:list={[
+          "rounded-xl p-6 border-2",
+          tier.recommended 
+            ? "border-accent bg-accent/5 dark:bg-accent/10"
+            : "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950"
+        ]}>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold">{tier.name}</h3>
+            <div class="text-right">
+              <span class="text-2xl font-bold">{tier.price}</span>
+              <span class="text-sm text-neutral-500 dark:text-neutral-500">{tier.period}</span>
+            </div>
+          </div>
+          <ul class="space-y-2 mb-6">
+            {tier.features.map((feature) => (
+              <li class="flex items-center gap-3 text-sm">
+                <span class:list={[
+                  "w-5 h-5 rounded-full flex items-center justify-center text-xs",
+                  feature.included 
+                    ? "bg-zinc-950 text-white dark:bg-white dark:text-black"
+                    : "bg-zinc-200 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-600"
+                ]}>
+                  {feature.included ? '✓' : '×'}
+                </span>
+                <span class:list={[feature.included ? "" : "text-neutral-400 dark:text-neutral-600 line-through"]}>
+                  {feature.text}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <a 
+            href={tier.cta.url}
+            class:list={[
+              "block w-full text-center h-12 px-6 font-bold rounded-lg transition-all",
+              tier.recommended
+                ? "bg-accent text-white hover:bg-accent/90"
+                : "bg-zinc-950 text-white dark:bg-white dark:text-black"
+            ]}
+          >
+            {tier.cta.text}
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,66 @@
+---
+/**
+ * ServicesFeatureCards — Large Feature Cards
+ * Two-column grid of tall cards with background images and overlay text.
+ */
+import type { ServicesData } from '../../../data/sample-data';
+
+interface Props { data: ServicesData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, services } = data;
+---
+
+<section class="py-20 md:py-32 bg-zinc-950 text-white dark:bg-white dark:text-black">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-white/20 dark:border-black/20 text-white/70 dark:text-black/70 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-white/70 dark:text-black/60">{description}</p>}
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+      {services.map((service) => (
+        <div class="group relative aspect-4/5 md:aspect-4/3 rounded-2xl overflow-hidden">
+          {/* Background Image */}
+          {service.image ? (
+            <img 
+              src={service.image.src} 
+              alt={service.image.alt}
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          ) : (
+            <div class="absolute inset-0 bg-linear-to-br from-accent to-accent/50" />
+          )}
+          
+          {/* Gradient Overlay */}
+          <div class="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-transparent dark:from-white/90 dark:via-white/50 dark:to-transparent" />
+          
+          {/* Content */}
+          <div class="absolute inset-0 p-8 flex flex-col justify-end">
+            {service.icon && (
+              <span class="text-4xl mb-4">{service.icon}</span>
+            )}
+            <h3 class="text-2xl md:text-3xl font-bold mb-2">{service.heading}</h3>
+            <p class="text-white/80 dark:text-black/80 mb-4 line-clamp-2">{service.description}</p>
+            {service.link && (
+              <a 
+                href={service.link.url}
+                class="inline-flex items-center gap-2 font-bold text-sm hover:gap-3 transition-all"
+              >
+                {service.link.text}
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </a>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

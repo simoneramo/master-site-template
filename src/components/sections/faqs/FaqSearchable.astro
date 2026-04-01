@@ -1,0 +1,79 @@
+---
+/**
+ * FaqSearchable — Searchable FAQ
+ * Search input at top with real-time filtering of accordion items.
+ */
+import type { FaqData } from '../../../data/sample-data';
+
+interface Props { data: FaqData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, items } = data;
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8 max-w-3xl">
+    <div class="text-center mb-12">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">{eyebrow}</span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <div x-data={`{
+      search: '',
+      active: null,
+      items: ${JSON.stringify(items.map((item, i) => ({ q: item.question.toLowerCase(), a: item.answer.toLowerCase(), idx: i })))},
+      match(item) {
+        if (!this.search) return true;
+        const s = this.search.toLowerCase();
+        return item.q.includes(s) || item.a.includes(s);
+      }
+    }`}>
+      <!-- Search -->
+      <div class="relative mb-8">
+        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input
+          type="text"
+          x-model="search"
+          placeholder="Search questions..."
+          class="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 focus:outline-none focus:border-black dark:focus:border-white transition-colors text-lg"
+        />
+      </div>
+
+      <!-- FAQ Items -->
+      <div class="space-y-3">
+        {items.map((item, i) => (
+          <div
+            x-show={`match(items[${i}])`}
+            x-transition
+            class="border-2 border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden"
+          >
+            <button
+              @click={`active = active === ${i} ? null : ${i}`}
+              class="w-full flex items-center justify-between px-6 py-5 text-left font-bold hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+            >
+              <span>{item.question}</span>
+              <svg class="w-5 h-5 shrink-0 ml-4 transition-transform duration-300" :class={`active === ${i} ? 'rotate-180' : ''`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div x-show={`active === ${i}`} x-collapse>
+              <div class="px-6 pb-6 text-neutral-600 dark:text-neutral-400 leading-relaxed">{item.answer}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- No results -->
+      <div x-show="search && !items.some(i => match(i))" class="text-center py-12 text-neutral-400">
+        <div class="text-4xl mb-4">🔍</div>
+        <p class="font-bold">No matching questions found</p>
+        <p class="text-sm mt-2">Try a different search term</p>
+      </div>
+    </div>
+  </div>
+</section>

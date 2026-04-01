@@ -1,0 +1,173 @@
+---
+/**
+ * HeroVideo — Video Background Hero
+ * Pattern key: video
+ * Section: Hero
+ *
+ * Full-viewport with background video (muted, autoplay, loop).
+ * Dark overlay with centered text. Falls back to image if no video.
+ */
+import type { HeroData } from '../../../data/sample-data';
+
+interface Props {
+  data: HeroData;
+}
+
+const { data } = Astro.props;
+const {
+  eyebrow,
+  heading,
+  headingAccent,
+  description,
+  primaryCta,
+  secondaryCta,
+  image,
+  trustBadge,
+} = data;
+
+let headingBefore = heading;
+let headingAfter = '';
+if (headingAccent && heading.includes(headingAccent)) {
+  const idx = heading.indexOf(headingAccent);
+  headingBefore = heading.slice(0, idx);
+  headingAfter = heading.slice(idx + headingAccent.length);
+}
+
+// Check if video source is actually configured
+const hasVideoSource = false; // Set to true when video src is added
+const uniqueId = `hero-video-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden" id={uniqueId}>
+  <!-- Video Background -->
+  <div class="absolute inset-0">
+    {hasVideoSource ? (
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        poster={image?.src ?? ''}
+        class="hero-video w-full h-full object-cover"
+      >
+        <!-- Add video source here -->
+      </video>
+    ) : null}
+
+    <!-- Fallback image (shown when no video source) -->
+    {image && (
+      <img
+        src={image.src}
+        alt={image.alt}
+        class={`w-full h-full object-cover ${hasVideoSource ? '-z-10' : ''}`}
+        loading="eager"
+      />
+    )}
+
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-linear-to-b from-black/70 via-black/50 to-black/70" />
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 container mx-auto px-4 md:px-8 text-center text-white py-32">
+    {eyebrow && (
+      <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 mb-8">
+        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+        {eyebrow}
+      </span>
+    )}
+
+    <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-8 max-w-5xl mx-auto drop-shadow-lg">
+      {headingAccent ? (
+        <>
+          {headingBefore}
+          <span class="text-indigo-400">{headingAccent}</span>
+          {headingAfter}
+        </>
+      ) : (
+        heading
+      )}
+    </h1>
+
+    <p class="text-xl md:text-2xl font-medium mb-12 text-white/80 max-w-2xl mx-auto leading-relaxed">
+      {description}
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      {primaryCta && (
+        <a
+          href={primaryCta.url}
+          class="group relative inline-flex items-center justify-center overflow-hidden h-16 px-12 font-bold text-black bg-white transition-all duration-300 text-lg rounded-lg hover:bg-zinc-100"
+        >
+          <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
+            {primaryCta.text}
+          </span>
+          <span class="absolute right-8 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+            →
+          </span>
+        </a>
+      )}
+      {secondaryCta && (
+        <a
+          href={secondaryCta.url}
+          class="inline-flex items-center justify-center h-16 px-10 font-bold border-2 border-white/40 text-white rounded-lg hover:border-white transition-colors text-lg backdrop-blur-sm"
+        >
+          {secondaryCta.text}
+        </a>
+      )}
+    </div>
+
+    {trustBadge && (
+      <div class="mt-12 flex items-center justify-center gap-2 text-sm font-bold text-white/50">
+        <span>{trustBadge.icon}</span>
+        <span>{trustBadge.title} · {trustBadge.subtitle}</span>
+      </div>
+    )}
+  </div>
+
+  <!-- Play/Pause control (only when video source present) -->
+  {hasVideoSource && (
+    <button
+      type="button"
+      class="video-toggle absolute bottom-8 right-8 z-10 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all"
+      aria-label="Pause video"
+    >
+      <svg class="pause-icon w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
+      </svg>
+      <svg class="play-icon w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z" />
+      </svg>
+    </button>
+  )}
+</section>
+
+{hasVideoSource && (
+  <script define:vars={{ uniqueId }}>
+    (function() {
+      const section = document.getElementById(uniqueId);
+      if (!section) return;
+      
+      const video = section.querySelector('.hero-video');
+      const toggleBtn = section.querySelector('.video-toggle');
+      const pauseIcon = section.querySelector('.pause-icon');
+      const playIcon = section.querySelector('.play-icon');
+      
+      if (video && toggleBtn) {
+        let playing = true;
+        toggleBtn.addEventListener('click', function() {
+          if (playing) {
+            video.pause();
+            pauseIcon?.classList.add('hidden');
+            playIcon?.classList.remove('hidden');
+          } else {
+            video.play();
+            pauseIcon?.classList.remove('hidden');
+            playIcon?.classList.add('hidden');
+          }
+          playing = !playing;
+        });
+      }
+    })();
+  </script>
+)}

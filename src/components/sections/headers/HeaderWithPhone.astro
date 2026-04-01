@@ -1,0 +1,114 @@
+---
+/**
+ * HeaderWithPhone — Header with Phone Number
+ * Pattern key: withPhone
+ * Section: Navigation / Header
+ *
+ * Sticky header with phone number displayed before the CTA button.
+ * Mobile: tap-to-call icon.
+ */
+import type { HeaderData } from '../../../data/sample-data';
+
+interface Props {
+  data: HeaderData;
+}
+
+const { data } = Astro.props;
+const { logo, navLinks, cta, phone = '0400 000 000' } = data;
+---
+
+<header
+  class="w-full z-50 transition-all duration-300"
+  x-data="{ scrollY: 0, mobileOpen: false }"
+  @scroll.window="scrollY = window.scrollY"
+  :class="scrollY > 100 ? 'fixed top-0 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md shadow-sm border-b border-zinc-200 dark:border-zinc-800' : 'absolute top-0 bg-transparent'"
+>
+  <div class="container mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
+    <a href="/" class="text-xl font-bold text-black dark:text-white shrink-0">
+      {logo}
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-8">
+      {navLinks.map((link) => (
+        <a
+          href={link.url}
+          class="text-sm font-bold text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <!-- Phone -->
+      <a
+        href={`tel:${phone.replace(/\s/g, '')}`}
+        class="hidden md:flex items-center gap-2 text-sm font-bold text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+        </svg>
+        {phone}
+      </a>
+
+      <!-- Mobile phone icon -->
+      <a
+        href={`tel:${phone.replace(/\s/g, '')}`}
+        class="md:hidden p-2 rounded-lg border-2 border-zinc-300 dark:border-zinc-700"
+        aria-label="Call us"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+        </svg>
+      </a>
+
+      <a
+        href={cta.url}
+        class="hidden md:inline-flex group relative items-center justify-center overflow-hidden bg-black dark:bg-white text-white dark:text-black font-bold px-6 py-2.5 rounded-lg transition-all"
+      >
+        <span class="transform transition-transform duration-300 group-hover:-translate-x-3">{cta.text}</span>
+        <span class="absolute right-4 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">→</span>
+      </a>
+
+      <button
+        @click="mobileOpen = !mobileOpen"
+        class="lg:hidden p-2 rounded-lg border-2 border-zinc-300 dark:border-zinc-700"
+        aria-label="Toggle menu"
+      >
+        <div class="w-5 h-4 flex flex-col justify-between">
+          <span class="block w-full h-0.5 bg-black dark:bg-white transition-transform origin-left" :class="mobileOpen ? 'rotate-45 translate-x-0.5' : ''" />
+          <span class="block w-full h-0.5 bg-black dark:bg-white transition-opacity" :class="mobileOpen ? 'opacity-0' : ''" />
+          <span class="block w-full h-0.5 bg-black dark:bg-white transition-transform origin-left" :class="mobileOpen ? '-rotate-45 translate-x-0.5' : ''" />
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    x-show="mobileOpen"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 -translate-y-4"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 translate-y-0"
+    x-transition:leave-end="opacity-0 -translate-y-4"
+    class="lg:hidden bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800"
+  >
+    <nav class="px-8 py-6 flex flex-col space-y-4">
+      {navLinks.map((link) => (
+        <a href={link.url} @click="mobileOpen = false" class="block py-2 font-bold text-lg hover:translate-x-1 transition-transform">
+          {link.label}
+        </a>
+      ))}
+      <div class="pt-4 border-t border-zinc-200 dark:border-zinc-800">
+        <a href={`tel:${phone.replace(/\s/g, '')}`} class="flex items-center gap-2 py-2 font-bold text-lg">
+          📞 {phone}
+        </a>
+      </div>
+      <a href={cta.url} class="inline-flex items-center justify-center h-12 bg-black dark:bg-white text-white dark:text-black font-bold rounded-lg">
+        {cta.text}
+      </a>
+    </nav>
+  </div>
+</header>

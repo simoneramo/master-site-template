@@ -1,0 +1,121 @@
+---
+/**
+ * HeroSplitRL — Image Left / Copy Right
+ * Pattern key: splitRL
+ * Section: Hero
+ *
+ * Two-column layout (45/55 split on desktop). Mirror of SplitLR.
+ * LEFT: Image with decorative accent
+ * RIGHT: Eyebrow → Headline → Description → CTAs
+ */
+import type { HeroData } from '../../../data/sample-data';
+
+interface Props {
+  data: HeroData;
+}
+
+const { data } = Astro.props;
+const {
+  eyebrow,
+  heading,
+  headingAccent,
+  description,
+  primaryCta,
+  secondaryCta,
+  image,
+  trustBadge,
+} = data;
+
+let headingBefore = heading;
+let headingAfter = '';
+if (headingAccent && heading.includes(headingAccent)) {
+  const idx = heading.indexOf(headingAccent);
+  headingBefore = heading.slice(0, idx);
+  headingAfter = heading.slice(idx + headingAccent.length);
+}
+---
+
+<section class="min-h-[90vh] flex items-center py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+
+      <!-- LEFT COLUMN: Image -->
+      <div class="lg:col-span-5 relative order-2 lg:order-1">
+        {image && (
+          <div class="relative">
+            <!-- Decorative accent bar -->
+            <div class="absolute -left-4 top-8 bottom-8 w-1 bg-indigo-500 dark:bg-indigo-400 rounded-full hidden lg:block" />
+
+            <img
+              src={image.src}
+              alt={image.alt}
+              class="w-full rounded-2xl object-cover aspect-4/3 shadow-xl"
+              loading="eager"
+            />
+
+            {trustBadge && (
+              <div class="absolute -bottom-4 -left-4 md:bottom-6 md:left-6 bg-white dark:bg-zinc-900 rounded-xl shadow-lg px-5 py-4 flex items-center gap-3 border border-zinc-100 dark:border-zinc-800">
+                <span class="text-2xl">{trustBadge.icon}</span>
+                <div>
+                  <div class="font-bold text-sm text-black dark:text-white">{trustBadge.title}</div>
+                  <div class="text-xs text-neutral-500 dark:text-neutral-400">{trustBadge.subtitle}</div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+        <div class="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] rounded-full bg-purple-500/5 dark:bg-purple-400/5 blur-3xl" />
+      </div>
+
+      <!-- RIGHT COLUMN: Copy -->
+      <div class="lg:col-span-7 text-center lg:text-left order-1 lg:order-2">
+        {eyebrow && (
+          <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+            {eyebrow}
+          </span>
+        )}
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+          {headingAccent ? (
+            <>
+              {headingBefore}
+              <span class="text-indigo-600 dark:text-indigo-400">{headingAccent}</span>
+              {headingAfter}
+            </>
+          ) : (
+            heading
+          )}
+        </h1>
+
+        <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-300 font-medium leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0">
+          {description}
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+          {primaryCta && (
+            <a
+              href={primaryCta.url}
+              class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200"
+            >
+              <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
+                {primaryCta.text}
+              </span>
+              <span class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                →
+              </span>
+            </a>
+          )}
+          {secondaryCta && (
+            <a
+              href={secondaryCta.url}
+              class="inline-flex items-center justify-center h-14 px-8 font-bold border-2 border-zinc-300 dark:border-zinc-700 rounded-lg hover:border-black dark:hover:border-white transition-colors text-lg"
+            >
+              {secondaryCta.text}
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

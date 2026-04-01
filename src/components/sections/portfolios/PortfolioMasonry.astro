@@ -1,0 +1,55 @@
+---
+/**
+ * PortfolioMasonry — Masonry Grid
+ * Asymmetric image grid with hover overlays showing project title.
+ */
+import type { PortfolioData } from '../../../data/sample-data';
+
+interface Props { data: PortfolioData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, projects } = data;
+
+// Vary heights for masonry effect
+const heights = ['aspect-3/4', 'aspect-square', 'aspect-4/3', 'aspect-3/4', 'aspect-4/5', 'aspect-square'];
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+      {projects.map((project, index) => (
+        <div class="break-inside-avoid group relative overflow-hidden rounded-2xl">
+          <div class:list={["relative", heights[index % heights.length]]}>
+            <img 
+              src={project.image.src} 
+              alt={project.image.alt}
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              loading="lazy"
+            />
+            {/* Hover Overlay */}
+            <div class="absolute inset-0 bg-zinc-950/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+              <span class="text-accent text-sm font-bold uppercase tracking-wider mb-2">{project.category}</span>
+              <h3 class="text-xl font-bold text-white mb-2">{project.title}</h3>
+              {project.metric && <p class="text-white/70 text-sm">{project.metric}</p>}
+              {project.link && (
+                <a href={project.link} class="mt-4 inline-flex items-center gap-2 text-white font-bold text-sm hover:gap-3 transition-all">
+                  View Project →
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

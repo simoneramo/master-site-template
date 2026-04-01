@@ -1,0 +1,96 @@
+---
+/**
+ * SolutionShowcase — Feature Showcase
+ * Central image/mockup with floating annotation cards pointing to features.
+ */
+import type { SolutionData } from '../../../data/sample-data';
+
+interface Props { data: SolutionData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, benefits, image } = data;
+---
+
+<section class="py-20 md:py-32 bg-surface dark:bg-zinc-900/50 overflow-hidden">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>
+    </div>
+
+    <div class="relative max-w-6xl mx-auto">
+      {/* Central Image */}
+      <div class="relative z-10 max-w-2xl mx-auto">
+        {image ? (
+          <div class="rounded-2xl overflow-hidden shadow-2xl">
+            <img src={image.src} alt={image.alt} class="w-full h-auto" />
+          </div>
+        ) : (
+          <div class="aspect-4/3 rounded-2xl bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center">
+            <span class="text-9xl">✨</span>
+          </div>
+        )}
+      </div>
+
+      {/* Floating Annotation Cards */}
+      <div class="hidden lg:block">
+        {benefits.slice(0, 4).map((benefit, index) => {
+          // Position cards outside the central image with proper spacing
+          const positions = [
+            'top-12 -left-8 xl:left-0',      // Top-left
+            'top-12 -right-8 xl:right-0',    // Top-right
+            'bottom-12 -left-8 xl:left-0',   // Bottom-left
+            'bottom-12 -right-8 xl:right-0', // Bottom-right
+          ];
+          const alignments = [
+            'text-left',
+            'text-left',
+            'text-left',
+            'text-left',
+          ];
+          const flexDirections = [
+            '',           // Normal flex direction for left cards
+            '',           // Normal flex direction for right cards
+            '',           // Normal flex direction for left cards
+            '',           // Normal flex direction for right cards
+          ];
+          return (
+            <div class:list={["absolute w-64 z-20", positions[index]]}>
+              <div class:list={["bg-white dark:bg-zinc-950 rounded-xl p-4 shadow-lg border-2 border-zinc-200 dark:border-zinc-800", alignments[index]]}>
+                <div class="flex items-center gap-3 mb-2">
+                  {benefit.icon && <span class="text-2xl">{benefit.icon}</span>}
+                  <h3 class="font-bold">{benefit.heading}</h3>
+                </div>
+                <p class="text-sm text-neutral-600 dark:text-neutral-400">{benefit.description}</p>
+              </div>
+              {/* Connector Line - points toward the image */}
+              <div class:list={{
+                "absolute w-8 h-0.5 bg-accent top-1/2 -translate-y-1/2": true,
+                "-right-8": index === 0 || index === 2,
+                "-left-8": index === 1 || index === 3,
+              }} />
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Mobile Benefits */}
+      <div class="lg:hidden mt-12 grid md:grid-cols-2 gap-4">
+        {benefits.map((benefit) => (
+          <div class="bg-white dark:bg-zinc-950 rounded-xl p-4 border-2 border-zinc-200 dark:border-zinc-800">
+            <div class="flex items-center gap-3 mb-2">
+              {benefit.icon && <span class="text-2xl">{benefit.icon}</span>}
+              <h3 class="font-bold">{benefit.heading}</h3>
+            </div>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">{benefit.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

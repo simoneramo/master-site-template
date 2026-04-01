@@ -1,0 +1,54 @@
+---
+/**
+ * BenefitsAltRows — Alternating Rows
+ * Full-width rows alternating image/text for storytelling flow.
+ */
+import type { BenefitsData } from '../../../data/sample-data';
+
+interface Props { data: BenefitsData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, benefits } = data;
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <div class="space-y-20 lg:space-y-32">
+      {benefits.map((benefit, index) => {
+        const isEven = index % 2 === 0;
+        return (
+          <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            {/* Visual */}
+            <div class:list={["relative", isEven ? "lg:order-1" : "lg:order-2"]}>
+              <div class="aspect-4/3 rounded-2xl bg-surface dark:bg-zinc-900 border-2 border-zinc-200 dark:border-zinc-800 flex items-center justify-center">
+                {benefit.icon && <span class="text-8xl">{benefit.icon}</span>}
+              </div>
+              {/* Number Badge */}
+              <div class="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-zinc-950 dark:bg-white text-white dark:text-black flex items-center justify-center text-2xl font-bold">
+                0{benefit.number || index + 1}
+              </div>
+            </div>
+            
+            {/* Content */}
+            <div class:list={[isEven ? "lg:order-2" : "lg:order-1"]}>
+              <h3 class="text-3xl md:text-4xl font-bold mb-4">{benefit.heading}</h3>
+              <p class="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                {benefit.description}
+              </p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

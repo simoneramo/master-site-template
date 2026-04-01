@@ -1,0 +1,54 @@
+---
+/**
+ * VideoFullWidth — Full-Width
+ * Full-width video with minimal padding. Heading above.
+ */
+import type { VideoData } from '../../../data/sample-data';
+
+interface Props { data: VideoData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, videoUrl } = data;
+
+const getEmbedUrl = (url: string) => {
+  if (!url || url === '#') return '';
+  const watchMatch = url.match(/youtube\.com\/watch\?v=([^&]+)/);
+  if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  const shortMatch = url.match(/youtu\.be\/([^?]+)/);
+  if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+  return url;
+};
+
+const embedUrl = getEmbedUrl(videoUrl || '');
+---
+
+<section class="py-12 md:py-20">
+  <div class="container mx-auto px-4 md:px-8 mb-8">
+    <div class="max-w-3xl">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-4">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-3xl md:text-4xl font-bold mb-2">{heading}</h2>
+      {description && <p class="text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+  </div>
+
+  <div class="relative aspect-video md:aspect-21/9 bg-zinc-900">
+    {embedUrl ? (
+      <iframe
+        class="w-full h-full"
+        src={embedUrl}
+        title={heading}
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      />
+    ) : (
+      <div class="absolute inset-0 flex items-center justify-center text-white/50">
+        <p>No video URL provided</p>
+      </div>
+    )}
+  </div>
+</section>

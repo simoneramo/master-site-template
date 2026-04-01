@@ -1,0 +1,18 @@
+---
+import type { TrustBarData } from '../../../data/sample-data';
+interface Props { data: TrustBarData; }
+const { data } = Astro.props;
+const { badges = [] } = data;
+---
+<section class="py-8">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="flex flex-wrap items-center justify-center gap-3">
+      {badges.map((badge) => (
+        <span class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border-2 border-zinc-200 dark:border-zinc-800 text-sm font-bold text-neutral-600 dark:text-neutral-400 hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-all">
+          <span>{badge.icon}</span>
+          {badge.text}
+        </span>
+      ))}
+    </div>
+  </div>
+</section>

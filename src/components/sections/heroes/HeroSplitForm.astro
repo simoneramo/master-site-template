@@ -1,0 +1,139 @@
+---
+/**
+ * HeroSplitForm — Split with Form
+ * Pattern key: splitForm
+ * Section: Hero
+ *
+ * Text left with trust indicators. Lead capture form card on the right.
+ */
+import type { HeroData } from '../../../data/sample-data';
+
+interface Props {
+  data: HeroData;
+}
+
+const { data } = Astro.props;
+const {
+  eyebrow,
+  heading,
+  headingAccent,
+  description,
+  trustBadge,
+  formFields = [],
+} = data;
+
+let headingBefore = heading;
+let headingAfter = '';
+if (headingAccent && heading.includes(headingAccent)) {
+  const idx = heading.indexOf(headingAccent);
+  headingBefore = heading.slice(0, idx);
+  headingAfter = heading.slice(idx + headingAccent.length);
+}
+
+const defaultFields = [
+  { label: 'Full Name', type: 'text', placeholder: 'John Smith' },
+  { label: 'Email', type: 'email', placeholder: 'john@example.com' },
+  { label: 'Phone', type: 'tel', placeholder: '0400 000 000' },
+];
+
+const fields = formFields.length > 0 ? formFields : defaultFields;
+---
+
+<section class="min-h-[90vh] flex items-center py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+
+      <!-- LEFT: Copy + Trust -->
+      <div class="lg:col-span-6 text-center lg:text-left">
+        {eyebrow && (
+          <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+            {eyebrow}
+          </span>
+        )}
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+          {headingAccent ? (
+            <>
+              {headingBefore}
+              <span class="text-indigo-600 dark:text-indigo-400">{headingAccent}</span>
+              {headingAfter}
+            </>
+          ) : (
+            heading
+          )}
+        </h1>
+
+        <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-300 font-medium leading-relaxed mb-10 max-w-lg mx-auto lg:mx-0">
+          {description}
+        </p>
+
+        <!-- Trust indicators -->
+        <div class="flex flex-wrap gap-6 justify-center lg:justify-start">
+          <div class="flex items-center gap-2 text-sm font-bold text-neutral-500 dark:text-neutral-400">
+            <span class="text-green-500">✓</span> Free consultation
+          </div>
+          <div class="flex items-center gap-2 text-sm font-bold text-neutral-500 dark:text-neutral-400">
+            <span class="text-green-500">✓</span> No obligation
+          </div>
+          <div class="flex items-center gap-2 text-sm font-bold text-neutral-500 dark:text-neutral-400">
+            <span class="text-green-500">✓</span> Reply within 24hrs
+          </div>
+        </div>
+
+        {trustBadge && (
+          <div class="mt-8 flex items-center gap-3 justify-center lg:justify-start">
+            <span class="text-2xl">{trustBadge.icon}</span>
+            <div class="text-left">
+              <div class="font-bold text-sm">{trustBadge.title}</div>
+              <div class="text-xs text-neutral-500 dark:text-neutral-400">{trustBadge.subtitle}</div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- RIGHT: Form Card -->
+      <div class="lg:col-span-6">
+        <div class="bg-white dark:bg-zinc-900 border-2 border-zinc-200 dark:border-zinc-800 rounded-2xl p-8 md:p-10 shadow-xl max-w-md mx-auto lg:ml-auto">
+          <h2 class="text-2xl font-bold mb-2">Get your free quote</h2>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-6">Fill out the form below and we'll get back to you within 24 hours.</p>
+
+          <form class="space-y-4" x-data="{ submitted: false }" @submit.prevent="submitted = true">
+            {fields.map((field) => (
+              <div>
+                <label class="block text-sm font-bold mb-1.5 text-neutral-700 dark:text-neutral-300">
+                  {field.label}
+                </label>
+                {field.type === 'textarea' ? (
+                  <textarea
+                    placeholder={field.placeholder}
+                    rows="3"
+                    class="w-full px-4 py-3 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-black dark:text-white focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-400 transition-colors text-sm"
+                  />
+                ) : (
+                  <input
+                    type={field.type as any}
+                    placeholder={field.placeholder}
+                    class="w-full px-4 py-3 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-black dark:text-white focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-400 transition-colors text-sm"
+                  />
+                )}
+              </div>
+            ))}
+
+            <button
+              type="submit"
+              class="w-full h-14 bg-black dark:bg-white text-white dark:text-black font-bold text-lg rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors mt-2"
+            >
+              Get My Free Quote →
+            </button>
+
+            <p class="text-xs text-center text-neutral-400 dark:text-neutral-500 mt-3">
+              🔒 Your data is safe. We never share your information.
+            </p>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,141 @@
+---
+/**
+ * FeaturesStickyScroll — Sticky Scroll
+ * Scrolling feature list left, sticky image right that changes per feature.
+ * Uses IntersectionObserver to detect which feature is in view and
+ * updates the sticky panel accordingly.
+ */
+import type { FeaturesData } from '../../../data/sample-data';
+
+interface Props { data: FeaturesData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, features, image } = data;
+
+// Build feature data for Alpine
+const featureData = features.map((f, i) => ({
+  icon: f.icon || '✨',
+  heading: f.heading,
+  description: f.description,
+}));
+---
+
+<section class="py-20 md:py-32 bg-surface dark:bg-zinc-900/50">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <div
+      class="grid lg:grid-cols-2 gap-12 lg:gap-16"
+      x-data={`{
+        activeFeature: 0,
+        features: ${JSON.stringify(featureData)},
+        init() {
+          const items = this.$root.querySelectorAll('.feature-item');
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                this.activeFeature = parseInt(entry.target.dataset.index);
+              }
+            });
+          }, { rootMargin: '-30% 0px -30% 0px', threshold: 0.1 });
+          items.forEach(item => observer.observe(item));
+        }
+      }`}
+    >
+      {/* Scrolling Features */}
+      <div class="space-y-24 lg:space-y-32">
+        {features.map((feature, index) => (
+          <div
+            class="feature-item scroll-mt-32 transition-opacity duration-500"
+            data-index={index}
+            :class={`activeFeature === ${index} ? 'opacity-100' : 'lg:opacity-40'`}
+          >
+            <div class="flex gap-4 mb-4">
+              {feature.icon && (
+                <div class="w-12 h-12 rounded-xl bg-zinc-950 dark:bg-white text-white dark:text-black flex items-center justify-center text-xl shrink-0">
+                  {feature.icon}
+                </div>
+              )}
+              <div class="flex items-center gap-3">
+                <span class="text-4xl font-bold text-zinc-200 dark:text-zinc-800">
+                  0{index + 1}
+                </span>
+              </div>
+            </div>
+            <h3 class="text-2xl font-bold mb-3">{feature.heading}</h3>
+            <p class="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              {feature.description}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Sticky Panel — changes with active feature */}
+      <div class="hidden lg:block">
+        <div class="sticky top-32">
+          <div class="rounded-2xl overflow-hidden bg-zinc-200 dark:bg-zinc-800 aspect-square flex flex-col items-center justify-center relative">
+            {image ? (
+              <img
+                src={image.src}
+                alt={image.alt}
+                class="w-full h-full object-cover absolute inset-0"
+                loading="lazy"
+              />
+            ) : null}
+
+            {/* Dynamic overlay that changes per feature */}
+            <div class:list={[
+              "relative z-10 flex flex-col items-center justify-center text-center p-8 w-full h-full transition-all duration-500",
+              image ? "bg-zinc-950/60 dark:bg-zinc-950/70" : ""
+            ]}>
+              <div
+                class="text-6xl mb-6 transition-all duration-500"
+                x-text="features[activeFeature]?.icon || '✨'"
+              >
+                {features[0]?.icon || '✨'}
+              </div>
+              <h4
+                class:list={[
+                  "text-2xl font-bold mb-3 transition-all duration-500",
+                  image ? "text-white" : ""
+                ]}
+                x-text="features[activeFeature]?.heading || ''"
+              >
+                {features[0]?.heading}
+              </h4>
+              <p
+                class:list={[
+                  "text-sm leading-relaxed max-w-xs transition-all duration-500",
+                  image ? "text-white/70" : "text-neutral-600 dark:text-neutral-400"
+                ]}
+                x-text="features[activeFeature]?.description || ''"
+              >
+                {features[0]?.description}
+              </p>
+
+              {/* Progress indicators */}
+              <div class="flex gap-2 mt-8">
+                {features.map((_, i) => (
+                  <button
+                    class="h-1.5 rounded-full transition-all duration-300"
+                    :class={`activeFeature === ${i} ? 'w-8 ${image ? "bg-white" : "bg-zinc-950 dark:bg-white"}' : 'w-3 ${image ? "bg-white/30" : "bg-zinc-400 dark:bg-zinc-600"}'`}
+                    @click={`activeFeature = ${i}; document.querySelectorAll('.feature-item')[${i}].scrollIntoView({ behavior: 'smooth', block: 'center' })`}
+                    aria-label={`Go to feature ${i + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
