@@ -2,6 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 
 // 1. Pick your layouts from the library
+import HeaderMegaMenu from "../components/sections/headers/HeaderMegaMenu.astro";
 import HeroSplitLR from "../components/sections/heroes/HeroSplitLR.astro";
 import TestimonialsFeatured from "../components/sections/testimonials/TestimonialsFeatured.astro";
 import ServicesBento from "../components/sections/services/ServicesBento.astro";
@@ -43,14 +44,41 @@ const servicesData = adaptServices(mainServices);
 const faqData = adaptFaq(faq);
 const ctaData = adaptContactForm(cta);
 const footerData = adaptFooter(globals.data);
+
+// Header data
+const headerData = {
+  logo: "🚀 Acme",
+  navLinks: [
+    { label: "Services", url: "/services" },
+    { label: "Work", url: "/work" },
+    { label: "About", url: "/about" },
+    { label: "Insights", url: "/insights" },
+    { label: "Contact", url: "/contact" },
+  ],
+  cta: { text: "Get a Quote", url: "/quote" },
+  topBar: {
+    phone: "1300 123 456",
+    email: "hello@example.com",
+    hours: "Mon-Fri 9am-5pm",
+    socials: [
+      { platform: "Facebook", url: "https://facebook.com" },
+      { platform: "Instagram", url: "https://instagram.com" },
+    ],
+  },
+};
 ---
 
 <MainLayout>
+  <HeaderMegaMenu data={headerData} />
   <!-- 5. Drop in components — clean, one-liner per section -->
   <HeroSplitLR data={heroData} />
   <TestimonialsFeatured data={testimonialsData} />
   <ServicesBento data={servicesData} />
   <FaqAccordion data={faqData} />
   <CtaForm data={ctaData} />
-  <FooterAntigravity data={footerData} logo="🚀 Acme Studio" wordmark="AcmeStudio" />
+  <FooterAntigravity
+    data={footerData}
+    logo="🚀 Acme Studio"
+    wordmark="AcmeStudio"
+  />
 </MainLayout>

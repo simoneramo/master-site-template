@@ -13,6 +13,8 @@ interface Props {
     hideCTA?: boolean;
     headerVariant?: "full" | "simple";
     footerVariant?: "full" | "simple";
+    hideHeader?: boolean;
+    hideFooter?: boolean;
 }
 
 const {
@@ -24,6 +26,8 @@ const {
     mainPadding = true,
     headerVariant = "full",
     footerVariant = "full",
+    hideHeader = false,
+    hideFooter = false,
 } = Astro.props;
 
 // Gracefully handle missing site config (e.g. local dev without site set)
@@ -76,14 +80,14 @@ const ogImage = new URL("/images/og-image.jpg", siteBase);
         </script>
 
         <script>
-            import Alpine from 'alpinejs';
-            
+            import Alpine from "alpinejs";
+
             // Make Alpine available globally for any inline scripts
             window.Alpine = Alpine;
-            
+
             // Initialize Alpine
             Alpine.start();
-            
+
             // Re-initialize on Astro page transitions
             document.addEventListener("astro:page-load", () => {
                 // Only re-init the main content area to avoid double-initializing persisted elements (Header/Footer)
@@ -102,18 +106,20 @@ const ogImage = new URL("/images/og-image.jpg", siteBase);
             Skip to main content
         </a>
 
-        <Header
-            variant={headerVariant}
-            hideMenu={hideMenu}
-            showPhoneButton={showPhoneButton}
-            hideCTA={hideCTA}
-        />
+        {!hideHeader && (
+            <Header
+                variant={headerVariant}
+                hideMenu={hideMenu}
+                showPhoneButton={showPhoneButton}
+                hideCTA={hideCTA}
+            />
+        )}
 
         <main id="main-content" class={mainPadding ? "pt-20" : ""}>
             <slot />
         </main>
 
-        <Footer variant={footerVariant} />
+        {!hideFooter && <Footer variant={footerVariant} />}
         <!-- 💬 Add your live chat script here (e.g. Tawk.to, Crisp, Intercom) -->
     </body>
 </html>

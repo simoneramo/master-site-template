@@ -302,6 +302,10 @@ export const SAMPLE_HEADER: HeaderData = {
     phone: '0400 000 000',
     email: 'hello@acmestudio.com',
     hours: 'Mon–Fri 9am–5pm',
+    socials: [
+      { platform: 'Facebook', url: 'https://facebook.com' },
+      { platform: 'Instagram', url: 'https://instagram.com' },
+    ],
   },
 };
 

@@ -18,13 +18,13 @@ const { logo, navLinks, cta, topBar } = data;
 ---
 
 <header
-  class="w-full z-50"
+  class="w-full z-50 header-topbar-nav"
   x-data="{ scrollY: 0, mobileOpen: false }"
   @scroll.window="scrollY = window.scrollY"
 >
   <!-- Top Bar -->
   <div
-    class="bg-zinc-900 dark:bg-zinc-800 text-white text-xs transition-all duration-300 overflow-hidden"
+    class="bg-zinc-900 dark:bg-zinc-800 text-white text-xs transition-all duration-300 overflow-hidden h-10 opacity-100"
     :class="scrollY > 80 ? 'h-0 opacity-0' : 'h-10 opacity-100'"
   >
     <div class="container mx-auto px-4 md:px-8 h-10 flex items-center justify-between">

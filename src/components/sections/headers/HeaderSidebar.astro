@@ -19,8 +19,9 @@ const { logo, navLinks, cta } = data;
 ---
 
 <aside
-  class="fixed left-0 top-0 h-screen z-50 flex flex-col bg-white dark:bg-zinc-950 border-r-2 border-zinc-200 dark:border-zinc-800 transition-all duration-300"
+  class="header-sidebar-nav fixed left-0 top-0 h-screen z-50 flex flex-col bg-white dark:bg-zinc-950 border-r-2 border-zinc-200 dark:border-zinc-800 transition-all duration-300 w-64"
   x-data="{ expanded: true, mobileOpen: false }"
+  x-init="expanded = true"
   :class="expanded ? 'w-64' : 'w-20'"
 >
   <!-- Logo + Collapse Toggle -->
