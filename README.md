@@ -45,6 +45,22 @@ A modern, production-ready Astro template built with accessibility at its core a
 - **Routing**: Static pages are in `src/pages/*.astro`. Blog pagination is handled in `src/pages/blog/[...page].astro` and individual posts in `src/pages/blog/[...slug].astro`.
 - **Components**: Includes `Header.astro` (sticky header with Alpine.js-powered mobile menu) and `Footer.astro`.
 
+### Component Library
+
+The template includes a comprehensive component library with **103 layout variants** across 23 section types:
+
+| Section | Variants |
+|---------|----------|
+| Heroes, Headers, Footers, CTAs, FAQs | 9, 8, 6, 7, 5 |
+| Trust Bars, Pricing, Services, Testimonials | 5, 5, 8, 7 |
+| Features, Benefits, Process, Portfolio | 6, 6, 5, 7 |
+| Team, Blog, Forms, Stats, Banners, Content | 3, 5, 3, 3, 4, 3 |
+
+**Browse the library:**
+- Run `npm run dev` and visit `http://localhost:4321/component-library`
+- View live previews of all variants with sample data
+- Use the gallery view for visual browsing
+
 ### Page Architecture (3-Tier System)
 
 This template uses a 3-tier page system designed to work with the **Project Starter Tool**:
