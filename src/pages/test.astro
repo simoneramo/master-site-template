@@ -7,6 +7,7 @@ import TestimonialsFeatured from "../components/sections/testimonials/Testimonia
 import ServicesBento from "../components/sections/services/ServicesBento.astro";
 import FaqAccordion from "../components/sections/faqs/FaqAccordion.astro";
 import CtaForm from "../components/sections/ctas/CtaForm.astro";
+import FooterAntigravity from "../components/sections/footers/FooterAntigravity.astro";
 
 // 2. Import adapters to transform CMS data
 import {
@@ -15,6 +16,7 @@ import {
   adaptServices,
   adaptFaq,
   adaptContactForm,
+  adaptFooter,
 } from "../lib/adapters";
 
 import { getEntry } from "astro:content";
@@ -32,12 +34,15 @@ const { testimonials } = homepage.data;
 const contactPage = await getEntry("contact", "index");
 const { faq } = contactPage.data;
 
+const globals = await getEntry("globals", "footer");
+
 // 4. Transform CMS data → Component data (one line per section)
 const heroData = adaptHero(hero);
 const testimonialsData = adaptTestimonials(testimonials);
 const servicesData = adaptServices(mainServices);
 const faqData = adaptFaq(faq);
 const ctaData = adaptContactForm(cta);
+const footerData = adaptFooter(globals.data);
 ---
 
 <MainLayout>
@@ -47,4 +52,5 @@ const ctaData = adaptContactForm(cta);
   <ServicesBento data={servicesData} />
   <FaqAccordion data={faqData} />
   <CtaForm data={ctaData} />
+  <FooterAntigravity data={footerData} logo="🚀 Acme Studio" wordmark="AcmeStudio" />
 </MainLayout>

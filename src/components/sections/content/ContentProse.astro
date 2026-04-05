@@ -1,0 +1,44 @@
+---
+/**
+ * ContentProse — Centered Prose Layout
+ * A simple centered text block for long-form content using typography prose.
+ */
+import type { ContentData } from "../../../data/sample-data";
+
+interface Props {
+  data: ContentData;
+}
+const { data } = Astro.props;
+const { eyebrow, heading, description, body } = data;
+---
+
+<section class="py-24 bg-white dark:bg-zinc-950">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+    <div class="text-center mb-16">
+      {
+        eyebrow && (
+          <span class="text-accent font-bold tracking-wider uppercase text-sm mb-4 block">
+            {eyebrow}
+          </span>
+        )
+      }
+      <h2
+        class="text-3xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white mb-6"
+      >
+        {heading}
+      </h2>
+      {
+        description && (
+          <p class="text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+            {description}
+          </p>
+        )
+      }
+    </div>
+
+    <div
+      class="prose prose-lg dark:prose-invert prose-zinc mx-auto"
+      set:html={body}
+    />
+  </div>
+</section>

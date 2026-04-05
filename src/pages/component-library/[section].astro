@@ -70,6 +70,12 @@ const sampleDataMap: Record<string, any> = {
   newsletters: SampleData.SAMPLE_NEWSLETTER,
   ctas: SampleData.SAMPLE_CTA,
   footers: SampleData.SAMPLE_FOOTER,
+  team: SampleData.SAMPLE_TEAM,
+  blog: SampleData.SAMPLE_BLOG,
+  forms: SampleData.SAMPLE_FORM,
+  stats: SampleData.SAMPLE_STATS,
+  banners: SampleData.SAMPLE_BANNER,
+  content: SampleData.SAMPLE_CONTENT,
 };
 
 const sampleData = sampleDataMap[sectionSlug] ?? {};
@@ -197,7 +203,8 @@ const sampleData = sampleDataMap[sectionSlug] ?? {};
               {isBuilt ? (
                 <div data-variant={variant.key} class:list={[
                   "border-2 border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden bg-white dark:bg-zinc-950 shadow-sm border-dashed",
-                  sectionSlug === 'headers' ? '' : 'p-4'
+                  sectionSlug === 'headers' ? '' : 'p-4',
+                  sectionSlug === 'banners' ? 'banner-preview-frame relative min-h-[300px] w-full bg-linear-to-b from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800/80' : ''
                 ]}>
                   {sectionSlug === 'headers' ? (
                     <!-- Headers: force relative positioning and show with fake page context -->
@@ -205,7 +212,7 @@ const sampleData = sampleDataMap[sectionSlug] ?? {};
                       <!-- Force header/aside to be relative so it stays in container -->
                       <Component data={sampleData} />
                       <!-- Fake page content below -->
-                      <div class="h-[250px] bg-linear-to-b from-zinc-100 to-zinc-200 dark:from-zinc-900 dark:to-zinc-800 p-8 pt-4 space-y-4">
+                      <div class="h-62.5 bg-linear-to-b from-zinc-100 to-zinc-200 dark:from-zinc-900 dark:to-zinc-800 p-8 pt-4 space-y-4">
                         <div class="h-8 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-3/4 mx-auto" />
                         <div class="h-4 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-full" />
                         <div class="h-4 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-5/6" />
@@ -275,10 +282,11 @@ const sampleData = sampleDataMap[sectionSlug] ?? {};
     </div>
   </section>
   
-  <!-- Header Preview Styles: Force fixed/absolute headers to be relative in the preview -->
+  <!-- Preview Styles: Force fixed/absolute components to be relative to preview block -->
   <style is:global>
     /* Create a new containing block to trap fixed positioned children */
-    .header-preview-frame {
+    .header-preview-frame,
+    .banner-preview-frame {
       transform: translateZ(0);
     }
     .header-preview-frame > header,

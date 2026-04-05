@@ -21,6 +21,7 @@ import type {
   PricingData,
   TrustBarData,
   NewsletterData,
+  TeamData,
 } from '../data/sample-data';
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -216,7 +217,7 @@ export function adaptThankYou(cms: any): CtaData {
     primaryCta: cms.buttonText ? {
       text: cms.buttonText,
       url: cms.buttonLink || '/',
-    } : undefined,
+    } : { text: 'Back to Home', url: '/' },
   };
 }
 
@@ -415,5 +416,37 @@ export function adaptNewsletter(cms: any): NewsletterData {
     benefits: cms.benefits,
     trustText: cms.trustText,
     buttonText: cms.buttonText,
+  };
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Team Page Adapter
+// ═══════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Transform CMS teamPage.teamMembers → TeamData
+ * CMS: { name, role, bio, emoji, initials, colorClass, linkedin }
+ */
+export function adaptTeam(cms: any): TeamData {
+  if (!cms || !cms.teamMembers) {
+    return {
+      heading: 'Meet the Team',
+      members: [],
+    };
+  }
+  return {
+    eyebrow: cms.sectionLabel,
+    heading: cms.heading || 'Meet the Team',
+    description: cms.description,
+    members: cms.teamMembers.map((member: any) => ({
+      name: member.name || '',
+      role: member.role || '',
+      bio: member.bio,
+      initials: member.initials,
+      emoji: member.emoji,
+      colorClass: member.colorClass,
+      linkedin: member.linkedin,
+      socials: member.linkedin ? [{ platform: 'LinkedIn', url: member.linkedin }] : undefined,
+    })) || [],
   };
 }

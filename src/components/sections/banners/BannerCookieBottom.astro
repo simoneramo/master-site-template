@@ -1,0 +1,48 @@
+---
+/**
+ * BannerCookieBottom — Bottom Bar Cookie Banner
+ * A full-width bar fixed to the bottom of the screen.
+ */
+import type { BannerData } from '../../../data/sample-data';
+
+interface Props { data: BannerData; }
+
+const { data } = Astro.props;
+const { text, link, primaryCta, secondaryCta } = data;
+---
+
+<div id="cookie-bottom" class="fixed bottom-0 left-0 w-full bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800 z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] transition-all duration-300 transform translate-y-0">
+  <div class="container mx-auto px-4 md:px-8 py-4 sm:py-6 flex flex-col lg:flex-row items-center justify-between gap-6">
+    <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-4xl">
+      {text}
+      {link && (
+        <span class="ml-1">
+          <a href={link.url} class="text-accent hover:underline font-medium">
+            {link.text}
+          </a>
+        </span>
+      )}
+    </p>
+    
+    <div class="flex items-center gap-4 shrink-0 w-full lg:w-auto">
+      {primaryCta && (
+        <button 
+          type="button" 
+          class="flex-1 lg:flex-none bg-zinc-950 dark:bg-white text-white dark:text-black font-bold py-2.5 px-6 rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors text-sm"
+          onclick="this.closest('#cookie-bottom').style.transform='translateY(100%)'; setTimeout(() => this.closest('#cookie-bottom').remove(), 300)"
+        >
+          {primaryCta.text}
+        </button>
+      )}
+      {secondaryCta && (
+        <button 
+          type="button" 
+          class="flex-1 lg:flex-none bg-transparent text-zinc-900 dark:text-white font-bold py-2.5 px-6 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors text-sm"
+          onclick="this.closest('#cookie-bottom').style.transform='translateY(100%)'; setTimeout(() => this.closest('#cookie-bottom').remove(), 300)"
+        >
+          {secondaryCta.text}
+        </button>
+      )}
+    </div>
+  </div>
+</div>

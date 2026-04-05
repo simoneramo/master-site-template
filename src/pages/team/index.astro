@@ -2,14 +2,19 @@
 import MainLayout from "../../layouts/MainLayout.astro";
 import PageHeroSection from "../../components/PageHeroSection.astro";
 import CTASection from "../../components/CTASection.astro";
+import TeamThreeCol from "../../components/sections/team/TeamThreeCol.astro";
+import { adaptTeam } from "../../lib/adapters";
 import { getEntry } from "astro:content";
 
 // Get team page content from TinaCMS
 const teamPage = await getEntry("teamPage", "team");
 const hero = teamPage?.data?.hero;
 const valuesSection = teamPage?.data?.values;
-const teamMembers = teamPage?.data?.teamMembers;
 const cta = teamPage?.data?.cta;
+
+// Transform CMS data to TeamData format
+const teamData = adaptTeam(teamPage?.data || {});
+const hasTeamMembers = teamData && teamData.members && teamData.members.length > 0;
 ---
 
 <MainLayout
@@ -40,57 +45,9 @@ const cta = teamPage?.data?.cta;
     <PageHeroSection variant="center" data={hero} />
 
     <!-- Team Members Grid -->
-    {
-        teamMembers && teamMembers.length > 0 && (
-            <section class="pb-20">
-                <div class="container mx-auto px-4 md:px-0">
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {teamMembers.map((member) => (
-                            <article class="border-2 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-xl overflow-hidden group">
-                                {/* Avatar */}
-                                <div class="bg-zinc-100 dark:bg-zinc-900 h-56 flex items-center justify-center">
-                                    <div
-                                        class={`w-28 h-28 flex items-center justify-center rounded-full font-bold text-3xl ${member.colorClass}`}
-                                    >
-                                        {member.initials}
-                                    </div>
-                                </div>
-                                {/* Content */}
-                                <div class="p-8">
-                                    <div class="text-3xl mb-3">
-                                        {member.emoji}
-                                    </div>
-                                    <h2 class="text-xl font-bold mb-1">
-                                        {member.name}
-                                    </h2>
-                                    <p class="text-sm font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-4">
-                                        {member.role}
-                                    </p>
-                                    <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed font-medium mb-6">
-                                        {member.bio}
-                                    </p>
-                                    <a
-                                        href={member.linkedin}
-                                        class="inline-flex items-center gap-2 font-bold text-sm border-b-2 border-black dark:border-white hover:border-transparent transition-colors"
-                                        aria-label={`Connect with ${member.name} on LinkedIn`}
-                                    >
-                                        <svg
-                                            class="w-4 h-4 fill-current"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h5v-8.306c0-4.613 6.11-4.953 6.11 2.433v5.873h4.972v-9.167c0-7.85-8.835-7.516-11.114-3.56v-3.273z" />
-                                        </svg>
-                                        LinkedIn
-                                    </a>
-                                </div>
-                            </article>
-                        ))}
-                    </div>
-                </div>
-            </section>
-        )
-    }
+    {hasTeamMembers && (
+        <TeamThreeCol data={teamData} />
+    )}
 
     <!-- Team Values Section -->
     <section class="py-20 bg-zinc-50 dark:bg-zinc-900/50">

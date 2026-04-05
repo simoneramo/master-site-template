@@ -1,0 +1,46 @@
+---
+/**
+ * StatsWithImage — Split layout stats
+ * Image on one side, headings & stats grid on the other.
+ */
+import type { StatsData } from '../../../data/sample-data';
+
+interface Props { data: StatsData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, image, stats } = data;
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      {image && (
+        <div class="relative rounded-3xl overflow-hidden aspect-4/3 order-last lg:order-first">
+          <img src={image.src} alt={image.alt} class="absolute inset-0 w-full h-full object-cover" />
+          <div class="absolute inset-0 ring-1 ring-inset ring-neutral-900/10 dark:ring-white/10 rounded-3xl"></div>
+        </div>
+      )}
+      <div>
+        {eyebrow && (
+          <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+            {eyebrow}
+          </span>
+        )}
+        {heading && <h2 class="text-4xl md:text-5xl font-bold mb-6">{heading}</h2>}
+        {description && <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-12">{description}</p>}
+
+        <div class="grid grid-cols-2 gap-8">
+          {stats.slice(0, 4).map((stat) => (
+            <div>
+              <div class="text-4xl font-extrabold text-accent mb-2">{stat.value}</div>
+              <div class="text-lg font-bold mb-1">{stat.label}</div>
+              {stat.description && (
+                <p class="text-sm text-neutral-600 dark:text-neutral-400">{stat.description}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

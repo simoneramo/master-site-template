@@ -1,0 +1,109 @@
+---
+/**
+ * BlogList — List View
+ * Vertical list layout with thumbnail images, titles, and excerpts.
+ */
+import type { BlogData } from '../../../data/sample-data';
+
+interface Props { data: BlogData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, posts = [], cta } = data || {};
+
+function formatDate(date: Date | string): string {
+  const d = new Date(date);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8 max-w-4xl">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    {posts && posts.length > 0 && (
+      <div class="space-y-8">
+        {posts.map((post) => (
+          <article class="group">
+            <a href={`/insights/${post.slug}`} class="flex flex-col sm:flex-row gap-6 p-6 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors border border-transparent hover:border-zinc-200 dark:hover:border-zinc-800">
+              <div class="shrink-0">
+                {post.heroImage ? (
+                  <img 
+                    src={post.heroImage} 
+                    alt={post.title}
+                    class="w-full sm:w-48 h-32 object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <div class="w-full sm:w-48 h-32 bg-zinc-200 dark:bg-zinc-800 rounded-lg flex items-center justify-center">
+                    <span class="text-3xl">📝</span>
+                  </div>
+                )}
+              </div>
+              
+              <div class="flex flex-col justify-center flex-grow">
+                <div class="flex items-center gap-3 mb-2 text-xs text-neutral-500 dark:text-neutral-400">
+                  {post.tags && post.tags.length > 0 && (
+                    <span class="font-bold uppercase tracking-wider text-zinc-950 dark:text-white">
+                      {post.tags[0]}
+                    </span>
+                  )}
+                  <span>·</span>
+                  <time datetime={String(post.pubDate)}>{formatDate(post.pubDate)}</time>
+                  {post.readTime && (
+                    <><span>·</span><span>{post.readTime}</span></>
+                  )}
+                </div>
+                
+                <h3 class="text-xl font-bold mb-2 group-hover:text-neutral-600 dark:group-hover:text-neutral-300 transition-colors">
+                  {post.title}
+                </h3>
+                
+                <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed line-clamp-2">
+                  {post.description}
+                </p>
+                
+                <div class="flex items-center gap-2 mt-4 text-sm">
+                  {post.author?.photo ? (
+                    <img src={post.author.photo} alt={post.author.name} class="w-6 h-6 rounded-full object-cover" />
+                  ) : (
+                    <div class="w-6 h-6 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-xs font-bold">
+                      {post.author?.name?.charAt(0) || 'A'}
+                    </div>
+                  )}
+                  <span class="text-neutral-600 dark:text-neutral-400 font-medium">{post.author?.name || 'Anonymous'}</span>
+                </div>
+              </div>
+              
+              <div class="hidden sm:flex items-center">
+                <svg class="w-5 h-5 text-neutral-400 group-hover:text-neutral-600 dark:group-hover:text-neutral-300 transition-colors transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    )}
+
+    {cta && (
+      <div class="text-center mt-12">
+        <a 
+          href={cta.url}
+          class="inline-flex items-center gap-2 px-6 py-3 bg-zinc-950 dark:bg-white text-white dark:text-black font-bold rounded-full hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
+        >
+          {cta.text}
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+    )}
+  </div>
+</section>

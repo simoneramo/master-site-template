@@ -1,0 +1,25 @@
+---
+/**
+ * StatsMinimal — Clean inline stats
+ * Perfect for breaking up content, no extra borders or background colors.
+ */
+import type { StatsData } from '../../../data/sample-data';
+
+interface Props { data: StatsData; }
+
+const { data } = Astro.props;
+const { stats } = data;
+---
+
+<section class="py-16 border-y border-zinc-200 dark:border-zinc-800">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-transparent md:divide-zinc-200 md:dark:divide-zinc-800 text-center">
+      {stats.map((stat) => (
+        <div class="px-4">
+          <div class="text-5xl font-extrabold tracking-tight mb-2">{stat.value}</div>
+          <div class="text-neutral-600 dark:text-neutral-400 font-medium uppercase tracking-wider text-sm">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

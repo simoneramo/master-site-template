@@ -18,7 +18,7 @@ We are building a robust Component Library inside the `master-site-template` to 
 |---|:---:|---|
 | **Heroes** | 9/9 | ✅ Complete |
 | **Navigation / Header** | 8/8 | ✅ Complete |
-| **Footer** | 5/5 | ✅ Complete |
+| **Footer** | 6/6 | ✅ Complete |
 | **Final CTA** | 7/7 | ✅ Complete |
 | **FAQ** | 5/5 | ✅ Complete |
 | **Trust Bar** | 5/5 | ✅ Complete |

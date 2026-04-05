@@ -1,0 +1,45 @@
+---
+/**
+ * StatsGrid — 4-column Stats Section
+ * A simple, clean grid of stats with optional icons and descriptions.
+ */
+import type { StatsData } from '../../../data/sample-data';
+
+interface Props { data: StatsData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, stats } = data;
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      {heading && <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>}
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+      {stats.map((stat) => (
+        <div class="text-center p-6 rounded-3xl bg-neutral-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+          {stat.icon && (
+            <div class="w-12 h-12 mx-auto rounded-2xl bg-accent/10 dark:bg-accent/20 flex items-center justify-center text-2xl mb-4">
+              {stat.icon}
+            </div>
+          )}
+          <div class="text-4xl lg:text-5xl font-extrabold tracking-tight mb-2 text-accent">
+            {stat.value}
+          </div>
+          <div class="text-lg font-bold mb-1">{stat.label}</div>
+          {stat.description && (
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">{stat.description}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

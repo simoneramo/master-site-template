@@ -1,0 +1,245 @@
+---
+/**
+ * FooterAntigravity — Antigravity Style Footer
+ * Pattern key: antigravity
+ * Section: Footer
+ *
+ * Bold, typography-driven footer with massive brand wordmark,
+ * clean link columns, and minimal bottom bar.
+ */
+import type { FooterData } from "../../../data/sample-data";
+
+interface Props {
+  data: FooterData;
+  /** Optional headline text (defaults to "Experience liftoff") */
+  headline?: string;
+  /** Optional brand wordmark text (defaults to logo without spaces) */
+  wordmark?: string;
+  /** Optional logo text (overrides data.logo) */
+  logo?: string;
+}
+
+const {
+  data,
+  headline = "Experience liftoff",
+  wordmark,
+  logo: logoProp,
+} = Astro.props;
+const { columns, socials, copyright, legalLinks } = data;
+
+// Use provided logo prop or fall back to data.logo
+const logo = logoProp || data.logo || "Brand";
+
+// Use provided wordmark or fall back to logo text
+const brandWordmark =
+  wordmark || (typeof logo === "string" ? logo.replace(/\s+/g, "") : "Brand");
+
+// Split columns into left and right groups (max 2 columns per side)
+const leftColumns = columns.slice(0, 2);
+const rightColumns = columns.slice(2, 4);
+---
+
+<footer class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white">
+  <!-- Top Section: Headline + Link Columns -->
+  <div class="mx-auto px-4 md:px-8 pt-16 md:pt-24 pb-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
+      <!-- Left: Headline -->
+      <div class="lg:col-span-4">
+        <h2 class="text-2xl md:text-3xl font-medium tracking-tight">
+          {headline}
+        </h2>
+      </div>
+
+      <!-- Center: Left Link Columns -->
+      <div class="lg:col-span-4">
+        <div class="grid grid-cols-2 gap-8">
+          {
+            leftColumns.map((col) => (
+              <div>
+                <ul class="space-y-3">
+                  {col.links.map((link) => (
+                    <li>
+                      <a
+                        href={link.url}
+                        class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors duration-200"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+
+          <!-- Fallback if no columns -->
+          {
+            leftColumns.length === 0 && (
+              <div>
+                <ul class="space-y-3">
+                  <li>
+                    <a
+                      href="/download"
+                      class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                    >
+                      Download
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/product"
+                      class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                    >
+                      Product
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/docs"
+                      class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                    >
+                      Docs
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/changelog"
+                      class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                    >
+                      Changelog
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            )
+          }
+        </div>
+      </div>
+
+      <!-- Right: Right Link Columns -->
+      <div class="lg:col-span-4">
+        <div class="grid grid-cols-2 gap-8">
+          {
+            rightColumns.map((col) => (
+              <div>
+                <ul class="space-y-3">
+                  {col.links.map((link) => (
+                    <li>
+                      <a
+                        href={link.url}
+                        class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors duration-200"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+
+          <!-- Fallback if no right columns -->
+          {
+            rightColumns.length === 0 && (
+              <div>
+                <ul class="space-y-3">
+                  <li>
+                    <a
+                      href="/blog"
+                      class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                    >
+                      Blog
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/pricing"
+                      class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                    >
+                      Pricing
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/use-cases"
+                      class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                    >
+                      Use Cases
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Massive Brand Wordmark -->
+  <div class="mx-auto px-4 md:px-8 py-4 md:py-8">
+    <div class="overflow-hidden">
+      <span
+        class="block text-[12vw] md:text-[10vw] lg:text-[15vw] font-bold leading-[0.85] tracking-tighter text-zinc-900 dark:text-white select-none"
+        aria-label={typeof logo === "string" ? logo : "Brand"}
+      >
+        {brandWordmark}
+      </span>
+    </div>
+  </div>
+
+  <!-- Bottom Bar: Logo + Legal Links -->
+  <div class="border-t border-zinc-200 dark:border-zinc-800">
+    <div class="mx-auto px-4 md:px-8 py-6">
+      <div
+        class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+      >
+        <!-- Logo / Brand -->
+        <a
+          href="/"
+          class="text-lg font-medium text-zinc-900 dark:text-white hover:opacity-70 transition-opacity"
+        >
+          {logo}
+        </a>
+
+        <!-- Legal Links -->
+        <nav class="flex flex-wrap items-center gap-x-6 gap-y-2">
+          {
+            legalLinks.map((link) => (
+              <a
+                href={link.url}
+                class="text-sm text-zinc-500 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors duration-200"
+              >
+                {link.label}
+              </a>
+            ))
+          }
+
+          <!-- Social Links (optional, displayed inline with legal) -->
+          {
+            socials && socials.length > 0 && (
+              <>
+                {socials.map((social) => (
+                  <a
+                    href={social.url}
+                    class="text-sm text-zinc-500 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors duration-200"
+                    aria-label={social.platform}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {social.platform}
+                  </a>
+                ))}
+              </>
+            )
+          }
+        </nav>
+      </div>
+
+      <!-- Copyright (subtle, below) -->
+      <p class="mt-4 text-xs text-zinc-400 dark:text-zinc-600">
+        {copyright}
+      </p>
+    </div>
+  </div>
+</footer>

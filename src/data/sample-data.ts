@@ -621,6 +621,37 @@ export const SAMPLE_CTA: CtaData = {
   ],
 };
 
+export interface TeamMember {
+  name: string;
+  role: string;
+  bio?: string;
+  photo?: string;
+  initials?: string;
+  emoji?: string;
+  colorClass?: string;
+  linkedin?: string;
+  socials?: { platform: string; url: string }[];
+}
+
+export interface TeamData {
+  eyebrow?: string;
+  heading: string;
+  description?: string;
+  members: TeamMember[];
+}
+
+export const SAMPLE_TEAM: TeamData = {
+  eyebrow: 'Meet the Team',
+  heading: 'The people behind the magic',
+  description: 'Our diverse team of experts is passionate about delivering exceptional results for our clients.',
+  members: [
+    { name: 'Sarah Mitchell', role: 'CEO & Founder', bio: 'With 15+ years in digital strategy, Sarah leads our vision.', photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop', socials: [{ platform: 'LinkedIn', url: '#' }, { platform: 'Twitter', url: '#' }] },
+    { name: 'James Chen', role: 'Creative Director', bio: 'James brings brands to life through stunning visual design.', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop', socials: [{ platform: 'LinkedIn', url: '#' }, { platform: 'Dribbble', url: '#' }] },
+    { name: 'Emily Torres', role: 'Lead Developer', bio: 'Emily builds fast, scalable solutions with modern tech.', photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop', socials: [{ platform: 'LinkedIn', url: '#' }, { platform: 'GitHub', url: '#' }] },
+    { name: 'David Park', role: 'SEO Specialist', bio: 'David ensures our clients rank at the top of Google.', photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop', socials: [{ platform: 'LinkedIn', url: '#' }] },
+  ],
+};
+
 export const SAMPLE_FOOTER: FooterData = {
   logo: '🚀 Acme Studio',
   tagline: 'We build websites that drive results for local businesses across Sydney.',
@@ -870,4 +901,230 @@ export const SAMPLE_SOLUTION_SINGLE: SolutionData = {
     { heading: 'Lightning Fast', description: 'Sub-second load times.', icon: '⚡' },
     { heading: 'Always Online', description: '99.99% uptime guaranteed.', icon: '✅' },
   ],
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Form Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface FormField {
+  label: string;
+  type: 'text' | 'email' | 'tel' | 'textarea' | 'select' | 'checkbox';
+  name: string;
+  placeholder?: string;
+  required?: boolean;
+  rows?: number;
+  options?: { label: string; value: string }[];
+}
+
+export interface FormData {
+  eyebrow?: string;
+  heading: string;
+  description?: string;
+  submitText?: string;
+  privacyNote?: string;
+  fields?: FormField[];
+}
+
+export const SAMPLE_FORM: FormData = {
+  eyebrow: 'Get in Touch',
+  heading: 'Send us a message',
+  description: 'Have a project in mind? Fill out the form below and we\'ll get back to you within 24 hours.',
+  submitText: 'Send Message',
+  privacyNote: '🔒 Your data is safe. We never share your information.',
+  fields: [
+    { label: 'Name', type: 'text', name: 'name', placeholder: 'Your name', required: true },
+    { label: 'Email', type: 'email', name: 'email', placeholder: 'you@example.com', required: true },
+    { label: 'Phone', type: 'tel', name: 'phone', placeholder: '0400 000 000', required: false },
+    { label: 'Message', type: 'textarea', name: 'message', placeholder: 'Tell us about your project...', required: true, rows: 4 },
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Blog / Insights Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  description: string;
+  pubDate: Date | string;
+  updatedDate?: Date | string;
+  heroImage?: string;
+  tags?: string[];
+  author?: {
+    name: string;
+    photo?: string;
+  };
+  readTime?: string;
+}
+
+export interface BlogData {
+  eyebrow?: string;
+  heading: string;
+  description?: string;
+  posts: BlogPost[];
+  featuredPost?: BlogPost;
+  cta?: CtaLink;
+}
+
+export const SAMPLE_BLOG: BlogData = {
+  eyebrow: 'Latest Insights',
+  heading: 'Tips, guides & industry insights',
+  description: 'Stay up to date with the latest trends in web design, development, and digital marketing.',
+  posts: [
+    { 
+      slug: 'how-to-optimize-website-speed', 
+      title: 'How to Optimize Your Website for Speed', 
+      description: 'Learn the essential techniques to make your website load faster and improve user experience.', 
+      pubDate: '2024-03-15', 
+      heroImage: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=500&fit=crop',
+      tags: ['Performance', 'Web Development'],
+      author: { name: 'Sarah Mitchell', photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop' },
+      readTime: '5 min read'
+    },
+    { 
+      slug: 'seo-best-practices-2024', 
+      title: 'SEO Best Practices for 2024', 
+      description: 'Stay ahead of the competition with these proven SEO strategies that actually work.', 
+      pubDate: '2024-03-10', 
+      heroImage: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=800&h=500&fit=crop',
+      tags: ['SEO', 'Marketing'],
+      author: { name: 'James Chen', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop' },
+      readTime: '8 min read'
+    },
+    { 
+      slug: 'design-systems-explained', 
+      title: 'Design Systems Explained', 
+      description: 'Everything you need to know about building and maintaining scalable design systems.', 
+      pubDate: '2024-03-05', 
+      heroImage: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=500&fit=crop',
+      tags: ['Design Systems', 'UI/UX'],
+      author: { name: 'Emily Torres', photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop' },
+      readTime: '6 min read'
+    },
+    { 
+      slug: 'accessibility-web-design', 
+      title: 'Accessibility in Web Design', 
+      description: 'Make your website inclusive for everyone with these accessibility guidelines.', 
+      pubDate: '2024-02-28', 
+      heroImage: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=800&h=500&fit=crop',
+      tags: ['Accessibility', 'Design'],
+      author: { name: 'David Park', photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop' },
+      readTime: '4 min read'
+    },
+    { 
+      slug: 'headless-cms-guide', 
+      title: 'The Complete Guide to Headless CMS', 
+      description: 'Why modern businesses are switching to headless CMS and how you can too.', 
+      pubDate: '2024-02-20', 
+      heroImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop',
+      tags: ['Headless CMS', 'Web Development'],
+      author: { name: 'Sarah Mitchell', photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop' },
+      readTime: '10 min read'
+    },
+    { 
+      slug: 'conversion-rate-optimization', 
+      title: 'Conversion Rate Optimization Tips', 
+      description: 'Turn more visitors into customers with these data-driven CRO strategies.', 
+      pubDate: '2024-02-15', 
+      heroImage: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&h=500&fit=crop',
+      tags: ['CRO', 'Business'],
+      author: { name: 'James Chen', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop' },
+      readTime: '7 min read'
+    },
+  ],
+  cta: { text: 'View All Articles', url: '/insights' },
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Stats Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface StatItem {
+  value: string;
+  label: string;
+  description?: string;
+  icon?: string;
+}
+
+export interface StatsData {
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+  image?: ImageData;
+  stats: StatItem[];
+  primaryCta?: CtaLink;
+}
+
+export const SAMPLE_STATS: StatsData = {
+  eyebrow: 'Our Impact',
+  heading: 'By the numbers',
+  description: 'We let our results speak for themselves. Here is what we have achieved so far.',
+  stats: [
+    { value: '500+', label: 'Projects Completed', description: 'Delivered successfully and on time.', icon: '🎯' },
+    { value: '15', label: 'Years Experience', description: 'Industry leaders since 2011.', icon: '⭐' },
+    { value: '4.9/5', label: 'Client Rating', description: 'Based on 200+ verified reviews.', icon: '📈' },
+    { value: '24/7', label: 'Customer Support', description: 'Always here when you need us.', icon: '🤝' },
+  ]
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Banner Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface BannerData {
+  text: string;
+  link?: CtaLink;
+  primaryCta?: CtaLink;
+  secondaryCta?: CtaLink;
+  dismissible?: boolean;
+}
+
+export const SAMPLE_BANNER: BannerData = {
+  text: 'GeneriCon 2023 · Join us in Denver from June 7 – 9 to see what\'s coming next',
+  link: { text: 'Register now', url: '/register' },
+  primaryCta: { text: 'Accept all', url: '#' },
+  secondaryCta: { text: 'Reject all', url: '#' },
+  dismissible: true,
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Content Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface ContentData {
+  eyebrow?: string;
+  heading: string;
+  description?: string;
+  body: string;
+  image?: ImageData;
+  author?: {
+    name: string;
+    role: string;
+    photo?: string;
+    date?: string;
+  };
+}
+
+export const SAMPLE_CONTENT: ContentData = {
+  eyebrow: 'Our Philosophy',
+  heading: 'Building for the modern web',
+  description: 'A deep dive into how we approach digital architecture and user experience in today\'s fast-paced environment.',
+  body: `
+    <p>We believe that form and function must work in perfect harmony. When users visit your site, they shouldn't just be impressed by the visuals; they should intuitively know how to navigate and find what they need. This philosophy underpins every decision we make in our design process.</p>
+    <h2>The importance of speed</h2>
+    <p>In a world where attention spans are measured in milliseconds, speed is a fully fledged feature. It's not just about passing Core Web Vitals or pleasing search algorithms; it's about respecting your user's time. We optimize every asset, leverage modern caching, and deliver leaner bundles.</p>
+    <blockquote>"Good design is obvious. Great design is transparent." — Joe Sparano</blockquote>
+    <p>When you build with performance in mind from day one, you establish a solid foundation that can scale with your business. Accessibility naturally follows suit. A fast site that isn't accessible is simply a fast site that ignores a significant portion of your audience.</p>
+    <h3>Moving forward</h3>
+    <p>Our commitment remains unwavering: to craft premium digital experiences that leave a lasting impact while performing flawlessly across all devices and networks.</p>
+  `,
+  image: { src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=600&fit=crop', alt: 'Team collaborating' },
+  author: {
+    name: 'Sarah Mitchell',
+    role: 'Lead Architect',
+    date: 'April 4, 2026',
+    photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop'
+  }
 };

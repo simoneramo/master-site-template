@@ -1,0 +1,39 @@
+---
+/**
+ * BannerFloating — Floating Banner
+ * A rounded banner that floats slightly below the top of the page.
+ */
+import type { BannerData } from '../../../data/sample-data';
+
+interface Props { data: BannerData; }
+
+const { data } = Astro.props;
+const { text, link, dismissible = true } = data;
+---
+
+<div id="floating-banner" class="relative z-50 pointer-events-none mt-4 w-full">
+  <div class="pointer-events-auto max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="p-3 bg-neutral-900 text-white rounded-xl shadow-lg border border-neutral-800 flex items-center justify-between">
+      <p class="text-sm font-medium ml-2">
+        {text}
+        {link && (
+          <a href={link.url} class="inline-flex items-center gap-1 font-bold ml-2 text-accent hover:underline">
+            {link.text}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </a>
+        )}
+      </p>
+      
+      {dismissible && (
+        <button 
+          type="button" 
+          class="p-1 hover:bg-neutral-800 rounded-lg transition-colors focus:outline-none ml-4"
+          aria-label="Dismiss banner"
+          onclick="this.closest('#floating-banner').remove()"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-neutral-400"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+      )}
+    </div>
+  </div>
+</div>

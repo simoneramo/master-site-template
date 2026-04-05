@@ -1,0 +1,37 @@
+---
+/**
+ * BannerSticky — Sticky Top Banner
+ * A full-width dark banner at the top of the page with a dismiss button.
+ */
+import type { BannerData } from '../../../data/sample-data';
+
+interface Props { data: BannerData; }
+
+const { data } = Astro.props;
+const { text, link, dismissible = true } = data;
+---
+
+<div id="sticky-banner" class="bg-neutral-900 text-white relative z-50">
+  <div class="container mx-auto px-4 py-3 flex items-center justify-between lg:justify-center relative">
+    <p class="text-sm font-medium text-center flex-1 pr-6 lg:pr-0">
+      {text}
+      {link && (
+        <a href={link.url} class="inline-flex items-center gap-1 font-bold ml-1 hover:text-accent transition-colors">
+          {link.text}
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </a>
+      )}
+    </p>
+    
+    {dismissible && (
+      <button 
+        type="button" 
+        class="-m-1.5 p-1.5 hover:opacity-70 transition-opacity focus:outline-none lg:absolute lg:right-4"
+        aria-label="Dismiss banner"
+        onclick="this.closest('#sticky-banner').remove()"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-neutral-400"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+      </button>
+    )}
+  </div>
+</div>

@@ -36,6 +36,12 @@ const PATTERN_REGISTRY = [
   { slug: 'solutions', label: 'Solution' },
   { slug: 'videos', label: 'Video / Demo' },
   { slug: 'newsletters', label: 'Newsletter Signup' },
+  { slug: 'team', label: 'Team' },
+  { slug: 'blog', label: 'Blog / Insights' },
+  { slug: 'forms', label: 'Forms' },
+  { slug: 'stats', label: 'Stats' },
+  { slug: 'banners', label: 'Banners' },
+  { slug: 'content', label: 'Content / Prose' },
 ];
 
 const BASE_URL = 'http://localhost:4321/component-library';

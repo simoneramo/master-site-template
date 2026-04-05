@@ -1,0 +1,46 @@
+---
+/**
+ * BannerCookie — Floating Cookie Card
+ * A floating card in the bottom corner with consent actions.
+ */
+import type { BannerData } from '../../../data/sample-data';
+
+interface Props { data: BannerData; }
+
+const { data } = Astro.props;
+const { text, link, primaryCta, secondaryCta } = data;
+---
+
+<div id="cookie-card" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 max-w-sm w-full bg-white dark:bg-zinc-950 rounded-xl shadow-xl border border-zinc-200 dark:border-zinc-800 p-6 z-50 transition-all duration-300 opacity-100">
+  <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">
+    {text}
+    {link && (
+      <span class="ml-1">
+        <a href={link.url} class="text-accent hover:underline font-medium">
+          {link.text}
+        </a>
+      </span>
+    )}
+  </p>
+  
+  <div class="flex items-center gap-3">
+    {primaryCta && (
+      <button 
+        type="button" 
+        class="bg-zinc-950 dark:bg-white text-white dark:text-black font-bold py-2 px-5 rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors text-sm shrink-0"
+        onclick="this.closest('#cookie-card').style.opacity='0'; setTimeout(() => this.closest('#cookie-card').remove(), 300)"
+      >
+        {primaryCta.text}
+      </button>
+    )}
+    {secondaryCta && (
+      <button 
+        type="button" 
+        class="bg-transparent text-zinc-900 dark:text-white font-bold py-2 px-5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors text-sm"
+        onclick="this.closest('#cookie-card').style.opacity='0'; setTimeout(() => this.closest('#cookie-card').remove(), 300)"
+      >
+        {secondaryCta.text}
+      </button>
+    )}
+  </div>
+</div>
