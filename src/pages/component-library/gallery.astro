@@ -14,10 +14,10 @@ const readyPatterns = allPatterns.filter(p => p.status === 'ready');
 <MainLayout
   title="Component Gallery — Visual Preview"
   description="Browse all 103 component variants as thumbnail cards."
-  headerVariant="simple"
-  footerVariant="simple"
+  hideHeader
+  hideFooter
 >
-  <section class="py-16">
+  <section class="py-16" x-data="{ filter: 'all' }">
     <div class="container mx-auto px-4 md:px-8">
       
       <!-- Header -->
@@ -31,19 +31,21 @@ const readyPatterns = allPatterns.filter(p => p.status === 'ready');
 
       <!-- Filter by Section -->
       <div class="flex flex-wrap gap-2 mb-8">
-        <a 
-          href="#all" 
-          class="px-4 py-2 rounded-full bg-zinc-950 text-white dark:bg-white dark:text-black font-bold text-sm"
+        <button 
+          @click="filter = 'all'"
+          :class="filter === 'all' ? 'bg-zinc-950 text-white dark:bg-white dark:text-black' : 'bg-surface dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400'"
+          class="px-4 py-2 rounded-full font-bold text-sm transition-colors"
         >
           All
-        </a>
+        </button>
         {PATTERN_REGISTRY.map(section => (
-          <a 
-            href={`#${section.slug}`}
-            class="px-4 py-2 rounded-full bg-surface dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 font-bold text-sm hover:border-zinc-400 transition-colors"
+          <button 
+            @click={`filter = '${section.slug}'`}
+            :class={`filter === '${section.slug}' ? 'bg-zinc-950 text-white dark:bg-white dark:text-black' : 'bg-surface dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400'`}
+            class="px-4 py-2 rounded-full font-bold text-sm transition-colors"
           >
             {section.icon} {section.label}
-          </a>
+          </button>
         ))}
       </div>
 
@@ -51,6 +53,13 @@ const readyPatterns = allPatterns.filter(p => p.status === 'ready');
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {readyPatterns.map((pattern) => (
           <a
+            x-show={`filter === 'all' || filter === '${pattern.sectionSlug}'`}
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-95"
             href={`/component-library/${pattern.sectionSlug}#${pattern.key}`}
             class="group block bg-white dark:bg-zinc-950 rounded-xl border-2 border-zinc-200 dark:border-zinc-800 overflow-hidden hover:border-accent transition-colors"
           >
@@ -94,16 +103,14 @@ const readyPatterns = allPatterns.filter(p => p.status === 'ready');
         ))}
       </div>
 
-      <!-- Empty State (if no captures yet) -->
-      {readyPatterns.length > 0 && (
-        <div class="mt-12 p-8 bg-surface dark:bg-zinc-900/50 rounded-xl border-2 border-dashed border-zinc-200 dark:border-zinc-800 text-center">
-          <p class="text-neutral-500 dark:text-neutral-400">
-            <strong>Missing thumbnails?</strong> Run{' '}
-            <code class="bg-zinc-200 dark:bg-zinc-800 px-2 py-1 rounded text-sm">pnpm capture-previews</code>
-            {' '}to generate them.
-          </p>
-        </div>
-      )}
+      <!-- Info -->
+      <div class="mt-12 p-8 bg-surface dark:bg-zinc-900/50 rounded-xl border-2 border-dashed border-zinc-200 dark:border-zinc-800 text-center">
+        <p class="text-neutral-500 dark:text-neutral-400">
+          <strong>Missing thumbnails?</strong> Run{' '}
+          <code class="bg-zinc-200 dark:bg-zinc-800 px-2 py-1 rounded text-sm">pnpm capture-previews</code>
+          {' '}to generate them.
+        </p>
+      </div>
 
     </div>
   </section>
