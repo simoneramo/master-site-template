@@ -286,11 +286,13 @@ export interface FooterData {
 export const SAMPLE_HEADER: HeaderData = {
   logo: '🚀 Acme Studio',
   navLinks: [
-    { label: 'Services', url: '/services', children: [
-      { label: 'Web Design', url: '/services/web-design', description: 'Beautiful, responsive websites' },
-      { label: 'SEO', url: '/services/seo', description: 'Rank higher on Google' },
-      { label: 'Branding', url: '/services/branding', description: 'Stand out from the crowd' },
-    ]},
+    {
+      label: 'Services', url: '/services', children: [
+        { label: 'Web Design', url: '/services/web-design', description: 'Beautiful, responsive websites' },
+        { label: 'SEO', url: '/services/seo', description: 'Rank higher on Google' },
+        { label: 'Branding', url: '/services/branding', description: 'Stand out from the crowd' },
+      ]
+    },
     { label: 'Work', url: '/work' },
     { label: 'About', url: '/about' },
     { label: 'Blog', url: '/blog' },
@@ -425,6 +427,7 @@ export const SAMPLE_FEATURES: FeaturesData = {
 export const SAMPLE_BENEFITS: BenefitsData = {
   eyebrow: 'The Advantage',
   heading: 'Results that speak for themselves',
+  description: 'A 2-minute walkthrough of our process and results.',
   benefits: [
     { icon: '📈', heading: 'More Traffic', description: 'Average 3x increase in organic traffic within 6 months.', number: 1 },
     { icon: '💰', heading: 'More Revenue', description: 'Our clients see an average 40% increase in online revenue.', number: 2 },
@@ -451,6 +454,7 @@ export const SAMPLE_VIDEO: VideoData = {
 export const SAMPLE_TESTIMONIALS: TestimonialsData = {
   eyebrow: 'What Clients Say',
   heading: 'Trusted by 500+ businesses',
+  description: 'Acme Studio completely transformed our online presence. Our enquiries have tripled since the new site launched',
   testimonials: [
     { quote: 'Acme Studio completely transformed our online presence. Our enquiries have tripled since the new site launched.', name: 'Sarah Mitchell', title: 'CEO', company: 'Mitchell & Co', rating: 5, photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop', platform: 'Google' },
     { quote: 'The team understood our vision from day one. The website they built exceeded all expectations.', name: 'James Chen', title: 'Director', company: 'Altitude Finance', rating: 5, photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop', platform: 'Google' },
@@ -660,23 +664,29 @@ export const SAMPLE_FOOTER: FooterData = {
   logo: '🚀 Acme Studio',
   tagline: 'We build websites that drive results for local businesses across Sydney.',
   columns: [
-    { heading: 'Services', links: [
-      { label: 'Web Design', url: '/services/web-design' },
-      { label: 'Development', url: '/services/development' },
-      { label: 'SEO', url: '/services/seo' },
-      { label: 'Branding', url: '/services/branding' },
-    ]},
-    { heading: 'Company', links: [
-      { label: 'About', url: '/about' },
-      { label: 'Work', url: '/work' },
-      { label: 'Blog', url: '/blog' },
-      { label: 'Careers', url: '/careers' },
-    ]},
-    { heading: 'Support', links: [
-      { label: 'Contact', url: '/contact' },
-      { label: 'FAQ', url: '/faq' },
-      { label: 'Help Center', url: '/help' },
-    ]},
+    {
+      heading: 'Services', links: [
+        { label: 'Web Design', url: '/services/web-design' },
+        { label: 'Development', url: '/services/development' },
+        { label: 'SEO', url: '/services/seo' },
+        { label: 'Branding', url: '/services/branding' },
+      ]
+    },
+    {
+      heading: 'Company', links: [
+        { label: 'About', url: '/about' },
+        { label: 'Work', url: '/work' },
+        { label: 'Blog', url: '/blog' },
+        { label: 'Careers', url: '/careers' },
+      ]
+    },
+    {
+      heading: 'Support', links: [
+        { label: 'Contact', url: '/contact' },
+        { label: 'FAQ', url: '/faq' },
+        { label: 'Help Center', url: '/help' },
+      ]
+    },
   ],
   socials: [
     { platform: 'Twitter', url: '#', icon: '𝕏' },
@@ -977,61 +987,61 @@ export const SAMPLE_BLOG: BlogData = {
   heading: 'Tips, guides & industry insights',
   description: 'Stay up to date with the latest trends in web design, development, and digital marketing.',
   posts: [
-    { 
-      slug: 'how-to-optimize-website-speed', 
-      title: 'How to Optimize Your Website for Speed', 
-      description: 'Learn the essential techniques to make your website load faster and improve user experience.', 
-      pubDate: '2024-03-15', 
+    {
+      slug: 'how-to-optimize-website-speed',
+      title: 'How to Optimize Your Website for Speed',
+      description: 'Learn the essential techniques to make your website load faster and improve user experience.',
+      pubDate: '2024-03-15',
       heroImage: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=500&fit=crop',
       tags: ['Performance', 'Web Development'],
       author: { name: 'Sarah Mitchell', photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop' },
       readTime: '5 min read'
     },
-    { 
-      slug: 'seo-best-practices-2024', 
-      title: 'SEO Best Practices for 2024', 
-      description: 'Stay ahead of the competition with these proven SEO strategies that actually work.', 
-      pubDate: '2024-03-10', 
+    {
+      slug: 'seo-best-practices-2024',
+      title: 'SEO Best Practices for 2024',
+      description: 'Stay ahead of the competition with these proven SEO strategies that actually work.',
+      pubDate: '2024-03-10',
       heroImage: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=800&h=500&fit=crop',
       tags: ['SEO', 'Marketing'],
       author: { name: 'James Chen', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop' },
       readTime: '8 min read'
     },
-    { 
-      slug: 'design-systems-explained', 
-      title: 'Design Systems Explained', 
-      description: 'Everything you need to know about building and maintaining scalable design systems.', 
-      pubDate: '2024-03-05', 
+    {
+      slug: 'design-systems-explained',
+      title: 'Design Systems Explained',
+      description: 'Everything you need to know about building and maintaining scalable design systems.',
+      pubDate: '2024-03-05',
       heroImage: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=500&fit=crop',
       tags: ['Design Systems', 'UI/UX'],
       author: { name: 'Emily Torres', photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop' },
       readTime: '6 min read'
     },
-    { 
-      slug: 'accessibility-web-design', 
-      title: 'Accessibility in Web Design', 
-      description: 'Make your website inclusive for everyone with these accessibility guidelines.', 
-      pubDate: '2024-02-28', 
+    {
+      slug: 'accessibility-web-design',
+      title: 'Accessibility in Web Design',
+      description: 'Make your website inclusive for everyone with these accessibility guidelines.',
+      pubDate: '2024-02-28',
       heroImage: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=800&h=500&fit=crop',
       tags: ['Accessibility', 'Design'],
       author: { name: 'David Park', photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop' },
       readTime: '4 min read'
     },
-    { 
-      slug: 'headless-cms-guide', 
-      title: 'The Complete Guide to Headless CMS', 
-      description: 'Why modern businesses are switching to headless CMS and how you can too.', 
-      pubDate: '2024-02-20', 
+    {
+      slug: 'headless-cms-guide',
+      title: 'The Complete Guide to Headless CMS',
+      description: 'Why modern businesses are switching to headless CMS and how you can too.',
+      pubDate: '2024-02-20',
       heroImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop',
       tags: ['Headless CMS', 'Web Development'],
       author: { name: 'Sarah Mitchell', photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop' },
       readTime: '10 min read'
     },
-    { 
-      slug: 'conversion-rate-optimization', 
-      title: 'Conversion Rate Optimization Tips', 
-      description: 'Turn more visitors into customers with these data-driven CRO strategies.', 
-      pubDate: '2024-02-15', 
+    {
+      slug: 'conversion-rate-optimization',
+      title: 'Conversion Rate Optimization Tips',
+      description: 'Turn more visitors into customers with these data-driven CRO strategies.',
+      pubDate: '2024-02-15',
       heroImage: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&h=500&fit=crop',
       tags: ['CRO', 'Business'],
       author: { name: 'James Chen', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop' },
@@ -1110,6 +1120,70 @@ export interface ContentData {
     date?: string;
   };
 }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Breakout Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface BreakoutData {
+  eyebrow?: string;
+  heading: string;
+  description: string;
+  cta?: {
+    text: string;
+    url: string;
+  };
+}
+
+export const SAMPLE_BREAKOUT: BreakoutData = {
+  eyebrow: 'Why "WeMakeSmall"?',
+  heading: 'Built for the Businesses',
+  description: 'I got tired of seeing small business owners get stuck between slow, broken DIY sites and overpriced city agencies. I\'m bringing 10 years of enterprise-grade engineering to give you a high-performance asset you actually own and delivered in 28.',
+  cta: {
+    text: "Let's chat",
+    url: '/contact'
+  }
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Showcase Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface ShowcaseData {
+  eyebrow?: string;
+  heading: string;
+  description: string;
+  cta?: {
+    text: string;
+    url: string;
+  };
+  image: {
+    src: string;
+    alt?: string;
+    url?: string;
+  };
+  reverse?: boolean;
+}
+
+export const SAMPLE_SHOWCASE: ShowcaseData = {
+  eyebrow: 'See it in action',
+  heading: 'Beautiful websites that convert',
+  description: 'Watch as we reveal the attention to detail that goes into every pixel. From smooth animations to intuitive navigation, every element is crafted with purpose.',
+  cta: {
+    text: 'View our work',
+    url: '/work'
+  },
+  image: {
+    src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=2400&fit=crop',
+    alt: 'Website showcase',
+    url: 'yoursite.com'
+  },
+  reverse: false
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Content Data
+// ═══════════════════════════════════════════════════════════════════════════════
 
 export const SAMPLE_CONTENT: ContentData = {
   eyebrow: 'Our Philosophy',

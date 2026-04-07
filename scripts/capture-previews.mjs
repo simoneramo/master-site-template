@@ -24,7 +24,7 @@ const PATTERN_REGISTRY = [
   { slug: 'footers', label: 'Footer' },
   { slug: 'ctas', label: 'Final CTA' },
   { slug: 'faqs', label: 'FAQ' },
-  { slug: 'trust-bars', label: 'Trust Bar' },
+  { slug: 'trust_bars', label: 'Trust Bar' },
   { slug: 'pricing', label: 'Pricing' },
   { slug: 'services', label: 'Services Grid' },
   { slug: 'testimonials', label: 'Testimonials / Reviews' },

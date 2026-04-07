@@ -1,4 +1,6 @@
 import { defineConfig } from "tinacms";
+import { toTinaBlockTemplates } from "../src/data/schema-generators";
+import { PATTERN_REGISTRY } from "../src/data/pattern-registry";
 
 // Your hosting provider likely exposes this as an environment variable
 const branch =
@@ -5007,7 +5009,9 @@ export default defineConfig({
           },
         ],
       },
-      // FLEXIBLE PAGE WITH EXISTING BLOCKS
+      // 🔄 FLEXIBLE PAGES — Block templates auto-generated from pattern registry
+      // Every section in the registry becomes an available block with a variant picker.
+      // See: src/data/pattern-registry.ts + src/data/schema-generators.ts
       {
         name: "flexiblePage",
         label: "Flexible Pages",
@@ -5034,192 +5038,7 @@ export default defineConfig({
             name: "blocks",
             label: "Page Blocks",
             list: true,
-            templates: [
-              {
-                name: "hero",
-                label: "Hero Section",
-                fields: [
-                  {
-                    type: "string",
-                    name: "variant",
-                    label: "Layout Variant",
-                    options: [
-                      { label: "Center", value: "center" },
-                      { label: "Left", value: "left" },
-                    ],
-                  },
-                  {
-                    type: "string",
-                    name: "label",
-                    label: "Label",
-                    description: "Small text above heading",
-                    required: false,
-                  },
-                  {
-                    type: "string",
-                    name: "heading",
-                    label: "Heading",
-                    required: false,
-                  },
-                  {
-                    type: "string",
-                    name: "description",
-                    label: "Description",
-                    ui: { component: "textarea" },
-                    required: false,
-                  },
-                  {
-                    type: "string",
-                    name: "buttonText",
-                    label: "Button Text",
-                    required: false,
-                  },
-                  {
-                    type: "string",
-                    name: "buttonLink",
-                    label: "Button Link",
-                    required: false,
-                  },
-                ],
-              },
-              {
-                name: "features",
-                label: "Features / Card Grid",
-                fields: [
-                  {
-                    type: "string",
-                    name: "variant",
-                    label: "Layout Variant",
-                    options: [
-                      { label: "Center", value: "center" },
-                      { label: "Left", value: "left" },
-                    ],
-                  },
-                  {
-                    type: "number",
-                    name: "columns",
-                    label: "Columns",
-                    description: "Number of columns (2, 3, or 4)",
-                  },
-                  {
-                    type: "string",
-                    name: "sectionLabel",
-                    label: "Section Label",
-                    required: false,
-                  },
-                  {
-                    type: "string",
-                    name: "heading",
-                    label: "Heading",
-                    required: false,
-                  },
-                  {
-                    type: "string",
-                    name: "description",
-                    label: "Description",
-                    ui: { component: "textarea" },
-                    required: false,
-                  },
-                  {
-                    type: "object",
-                    name: "items",
-                    label: "Feature Items",
-                    list: true,
-                    fields: [
-                      {
-                        type: "string",
-                        name: "icon",
-                        label: "Icon (Emoji)",
-                        required: true,
-                      },
-                      {
-                        type: "string",
-                        name: "title",
-                        label: "Title",
-                        required: true,
-                      },
-                      {
-                        type: "string",
-                        name: "description",
-                        label: "Description",
-                        ui: { component: "textarea" },
-                        required: true,
-                      },
-                      {
-                        type: "string",
-                        name: "linkText",
-                        label: "Link Text",
-                        required: false,
-                      },
-                      {
-                        type: "string",
-                        name: "linkUrl",
-                        label: "Link URL",
-                        required: false,
-                      },
-                    ],
-                  },
-                  {
-                    type: "string",
-                    name: "ctaText",
-                    label: "CTA Text",
-                    required: false,
-                  },
-                  {
-                    type: "string",
-                    name: "ctaLink",
-                    label: "CTA Link",
-                    required: false,
-                  },
-                ],
-              },
-              {
-                name: "cta",
-                label: "Call to Action",
-                fields: [
-                  {
-                    type: "string",
-                    name: "variant",
-                    label: "Layout Variant",
-                    options: [
-                      { label: "Center", value: "center" },
-                      { label: "Left", value: "left" },
-                    ],
-                  },
-                  {
-                    type: "string",
-                    name: "sectionLabel",
-                    label: "Section Label",
-                    required: false,
-                  },
-                  {
-                    type: "string",
-                    name: "heading",
-                    label: "Heading",
-                    required: false,
-                  },
-                  {
-                    type: "string",
-                    name: "description",
-                    label: "Description",
-                    ui: { component: "textarea" },
-                    required: false,
-                  },
-                  {
-                    type: "string",
-                    name: "buttonText",
-                    label: "Button Text",
-                    required: false,
-                  },
-                  {
-                    type: "string",
-                    name: "buttonLink",
-                    label: "Button Link",
-                    required: false,
-                  },
-                ],
-              },
-            ],
+            templates: toTinaBlockTemplates(PATTERN_REGISTRY),
           },
         ],
       },

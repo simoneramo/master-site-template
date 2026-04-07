@@ -1,0 +1,110 @@
+---
+/**
+ * TrustBarKeyProofPoints — Key Proof Points Marquee
+ * Pattern key: keyProofPoints
+ * Section: Trust Bar
+ *
+ * Infinite scrolling marquee of key proof points with icons.
+ * Seamless loop animation that pauses on hover.
+ */
+import type { TrustBarData } from '../../../data/sample-data';
+
+interface Props {
+  data: TrustBarData;
+  /** Speed of animation in seconds (default: 60) */
+  speed?: number;
+}
+
+const { data, speed = 60 } = Astro.props;
+const { badges = [] } = data;
+
+// Default proof points if none provided
+const defaultItems = [
+  { icon: '🛡️', text: 'Licensed & Insured' },
+  { icon: '⭐', text: '5-Star Rated' },
+  { icon: '📍', text: 'Locally Owned' },
+  { icon: '✅', text: 'Certified Partner' },
+  { icon: '🚀', text: 'Fast Delivery' },
+  { icon: '💯', text: 'Satisfaction Guaranteed' },
+];
+
+const items = badges.length > 0 ? badges : defaultItems;
+---
+
+<!-- Key Proof Points -->
+<section
+  class="py-2 md:py-4 bg-white dark:bg-zinc-900 overflow-hidden"
+  aria-label="Key Proof Points"
+>
+  <div class="relative flex overflow-x-hidden">
+    <!-- First marquee track -->
+    <div
+      class="animate-marquee whitespace-nowrap flex items-center gap-12 pr-12 py-2"
+      style={`animation-duration: ${speed}s;`}
+    >
+      {
+        Array(4)
+          .fill(items)
+          .flat()
+          .map((item) => (
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">{item.icon}</span>
+              <span class="text-md font-bold capitalize">{item.text}</span>
+            </div>
+          ))
+      }
+    </div>
+
+    <!-- Second marquee track (seamless loop) -->
+    <div
+      class="absolute top-0 animate-marquee2 whitespace-nowrap flex items-center gap-12 pr-12 py-2"
+      style={`animation-duration: ${speed}s;`}
+    >
+      {
+        Array(4)
+          .fill(items)
+          .flat()
+          .map((item) => (
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">{item.icon}</span>
+              <span class="text-md font-bold capitalize">{item.text}</span>
+            </div>
+          ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes marquee2 {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 60s linear infinite;
+  }
+
+  .animate-marquee2 {
+    animation: marquee2 60s linear infinite;
+  }
+
+  /* Pause on hover */
+  section:hover .animate-marquee,
+  section:hover .animate-marquee2 {
+    animation-play-state: paused;
+  }
+</style>

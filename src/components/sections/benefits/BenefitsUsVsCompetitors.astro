@@ -1,0 +1,104 @@
+---
+/**
+ * BenefitsUsVsCompetitors — Us vs. Competitors Table
+ * Pattern key: usVsCompetitors
+ * Section: Benefits
+ *
+ * Full-width comparison table with your business highlighted
+ * against competitors, plus optional CTA link below.
+ */
+import type { BenefitsData } from '../../../data/sample-data';
+
+interface Props {
+  data: BenefitsData;
+  /** Optional CTA text */
+  ctaText?: string;
+  /** Optional CTA link */
+  ctaLink?: string;
+}
+
+const { data, ctaText, ctaLink } = Astro.props;
+const { eyebrow, heading, description, benefits } = data;
+
+// Default comparison data structure
+// First column is "Us", then competitors
+const columnHeaders = ['Feature', 'Us', 'Typical Agency', 'DIY Builder'];
+
+// Map benefits to comparison rows
+const rows = benefits.map((benefit) => ({
+  feature: benefit.heading,
+  subtitle: benefit.description,
+  us: '✓ Included',
+  competitor1: '✗ Extra fee',
+  competitor2: '✗ Not available',
+}));
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <!-- Header -->
+    <div class="max-w-3xl mb-12">
+      {eyebrow && (
+        <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
+          {eyebrow}
+        </p>
+      )}
+      {heading && <h2 class="text-5xl font-bold mb-4">{heading}</h2>}
+      {description && (
+        <p class="text-lg text-neutral-600 dark:text-neutral-400 font-medium">
+          {description}
+        </p>
+      )}
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y-2 divide-neutral-200 dark:divide-zinc-700 border-b-2 border-neutral-200 dark:border-zinc-700 border-collapse">
+        <thead class="bg-black dark:bg-white text-white dark:text-black">
+          <tr>
+            {columnHeaders.map((header, index) => (
+              <th
+                class={`p-4 text-lg font-extrabold ${index === 0 ? "text-left sticky left-0 z-20 bg-black dark:bg-white" : "text-center"}`}
+              >
+                {header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody class="divide-y-2 divide-neutral-200 dark:divide-zinc-700">
+          {rows.map((row) => (
+            <tr class="bg-white text-md font-medium dark:bg-black">
+              <td class="p-4 sticky left-0 bg-white dark:bg-black font-bold">
+                {row.feature}
+                <p class="text-md text-neutral-600 dark:text-neutral-400 font-normal mt-1">
+                  {row.subtitle}
+                </p>
+              </td>
+              <td class="p-4 bg-zinc-100 dark:bg-zinc-800 text-center font-bold text-green-600 dark:text-green-400">
+                {row.us}
+              </td>
+              <td class="p-4 text-center text-neutral-500 dark:text-neutral-400">
+                {row.competitor1}
+              </td>
+              <td class="p-4 text-center text-neutral-500 dark:text-neutral-400">
+                {row.competitor2}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CTA -->
+    {ctaText && ctaLink && (
+      <div class="mt-10">
+        <a
+          href={ctaLink}
+          class="font-bold border-b-2 border-black dark:border-white hover:border-transparent transition-colors text-black dark:text-white"
+        >
+          {ctaText} &rarr;
+        </a>
+      </div>
+    )}
+  </div>
+</section>

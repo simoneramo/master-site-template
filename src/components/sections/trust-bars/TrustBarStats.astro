@@ -1,18 +1,28 @@
 ---
-import type { TrustBarData } from '../../../data/sample-data';
-interface Props { data: TrustBarData; }
+import type { TrustBarData } from "../../../data/sample-data";
+interface Props {
+  data: TrustBarData;
+}
 const { data } = Astro.props;
 const { stats = [] } = data;
 ---
+
+<!-- Stats -->
 <section class="py-16 bg-zinc-50 dark:bg-zinc-900">
   <div class="container mx-auto px-4 md:px-8">
-    <div class="flex flex-wrap items-center justify-center divide-x-0 md:divide-x divide-zinc-200 dark:divide-zinc-800 gap-y-8">
-      {stats.map((stat) => (
-        <div class="text-center px-8 md:px-12">
-          <div class="text-4xl md:text-5xl font-bold mb-1">{stat.value}</div>
-          <div class="text-sm font-medium text-neutral-500 dark:text-neutral-400">{stat.label}</div>
-        </div>
-      ))}
+    <div
+      class="flex flex-wrap items-center justify-center divide-x-0 md:divide-x divide-zinc-200 dark:divide-zinc-800 gap-y-8"
+    >
+      {
+        stats.map((stat) => (
+          <div class="text-center px-8 md:px-12">
+            <div class="text-4xl md:text-5xl font-bold mb-1">{stat.value}</div>
+            <div class="text-sm font-medium text-neutral-500 dark:text-neutral-400">
+              {stat.label}
+            </div>
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>

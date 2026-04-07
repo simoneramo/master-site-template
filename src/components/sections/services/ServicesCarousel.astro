@@ -1,0 +1,153 @@
+---
+/**
+ * ServicesCarousel — Benefits Features Grid Carousel
+ * Pattern key: carousel
+ * Section: Services
+ *
+ * Horizontal scrolling carousel with navigation arrows.
+ * Shows 3 cards at a time, one card at a time scrolls.
+ */
+import type { ServicesData } from '../../../data/sample-data';
+
+interface Props {
+  data: ServicesData;
+  /** Section ID for anchor links */
+  id?: string;
+  /** Optional CTA text */
+  ctaText?: string;
+  /** Optional CTA link */
+  ctaLink?: string;
+}
+
+const { data, id, ctaText, ctaLink } = Astro.props;
+const { eyebrow, heading, description, services } = data;
+---
+
+<section {id} class="py-20 md:py-32"
+  x-data="{ 
+    scrollLeft: 0,
+    maxScroll: 0,
+    cardWidth: 0,
+    gap: 24,
+    init() {
+      this.$nextTick(() => {
+        this.updateDimensions();
+      });
+      window.addEventListener('resize', () => this.updateDimensions());
+    },
+    updateDimensions() {
+      const track = this.$refs.track;
+      const card = this.$refs.track?.firstElementChild;
+      if (track && card) {
+        this.cardWidth = card.offsetWidth + this.gap;
+        this.maxScroll = track.scrollWidth - track.clientWidth;
+        this.scrollLeft = track.scrollLeft;
+      }
+    },
+    scrollPrev() {
+      this.$refs.track.scrollBy({ left: -this.cardWidth, behavior: 'smooth' });
+    },
+    scrollNext() {
+      this.$refs.track.scrollBy({ left: this.cardWidth, behavior: 'smooth' });
+    },
+    onScroll() {
+      this.scrollLeft = this.$refs.track.scrollLeft;
+      this.maxScroll = this.$refs.track.scrollWidth - this.$refs.track.clientWidth;
+    },
+    get canPrev() { return this.scrollLeft > 0; },
+    get canNext() { return this.scrollLeft < this.maxScroll - 1; }
+  }"
+>
+  <div class="container mx-auto px-4 md:px-8">
+    <!-- Header -->
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    <!-- Carousel Container -->
+    <div class="relative">
+      <!-- Cards Track -->
+      <div 
+        x-ref="track"
+        @scroll.throttle="onScroll"
+        class="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide scroll-smooth"
+        style="scrollbar-width: none; -ms-overflow-style: none;"
+      >
+        {services.map((service) => (
+          <div class="carousel-card group flex-shrink-0 w-full md:w-[calc(33.333%-16px)] snap-start">
+            <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 lg:p-8 h-full transition-all hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700">
+              {/* Icon */}
+              {service.icon && (
+                <div class="text-4xl mb-6">
+                  {service.icon}
+                </div>
+              )}
+              
+              {/* Content */}
+              <h3 class="text-xl font-bold mb-3 text-black dark:text-white">{service.heading}</h3>
+              <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">{service.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Bottom Row: CTA + Navigation */}
+    <div class="flex items-center justify-between mt-8">
+      {/* CTA */}
+      {ctaText && ctaLink ? (
+        <a 
+          href={ctaLink}
+          class="inline-flex items-center gap-2 font-bold text-black dark:text-white border-b-2 border-black dark:border-white pb-1 hover:opacity-70 transition-opacity"
+        >
+          {ctaText}
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      ) : (
+        <div />
+      )}
+
+      {/* Navigation Arrows */}
+      <div class="flex items-center gap-3">
+        <button 
+          type="button"
+          @click="scrollPrev"
+          :disabled="!canPrev"
+          :class="canPrev ? 'opacity-100' : 'opacity-30 cursor-not-allowed'"
+          class="w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-black dark:text-white hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all"
+          aria-label="Previous slide"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button 
+          type="button"
+          @click="scrollNext"
+          :disabled="!canNext"
+          :class="canNext ? 'opacity-100' : 'opacity-30 cursor-not-allowed'"
+          class="w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-black dark:text-white hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all"
+          aria-label="Next slide"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+</style>

@@ -1,12 +1,16 @@
 /**
  * Pattern Registry — Single source of truth for all section patterns.
- * Maps section types to their available layout variants and component files.
+ * Maps section types to their available layout variants, component files,
+ * and canonical field schemas.
  *
  * Used by:
- * - Component browser (_component-library pages)
- * - Future: Prompt Builder integration
- * - Future: Tina CMS schema generation
+ * - Component browser (component-library pages)
+ * - Schema generators (Zod, TinaCMS, TypeScript types)
+ * - Prompt Builder integration
  */
+
+import { SECTION_FIELDS, type FieldDef } from './section-fields';
+export type { FieldDef } from './section-fields';
 
 export interface PatternVariant {
   key: string;
@@ -22,6 +26,7 @@ export interface SectionDefinition {
   label: string;
   icon: string;
   dataKey: string;
+  fields: FieldDef[];   // Canonical field schema for this section
   variants: PatternVariant[];
 }
 
@@ -31,6 +36,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Navigation / Header',
     icon: '🧭',
     dataKey: 'SAMPLE_HEADER',
+    fields: SECTION_FIELDS.headers,
     variants: [
       { key: 'standard', label: 'Standard', component: 'HeaderStandard', brief: 'Sticky header with logo left, nav right, CTA far right. Mobile hamburger with slide-out drawer.', status: 'ready' },
       { key: 'withPhone', label: 'With Phone', component: 'HeaderWithPhone', brief: 'Sticky header with phone number displayed before the CTA button. Mobile: tap-to-call icon.', status: 'ready' },
@@ -47,6 +53,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Hero',
     icon: '🦸',
     dataKey: 'SAMPLE_HERO',
+    fields: SECTION_FIELDS.heroes,
     variants: [
       { key: 'splitLR', label: 'Copy Left / Image Right', component: 'HeroSplitLR', brief: 'Two-column (55/45). Text left with eyebrow, headline, CTAs. Image right with floating trust badge.', status: 'ready' },
       { key: 'splitRL', label: 'Image Left / Copy Right', component: 'HeroSplitRL', brief: 'Two-column (45/55). Image left, text content right.', status: 'ready' },
@@ -57,19 +64,22 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
       { key: 'animatedText', label: 'Animated Text Hero', component: 'HeroAnimatedText', brief: 'Centered headline with one rotating/typed word cycling through keywords.', status: 'ready' },
       { key: 'slider', label: 'Hero Slider / Carousel', component: 'HeroSlider', brief: 'Full-viewport carousel auto-advancing through 3–4 slides with unique content.', status: 'ready' },
       { key: 'parallax', label: 'Parallax', component: 'HeroParallax', brief: 'Full-viewport hero with parallax background image scrolling at slower rate.', status: 'ready' },
+      { key: 'abstractDark', label: 'Abstract Dark', component: 'HeroAbstractDark', brief: 'Dark background with subtle grid and coloured blur blobs.', status: 'ready' },
     ],
   },
   {
-    slug: 'trust-bars',
+    slug: 'trust_bars',
     label: 'Trust Bar',
     icon: '🤝',
     dataKey: 'SAMPLE_TRUST_BAR',
+    fields: SECTION_FIELDS['trust_bars'],
     variants: [
       { key: 'logoStrip', label: 'Logo Strip', component: 'TrustBarLogoStrip', brief: 'Horizontal row of grayscale logos with hover-to-color transition.', status: 'ready' },
       { key: 'statsBar', label: 'Stats Bar', component: 'TrustBarStats', brief: 'Three or four key statistics in a horizontal row with vertical dividers.', status: 'ready' },
       { key: 'badgeRow', label: 'Badge Row', component: 'TrustBarBadges', brief: 'Pill-shaped trust badges in a centered row (icon + text each).', status: 'ready' },
       { key: 'testimonialSnippet', label: 'Testimonial Snippet', component: 'TrustBarTestimonial', brief: 'Logos on left, mini testimonial quote with photo on right.', status: 'ready' },
       { key: 'animatedCounters', label: 'Animated Counters', component: 'TrustBarCounters', brief: 'Four metrics that count up from 0 when scrolled into view.', status: 'ready' },
+      { key: 'keyProofPoints', label: 'Key Proof Points', component: 'TrustBarKeyProofPoints', brief: 'Horizontal row of checkmark badges highlighting key trust factors.', status: 'ready' },
     ],
   },
   {
@@ -77,6 +87,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Problem / Agitation',
     icon: '⚡',
     dataKey: 'SAMPLE_PROBLEM',
+    fields: SECTION_FIELDS.problems,
     variants: [
       { key: 'splitLR', label: 'Split Layout', component: 'ProblemSplit', brief: 'Text left with pain points, relevant problem image on right.', status: 'ready' },
       { key: 'centeredIcons', label: 'Centered with Icons', component: 'ProblemCenteredIcons', brief: 'Centered heading with 3 icon cards below, each showing a pain point.', status: 'ready' },
@@ -90,6 +101,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Solution',
     icon: '💡',
     dataKey: 'SAMPLE_SOLUTION',
+    fields: SECTION_FIELDS.solutions,
     variants: [
       { key: 'splitRL', label: 'Image Left / Copy Right', component: 'SolutionSplitRL', brief: 'Bright image left, solution text with benefits on right.', status: 'ready' },
       { key: 'centered', label: 'Centered Feature', component: 'SolutionCentered', brief: 'Centered heading, feature image/mockup, benefit grid below.', status: 'ready' },
@@ -103,6 +115,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Services Grid',
     icon: '🔧',
     dataKey: 'SAMPLE_SERVICES',
+    fields: SECTION_FIELDS.services,
     variants: [
       { key: 'threeCol', label: '3-Column Cards', component: 'ServicesThreeCol', brief: 'Three cards per row with icon, heading, description, and optional link.', status: 'ready' },
       { key: 'altRows', label: 'Alternating Rows', component: 'ServicesAltRows', brief: 'Full-width rows alternating image position left/right.', status: 'ready' },
@@ -112,6 +125,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
       { key: 'tabbed', label: 'Tabbed Services', component: 'ServicesTabbed', brief: 'Tab navigation at top, each tab reveals service content below.', status: 'ready' },
       { key: 'iconOnly', label: 'Compact Icon Grid', component: 'ServicesIconGrid', brief: 'Dense 4-column grid of icon + label tiles. Hover reveals description.', status: 'ready' },
       { key: 'accordion', label: 'Accordion Services', component: 'ServicesAccordion', brief: 'Vertical accordion list, click to expand description and image.', status: 'ready' },
+      { key: 'carousel', label: 'Carousel Cards', component: 'ServicesCarousel', brief: 'Horizontal scrolling carousel of feature cards with snap points.', status: 'ready' },
     ],
   },
   {
@@ -119,6 +133,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Features Grid',
     icon: '✨',
     dataKey: 'SAMPLE_FEATURES',
+    fields: SECTION_FIELDS.features,
     variants: [
       { key: 'threeCol', label: '3-Column Grid', component: 'FeaturesThreeCol', brief: 'Three features per row with icon, heading, and description.', status: 'ready' },
       { key: 'twoColImage', label: '2-Column with Image', component: 'FeaturesTwoColImage', brief: 'Large image left, stacked feature list right.', status: 'ready' },
@@ -133,11 +148,13 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Benefits',
     icon: '🎯',
     dataKey: 'SAMPLE_BENEFITS',
+    fields: SECTION_FIELDS.benefits,
     variants: [
       { key: 'iconList', label: 'Icon List', component: 'BenefitsIconList', brief: 'Two-column grid of benefit items with icons, headings, and descriptions.', status: 'ready' },
       { key: 'altRows', label: 'Alternating Rows', component: 'BenefitsAltRows', brief: 'Full-width rows alternating image/text for storytelling flow.', status: 'ready' },
       { key: 'numbered', label: 'Numbered Benefits', component: 'BenefitsNumbered', brief: 'Numbered list with large styled numbers in accent color.', status: 'ready' },
       { key: 'vsComparison', label: 'Us vs. Competitors', component: 'BenefitsComparison', brief: 'Comparison table with your business highlighted against competitors.', status: 'ready' },
+      { key: 'usVsCompetitors', label: 'Comparison Table', component: 'BenefitsUsVsCompetitors', brief: 'Full-width comparison table with sticky first column and optional CTA link.', status: 'ready' },
       { key: 'splitShowcase', label: 'Split Showcase', component: 'BenefitsSplitShowcase', brief: 'Large image left, stacked benefits with icons on right.', status: 'ready' },
       { key: 'timeline', label: 'Benefits Timeline', component: 'BenefitsTimeline', brief: 'Horizontal timeline with benefit stops alternating above/below.', status: 'ready' },
     ],
@@ -147,6 +164,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Video / Demo',
     icon: '🎬',
     dataKey: 'SAMPLE_VIDEO',
+    fields: SECTION_FIELDS.videos,
     variants: [
       { key: 'centered', label: 'Centered Video', component: 'VideoCentered', brief: 'Centered heading above video embed/thumbnail with play button overlay.', status: 'ready' },
       { key: 'splitText', label: 'Split with Text', component: 'VideoSplitText', brief: 'Two-column: text and CTA left, video right.', status: 'ready' },
@@ -160,6 +178,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Testimonials / Reviews',
     icon: '⭐',
     dataKey: 'SAMPLE_TESTIMONIALS',
+    fields: SECTION_FIELDS.testimonials,
     variants: [
       { key: 'threeCol', label: '3-Column Cards', component: 'TestimonialsThreeCol', brief: 'Three cards with star rating, quote, customer name, and optional avatar.', status: 'ready' },
       { key: 'featured', label: 'Single Featured', component: 'TestimonialsFeatured', brief: 'One large centered testimonial with decorative quote marks and photo.', status: 'ready' },
@@ -175,6 +194,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Portfolio / Gallery',
     icon: '🖼️',
     dataKey: 'SAMPLE_PORTFOLIO',
+    fields: SECTION_FIELDS.portfolios,
     variants: [
       { key: 'masonry', label: 'Masonry Grid', component: 'PortfolioMasonry', brief: 'Asymmetric image grid with hover overlays showing project title.', status: 'ready' },
       { key: 'uniform', label: 'Uniform Grid', component: 'PortfolioUniform', brief: 'Even grid with consistent aspect ratios and hover overlays.', status: 'ready' },
@@ -190,6 +210,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Process / How it Works',
     icon: '🔄',
     dataKey: 'SAMPLE_PROCESS',
+    fields: SECTION_FIELDS.processes,
     variants: [
       { key: 'numbered', label: 'Numbered Steps', component: 'ProcessNumbered', brief: 'Horizontal row of numbered circles with headings, connected by lines.', status: 'ready' },
       { key: 'timeline', label: 'Vertical Timeline', component: 'ProcessTimeline', brief: 'Centered vertical line with steps alternating left and right.', status: 'ready' },
@@ -203,6 +224,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Pricing',
     icon: '💰',
     dataKey: 'SAMPLE_PRICING',
+    fields: SECTION_FIELDS.pricing,
     variants: [
       { key: 'threeCol', label: '3-Tier Cards', component: 'PricingThreeTier', brief: 'Three pricing cards, middle highlighted as recommended.', status: 'ready' },
       { key: 'twoCol', label: '2-Plan Comparison', component: 'PricingTwoCol', brief: 'Two plans side by side with optional feature comparison table below.', status: 'ready' },
@@ -216,6 +238,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'FAQ',
     icon: '❓',
     dataKey: 'SAMPLE_FAQ',
+    fields: SECTION_FIELDS.faqs,
     variants: [
       { key: 'accordion', label: 'Accordion', component: 'FaqAccordion', brief: 'Vertical accordion list, one answer open at a time. Chevron rotates.', status: 'ready' },
       { key: 'twoColGrid', label: 'Two-Column Grid', component: 'FaqTwoColGrid', brief: 'All Q&As visible in a 2-column card grid. No collapsing.', status: 'ready' },
@@ -229,6 +252,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Newsletter Signup',
     icon: '📧',
     dataKey: 'SAMPLE_NEWSLETTER',
+    fields: SECTION_FIELDS.newsletters,
     variants: [
       { key: 'centered', label: 'Centered', component: 'NewsletterCentered', brief: 'Centered heading, subtext, inline email input + submit button.', status: 'ready' },
       { key: 'split', label: 'Split Layout', component: 'NewsletterSplit', brief: 'Benefits list left, form inputs right.', status: 'ready' },
@@ -242,6 +266,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Final CTA',
     icon: '🚀',
     dataKey: 'SAMPLE_CTA',
+    fields: SECTION_FIELDS.ctas,
     variants: [
       { key: 'centeredBanner', label: 'Centered Banner', component: 'CtaCenteredBanner', brief: 'Full-width contrasting section with centered heading, subtext, CTA button.', status: 'ready' },
       { key: 'splitImage', label: 'Split with Image', component: 'CtaSplitImage', brief: 'Text and CTA left, emotional image right.', status: 'ready' },
@@ -257,6 +282,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Footer',
     icon: '📋',
     dataKey: 'SAMPLE_FOOTER',
+    fields: SECTION_FIELDS.footers,
     variants: [
       { key: 'fourCol', label: '4-Column', component: 'FooterFourCol', brief: 'Logo + tagline + socials, 2 nav columns, contact info. Copyright bar below.', status: 'ready' },
       { key: 'minimal', label: 'Minimal', component: 'FooterMinimal', brief: 'Single row: logo left, links center, socials right. Copyright below.', status: 'ready' },
@@ -264,6 +290,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
       { key: 'fatFooter', label: 'Fat Footer', component: 'FooterFat', brief: 'Large content-rich footer with 5–6 columns, certifications, payment icons.', status: 'ready' },
       { key: 'centered', label: 'Centered Simple', component: 'FooterCentered', brief: 'Everything centered: logo, nav links, socials, copyright.', status: 'ready' },
       { key: 'antigravity', label: 'Antigravity', component: 'FooterAntigravity', brief: 'Bold typography-driven footer with massive brand wordmark, clean link columns, and minimal bottom bar.', status: 'ready' },
+      { key: 'full', label: 'Full with Acknowledgement', component: 'FooterFull', brief: 'Full-featured footer with logo, socials, multi-column links, and Indigenous land acknowledgement.', status: 'ready' },
     ],
   },
   {
@@ -271,6 +298,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Team',
     icon: '👥',
     dataKey: 'SAMPLE_TEAM',
+    fields: SECTION_FIELDS.team,
     variants: [
       { key: 'threeCol', label: '3-Column Grid', component: 'TeamThreeCol', brief: 'Three-column grid of team cards with photos, names, roles, and social links.', status: 'ready' },
       { key: 'featured', label: 'Featured Leader', component: 'TeamFeatured', brief: 'Large featured leader card on top, remaining team in 3-column grid below.', status: 'ready' },
@@ -282,6 +310,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Blog / Insights',
     icon: '📝',
     dataKey: 'SAMPLE_BLOG',
+    fields: SECTION_FIELDS.blog,
     variants: [
       { key: 'threeCol', label: '3-Column Grid', component: 'BlogThreeCol', brief: 'Three-column grid of blog post cards with images, titles, excerpts, and metadata.', status: 'ready' },
       { key: 'featured', label: 'Featured Post', component: 'BlogFeatured', brief: 'Large featured post at top, remaining posts in 3-column grid below.', status: 'ready' },
@@ -295,6 +324,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Forms',
     icon: '📋',
     dataKey: 'SAMPLE_FORM',
+    fields: SECTION_FIELDS.forms,
     variants: [
       { key: 'contact', label: 'Contact Form', component: 'FormContact', brief: 'Clean centered contact form with name, email, phone, and message fields.', status: 'ready' },
       { key: 'step', label: 'Step Form', component: 'FormStep', brief: 'Multi-step form with progress indicator and step navigation.', status: 'ready' },
@@ -306,6 +336,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Stats',
     icon: '📊',
     dataKey: 'SAMPLE_STATS',
+    fields: SECTION_FIELDS.stats,
     variants: [
       { key: 'grid', label: 'Stats Grid', component: 'StatsGrid', brief: 'A simple, clean grid of stats with optional icons and descriptions.', status: 'ready' },
       { key: 'minimal', label: 'Stats Minimal', component: 'StatsMinimal', brief: 'Clean inline stats perfect for breaking up content, no extra borders or background colors.', status: 'ready' },
@@ -317,6 +348,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     label: 'Banners',
     icon: '🏷️',
     dataKey: 'SAMPLE_BANNER',
+    fields: SECTION_FIELDS.banners,
     variants: [
       { key: 'sticky', label: 'Sticky Banner', component: 'BannerSticky', brief: 'A full-width dark banner at the top of the page with a dismiss button.', status: 'ready' },
       { key: 'floating', label: 'Floating Banner', component: 'BannerFloating', brief: 'A rounded banner that floats slightly below the top of the page.', status: 'ready' },
@@ -325,10 +357,32 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     ],
   },
   {
+    slug: 'breakouts',
+    label: 'Breakout',
+    icon: '💥',
+    dataKey: 'SAMPLE_BREAKOUT',
+    fields: SECTION_FIELDS.breakouts,
+    variants: [
+      { key: 'centered', label: 'Centered', component: 'BreakoutCentered', brief: 'Full-width breakout section with centered content, eyebrow, heading, description, and CTA button.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'showcases',
+    label: 'Showcase',
+    icon: '🖥️',
+    dataKey: 'SAMPLE_SHOWCASE',
+    fields: SECTION_FIELDS.showcases,
+    variants: [
+      { key: 'scrollReveal', label: 'Scroll Reveal Left', component: 'ShowcaseScrollReveal', brief: 'Sticky scroll section with content on left, browser mockup image on right that scrolls vertically.', status: 'ready' },
+      { key: 'scrollRevealRight', label: 'Scroll Reveal Right', component: 'ShowcaseScrollRevealRight', brief: 'Sticky scroll section with content on right, browser mockup image on left that scrolls vertically.', status: 'ready' },
+    ],
+  },
+  {
     slug: 'content',
     label: 'Content / Prose',
     icon: '📄',
     dataKey: 'SAMPLE_CONTENT',
+    fields: SECTION_FIELDS.content,
     variants: [
       { key: 'prose', label: 'Centered Prose', component: 'ContentProse', brief: 'A simple centered text block for long-form content using typography prose.', status: 'ready' },
       { key: 'split', label: 'Split Layout', component: 'ContentSplit', brief: 'A two-column layout with heading on the left and rich text on the right.', status: 'ready' },

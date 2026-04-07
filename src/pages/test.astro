@@ -5,10 +5,10 @@ import MainLayout from "../layouts/MainLayout.astro";
 import HeaderMegaMenu from "../components/sections/headers/HeaderMegaMenu.astro";
 import HeroSplitLR from "../components/sections/heroes/HeroSplitLR.astro";
 import TestimonialsFeatured from "../components/sections/testimonials/TestimonialsFeatured.astro";
-import ServicesBento from "../components/sections/services/ServicesBento.astro";
-import FaqAccordion from "../components/sections/faqs/FaqAccordion.astro";
+import ServicesAltRows from "../components/sections/services/ServicesAltRows.astro";
+import FaqTwoColGrid from "../components/sections/faqs/FaqTwoColGrid.astro";
 import CtaForm from "../components/sections/ctas/CtaForm.astro";
-import FooterAntigravity from "../components/sections/footers/FooterAntigravity.astro";
+import FooterCentered from "../components/sections/footers/FooterCentered.astro";
 
 // 2. Import adapters to transform CMS data
 import {
@@ -73,12 +73,8 @@ const headerData = {
   <!-- 5. Drop in components — clean, one-liner per section -->
   <HeroSplitLR data={heroData} />
   <TestimonialsFeatured data={testimonialsData} />
-  <ServicesBento data={servicesData} />
-  <FaqAccordion data={faqData} />
+  <ServicesAltRows data={servicesData} />
+  <FaqTwoColGrid data={faqData} />
   <CtaForm data={ctaData} />
-  <FooterAntigravity
-    data={footerData}
-    logo="🚀 Acme Studio"
-    wordmark="AcmeStudio"
-  />
+  <FooterCentered data={footerData} />
 </MainLayout>

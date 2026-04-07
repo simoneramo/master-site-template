@@ -1,0 +1,126 @@
+---
+/**
+ * ShowcaseScrollRevealRight — Scroll-driven Image Reveal (Right)
+ * Pattern key: scrollRevealRight
+ * Section: Showcase
+ *
+ * A sticky scroll section with content on the RIGHT and
+ * a browser mockup image on the LEFT that scrolls vertically as user scrolls.
+ */
+import type { ShowcaseData } from '../../../data/sample-data';
+
+interface Props {
+  data: ShowcaseData;
+  /** Section ID for anchor links */
+  id?: string;
+}
+
+const { data, id } = Astro.props;
+const {
+  eyebrow,
+  heading,
+  description,
+  cta,
+  image,
+} = data;
+---
+
+<section
+  {id}
+  class="relative z-10 h-[120vh] bg-white dark:bg-black"
+  x-data="{ 
+    progress: 0,
+    calculateProgress() {
+      const rect = $el.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const elementHeight = $el.offsetHeight;
+      
+      const scrolled = -rect.top;
+      const scrollableDistance = elementHeight - windowHeight;
+      
+      if (scrollableDistance > 0) {
+        this.progress = Math.max(0, Math.min(1, scrolled / scrollableDistance));
+      }
+    }
+  }"
+  @scroll.window="calculateProgress()"
+  x-init="calculateProgress()"
+>
+  <div class="sticky top-0 h-screen flex items-center overflow-hidden">
+    <div class="container mx-auto px-4 md:px-8 w-full">
+      <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <!-- Image Side — Browser Chrome Mockup (LEFT) -->
+        <div
+          class="relative w-full rounded-xl overflow-hidden border-2 border-zinc-200 dark:border-zinc-700 shadow-2xl bg-white dark:bg-zinc-900"
+        >
+          <!-- Browser Chrome Bar -->
+          <div
+            class="flex items-center gap-3 px-4 py-3 bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 shrink-0"
+          >
+            <!-- Traffic Lights -->
+            <div class="flex items-center gap-1.5">
+              <div class="w-3 h-3 rounded-full bg-red-400"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+              <div class="w-3 h-3 rounded-full bg-green-400"></div>
+            </div>
+            <!-- URL Bar -->
+            <div
+              class="flex-1 flex items-center gap-2 bg-white dark:bg-zinc-700 rounded-md px-3 py-1.5 text-xs font-medium text-neutral-400 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-600"
+            >
+              <svg
+                class="w-3 h-3 shrink-0 text-green-500"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              {image?.url || 'yoursite.com'}
+            </div>
+          </div>
+          <!-- Scrolling Image -->
+          <div class="relative h-[400px] md:h-[500px] w-full overflow-hidden">
+            {image?.src && (
+              <img
+                src={image.src}
+                alt={image.alt || heading}
+                class="absolute inset-0 w-full h-full object-cover will-change-[object-position]"
+                :style="`object-position: 50% ${progress * 100}%`"
+              />
+            )}
+          </div>
+        </div>
+
+        <!-- Content Side (RIGHT) -->
+        <div>
+          {eyebrow && (
+            <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+              <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+              {eyebrow}
+            </span>
+          )}
+          
+          <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 dark:text-white">
+            {heading}
+          </h2>
+          
+          <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-300 font-medium leading-relaxed mb-8">
+            {description}
+          </p>
+          
+          {cta?.text && cta?.url && (
+            <a
+              href={cta.url}
+              class="font-bold border-b-2 border-black dark:border-white hover:border-transparent transition-colors text-black dark:text-white"
+            >
+              {cta.text} &rarr;
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

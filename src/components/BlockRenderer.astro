@@ -1,45 +1,82 @@
 ---
 /**
- * BlockRenderer — Maps flexible page blocks to existing site components
+ * BlockRenderer — Dynamic section renderer for flexible pages.
  *
- * Each block's `_template` value maps to a real component.
- * The block data is passed as `data` (and optionally `variant`).
+ * Maps each block's `_template` (section slug) and `variant` (layout choice)
+ * to the corresponding Astro component from the component library.
  *
- * Supported _template values:
- *   hero      → PageHeroSection
- *   features  → CardGrid
- *   cta       → CTASection
+ * Components are resolved via the pattern registry:
+ *   _template: "heroes" + variant: "splitLR" → HeroSplitLR.astro
+ *
+ * If no variant is specified, the first ready variant is used as the default.
  */
 
-import PageHeroSection from "@/components/PageHeroSection.astro";
-import CardGrid from "@/components/CardGrid.astro";
-import CTASection from "@/components/CTASection.astro";
+import { PATTERN_REGISTRY, type SectionDefinition } from "@/data/pattern-registry";
+
+// ── Import all section components ────────────────────────────────────────────
+// Using import.meta.glob to eagerly import all section components at build time.
+const modules = import.meta.glob(
+  "../components/sections/**/*.astro",
+  { eager: true }
+) as Record<string, { default: any }>;
+
+// Build a lookup map: componentName → Component
+// e.g. "HeroSplitLR" → HeroSplitLR component
+const componentMap: Record<string, any> = {};
+for (const [path, mod] of Object.entries(modules)) {
+  const match = path.match(/\/([^/]+)\.astro$/);
+  if (match) {
+    componentMap[match[1]] = mod.default;
+  }
+}
+
+// Build a lookup map: sectionSlug → SectionDefinition
+const sectionMap: Record<string, SectionDefinition> = {};
+for (const section of PATTERN_REGISTRY) {
+  sectionMap[section.slug] = section;
+}
 
 interface Props {
   blocks?: any[];
 }
 
 const { blocks = [] } = Astro.props;
+
+// Resolve each block to its component
+const resolvedBlocks = blocks
+  .filter((block: any) => block && block._template)
+  .map((block: any) => {
+    const section = sectionMap[block._template];
+    if (!section) {
+      console.warn(`[BlockRenderer] Unknown section type: "${block._template}"`);
+      return null;
+    }
+
+    // Find the variant — use the block's choice, or fall back to the first ready variant
+    const variantKey = block.variant;
+    const variant = variantKey
+      ? section.variants.find(v => v.key === variantKey)
+      : section.variants.find(v => v.status === 'ready');
+
+    if (!variant) {
+      console.warn(`[BlockRenderer] No variant found for "${block._template}" (variant: "${variantKey}")`);
+      return null;
+    }
+
+    const Component = componentMap[variant.component];
+    if (!Component) {
+      console.warn(`[BlockRenderer] Component not found: "${variant.component}" for "${block._template}/${variantKey}"`);
+      return null;
+    }
+
+    // Strip _template and variant from the data passed to the component
+    const { _template, variant: _v, ...data } = block;
+
+    return { Component, data };
+  })
+  .filter(Boolean);
 ---
 
-{
-  blocks?.map((block) => {
-    if (!block) return null;
-
-    const template = block._template;
-
-    switch (template) {
-      case "hero":
-        return <PageHeroSection variant={block.variant || "center"} data={block} />;
-
-      case "features":
-        return <CardGrid data={block} variant={block.variant || "center"} columns={block.columns || 3} />;
-
-      case "cta":
-        return <CTASection variant={block.variant || "center"} data={block} />;
-
-      default:
-        return null;
-    }
-  })
-}
+{resolvedBlocks.map(({ Component, data }: any) => (
+  <Component data={data} />
+))}

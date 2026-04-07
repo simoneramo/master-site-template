@@ -1,4 +1,6 @@
 import { defineCollection, z } from 'astro:content';
+import { PATTERN_REGISTRY } from './data/pattern-registry';
+import { toZodBlockUnion } from './data/schema-generators';
 
 // Config definitions
 const homepage = defineCollection({
@@ -785,48 +787,14 @@ const legalPages = defineCollection({
 	}),
 });
 
+// 🔄 Flexible Pages — blocks auto-generated from pattern registry
+// Every section type in PATTERN_REGISTRY is available as a block.
 const flexiblePages = defineCollection({
 	type: 'content',
 	schema: z.object({
 		title: z.string(),
 		description: z.string().optional(),
-		blocks: z.array(z.discriminatedUnion('_template', [
-			z.object({
-				_template: z.literal('hero'),
-				variant: z.enum(['center', 'left']).optional(),
-				label: z.string().optional(),
-				heading: z.string(),
-				description: z.string(),
-				buttonText: z.string().optional(),
-				buttonLink: z.string().optional(),
-			}),
-			z.object({
-				_template: z.literal('features'),
-				variant: z.enum(['center', 'left']).optional(),
-				columns: z.number().optional(),
-				sectionLabel: z.string().optional(),
-				heading: z.string().optional(),
-				description: z.string().optional(),
-				items: z.array(z.object({
-					icon: z.string(),
-					title: z.string(),
-					description: z.string(),
-					linkText: z.string().optional(),
-					linkUrl: z.string().optional(),
-				})).optional(),
-				ctaText: z.string().optional(),
-				ctaLink: z.string().optional(),
-			}),
-			z.object({
-				_template: z.literal('cta'),
-				variant: z.enum(['center', 'left']).optional(),
-				sectionLabel: z.string().optional(),
-				heading: z.string().optional(),
-				description: z.string().optional(),
-				buttonText: z.string().optional(),
-				buttonLink: z.string().optional(),
-			}),
-		])).optional(),
+		blocks: z.array(toZodBlockUnion(z, PATTERN_REGISTRY)).optional(),
 	}),
 });
 

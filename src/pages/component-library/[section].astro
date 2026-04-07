@@ -55,7 +55,7 @@ import * as SampleData from '../../data/sample-data';
 const sampleDataMap: Record<string, any> = {
   headers: SampleData.SAMPLE_HEADER,
   heroes: SampleData.SAMPLE_HERO,
-  'trust-bars': SampleData.SAMPLE_TRUST_BAR,
+  'trust_bars': SampleData.SAMPLE_TRUST_BAR,
   problems: SampleData.SAMPLE_PROBLEM,
   solutions: SampleData.SAMPLE_SOLUTION,
   services: SampleData.SAMPLE_SERVICES,
@@ -76,6 +76,8 @@ const sampleDataMap: Record<string, any> = {
   stats: SampleData.SAMPLE_STATS,
   banners: SampleData.SAMPLE_BANNER,
   content: SampleData.SAMPLE_CONTENT,
+  breakouts: SampleData.SAMPLE_BREAKOUT,
+  showcases: SampleData.SAMPLE_SHOWCASE,
 };
 
 const sampleData = sampleDataMap[sectionSlug] ?? {};
@@ -384,6 +386,32 @@ const sampleData = sampleDataMap[sectionSlug] ?? {};
     /* Override fixed class on HeaderTopBarNav main nav */
     .header-preview-frame > header.header-topbar-nav > div:last-child.fixed {
       position: sticky !important;
+    }
+    
+    /* Banner preview: contain fixed-position banners (cookie banners, etc.) */
+    .banner-preview-frame {
+      position: relative !important;
+    }
+    
+    .banner-preview-frame > [id^="cookie-"],
+    .banner-preview-frame > [class*="fixed"] {
+      position: absolute !important;
+    }
+    
+    /* Ensure cookie card stays in bottom-right of preview container */
+    .banner-preview-frame > #cookie-card {
+      bottom: 1rem !important;
+      right: 1rem !important;
+      left: auto !important;
+      top: auto !important;
+    }
+    
+    /* Ensure cookie bottom bar stays at bottom of preview container */
+    .banner-preview-frame > #cookie-bottom {
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      top: auto !important;
     }
   </style>
 </MainLayout>

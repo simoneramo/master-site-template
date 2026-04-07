@@ -1,0 +1,198 @@
+---
+/**
+ * FooterFull — Full Footer with Indigenous Acknowledgement
+ * Pattern key: full
+ * Section: Footer
+ *
+ * Full-featured footer with logo, social links, multi-column layout,
+ * legal links, copyright, and Indigenous land acknowledgement.
+ */
+import type { FooterData } from "../../../data/sample-data";
+
+interface Props {
+  data: FooterData;
+  /** Layout variant - "full" shows link columns, "simple" hides them */
+  variant?: "full" | "simple";
+  /** Optional brand name (defaults to logo) */
+  brandName?: string;
+  /** Optional badge text shown next to brand */
+  badge?: string;
+}
+
+const {
+  data,
+  variant = "full",
+  brandName,
+  badge = "Beta",
+} = Astro.props;
+
+const { columns, socials, copyright, legalLinks } = data;
+
+// Filter visible socials (if visible property exists, otherwise show all)
+const visibleSocials = socials?.filter((s) => (s as any).visible !== false) || [];
+---
+
+<footer class="pt-10 pb-6">
+  <div class="mx-auto px-8">
+    <!-- Top Section: Logo and Socials -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-10">
+      <div>
+        <span
+          class="text-xl font-bold text-black dark:text-neutral-300 px-2 pt-1 pb-1.5 inline-flex items-center gap-2"
+        >
+          {brandName || data.logo || "🚀 Your Brand"}
+          {
+            badge && (
+              <span class="text-[10px] font-bold uppercase tracking-widest bg-zinc-100 text-neutral-600 dark:bg-zinc-800 dark:text-neutral-300 px-2 py-0.5 rounded-full mb-px">
+                {badge}
+              </span>
+            )
+          }
+        </span>
+      </div>
+      <div class="flex gap-4 mt-6 md:mt-0">
+        <!-- Social Icons -->
+        {
+          visibleSocials.map((platform) => (
+            <a
+              href={platform.url}
+              class="w-10 h-10 bg-zinc-600 dark:bg-zinc-800 rounded-full hover:bg-black hover:text-white dark:hover:bg-zinc-700 transition-colors flex items-center justify-center text-white dark:text-white"
+              aria-label={platform.platform}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Fragment set:html={platform.icon} />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    {
+      variant === "full" && columns && columns.length > 0 && (
+        <>
+          <hr class="mb-10 border-t border-zinc-300 dark:border-zinc-800" />
+
+          <!-- Middle Section: Links Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12 mb-20">
+            {columns.map((column) => (
+              <div>
+                <h4 class="font-bold text-black dark:text-white mb-2 text-xl">
+                  {column.heading}
+                </h4>
+                {column.description && (
+                  <p class="text-sm font-medium text-neutral-500 dark:text-neutral-400 mb-8">
+                    {column.description}
+                  </p>
+                )}
+                <ul class="space-y-6 text-neutral-700 dark:text-neutral-400 font-medium">
+                  {column.links.map((link) => (
+                    <li>
+                      <a
+                        href={link.url}
+                        class="hover:text-black dark:hover:text-white transition-colors relative inline-block hover:after:content-[''] hover:after:absolute hover:after:left-0 hover:after:bottom-0 hover:after:w-full hover:after:h-[2px] hover:after:bg-black dark:hover:after:bg-white"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </>
+      )
+    }
+
+    <hr class="mb-6 border-t border-zinc-300 dark:border-zinc-800" />
+
+    <!-- Bottom Section: Copyright and Legal Links -->
+    <div
+      class="flex flex-col md:flex-row justify-between items-center text-sm text-neutral-800 dark:text-neutral-400 font-bold"
+    >
+      <p class="mb-4 md:mb-0">
+        &copy; {new Date().getFullYear()}
+        {copyright?.replace(/^©\s*\d{4}\s*/, "")}
+      </p>
+      <div class="flex gap-8">
+        {
+          legalLinks?.map((link) => (
+            <a
+              href={link.url}
+              class="hover:text-black dark:hover:text-white transition-colors relative inline-block hover:after:content-[''] hover:after:absolute hover:after:left-0 hover:after:bottom-0 hover:after:w-full hover:after:h-[2px] hover:after:bg-black dark:hover:after:bg-white"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+        <a
+          href="#"
+          class="hover:text-black dark:hover:text-white transition-colors"
+        >
+          Back to top &uarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Indigenous Acknowledgement -->
+    <div class="mt-8 max-w-5xl">
+      <div class="flex items-start gap-4">
+        <div class="flex gap-3 shrink-0 mt-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 900 600"
+            width="60"
+            height="40"
+            class="rounded-sm shadow-sm"
+            aria-label="Aboriginal Flag"
+          >
+            <rect width="900" height="300" fill="#000"></rect>
+            <rect y="300" width="900" height="300" fill="#ce1126"></rect>
+            <circle cx="450" cy="300" r="150" fill="#ffcc00"></circle>
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 640 480"
+            width="60"
+            height="40"
+            class="rounded-sm shadow-sm"
+            aria-label="Torres Strait Islander Flag"
+          >
+            <defs>
+              <clipPath id="ts-flag-clip">
+                <rect width="640" height="480"></rect>
+              </clipPath>
+            </defs>
+            <g clip-path="url(#ts-flag-clip)">
+              <path fill="#009933" d="M0 0h640v480H0z"></path>
+              <path fill="#0000cc" d="M0 140h640v200H0z"></path>
+              <path
+                fill="none"
+                stroke="#000"
+                stroke-width="14"
+                d="M0 140h640M0 340h640"></path>
+              <!-- White Dhari and Star -->
+              <g fill="#fff" transform="translate(320, 240)">
+                <path
+                  d="M0-65l17 50h53l-42 31 16 50-44-31-44 31 16-50-42-31h53z"
+                ></path>
+                <!-- Simplified Dhari representation -->
+                <path
+                  d="M-80-10 c0-50 35-90 80-90 s80 40 80 90 v20 h-20 v-20 c0-40-25-70-60-70 s-60 30-60 70 v20 h-20 z"
+                ></path>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <p class="text-xs font-medium text-neutral-600 dark:text-neutral-400">
+          WeMakeSmall is located on the traditional lands of the Bunurong
+          people, part of the Kulin Nation, whose country extends across
+          southeastern Victoria, including the Mornington Peninsula,
+          Westernport Bay, and Wilson's Promontory. We pay our respects to
+          Elders both past and present, and recognise and respect their abiding
+          connection to this land, its waterways and community.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
