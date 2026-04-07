@@ -388,6 +388,20 @@ const sampleData = sampleDataMap[sectionSlug] ?? {};
       position: sticky !important;
     }
     
+    /* Special handling for HeaderFloatingPill - needs centered positioning */
+    .header-preview-frame > div.header-floating-pill-wrapper {
+      position: relative !important;
+      height: auto !important;
+    }
+    .header-preview-frame > div.header-floating-pill-wrapper > header.header-floating-pill {
+      position: sticky !important;
+      margin: 1.5rem auto 0 !important;
+      top: 1.5rem !important;
+      left: auto !important;
+      right: auto !important;
+      transform: none !important;
+    }
+    
     /* Banner preview: contain fixed-position banners (cookie banners, etc.) */
     .banner-preview-frame {
       position: relative !important;

@@ -616,29 +616,13 @@ export const SECTION_FIELDS: Record<string, FieldDef[]> = {
   // ── Breakout ────────────────────────────────────────────────
   breakouts: [
     ...sectionHeader(),
-    {
-      name: 'cta',
-      label: 'Call to Action',
-      type: 'object',
-      fields: [
-        { name: 'text', label: 'Button Text', type: 'string', required: true },
-        { name: 'url', label: 'Button URL', type: 'url', required: true },
-      ],
-    },
+    ctaField('cta', 'Call to Action', true),
   ],
 
   // ── Showcases ────────────────────────────────────────────────
   showcases: [
     ...sectionHeader(),
-    {
-      name: 'cta',
-      label: 'Call to Action',
-      type: 'object',
-      fields: [
-        { name: 'text', label: 'Button Text', type: 'string' },
-        { name: 'url', label: 'Button URL', type: 'url' },
-      ],
-    },
+    ctaField('cta', 'Call to Action', true),
     imageField('image', 'Showcase Image'),
     { name: 'reverse', label: 'Reverse Layout', type: 'boolean', description: 'Flip content and image sides' },
   ],

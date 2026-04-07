@@ -46,6 +46,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
       { key: 'megaMenu', label: 'Mega Menu', component: 'HeaderMegaMenu', brief: 'Full-width mega menu dropdown with multi-column content on hover/click.', status: 'ready' },
       { key: 'minimal', label: 'Minimal (Logo + Burger)', component: 'HeaderMinimal', brief: 'Logo left, hamburger right on all screens. Full-screen overlay menu.', status: 'ready' },
       { key: 'sidebar', label: 'Sidebar Navigation', component: 'HeaderSidebar', brief: 'Vertical sidebar fixed to the left. Main content shifts right.', status: 'ready' },
+      { key: 'floatingPill', label: 'Floating Pill', component: 'HeaderFloatingPill', brief: 'Floating pill header that transforms on scroll. Logo left, nav center, CTA right.', status: 'ready' },
     ],
   },
   {

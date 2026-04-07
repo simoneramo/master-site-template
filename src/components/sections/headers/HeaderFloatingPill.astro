@@ -1,0 +1,171 @@
+---
+/**
+ * HeaderFloatingPill — Floating Pill Navigation Header
+ * Pattern key: floatingPill
+ * Section: Navigation / Header
+ *
+ * Floating pill header that transforms on scroll. Logo left, nav center, CTA right.
+ * Mobile hamburger with dropdown menu.
+ */
+import type { HeaderData } from '../../../data/sample-data';
+
+interface Props {
+  data: HeaderData;
+}
+
+const { data } = Astro.props;
+const { logo, navLinks, cta } = data;
+---
+
+<div 
+  class="header-floating-pill-wrapper h-20"
+  x-data="{ scrollY: 0, mobileOpen: false }"
+  @scroll.window="scrollY = window.scrollY"
+>
+  <header
+    class="header-floating-pill fixed left-0 right-0 mx-auto z-50 rounded-full transition-all duration-500 ease-[cubic-bezier(0.617,1.5,0.68,1)] border border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900 py-3 px-6 w-[94%] max-w-7xl top-6"
+    :class={"{ 'w-[90%]! max-w-5xl! shadow-xl bg-white/90! dark:bg-zinc-950/90! backdrop-blur-md py-2! border-zinc-200! dark:border-zinc-800!': scrollY > 20 }"}
+  >
+    <div class="w-full relative flex items-center justify-between">
+      <!-- Logo (Left) -->
+      <div class="flex items-center shrink-0">
+        <a href="/" class="text-xl font-bold tracking-tight text-black dark:text-white whitespace-nowrap">
+          {logo}
+        </a>
+      </div>
+
+      <!-- Desktop Navigation (Center) - Absolutely Centered -->
+      <div class="hidden lg:block absolute left-1/2 -translate-x-1/2">
+        <nav class="flex items-center gap-8">
+          {navLinks.map((link) => (
+            <a
+              href={link.url}
+              class="text-sm font-bold text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors whitespace-nowrap"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+
+      <!-- Desktop CTA & Mobile Toggle (Right) -->
+      <div class="flex items-center gap-4 shrink-0">
+        <div class="hidden lg:block">
+          <a
+            href={cta.url}
+            class="group relative inline-flex items-center justify-center overflow-hidden bg-black dark:bg-white text-white dark:text-black font-bold px-5 py-2 rounded-full transition-all duration-300 hover:bg-zinc-800 dark:hover:bg-zinc-200"
+          >
+            <span class="transform transition-transform duration-300 group-hover:-translate-x-2">{cta.text}</span>
+            <span class="absolute right-3 transform -translate-x-3 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">→</span>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Toggle (Right) - Hidden on Desktop -->
+        <div class="lg:hidden">
+          <button
+            type="button"
+            class="p-2.5 inline-flex justify-center items-center gap-2 rounded-full border-2 border-zinc-300 dark:border-zinc-700 bg-black dark:bg-white text-white dark:text-black shadow-sm hover:bg-zinc-800 dark:hover:bg-zinc-200 focus:outline-none transition-all text-sm"
+            :class="{ 'ring-2 ring-offset-1 ring-black dark:ring-white': mobileOpen }"
+            @click="mobileOpen = !mobileOpen"
+            aria-label="Toggle navigation"
+          >
+            <!-- Hamburger Icon -->
+            <svg 
+              x-show="!mobileOpen" 
+              class="w-5 h-5" 
+              fill="none"
+              stroke="currentColor" 
+              stroke-width="2" 
+              stroke-linecap="round" 
+              stroke-linejoin="round"
+              viewBox="0 0 24 24"
+            >
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+
+            <!-- Close Icon -->
+            <svg 
+              x-show="mobileOpen" 
+              x-cloak 
+              class="w-5 h-5" 
+              fill="none"
+              stroke="currentColor" 
+              stroke-width="2" 
+              stroke-linecap="round" 
+              stroke-linejoin="round"
+              viewBox="0 0 24 24"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Dropdown -->
+    <div
+      id="mobile-menu-dropdown"
+      class="absolute top-full left-0 right-0 mt-3 w-full bg-white dark:bg-zinc-950 rounded-3xl shadow-xl border border-zinc-200 dark:border-zinc-800 p-6 z-50 origin-top transform"
+      x-show="mobileOpen"
+      x-cloak
+      x-transition:enter="animate-drop-in origin-top"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100 scale-100"
+      x-transition:leave-end="opacity-0 scale-90"
+      @click.outside="mobileOpen = false"
+    >
+      <div class="flex flex-col gap-6">
+        <!-- Links -->
+        <nav class="flex flex-col gap-4">
+          {navLinks.map((link) => (
+            <a
+              href={link.url}
+              @click="mobileOpen = false"
+              class="text-base font-bold text-zinc-800 dark:text-zinc-200 hover:text-black dark:hover:text-white transition-colors"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        <!-- CTA Button -->
+        <div>
+          <a
+            href={cta.url}
+            class="flex items-center justify-center w-full bg-black dark:bg-white text-white dark:text-black font-bold rounded-full py-3 px-4 transition-colors hover:bg-zinc-800 dark:hover:bg-zinc-200"
+          >
+            {cta.text}
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<style>
+  [x-cloak] {
+    display: none !important;
+  }
+
+  .animate-drop-in {
+    animation: dropIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  @keyframes dropIn {
+    0% {
+      opacity: 0;
+      transform: scaleY(0.9) translateY(-20px);
+    }
+    70% {
+      opacity: 1;
+      transform: scaleY(1.02) translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: scaleY(1) translateY(0);
+    }
+  }
+</style>
