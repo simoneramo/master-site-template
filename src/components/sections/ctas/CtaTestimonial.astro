@@ -3,9 +3,11 @@
  * CtaTestimonial — Testimonial + CTA
  * Customer quote left, persuasive heading and CTA right.
  */
-import type { CtaData } from '../../../data/sample-data';
+import type { CtaData } from "../../../data/sample-data";
 
-interface Props { data: CtaData; }
+interface Props {
+  data: CtaData;
+}
 
 const { data } = Astro.props;
 const { heading, description, primaryCta, testimonial } = data;
@@ -14,47 +16,76 @@ const { heading, description, primaryCta, testimonial } = data;
 <section class="py-20 md:py-32">
   <div class="container mx-auto px-4 md:px-8">
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-
       <!-- Testimonial -->
-      {testimonial && (
-        <div class="bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-8 md:p-10 border-2 border-zinc-200 dark:border-zinc-800">
-          <div class="text-5xl text-indigo-500/30 mb-4">"</div>
-          <blockquote class="text-xl font-medium leading-relaxed mb-6 italic">
-            {testimonial.quote}
-          </blockquote>
+      {
+        testimonial && (
+          <div class="bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-8 md:p-10 border-2 border-zinc-200 dark:border-zinc-800">
+            <blockquote class="text-xl font-bold leading-relaxed mb-6">
+              {testimonial.quote}
+            </blockquote>
 
-          {testimonial.rating && (
-            <div class="flex gap-1 mb-4">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <span class={i < (testimonial.rating ?? 0) ? 'text-yellow-500' : 'text-zinc-300 dark:text-zinc-700'}>★</span>
-              ))}
-            </div>
-          )}
-
-          <div class="flex items-center gap-3">
-            {testimonial.photo && (
-              <img src={testimonial.photo} alt={testimonial.name} class="w-12 h-12 rounded-full object-cover" loading="lazy" />
+            {testimonial.rating && (
+              <div class="flex gap-1 mb-4">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <span
+                    class={
+                      i < (testimonial.rating ?? 0)
+                        ? "text-yellow-500"
+                        : "text-zinc-300 dark:text-zinc-700"
+                    }
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
             )}
-            <div>
-              <div class="font-bold text-sm">{testimonial.name}</div>
-              <div class="text-xs text-neutral-500 dark:text-neutral-400">
-                {testimonial.title}{testimonial.company ? `, ${testimonial.company}` : ''}
+
+            <div class="flex items-center gap-3">
+              {testimonial.photo && (
+                <img
+                  src={testimonial.photo}
+                  alt={testimonial.name}
+                  class="w-12 h-12 rounded-full object-cover"
+                  loading="lazy"
+                />
+              )}
+              <div>
+                <div class="font-bold text-sm">{testimonial.name}</div>
+                <div class="text-xs text-neutral-500 dark:text-neutral-400">
+                  {testimonial.title}
+                  {testimonial.company ? `, ${testimonial.company}` : ""}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )
+      }
 
       <!-- CTA -->
       <div class="text-center lg:text-left">
-        <h2 class="text-4xl md:text-5xl font-bold leading-tight mb-6">{heading}</h2>
-        <p class="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed mb-10">{description}</p>
-        {primaryCta && (
-          <a href={primaryCta.url} class="group relative inline-flex items-center justify-center overflow-hidden h-16 px-12 font-bold text-white bg-black dark:bg-white dark:text-black text-lg rounded-lg transition-all">
-            <span class="transform transition-transform duration-300 group-hover:-translate-x-3">{primaryCta.text}</span>
-            <span class="absolute right-8 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">→</span>
-          </a>
-        )}
+        <h2 class="text-4xl md:text-5xl font-bold leading-tighter mb-4">
+          {heading}
+        </h2>
+        <p
+          class="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed mb-8"
+        >
+          {description}
+        </p>
+        {
+          primaryCta && (
+            <a
+              href={primaryCta.url}
+              class="group relative inline-flex items-center justify-center overflow-hidden h-16 px-12 font-bold text-white bg-black dark:bg-white dark:text-black text-lg rounded-lg transition-all"
+            >
+              <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
+                {primaryCta.text}
+              </span>
+              <span class="absolute right-8 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                →
+              </span>
+            </a>
+          )
+        }
       </div>
     </div>
   </div>

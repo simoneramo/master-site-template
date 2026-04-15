@@ -7,7 +7,7 @@
  * Full-viewport background image with dark gradient overlay.
  * Text content centered over the image.
  */
-import type { HeroData } from '../../../data/sample-data';
+import type { HeroData } from "../../../data/sample-data";
 
 interface Props {
   data: HeroData;
@@ -26,14 +26,14 @@ const {
 } = data;
 
 let headingBefore = heading;
-let headingAfter = '';
+let headingAfter = "";
 if (headingAccent && heading.includes(headingAccent)) {
   const idx = heading.indexOf(headingAccent);
   headingBefore = heading.slice(0, idx);
   headingAfter = heading.slice(idx + headingAccent.length);
 }
 
-const bgImage = image?.src ?? '';
+const bgImage = image?.src ?? "";
 ---
 
 <section
@@ -43,74 +43,104 @@ const bgImage = image?.src ?? '';
   <div class="absolute inset-0">
     <img
       src={bgImage}
-      alt={image?.alt ?? ''}
+      alt={image?.alt ?? ""}
       class="w-full h-full object-cover"
       loading="eager"
     />
     <!-- Gradient Overlay -->
-    <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/50 to-black/30" />
+    <div
+      class="absolute inset-0 bg-linear-to-t from-black/70 via-black/70 to-black/70"
+    >
+    </div>
   </div>
 
   <!-- Content -->
-  <div class="relative z-10 container mx-auto px-4 md:px-8 text-center text-white py-32">
-    {eyebrow && (
-      <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-white/30 text-white/80 mb-8">
-        {eyebrow}
-      </span>
-    )}
+  <div
+    class="relative z-10 container mx-auto px-4 md:px-8 text-center text-white py-32"
+  >
+    {
+      eyebrow && (
+        <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-white/30 text-white/80 mb-8">
+          {eyebrow}
+        </span>
+      )
+    }
 
-    <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-8 max-w-5xl mx-auto">
-      {headingAccent ? (
-        <>
-          {headingBefore}
-          <span class="text-indigo-400">{headingAccent}</span>
-          {headingAfter}
-        </>
-      ) : (
-        heading
-      )}
+    <h1
+      class="text-5xl md:text-6xl lg:text-7xl font-bold leading-tighter mb-8 max-w-4xl mx-auto"
+    >
+      {
+        headingAccent ? (
+          <>
+            {headingBefore}
+            <span class="text-indigo-500"> {headingAccent}</span>
+            {headingAfter}
+          </>
+        ) : (
+          heading
+        )
+      }
     </h1>
 
-    <p class="text-xl md:text-2xl font-medium mb-12 text-white/80 max-w-2xl mx-auto leading-relaxed">
+    <p
+      class="text-xl font-regular mb-12 text-white/90 max-w-2xl mx-auto leading-relaxed"
+    >
       {description}
     </p>
 
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      {primaryCta && (
-        <a
-          href={primaryCta.url}
-          class="group relative inline-flex items-center justify-center overflow-hidden h-16 px-12 font-bold text-black bg-white transition-all duration-300 text-lg rounded-lg hover:bg-zinc-100"
-        >
-          <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
-            {primaryCta.text}
-          </span>
-          <span class="absolute right-8 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-            →
-          </span>
-        </a>
-      )}
-      {secondaryCta && (
-        <a
-          href={secondaryCta.url}
-          class="inline-flex items-center justify-center h-16 px-10 font-bold border-2 border-white/40 text-white rounded-lg hover:border-white transition-colors text-lg"
-        >
-          {secondaryCta.text}
-        </a>
-      )}
+      {
+        primaryCta && (
+          <a
+            href={primaryCta.url}
+            class="group relative inline-flex items-center justify-center overflow-hidden h-16 px-12 font-bold text-black bg-white transition-all duration-300 text-lg rounded-lg hover:bg-zinc-100"
+          >
+            <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
+              {primaryCta.text}
+            </span>
+            <span class="absolute right-8 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+              →
+            </span>
+          </a>
+        )
+      }
+      {
+        secondaryCta && (
+          <a
+            href={secondaryCta.url}
+            class="inline-flex items-center justify-center h-16 px-10 font-bold border-2 border-white/40 text-white rounded-lg hover:border-white transition-colors text-lg"
+          >
+            {secondaryCta.text}
+          </a>
+        )
+      }
     </div>
 
-    {trustBadge && (
-      <div class="mt-12 flex items-center justify-center gap-2 text-sm font-bold text-white/60">
-        <span>{trustBadge.icon}</span>
-        <span>{trustBadge.title} · {trustBadge.subtitle}</span>
-      </div>
-    )}
+    {
+      trustBadge && (
+        <div class="mt-12 flex items-center justify-center gap-2 text-sm font-bold text-white">
+          <span>{trustBadge.icon}</span>
+          <span>
+            {trustBadge.title} · {trustBadge.subtitle}
+          </span>
+        </div>
+      )
+    }
   </div>
 
   <!-- Scroll indicator -->
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-    <svg class="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    <svg
+      class="w-6 h-6 text-white/60"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
     </svg>
   </div>
 </section>

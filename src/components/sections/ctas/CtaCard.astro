@@ -3,38 +3,64 @@
  * CtaCard — Card CTA
  * Centered floating card with heading, subtext, CTA on contrasting background.
  */
-import type { CtaData } from '../../../data/sample-data';
+import type { CtaData } from "../../../data/sample-data";
 
-interface Props { data: CtaData; }
+interface Props {
+  data: CtaData;
+}
 
 const { data } = Astro.props;
 const { heading, description, primaryCta, trustBadges } = data;
 ---
 
 <section class="py-20 md:py-32">
-  <div class="container mx-auto px-4 md:px-8 max-w-4xl">
-    <div class="bg-zinc-950 dark:bg-white text-white dark:text-black rounded-3xl p-10 md:p-16 text-center shadow-2xl relative overflow-hidden">
+  <div class="container mx-auto px-4 md:px-8 max-w-6xl">
+    <div
+      class="bg-zinc-950 dark:bg-white text-white dark:text-black rounded-3xl p-10 md:p-24 text-center shadow-2xl relative overflow-hidden"
+    >
       <!-- Decorative glow -->
-      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl -translate-y-1/2" />
+      <div
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl -translate-y-1/2"
+      >
+      </div>
 
       <div class="relative z-10">
-        <h2 class="text-3xl md:text-5xl font-bold leading-tight mb-6">{heading}</h2>
-        <p class="text-lg text-white/70 dark:text-black/60 mb-10 max-w-xl mx-auto leading-relaxed">{description}</p>
+        <h2 class="text-3xl md:text-5xl font-bold leading-tight mb-6">
+          {heading}
+        </h2>
+        <p
+          class="text-lg text-white/70 dark:text-black/60 mb-10 max-w-xl mx-auto leading-relaxed"
+        >
+          {description}
+        </p>
 
-        {primaryCta && (
-          <a href={primaryCta.url} class="group relative inline-flex items-center justify-center overflow-hidden h-16 px-14 font-bold bg-white text-black dark:bg-black dark:text-white text-lg rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all">
-            <span class="transform transition-transform duration-300 group-hover:-translate-x-3">{primaryCta.text}</span>
-            <span class="absolute right-8 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">→</span>
-          </a>
-        )}
+        {
+          primaryCta && (
+            <a
+              href={primaryCta.url}
+              class="group relative inline-flex items-center justify-center overflow-hidden h-16 px-14 font-bold bg-white text-black dark:bg-black dark:text-white text-lg rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all"
+            >
+              <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
+                {primaryCta.text}
+              </span>
+              <span class="absolute right-8 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                →
+              </span>
+            </a>
+          )
+        }
 
-        {trustBadges && trustBadges.length > 0 && (
-          <div class="flex flex-wrap items-center justify-center gap-6 mt-8 text-sm text-white/40 dark:text-black/40">
-            {trustBadges.map((badge) => (
-              <span class="flex items-center gap-1.5"><span>{badge.icon}</span> {badge.text}</span>
-            ))}
-          </div>
-        )}
+        {
+          trustBadges && trustBadges.length > 0 && (
+            <div class="flex flex-wrap items-center justify-center gap-6 mt-8 text-sm text-white/80 dark:text-black/40">
+              {trustBadges.map((badge) => (
+                <span class="flex items-center gap-1.5">
+                  <span>{badge.icon}</span> {badge.text}
+                </span>
+              ))}
+            </div>
+          )
+        }
       </div>
     </div>
   </div>

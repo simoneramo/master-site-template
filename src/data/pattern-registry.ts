@@ -47,6 +47,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
       { key: 'minimal', label: 'Minimal (Logo + Burger)', component: 'HeaderMinimal', brief: 'Logo left, hamburger right on all screens. Full-screen overlay menu.', status: 'ready' },
       { key: 'sidebar', label: 'Sidebar Navigation', component: 'HeaderSidebar', brief: 'Vertical sidebar fixed to the left. Main content shifts right.', status: 'ready' },
       { key: 'floatingPill', label: 'Floating Pill', component: 'HeaderFloatingPill', brief: 'Floating pill header that transforms on scroll. Logo left, nav center, CTA right.', status: 'ready' },
+      { key: 'floatingPillTest', label: 'Floating Pill (Test)', component: 'HeaderFloatingPillTest', brief: 'Direct port of reference demo — test only.', status: 'ready' },
     ],
   },
   {
@@ -66,6 +67,16 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
       { key: 'slider', label: 'Hero Slider / Carousel', component: 'HeroSlider', brief: 'Full-viewport carousel auto-advancing through 3–4 slides with unique content.', status: 'ready' },
       { key: 'parallax', label: 'Parallax', component: 'HeroParallax', brief: 'Full-viewport hero with parallax background image scrolling at slower rate.', status: 'ready' },
       { key: 'abstractDark', label: 'Abstract Dark', component: 'HeroAbstractDark', brief: 'Dark background with subtle grid and coloured blur blobs.', status: 'ready' },
+      { key: 'editorialSplit', label: 'Editorial Split', component: 'HeroEditorialSplit', brief: 'Large bold headline top-left on white, full-height rounded image right. Description card and pill CTAs anchored to the bottom of the image.', status: 'ready' },
+      { key: 'headlineSplit', label: 'Headline Split', component: 'HeroHeadlineSplit', brief: 'Two-row layout: intro text + pill CTA left, large headline right on top. Full-width image below.', status: 'ready' },
+      { key: 'topSplit', label: 'Top Split', component: 'HeroTopSplit', brief: 'Two-row layout: headline left, description + CTA right on top. Full-width image with floating card overlay below.', status: 'ready' },
+      { key: 'fullBleedBottom', label: 'Full-Bleed Bottom Bar', component: 'HeroFullBleedBottom', brief: 'Full-viewport background image with dark overlay. Large bold headline on left. Bottom bar with address, contact, and CTA card.', status: 'ready' },
+      { key: 'gradientMesh', label: 'Gradient Mesh', component: 'HeroGradientMesh', brief: 'Soft coloured gradient orbs on white/dark background. Centered layout with gradient text accent. Great for SaaS, startups, creative tools.', status: 'ready' },
+      { key: 'bento', label: 'Bento Grid', component: 'HeroBento', brief: 'Bento-box grid of rounded cards: large headline card, tall image card, trust stat card, brand accent card. Modern 2024/2025 grid aesthetic.', status: 'ready' },
+      { key: 'typographic', label: 'Typographic Editorial', component: 'HeroTypographic', brief: 'No image required. Oversized display headline with outlined text accent dominates the viewport. Description and CTA below a rule. Great for agencies, portfolios, consultancies.', status: 'ready' },
+      { key: 'socialProof', label: 'Social Proof', component: 'HeroSocialProof', brief: 'Copy and CTAs left. Right column is stacked customer review cards with avatars, star ratings, and quotes. Maximises credibility above the fold for service businesses.', status: 'ready' },
+      { key: 'serviceList', label: 'Service Checklist', component: 'HeroServiceList', brief: 'Headline and CTAs left. Right column shows a branded "what\'s included" checklist card. Uses rotatingWords as items. Great for trades, accounting, legal, consulting.', status: 'ready' },
+      { key: 'darkSplit', label: 'Dark Color-Block Split', component: 'HeroDarkSplit', brief: 'Full-viewport hard split: dark branded left panel with headline, CTAs, and inline stats. Full-height image bleeds to the right edge with a trust badge overlay. Bold, corporate, B2B.', status: 'ready' },
     ],
   },
   {
@@ -188,6 +199,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
       { key: 'logoQuote', label: 'Logo + Quote', component: 'TestimonialsLogoQuote', brief: 'Wide horizontal cards: company logo, quote text, customer info.', status: 'ready' },
       { key: 'socialEmbed', label: 'Social Proof Wall', component: 'TestimonialsSocialWall', brief: 'Grid styled as social media posts with platform icons.', status: 'ready' },
       { key: 'ratingBreakdown', label: 'Rating Breakdown', component: 'TestimonialsRatingBreakdown', brief: 'Large average rating with bar chart breakdown and quote snippets.', status: 'ready' },
+      { key: 'marquee', label: 'Scrolling Marquee', component: 'TestimonialsMarqueeSection', brief: 'Infinite horizontal scroll of testimonial cards with pause on hover.', status: 'ready' },
     ],
   },
   {

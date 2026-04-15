@@ -1,0 +1,156 @@
+---
+/**
+ * HeroEditorialSplit — Editorial Split Hero
+ * Pattern key: editorialSplit
+ * Section: Hero
+ *
+ * Full-bleed photo fills the entire section.
+ * A white card overlays the top-left containing the eyebrow and large heading
+ * (rounded bottom-right corner). Description + pill CTAs are anchored
+ * to the bottom-right over the image.
+ * Great for professional services — accounting, legal, consulting, finance.
+ */
+import type { HeroData } from "../../../data/sample-data";
+
+interface Props {
+  data: HeroData;
+}
+
+const { data } = Astro.props;
+const {
+  eyebrow,
+  heading,
+  headingAccent,
+  description,
+  primaryCta,
+  secondaryCta,
+  image,
+  trustBadge,
+} = data;
+
+// Split heading to highlight accent word(s)
+let headingBefore = heading;
+let headingAfter = "";
+if (headingAccent && heading.includes(headingAccent)) {
+  const idx = heading.indexOf(headingAccent);
+  headingBefore = heading.slice(0, idx);
+  headingAfter = heading.slice(idx + headingAccent.length);
+}
+---
+
+<section
+  class="relative bg-zinc-100 dark:bg-zinc-900 overflow-hidden min-h-120 md:min-h-145 lg:min-h-165"
+>
+  <!-- Full-bleed background image -->
+  {
+    image && (
+      <div class="absolute inset-0">
+        <img
+          src={image.src}
+          alt={image.alt}
+          class="w-full h-full object-cover"
+          loading="eager"
+        />
+      </div>
+    )
+  }
+
+  <!-- White heading card — top-left overlay, rounded bottom-right corner -->
+  <div
+    class="absolute top-0 left-0 z-10 bg-white dark:bg-zinc-950 rounded-br-3xl px-8 py-10 md:px-12 md:py-14 lg:px-16 lg:py-16 max-w-[56%] sm:max-w-[52%] lg:max-w-[48%]"
+  >
+    <!-- Eyebrow -->
+    {
+      eyebrow && (
+        <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+          {eyebrow}
+        </span>
+      )
+    }
+
+    <h1
+      class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.08] text-zinc-900 dark:text-white"
+    >
+      {
+        headingAccent ? (
+          <>
+            {headingBefore}
+            <span class="text-indigo-600 dark:text-indigo-400">
+              {" "}
+              {headingAccent}
+            </span>
+            {headingAfter}
+          </>
+        ) : (
+          heading
+        )
+      }
+    </h1>
+  </div>
+
+  <!-- Description card + pill CTAs — anchored bottom-right -->
+  <div
+    class="absolute bottom-0 right-0 z-10 p-5 md:p-7 lg:p-8 max-w-70 sm:max-w-xs md:max-w-sm"
+  >
+    <!-- Trust Badge (optional) -->
+    {
+      trustBadge && (
+        <div class="bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm rounded-xl p-3 mb-3 shadow-lg flex items-center gap-3">
+          <span class="text-2xl">{trustBadge.icon}</span>
+          <div>
+            <div class="font-bold text-sm text-zinc-900 dark:text-white">
+              {trustBadge.title}
+            </div>
+            <div class="text-xs text-zinc-500 dark:text-zinc-400">
+              {trustBadge.subtitle}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      description && (
+        <div class="bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm rounded-2xl p-4 md:p-5 mb-4 shadow-xl">
+          <p class="text-sm md:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed">
+            {description}
+          </p>
+        </div>
+      )
+    }
+
+    <div class="flex flex-wrap gap-3">
+      {
+        primaryCta && (
+          <a
+            href={primaryCta.url}
+            class="group relative inline-flex items-center justify-center overflow-hidden h-12 px-8 font-bold text-zinc-900 bg-white rounded-full hover:bg-zinc-100 transition-all duration-300 text-sm whitespace-nowrap shadow-lg"
+          >
+            <span class="transform transition-transform duration-300 group-hover:-translate-x-1">
+              {primaryCta.text}
+            </span>
+            <span class="absolute right-5 transform translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+              →
+            </span>
+          </a>
+        )
+      }
+      {
+        secondaryCta && (
+          <a
+            href={secondaryCta.url}
+            class="group relative inline-flex items-center justify-center overflow-hidden h-12 px-8 font-bold text-white border-2 border-white/80 rounded-full hover:bg-white/10 hover:border-white transition-all duration-300 text-sm whitespace-nowrap backdrop-blur-sm"
+          >
+            <span class="transform transition-transform duration-300 group-hover:-translate-x-1">
+              {secondaryCta.text}
+            </span>
+            <span class="absolute right-5 transform translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+              →
+            </span>
+          </a>
+        )
+      }
+    </div>
+  </div>
+</section>

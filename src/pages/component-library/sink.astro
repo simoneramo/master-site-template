@@ -1,0 +1,734 @@
+---
+/**
+ * Kitchen Sink — Every section component rendered on a single page.
+ * URL: /component-library/sink
+ *
+ * Iterates through every section in PATTERN_REGISTRY, renders every
+ * "ready" variant with its matching sample data, and wraps each in a
+ * labelled card so you can visually audit the entire component library
+ * at a glance.
+ */
+import MainLayout from "../../layouts/MainLayout.astro";
+import { PATTERN_REGISTRY, getStats } from "../../data/pattern-registry";
+import * as SampleData from "../../data/sample-data";
+
+// ── Build component map via Astro.glob ──────────────────────────────────
+const allComponents = await Astro.glob("../../components/sections/**/*.astro");
+const componentMap: Record<string, any> = {};
+for (const mod of allComponents) {
+  const filename = mod.file?.split("/").pop()?.replace(".astro", "") ?? "";
+  if (filename) componentMap[filename] = mod.default;
+}
+
+// ── Map section slugs → sample data ─────────────────────────────────────
+const sampleDataMap: Record<string, any> = {
+  headers: SampleData.SAMPLE_HEADER,
+  heroes: SampleData.SAMPLE_HERO,
+  trust_bars: SampleData.SAMPLE_TRUST_BAR,
+  problems: SampleData.SAMPLE_PROBLEM,
+  solutions: SampleData.SAMPLE_SOLUTION,
+  services: SampleData.SAMPLE_SERVICES,
+  features: SampleData.SAMPLE_FEATURES,
+  benefits: SampleData.SAMPLE_BENEFITS,
+  videos: SampleData.SAMPLE_VIDEO,
+  testimonials: SampleData.SAMPLE_TESTIMONIALS,
+  portfolios: SampleData.SAMPLE_PORTFOLIO,
+  processes: SampleData.SAMPLE_PROCESS,
+  pricing: SampleData.SAMPLE_PRICING,
+  faqs: SampleData.SAMPLE_FAQ,
+  newsletters: SampleData.SAMPLE_NEWSLETTER,
+  ctas: SampleData.SAMPLE_CTA,
+  footers: SampleData.SAMPLE_FOOTER,
+  team: SampleData.SAMPLE_TEAM,
+  blog: SampleData.SAMPLE_BLOG,
+  forms: SampleData.SAMPLE_FORM,
+  stats: SampleData.SAMPLE_STATS,
+  banners: SampleData.SAMPLE_BANNER,
+  content: SampleData.SAMPLE_CONTENT,
+  breakouts: SampleData.SAMPLE_BREAKOUT,
+  showcases: SampleData.SAMPLE_SHOWCASE,
+};
+
+// ── Compute stats ───────────────────────────────────────────────────────
+const stats = getStats();
+
+// Count how many we'll actually render (ready + component exists)
+let renderableCount = 0;
+for (const section of PATTERN_REGISTRY) {
+  for (const variant of section.variants) {
+    if (variant.status === "ready" && componentMap[variant.component]) {
+      renderableCount++;
+    }
+  }
+}
+---
+
+<MainLayout
+  title="Kitchen Sink — Every Component"
+  description="A single page showing every section component in the design system, rendered live with sample data."
+  hideFooter
+>
+  <!-- ═══════════ Sticky Table of Contents Bar ═══════════ -->
+  <div class="sink-toc-bar" x-data="{ open: false }">
+    <div class="sink-toc-inner">
+      <a href="/component-library" class="sink-back-link"> ← Library </a>
+      <button @click="open = !open" class="sink-toc-toggle">
+        <span class="sink-toc-toggle-label">Jump to Section</span>
+        <svg
+          class="sink-toc-chevron"
+          :class="open && 'rotate'"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      <span class="sink-badge">{renderableCount} components</span>
+    </div>
+    <div
+      class="sink-toc-dropdown"
+      x-show="open"
+      x-transition
+      @click.outside="open = false"
+    >
+      {
+        PATTERN_REGISTRY.map((section) => (
+          <a
+            href={`#section-${section.slug}`}
+            class="sink-toc-link"
+            @click="open = false"
+          >
+            <span class="sink-toc-icon">{section.icon}</span>
+            <span>{section.label}</span>
+            <span class="sink-toc-count">
+              {
+                section.variants.filter(
+                  (v) => v.status === "ready" && componentMap[v.component],
+                ).length
+              }
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- ═══════════ Page Header ═══════════ -->
+  <section class="sink-header">
+    <div class="sink-header-inner">
+      <div class="sink-header-badge">🧪 Kitchen Sink</div>
+      <h1 class="sink-title">
+        Every Component,<br /><span class="sink-title-accent">One Page</span>
+      </h1>
+      <p class="sink-subtitle">
+        All <strong>{renderableCount}</strong> live components across <strong
+          >{stats.totalSections}</strong
+        > section categories, rendered with sample data. Scroll to browse or jump
+        via the navigation bar above.
+      </p>
+      <div class="sink-stats-row">
+        <div class="sink-stat">
+          <span class="sink-stat-value">{stats.totalSections}</span>
+          <span class="sink-stat-label">Categories</span>
+        </div>
+        <div class="sink-stat-divider"></div>
+        <div class="sink-stat">
+          <span class="sink-stat-value">{stats.totalPatterns}</span>
+          <span class="sink-stat-label">Total Variants</span>
+        </div>
+        <div class="sink-stat-divider"></div>
+        <div class="sink-stat">
+          <span class="sink-stat-value">{stats.ready}</span>
+          <span class="sink-stat-label">Ready</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ All Sections ═══════════ -->
+  {
+    PATTERN_REGISTRY.map((section) => {
+      const readyVariants = section.variants.filter(
+        (v) => v.status === "ready" && componentMap[v.component],
+      );
+      if (readyVariants.length === 0) return null;
+
+      const sampleData = sampleDataMap[section.slug] ?? {};
+
+      return (
+        <section id={`section-${section.slug}`} class="sink-section">
+          {/* ── Section Divider ── */}
+          <div class="sink-section-header">
+            <div class="sink-section-header-inner">
+              <div class="sink-section-icon">{section.icon}</div>
+              <div>
+                <h2 class="sink-section-title">{section.label}</h2>
+                <p class="sink-section-meta">
+                  {readyVariants.length} variant
+                  {readyVariants.length !== 1 ? "s" : ""}
+                  <span class="sink-section-sep">·</span>
+                  <a
+                    href={`/component-library/${section.slug}`}
+                    class="sink-section-link"
+                  >
+                    View detail page →
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Variant Cards ── */}
+          {readyVariants.map((variant) => {
+            const Component = componentMap[variant.component];
+            const isHeader = section.slug === "headers";
+            const isBanner = section.slug === "banners";
+
+            return (
+              <div id={`variant-${variant.component}`} class="sink-variant">
+                {/* Variant label bar */}
+                <div class="sink-variant-label">
+                  <div class="sink-variant-name">
+                    <span class="sink-variant-dot" />
+                    {variant.label}
+                  </div>
+                  <code class="sink-variant-code">{variant.component}</code>
+                </div>
+
+                {/* Preview */}
+                <div
+                  class:list={[
+                    "sink-variant-preview",
+                    isBanner && "banner-preview-frame relative min-h-[300px]",
+                  ]}
+                >
+                  {isHeader ? (
+                    <div
+                      class:list={[
+                        "header-preview-frame relative max-h-[500px] overflow-y-auto",
+                        variant.key === "sidebar" && "sidebar-layout",
+                      ]}
+                    >
+                      <Component data={sampleData} />
+                      <div
+                        class:list={[
+                          "bg-linear-to-b from-zinc-100 to-zinc-200 dark:from-zinc-900 dark:to-zinc-800 p-8 pt-4 space-y-4",
+                          variant.key === "sidebar"
+                            ? "flex-1 min-h-[500px]"
+                            : "h-[800px]",
+                        ]}
+                      >
+                        {variant.key === "sidebar" && (
+                          <div class="h-8 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-3/4" />
+                        )}
+                        <div class="h-8 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-3/4 mx-auto" />
+                        <div class="h-4 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-full" />
+                        <div class="h-4 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-5/6" />
+                        <div class="h-4 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-4/6" />
+                        <div class="h-20 bg-zinc-200/50 dark:bg-zinc-800/50 rounded-lg" />
+                        <div class="h-4 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-full mt-8" />
+                        <div class="h-4 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-5/6" />
+                        <div class="h-4 bg-zinc-300/50 dark:bg-zinc-700/50 rounded w-4/6" />
+                      </div>
+                    </div>
+                  ) : (
+                    <Component data={sampleData} />
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </section>
+      );
+    })
+  }
+
+  <!-- ═══════════ Footer ═══════════ -->
+  <div class="sink-footer">
+    <p>End of Kitchen Sink · {renderableCount} components rendered</p>
+    <a href="/component-library" class="sink-footer-link"
+      >← Back to Component Library</a
+    >
+  </div>
+
+  <!-- ═══════════ Styles ═══════════ -->
+  <style>
+    /* ── TOC Bar ── */
+    .sink-toc-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    :global(.dark) .sink-toc-bar {
+      background: rgba(9, 9, 11, 0.85);
+      border-bottom-color: rgba(255, 255, 255, 0.06);
+    }
+    .sink-toc-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .sink-back-link {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #a1a1aa;
+      text-decoration: none;
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+    .sink-back-link:hover {
+      color: #18181b;
+    }
+    :global(.dark) .sink-back-link:hover {
+      color: #fafafa;
+    }
+    .sink-toc-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.375rem 0.75rem;
+      border-radius: 9999px;
+      border: 1.5px solid #e4e4e7;
+      background: #fafafa;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #3f3f46;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    :global(.dark) .sink-toc-toggle {
+      border-color: #3f3f46;
+      background: #18181b;
+      color: #d4d4d8;
+    }
+    .sink-toc-toggle:hover {
+      border-color: #a1a1aa;
+    }
+    .sink-toc-chevron {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.2s;
+    }
+    .sink-toc-chevron.rotate {
+      transform: rotate(180deg);
+    }
+    .sink-toc-toggle-label {
+      display: none;
+    }
+    @media (min-width: 640px) {
+      .sink-toc-toggle-label {
+        display: inline;
+      }
+    }
+    .sink-badge {
+      margin-left: auto;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #a855f7;
+      background: rgba(168, 85, 247, 0.1);
+      padding: 0.25rem 0.625rem;
+      border-radius: 9999px;
+      white-space: nowrap;
+    }
+    :global(.dark) .sink-badge {
+      color: #c084fc;
+      background: rgba(168, 85, 247, 0.15);
+    }
+    .sink-toc-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      max-height: 50vh;
+      overflow-y: auto;
+    }
+    :global(.dark) .sink-toc-dropdown {
+      background: rgba(9, 9, 11, 0.98);
+      border-bottom-color: rgba(255, 255, 255, 0.06);
+    }
+    .sink-toc-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #3f3f46;
+      text-decoration: none;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    :global(.dark) .sink-toc-link {
+      color: #d4d4d8;
+    }
+    .sink-toc-link:hover {
+      background: #f4f4f5;
+      color: #18181b;
+    }
+    :global(.dark) .sink-toc-link:hover {
+      background: #27272a;
+      color: #fafafa;
+    }
+    .sink-toc-icon {
+      font-size: 1rem;
+    }
+    .sink-toc-count {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: #a1a1aa;
+      background: #f4f4f5;
+      padding: 0.125rem 0.4rem;
+      border-radius: 9999px;
+    }
+    :global(.dark) .sink-toc-count {
+      background: #27272a;
+      color: #71717a;
+    }
+
+    /* ── Page Header ── */
+    .sink-header {
+      padding: 5rem 1.5rem 3rem;
+      text-align: center;
+      background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+      border-bottom: 1px solid #e4e4e7;
+    }
+    :global(.dark) .sink-header {
+      background: linear-gradient(180deg, #09090b 0%, #18181b 100%);
+      border-bottom-color: #27272a;
+    }
+    .sink-header-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .sink-header-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #a855f7;
+      background: rgba(168, 85, 247, 0.08);
+      border: 1px solid rgba(168, 85, 247, 0.2);
+      padding: 0.375rem 1rem;
+      border-radius: 9999px;
+      margin-bottom: 1.5rem;
+    }
+    .sink-title {
+      font-size: clamp(2.25rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #18181b;
+      margin: 0 0 1rem;
+    }
+    :global(.dark) .sink-title {
+      color: #fafafa;
+    }
+    .sink-title-accent {
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .sink-subtitle {
+      font-size: 1.125rem;
+      color: #71717a;
+      line-height: 1.6;
+      margin: 0 0 2rem;
+    }
+    :global(.dark) .sink-subtitle {
+      color: #a1a1aa;
+    }
+    .sink-subtitle strong {
+      color: #18181b;
+      font-weight: 700;
+    }
+    :global(.dark) .sink-subtitle strong {
+      color: #fafafa;
+    }
+    .sink-stats-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .sink-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.125rem;
+    }
+    .sink-stat-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #18181b;
+    }
+    :global(.dark) .sink-stat-value {
+      color: #fafafa;
+    }
+    .sink-stat-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #a1a1aa;
+    }
+    .sink-stat-divider {
+      width: 1px;
+      height: 2rem;
+      background: #e4e4e7;
+    }
+    :global(.dark) .sink-stat-divider {
+      background: #3f3f46;
+    }
+
+    /* ── Section Dividers ── */
+    .sink-section {
+      scroll-margin-top: 4rem;
+    }
+    .sink-section-header {
+      position: sticky;
+      top: 3rem;
+      z-index: 90;
+      background: rgba(250, 250, 250, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid #e4e4e7;
+      border-top: 2px solid #e4e4e7;
+      padding: 1rem 1.5rem;
+    }
+    :global(.dark) .sink-section-header {
+      background: rgba(24, 24, 27, 0.92);
+      border-color: #27272a;
+    }
+    .sink-section-header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .sink-section-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+    .sink-section-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #18181b;
+      margin: 0;
+      line-height: 1.2;
+    }
+    :global(.dark) .sink-section-title {
+      color: #fafafa;
+    }
+    .sink-section-meta {
+      font-size: 0.8125rem;
+      color: #71717a;
+      margin: 0.125rem 0 0;
+    }
+    :global(.dark) .sink-section-meta {
+      color: #a1a1aa;
+    }
+    .sink-section-sep {
+      margin: 0 0.375rem;
+      opacity: 0.4;
+    }
+    .sink-section-link {
+      color: #a855f7;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .sink-section-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ── Variant Cards ── */
+    .sink-variant {
+      border-bottom: 1px solid #f4f4f5;
+      scroll-margin-top: 8rem;
+    }
+    :global(.dark) .sink-variant {
+      border-bottom-color: #1c1c1f;
+    }
+    .sink-variant-label {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .sink-variant-name {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #3f3f46;
+    }
+    :global(.dark) .sink-variant-name {
+      color: #d4d4d8;
+    }
+    .sink-variant-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+    }
+    .sink-variant-code {
+      font-size: 0.6875rem;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+      color: #a1a1aa;
+      background: #f4f4f5;
+      padding: 0.125rem 0.5rem;
+      border-radius: 0.25rem;
+    }
+    :global(.dark) .sink-variant-code {
+      color: #71717a;
+      background: #1c1c1f;
+    }
+    .sink-variant-preview {
+      overflow: hidden;
+      background: #ffffff;
+    }
+    :global(.dark) .sink-variant-preview {
+      background: #09090b;
+    }
+
+    /* ── Footer ── */
+    .sink-footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      border-top: 2px solid #e4e4e7;
+      color: #71717a;
+      font-size: 0.875rem;
+    }
+    :global(.dark) .sink-footer {
+      border-top-color: #27272a;
+      color: #a1a1aa;
+    }
+    .sink-footer-link {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-weight: 700;
+      color: #a855f7;
+      text-decoration: none;
+    }
+    .sink-footer-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+
+  <!-- ═══════════ Inherited preview styles for headers & banners ═══════════ -->
+  <style is:global>
+    /* Re-use the same containment styles from [section].astro
+       so headers stay relative within their preview boxes and
+       banners are contained within their preview areas. */
+
+    .header-preview-frame {
+      overscroll-behavior: contain;
+    }
+    .header-preview-frame > header:not(.header-floating-pill) {
+      position: sticky !important;
+      top: 0 !important;
+      width: 100% !important;
+      z-index: 50 !important;
+    }
+    .header-preview-frame.sidebar-layout > aside.header-sidebar-nav {
+      position: sticky !important;
+    }
+    .header-preview-frame > header.fixed:not(.header-floating-pill),
+    .header-preview-frame > header [class*="fixed"] {
+      position: sticky !important;
+    }
+    .header-preview-frame > header.header-floating-pill {
+      position: sticky !important;
+    }
+    .header-preview-frame.sidebar-layout {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: flex-start !important;
+    }
+    .header-preview-frame > aside.header-sidebar-nav {
+      position: sticky !important;
+      top: 0 !important;
+      left: 0 !important;
+      height: 500px !important;
+      min-height: 500px !important;
+      flex-shrink: 0 !important;
+      transition: width 0.3s ease !important;
+    }
+    .header-preview-frame > aside.header-sidebar-nav + div {
+      display: none !important;
+    }
+    .header-preview-frame.sidebar-layout > div:last-child {
+      flex: 1 !important;
+      margin-left: 0 !important;
+      min-height: 500px !important;
+    }
+    .header-preview-frame > header > div,
+    .header-preview-frame > aside > div {
+      max-width: 100% !important;
+    }
+    .header-preview-frame > header.header-topbar-nav {
+      position: relative !important;
+    }
+    .header-preview-frame > header.header-topbar-nav > div:first-child {
+      height: 2.5rem !important;
+      max-height: 2.5rem !important;
+      min-height: 2.5rem !important;
+      opacity: 1 !important;
+      overflow: visible !important;
+    }
+    .header-preview-frame > header.header-topbar-nav > div:last-child {
+      position: sticky !important;
+      top: 0 !important;
+    }
+    .header-preview-frame > header.header-topbar-nav > div:last-child.fixed {
+      position: sticky !important;
+    }
+    .banner-preview-frame {
+      position: relative !important;
+    }
+    .banner-preview-frame > [id^="cookie-"],
+    .banner-preview-frame > [class*="fixed"] {
+      position: absolute !important;
+    }
+    .banner-preview-frame > #cookie-card {
+      bottom: 1rem !important;
+      right: 1rem !important;
+      left: auto !important;
+      top: auto !important;
+    }
+    .banner-preview-frame > #cookie-bottom {
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      top: auto !important;
+    }
+  </style>
+</MainLayout>

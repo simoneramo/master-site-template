@@ -1,0 +1,154 @@
+---
+/**
+ * HeroDarkSplit — Dark Color-Blocked Split Hero
+ * Pattern key: darkSplit
+ * Section: Hero
+ *
+ * Full-viewport split layout with hard color blocking.
+ * LEFT: Dark panel (zinc-950/black) with eyebrow, headline, description, CTAs, and stat row.
+ * RIGHT: Full-height image that bleeds to the viewport edge, with a 3-stat overlay card
+ *        anchored to the bottom.
+ * Bold, authoritative, corporate. Great for B2B, finance, construction, professional services.
+ */
+import type { HeroData } from '../../../data/sample-data';
+
+interface Props {
+  data: HeroData;
+}
+
+const { data } = Astro.props;
+const {
+  eyebrow,
+  heading,
+  headingAccent,
+  description,
+  primaryCta,
+  secondaryCta,
+  image,
+  trustBadge,
+} = data;
+
+let headingBefore = heading;
+let headingAfter = '';
+if (headingAccent && heading.includes(headingAccent)) {
+  const idx = heading.indexOf(headingAccent);
+  headingBefore = heading.slice(0, idx);
+  headingAfter = heading.slice(idx + headingAccent.length);
+}
+
+// Inline stats shown as a row beneath the CTAs
+const stats = [
+  { value: '500+', label: 'Projects' },
+  { value: '15yrs', label: 'Experience' },
+  { value: '98%', label: 'Retention' },
+];
+---
+
+<section class="min-h-screen flex flex-col lg:flex-row overflow-hidden">
+
+  <!-- LEFT PANEL: Dark branded content -->
+  <div class="lg:w-1/2 bg-zinc-950 text-white flex items-center relative">
+    <!-- Subtle texture -->
+    <div
+      class="absolute inset-0 opacity-[0.04] pointer-events-none"
+      style="background-image: radial-gradient(circle, #fff 1px, transparent 1px); background-size: 28px 28px;"
+    />
+    <!-- Indigo accent blob -->
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-indigo-700/20 rounded-full blur-3xl pointer-events-none" />
+
+    <div class="relative z-10 px-8 md:px-14 lg:px-16 py-24 lg:py-32 w-full max-w-2xl mx-auto lg:ml-auto lg:mr-0">
+
+      <!-- Eyebrow -->
+      {eyebrow && (
+        <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-indigo-400 mb-8">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+          {eyebrow}
+        </span>
+      )}
+
+      <!-- Headline -->
+      <h1 class="text-4xl sm:text-5xl xl:text-6xl font-bold leading-[1.08] tracking-tight mb-6">
+        {headingAccent ? (
+          <>
+            {headingBefore}
+            <span class="text-indigo-400"> {headingAccent}</span>
+            {headingAfter}
+          </>
+        ) : (
+          heading
+        )}
+      </h1>
+
+      <!-- Description -->
+      <p class="text-lg text-zinc-400 leading-relaxed mb-10 max-w-md">
+        {description}
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row gap-4 mb-12">
+        {primaryCta && (
+          <a
+            href={primaryCta.url}
+            class="group inline-flex items-center justify-center gap-3 h-14 px-10 font-bold text-black bg-white rounded-lg text-base transition-all duration-300 hover:bg-zinc-100"
+          >
+            {primaryCta.text}
+            <span class="transform transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </a>
+        )}
+        {secondaryCta && (
+          <a
+            href={secondaryCta.url}
+            class="inline-flex items-center justify-center h-14 px-8 font-bold border-2 border-zinc-700 text-white rounded-lg hover:border-zinc-400 transition-colors text-base"
+          >
+            {secondaryCta.text}
+          </a>
+        )}
+      </div>
+
+      <!-- Stat row -->
+      <div class="flex items-center gap-8 pt-8 border-t border-zinc-800">
+        {stats.map((stat, i) => (
+          <>
+            <div>
+              <div class="text-2xl font-black text-white">{stat.value}</div>
+              <div class="text-xs font-bold uppercase tracking-widest text-zinc-500 mt-0.5">{stat.label}</div>
+            </div>
+            {i < stats.length - 1 && (
+              <div class="w-px h-8 bg-zinc-800 shrink-0" />
+            )}
+          </>
+        ))}
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL: Full-height image + bottom stat card -->
+  <div class="lg:w-1/2 relative min-h-[50vh] lg:min-h-0">
+    {image ? (
+      <img
+        src={image.src}
+        alt={image.alt}
+        class="absolute inset-0 w-full h-full object-cover"
+        loading="eager"
+      />
+    ) : (
+      <div class="absolute inset-0 bg-linear-to-br from-zinc-800 to-zinc-900" />
+    )}
+
+    <!-- Subtle dark gradient at bottom for card legibility -->
+    <div class="absolute inset-x-0 bottom-0 h-48 bg-linear-to-t from-black/60 to-transparent" />
+
+    <!-- Trust badge card anchored bottom-left -->
+    {trustBadge && (
+      <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10 bg-white/10 dark:bg-black/30 backdrop-blur-md border border-white/20 rounded-2xl px-5 py-4 flex items-center gap-4 shadow-xl">
+        <span class="text-3xl">{trustBadge.icon}</span>
+        <div>
+          <div class="font-bold text-white text-sm leading-tight">{trustBadge.title}</div>
+          <div class="text-white/60 text-xs mt-0.5">{trustBadge.subtitle}</div>
+        </div>
+      </div>
+    )}
+  </div>
+
+</section>

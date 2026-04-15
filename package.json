@@ -4,11 +4,14 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "tinacms dev -c \"astro dev\"",
-    "build": "tinacms build && astro build",
+    "dev": "pnpm run export-all && tinacms dev -c \"astro dev\"",
+    "build": "pnpm run export-all && tinacms build && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "capture-previews": "node scripts/capture-previews.mjs"
+    "capture-previews": "node scripts/capture-previews.mjs",
+    "export-registry": "tsx scripts/export-registry.mjs",
+    "export-tokens": "node scripts/export-tokens.mjs",
+    "export-all": "pnpm run export-registry && pnpm run export-tokens"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.6.1",
@@ -45,6 +48,7 @@
     "@tailwindcss/vite": "^4",
     "@types/alpinejs": "^3.13.11",
     "playwright": "^1.58.2",
-    "tailwindcss": "^4"
+    "tailwindcss": "^4",
+    "tsx": "^4.21.0"
   }
 }

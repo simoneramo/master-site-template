@@ -38,4 +38,4 @@ node_modules
 .netlify
 
 .agent
-.antigravity
+.antigravity.claude/settings.local.json

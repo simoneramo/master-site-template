@@ -1,0 +1,140 @@
+---
+/**
+ * HeroTypographic — Typographic Editorial Hero
+ * Pattern key: typographic
+ * Section: Hero
+ *
+ * No image required. The headline IS the design — oversized type dominates
+ * the viewport. Some words render as outline-stroked text for depth.
+ * Description + CTA sit below a horizontal rule. Trust info anchors the bottom.
+ * Great for creative agencies, portfolios, consultancies.
+ */
+import type { HeroData } from '../../../data/sample-data';
+
+interface Props {
+  data: HeroData;
+}
+
+const { data } = Astro.props;
+const {
+  eyebrow,
+  heading,
+  headingAccent,
+  description,
+  primaryCta,
+  secondaryCta,
+  trustBadge,
+} = data;
+
+let headingBefore = heading;
+let headingAfter = '';
+if (headingAccent && heading.includes(headingAccent)) {
+  const idx = heading.indexOf(headingAccent);
+  headingBefore = heading.slice(0, idx);
+  headingAfter = heading.slice(idx + headingAccent.length);
+}
+---
+
+<section class="min-h-screen bg-white dark:bg-zinc-950 flex flex-col">
+
+  <!-- Top strip: eyebrow label + decorative counter -->
+  <div class="border-b border-zinc-200 dark:border-zinc-800 py-4">
+    <div class="container mx-auto px-4 md:px-8 flex items-center justify-between">
+      {eyebrow ? (
+        <span class="text-xs font-bold uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
+          {eyebrow}
+        </span>
+      ) : (
+        <span />
+      )}
+      <span class="text-xs font-mono text-zinc-400 dark:text-zinc-600 tabular-nums">01 / Hero</span>
+    </div>
+  </div>
+
+  <!-- Main content: fills remaining height -->
+  <div class="flex-1 flex flex-col justify-center">
+    <div class="container mx-auto px-4 md:px-8 py-12 md:py-20">
+
+      <!-- Giant headline block -->
+      <div class="mb-10 md:mb-14">
+        <!-- Line 1: normal heading text (outline style on dark, solid on light) -->
+        {headingBefore && (
+          <div class="overflow-hidden leading-none mb-2">
+            <p
+              class="text-[clamp(3.5rem,10vw,9rem)] font-black leading-none tracking-tight uppercase text-zinc-950 dark:text-white"
+            >
+              {headingBefore}
+            </p>
+          </div>
+        )}
+
+        <!-- Line 2: accent word — outlined text treatment -->
+        {headingAccent && (
+          <div class="overflow-hidden leading-none mb-2">
+            <p
+              class="text-[clamp(3.5rem,10vw,9rem)] font-black leading-none tracking-tight uppercase text-transparent"
+              style="-webkit-text-stroke: 2px rgb(99 102 241); color: transparent;"
+            >
+              {headingAccent}
+            </p>
+          </div>
+        )}
+
+        <!-- Line 3: tail of heading (if any) — solid fill -->
+        {headingAfter && (
+          <div class="overflow-hidden leading-none">
+            <p
+              class="text-[clamp(3.5rem,10vw,9rem)] font-black leading-none tracking-tight uppercase text-zinc-950 dark:text-white"
+            >
+              {headingAfter.trim()}
+            </p>
+          </div>
+        )}
+      </div>
+
+      <!-- Divider rule -->
+      <div class="border-t border-zinc-200 dark:border-zinc-800 mb-8 md:mb-10" />
+
+      <!-- Bottom row: description left + CTAs right -->
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+        <p class="text-lg md:text-xl text-zinc-600 dark:text-zinc-400 max-w-xl leading-relaxed">
+          {description}
+        </p>
+
+        <div class="flex flex-wrap gap-4 flex-shrink-0">
+          {primaryCta && (
+            <a
+              href={primaryCta.url}
+              class="group inline-flex items-center justify-center gap-3 h-14 px-10 font-bold text-white bg-zinc-950 dark:bg-white dark:text-zinc-950 rounded-lg text-base transition-all duration-300 hover:bg-zinc-800 dark:hover:bg-zinc-100"
+            >
+              {primaryCta.text}
+              <span class="transform transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </a>
+          )}
+          {secondaryCta && (
+            <a
+              href={secondaryCta.url}
+              class="inline-flex items-center justify-center h-14 px-8 font-bold border-2 border-zinc-300 dark:border-zinc-700 rounded-lg text-base hover:border-zinc-500 dark:hover:border-zinc-500 transition-colors"
+            >
+              {secondaryCta.text}
+            </a>
+          )}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom strip: trust badge anchored to footer of section -->
+  {trustBadge && (
+    <div class="border-t border-zinc-200 dark:border-zinc-800 py-4">
+      <div class="container mx-auto px-4 md:px-8 flex items-center gap-4">
+        <span class="text-xl">{trustBadge.icon}</span>
+        <span class="font-bold text-sm text-zinc-900 dark:text-white">{trustBadge.title}</span>
+        <span class="text-zinc-300 dark:text-zinc-700">—</span>
+        <span class="text-sm text-zinc-500 dark:text-zinc-400">{trustBadge.subtitle}</span>
+      </div>
+    </div>
+  )}
+
+</section>

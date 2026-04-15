@@ -1,0 +1,3889 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-04-15T02:05:27.292Z",
+  "sections": [
+    {
+      "slug": "headers",
+      "label": "Navigation / Header",
+      "icon": "🧭",
+      "dataKey": "SAMPLE_HEADER",
+      "fields": [
+        {
+          "name": "logo",
+          "label": "Logo",
+          "type": "string",
+          "required": true,
+          "description": "Logo text or image path"
+        },
+        {
+          "name": "navLinks",
+          "label": "Navigation Links",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "URL",
+              "type": "url",
+              "required": true
+            },
+            {
+              "name": "children",
+              "label": "Dropdown Items",
+              "type": "string",
+              "list": true,
+              "fields": [
+                {
+                  "name": "label",
+                  "label": "Label",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "url",
+                  "label": "URL",
+                  "type": "url",
+                  "required": true
+                },
+                {
+                  "name": "description",
+                  "label": "Description",
+                  "type": "string"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "cta",
+          "label": "CTA Button",
+          "type": "string",
+          "required": true,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "phone",
+          "label": "Phone Number",
+          "type": "string"
+        },
+        {
+          "name": "topBar",
+          "label": "Top Bar",
+          "type": "string",
+          "description": "Optional info strip above main navigation",
+          "fields": [
+            {
+              "name": "phone",
+              "label": "Phone",
+              "type": "string"
+            },
+            {
+              "name": "email",
+              "label": "Email",
+              "type": "string"
+            },
+            {
+              "name": "hours",
+              "label": "Business Hours",
+              "type": "string"
+            },
+            {
+              "name": "socials",
+              "label": "Social Links",
+              "type": "string",
+              "list": true,
+              "fields": [
+                {
+                  "name": "platform",
+                  "label": "Platform",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "url",
+                  "label": "URL",
+                  "type": "url",
+                  "required": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "standard",
+          "label": "Standard",
+          "component": "HeaderStandard",
+          "brief": "Sticky header with logo left, nav right, CTA far right. Mobile hamburger with slide-out drawer.",
+          "status": "ready",
+          "preview": "/previews/headers/standard.png"
+        },
+        {
+          "key": "withPhone",
+          "label": "With Phone",
+          "component": "HeaderWithPhone",
+          "brief": "Sticky header with phone number displayed before the CTA button. Mobile: tap-to-call icon.",
+          "status": "ready",
+          "preview": "/previews/headers/withPhone.png"
+        },
+        {
+          "key": "centeredLogo",
+          "label": "Centered Logo",
+          "component": "HeaderCenteredLogo",
+          "brief": "Logo centered, nav links split evenly on either side. CTA far right.",
+          "status": "ready",
+          "preview": "/previews/headers/centeredLogo.png"
+        },
+        {
+          "key": "transparent",
+          "label": "Transparent Overlay",
+          "component": "HeaderTransparent",
+          "brief": "Transparent header overlaying hero. Transitions to solid on scroll.",
+          "status": "ready",
+          "preview": "/previews/headers/transparent.png"
+        },
+        {
+          "key": "topBarNav",
+          "label": "Top Bar + Nav",
+          "component": "HeaderTopBarNav",
+          "brief": "Two-tier: thin info strip on top, main nav below. Top bar hides on scroll.",
+          "status": "ready",
+          "preview": "/previews/headers/topBarNav.png"
+        },
+        {
+          "key": "megaMenu",
+          "label": "Mega Menu",
+          "component": "HeaderMegaMenu",
+          "brief": "Full-width mega menu dropdown with multi-column content on hover/click.",
+          "status": "ready",
+          "preview": "/previews/headers/megaMenu.png"
+        },
+        {
+          "key": "minimal",
+          "label": "Minimal (Logo + Burger)",
+          "component": "HeaderMinimal",
+          "brief": "Logo left, hamburger right on all screens. Full-screen overlay menu.",
+          "status": "ready",
+          "preview": "/previews/headers/minimal.png"
+        },
+        {
+          "key": "sidebar",
+          "label": "Sidebar Navigation",
+          "component": "HeaderSidebar",
+          "brief": "Vertical sidebar fixed to the left. Main content shifts right.",
+          "status": "ready",
+          "preview": "/previews/headers/sidebar.png"
+        },
+        {
+          "key": "floatingPill",
+          "label": "Floating Pill",
+          "component": "HeaderFloatingPill",
+          "brief": "Floating pill header that transforms on scroll. Logo left, nav center, CTA right.",
+          "status": "ready",
+          "preview": "/previews/headers/floatingPill.png"
+        },
+        {
+          "key": "floatingPillTest",
+          "label": "Floating Pill (Test)",
+          "component": "HeaderFloatingPillTest",
+          "brief": "Direct port of reference demo — test only.",
+          "status": "ready",
+          "preview": "/previews/headers/floatingPillTest.png"
+        }
+      ]
+    },
+    {
+      "slug": "heroes",
+      "label": "Hero",
+      "icon": "🦸",
+      "dataKey": "SAMPLE_HERO",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "headingAccent",
+          "label": "Heading Accent",
+          "type": "string",
+          "description": "Word(s) to highlight in accent colour"
+        },
+        {
+          "name": "primaryCta",
+          "label": "Primary CTA",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "secondaryCta",
+          "label": "Secondary CTA",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "image",
+          "label": "Hero Image",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Image Source",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Alt Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "trustBadge",
+          "label": "Trust Badge",
+          "type": "string",
+          "fields": [
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "subtitle",
+              "label": "Subtitle",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "rotatingWords",
+          "label": "Rotating Words",
+          "type": "string",
+          "list": true,
+          "description": "Words that cycle in animated text variant"
+        },
+        {
+          "name": "slides",
+          "label": "Carousel Slides",
+          "type": "string",
+          "list": true,
+          "description": "Slides for the slider/carousel variant",
+          "fields": [
+            {
+              "name": "heading",
+              "label": "Heading",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "cta",
+              "label": "Slide CTA",
+              "type": "string",
+              "required": true,
+              "fields": [
+                {
+                  "name": "text",
+                  "label": "Button Text",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "url",
+                  "label": "Button URL",
+                  "type": "url",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "name": "image",
+              "label": "Slide Image",
+              "type": "string",
+              "required": true,
+              "fields": [
+                {
+                  "name": "src",
+                  "label": "Image Source",
+                  "type": "image",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "label": "Alt Text",
+                  "type": "string",
+                  "required": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "formFields",
+          "label": "Form Fields",
+          "type": "string",
+          "list": true,
+          "description": "Fields for the form variant",
+          "fields": [
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "type",
+              "label": "Input Type",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "placeholder",
+              "label": "Placeholder",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "splitLR",
+          "label": "Copy Left / Image Right",
+          "component": "HeroSplitLR",
+          "brief": "Two-column (55/45). Text left with eyebrow, headline, CTAs. Image right with floating trust badge.",
+          "status": "ready",
+          "preview": "/previews/heroes/splitLR.png"
+        },
+        {
+          "key": "splitRL",
+          "label": "Image Left / Copy Right",
+          "component": "HeroSplitRL",
+          "brief": "Two-column (45/55). Image left, text content right.",
+          "status": "ready",
+          "preview": "/previews/heroes/splitRL.png"
+        },
+        {
+          "key": "centered",
+          "label": "Centered",
+          "component": "HeroCentered",
+          "brief": "Full-width centered layout. Eyebrow, headline, CTAs, then large image below.",
+          "status": "ready",
+          "preview": "/previews/heroes/centered.png"
+        },
+        {
+          "key": "fullBleed",
+          "label": "Full-Bleed Image",
+          "component": "HeroFullBleed",
+          "brief": "Full-viewport background image with dark gradient overlay. Text over image.",
+          "status": "ready",
+          "preview": "/previews/heroes/fullBleed.png"
+        },
+        {
+          "key": "video",
+          "label": "Video Background",
+          "component": "HeroVideo",
+          "brief": "Full-viewport background video (muted, autoplay, loop). Dark overlay with text.",
+          "status": "ready",
+          "preview": "/previews/heroes/video.png"
+        },
+        {
+          "key": "splitForm",
+          "label": "Split with Form",
+          "component": "HeroSplitForm",
+          "brief": "Text left with trust indicators. Lead capture form card on the right.",
+          "status": "ready",
+          "preview": "/previews/heroes/splitForm.png"
+        },
+        {
+          "key": "animatedText",
+          "label": "Animated Text Hero",
+          "component": "HeroAnimatedText",
+          "brief": "Centered headline with one rotating/typed word cycling through keywords.",
+          "status": "ready",
+          "preview": "/previews/heroes/animatedText.png"
+        },
+        {
+          "key": "slider",
+          "label": "Hero Slider / Carousel",
+          "component": "HeroSlider",
+          "brief": "Full-viewport carousel auto-advancing through 3–4 slides with unique content.",
+          "status": "ready",
+          "preview": "/previews/heroes/slider.png"
+        },
+        {
+          "key": "parallax",
+          "label": "Parallax",
+          "component": "HeroParallax",
+          "brief": "Full-viewport hero with parallax background image scrolling at slower rate.",
+          "status": "ready",
+          "preview": "/previews/heroes/parallax.png"
+        },
+        {
+          "key": "abstractDark",
+          "label": "Abstract Dark",
+          "component": "HeroAbstractDark",
+          "brief": "Dark background with subtle grid and coloured blur blobs.",
+          "status": "ready",
+          "preview": "/previews/heroes/abstractDark.png"
+        },
+        {
+          "key": "editorialSplit",
+          "label": "Editorial Split",
+          "component": "HeroEditorialSplit",
+          "brief": "Large bold headline top-left on white, full-height rounded image right. Description card and pill CTAs anchored to the bottom of the image.",
+          "status": "ready",
+          "preview": "/previews/heroes/editorialSplit.png"
+        },
+        {
+          "key": "headlineSplit",
+          "label": "Headline Split",
+          "component": "HeroHeadlineSplit",
+          "brief": "Two-row layout: intro text + pill CTA left, large headline right on top. Full-width image below.",
+          "status": "ready",
+          "preview": "/previews/heroes/headlineSplit.png"
+        },
+        {
+          "key": "topSplit",
+          "label": "Top Split",
+          "component": "HeroTopSplit",
+          "brief": "Two-row layout: headline left, description + CTA right on top. Full-width image with floating card overlay below.",
+          "status": "ready",
+          "preview": "/previews/heroes/topSplit.png"
+        },
+        {
+          "key": "fullBleedBottom",
+          "label": "Full-Bleed Bottom Bar",
+          "component": "HeroFullBleedBottom",
+          "brief": "Full-viewport background image with dark overlay. Large bold headline on left. Bottom bar with address, contact, and CTA card.",
+          "status": "ready",
+          "preview": "/previews/heroes/fullBleedBottom.png"
+        },
+        {
+          "key": "gradientMesh",
+          "label": "Gradient Mesh",
+          "component": "HeroGradientMesh",
+          "brief": "Soft coloured gradient orbs on white/dark background. Centered layout with gradient text accent. Great for SaaS, startups, creative tools.",
+          "status": "ready",
+          "preview": "/previews/heroes/gradientMesh.png"
+        },
+        {
+          "key": "bento",
+          "label": "Bento Grid",
+          "component": "HeroBento",
+          "brief": "Bento-box grid of rounded cards: large headline card, tall image card, trust stat card, brand accent card. Modern 2024/2025 grid aesthetic.",
+          "status": "ready",
+          "preview": "/previews/heroes/bento.png"
+        },
+        {
+          "key": "typographic",
+          "label": "Typographic Editorial",
+          "component": "HeroTypographic",
+          "brief": "No image required. Oversized display headline with outlined text accent dominates the viewport. Description and CTA below a rule. Great for agencies, portfolios, consultancies.",
+          "status": "ready",
+          "preview": "/previews/heroes/typographic.png"
+        },
+        {
+          "key": "socialProof",
+          "label": "Social Proof",
+          "component": "HeroSocialProof",
+          "brief": "Copy and CTAs left. Right column is stacked customer review cards with avatars, star ratings, and quotes. Maximises credibility above the fold for service businesses.",
+          "status": "ready",
+          "preview": "/previews/heroes/socialProof.png"
+        },
+        {
+          "key": "serviceList",
+          "label": "Service Checklist",
+          "component": "HeroServiceList",
+          "brief": "Headline and CTAs left. Right column shows a branded \"what's included\" checklist card. Uses rotatingWords as items. Great for trades, accounting, legal, consulting.",
+          "status": "ready",
+          "preview": "/previews/heroes/serviceList.png"
+        },
+        {
+          "key": "darkSplit",
+          "label": "Dark Color-Block Split",
+          "component": "HeroDarkSplit",
+          "brief": "Full-viewport hard split: dark branded left panel with headline, CTAs, and inline stats. Full-height image bleeds to the right edge with a trust badge overlay. Bold, corporate, B2B.",
+          "status": "ready",
+          "preview": "/previews/heroes/darkSplit.png"
+        }
+      ]
+    },
+    {
+      "slug": "trust_bars",
+      "label": "Trust Bar",
+      "icon": "🤝",
+      "dataKey": "SAMPLE_TRUST_BAR",
+      "fields": [
+        {
+          "name": "logos",
+          "label": "Logos",
+          "type": "string",
+          "list": true,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Logo Image",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Company Name",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "trustStats",
+          "label": "Statistics",
+          "type": "string",
+          "list": true,
+          "fields": [
+            {
+              "name": "value",
+              "label": "Value",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "badges",
+          "label": "Trust Badges",
+          "type": "string",
+          "list": true,
+          "fields": [
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "text",
+              "label": "Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "testimonial",
+          "label": "Featured Testimonial",
+          "type": "string",
+          "fields": [
+            {
+              "name": "quote",
+              "label": "Quote",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "name",
+              "label": "Name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "photo",
+              "label": "Photo",
+              "type": "image"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "logoStrip",
+          "label": "Logo Strip",
+          "component": "TrustBarLogoStrip",
+          "brief": "Horizontal row of grayscale logos with hover-to-color transition.",
+          "status": "ready",
+          "preview": "/previews/trust_bars/logoStrip.png"
+        },
+        {
+          "key": "statsBar",
+          "label": "Stats Bar",
+          "component": "TrustBarStats",
+          "brief": "Three or four key statistics in a horizontal row with vertical dividers.",
+          "status": "ready",
+          "preview": "/previews/trust_bars/statsBar.png"
+        },
+        {
+          "key": "badgeRow",
+          "label": "Badge Row",
+          "component": "TrustBarBadges",
+          "brief": "Pill-shaped trust badges in a centered row (icon + text each).",
+          "status": "ready",
+          "preview": "/previews/trust_bars/badgeRow.png"
+        },
+        {
+          "key": "testimonialSnippet",
+          "label": "Testimonial Snippet",
+          "component": "TrustBarTestimonial",
+          "brief": "Logos on left, mini testimonial quote with photo on right.",
+          "status": "ready",
+          "preview": "/previews/trust_bars/testimonialSnippet.png"
+        },
+        {
+          "key": "animatedCounters",
+          "label": "Animated Counters",
+          "component": "TrustBarCounters",
+          "brief": "Four metrics that count up from 0 when scrolled into view.",
+          "status": "ready",
+          "preview": "/previews/trust_bars/animatedCounters.png"
+        },
+        {
+          "key": "keyProofPoints",
+          "label": "Key Proof Points",
+          "component": "TrustBarKeyProofPoints",
+          "brief": "Horizontal row of checkmark badges highlighting key trust factors.",
+          "status": "ready",
+          "preview": "/previews/trust_bars/keyProofPoints.png"
+        }
+      ]
+    },
+    {
+      "slug": "problems",
+      "label": "Problem / Agitation",
+      "icon": "⚡",
+      "dataKey": "SAMPLE_PROBLEM",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "painPoints",
+          "label": "Pain Points",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "string"
+            },
+            {
+              "name": "heading",
+              "label": "Heading",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "image",
+          "label": "Section Image",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Image Source",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Alt Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "comparison",
+          "label": "Comparison",
+          "type": "string",
+          "description": "Before/after or with/without comparison",
+          "fields": [
+            {
+              "name": "without",
+              "label": "Without Us",
+              "type": "string",
+              "required": true,
+              "fields": [
+                {
+                  "name": "heading",
+                  "label": "Heading",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "points",
+                  "label": "Points",
+                  "type": "string",
+                  "list": true,
+                  "required": true
+                }
+              ]
+            },
+            {
+              "name": "with",
+              "label": "With Us",
+              "type": "string",
+              "required": true,
+              "fields": [
+                {
+                  "name": "heading",
+                  "label": "Heading",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "points",
+                  "label": "Points",
+                  "type": "string",
+                  "list": true,
+                  "required": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "splitLR",
+          "label": "Split Layout",
+          "component": "ProblemSplit",
+          "brief": "Text left with pain points, relevant problem image on right.",
+          "status": "ready",
+          "preview": "/previews/problems/splitLR.png"
+        },
+        {
+          "key": "centeredIcons",
+          "label": "Centered with Icons",
+          "component": "ProblemCenteredIcons",
+          "brief": "Centered heading with 3 icon cards below, each showing a pain point.",
+          "status": "ready",
+          "preview": "/previews/problems/centeredIcons.png"
+        },
+        {
+          "key": "fullWidth",
+          "label": "Full-Width Statement",
+          "component": "ProblemFullWidth",
+          "brief": "Large bold statement spanning full width with supporting bullet points.",
+          "status": "ready",
+          "preview": "/previews/problems/fullWidth.png"
+        },
+        {
+          "key": "comparison",
+          "label": "Comparison Table",
+          "component": "ProblemComparison",
+          "brief": "Two-column comparison: \"Without Us\" (red) vs \"With Us\" (green).",
+          "status": "ready",
+          "preview": "/previews/problems/comparison.png"
+        },
+        {
+          "key": "stackedCards",
+          "label": "Stacked Pain Cards",
+          "component": "ProblemStackedCards",
+          "brief": "Vertical stack of full-width cards with progressive visual intensity.",
+          "status": "ready",
+          "preview": "/previews/problems/stackedCards.png"
+        }
+      ]
+    },
+    {
+      "slug": "solutions",
+      "label": "Solution",
+      "icon": "💡",
+      "dataKey": "SAMPLE_SOLUTION",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "benefits",
+          "label": "Benefits",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "string"
+            },
+            {
+              "name": "heading",
+              "label": "Heading",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "number",
+              "label": "Number",
+              "type": "number",
+              "description": "Display order number"
+            }
+          ]
+        },
+        {
+          "name": "image",
+          "label": "Section Image",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Image Source",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Alt Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "primaryCta",
+          "label": "Primary CTA",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "tabs",
+          "label": "Tabs",
+          "type": "string",
+          "list": true,
+          "description": "Content tabs for the tabbed variant",
+          "fields": [
+            {
+              "name": "label",
+              "label": "Tab Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "heading",
+              "label": "Heading",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "image",
+              "label": "Tab Image",
+              "type": "string",
+              "required": false,
+              "fields": [
+                {
+                  "name": "src",
+                  "label": "Image Source",
+                  "type": "image",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "label": "Alt Text",
+                  "type": "string",
+                  "required": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "splitRL",
+          "label": "Image Left / Copy Right",
+          "component": "SolutionSplitRL",
+          "brief": "Bright image left, solution text with benefits on right.",
+          "status": "ready",
+          "preview": "/previews/solutions/splitRL.png"
+        },
+        {
+          "key": "centered",
+          "label": "Centered Feature",
+          "component": "SolutionCentered",
+          "brief": "Centered heading, feature image/mockup, benefit grid below.",
+          "status": "ready",
+          "preview": "/previews/solutions/centered.png"
+        },
+        {
+          "key": "beforeAfter",
+          "label": "Before / After",
+          "component": "SolutionBeforeAfter",
+          "brief": "Side-by-side before (muted) and after (vibrant) comparison.",
+          "status": "ready",
+          "preview": "/previews/solutions/beforeAfter.png"
+        },
+        {
+          "key": "featureShowcase",
+          "label": "Feature Showcase",
+          "component": "SolutionShowcase",
+          "brief": "Central image/mockup with floating annotation cards pointing to features.",
+          "status": "ready",
+          "preview": "/previews/solutions/featureShowcase.png"
+        },
+        {
+          "key": "tabbed",
+          "label": "Tabbed Solutions",
+          "component": "SolutionTabbed",
+          "brief": "Horizontal tabs revealing tailored content per solution aspect.",
+          "status": "ready",
+          "preview": "/previews/solutions/tabbed.png"
+        }
+      ]
+    },
+    {
+      "slug": "services",
+      "label": "Services Grid",
+      "icon": "🔧",
+      "dataKey": "SAMPLE_SERVICES",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "services",
+          "label": "Services",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "string"
+            },
+            {
+              "name": "heading",
+              "label": "Heading",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "image",
+              "label": "Service Image",
+              "type": "string",
+              "required": false,
+              "fields": [
+                {
+                  "name": "src",
+                  "label": "Image Source",
+                  "type": "image",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "label": "Alt Text",
+                  "type": "string",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "name": "link",
+              "label": "Learn More Link",
+              "type": "string",
+              "required": false,
+              "fields": [
+                {
+                  "name": "text",
+                  "label": "Button Text",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "url",
+                  "label": "Button URL",
+                  "type": "url",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "name": "category",
+              "label": "Category",
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "threeCol",
+          "label": "3-Column Cards",
+          "component": "ServicesThreeCol",
+          "brief": "Three cards per row with icon, heading, description, and optional link.",
+          "status": "ready",
+          "preview": "/previews/services/threeCol.png"
+        },
+        {
+          "key": "altRows",
+          "label": "Alternating Rows",
+          "component": "ServicesAltRows",
+          "brief": "Full-width rows alternating image position left/right.",
+          "status": "ready",
+          "preview": "/previews/services/altRows.png"
+        },
+        {
+          "key": "featureCards",
+          "label": "Large Feature Cards",
+          "component": "ServicesFeatureCards",
+          "brief": "Two-column grid of tall cards with background images and overlay text.",
+          "status": "ready",
+          "preview": "/previews/services/featureCards.png"
+        },
+        {
+          "key": "bento",
+          "label": "Bento Grid",
+          "component": "ServicesBento",
+          "brief": "Asymmetric grid with one large tile spanning 2 columns/rows.",
+          "status": "ready",
+          "preview": "/previews/services/bento.png"
+        },
+        {
+          "key": "scroll",
+          "label": "Horizontal Scroll",
+          "component": "ServicesScroll",
+          "brief": "Horizontally scrolling card row with snap scrolling.",
+          "status": "ready",
+          "preview": "/previews/services/scroll.png"
+        },
+        {
+          "key": "tabbed",
+          "label": "Tabbed Services",
+          "component": "ServicesTabbed",
+          "brief": "Tab navigation at top, each tab reveals service content below.",
+          "status": "ready",
+          "preview": "/previews/services/tabbed.png"
+        },
+        {
+          "key": "iconOnly",
+          "label": "Compact Icon Grid",
+          "component": "ServicesIconGrid",
+          "brief": "Dense 4-column grid of icon + label tiles. Hover reveals description.",
+          "status": "ready",
+          "preview": "/previews/services/iconOnly.png"
+        },
+        {
+          "key": "accordion",
+          "label": "Accordion Services",
+          "component": "ServicesAccordion",
+          "brief": "Vertical accordion list, click to expand description and image.",
+          "status": "ready",
+          "preview": "/previews/services/accordion.png"
+        },
+        {
+          "key": "carousel",
+          "label": "Carousel Cards",
+          "component": "ServicesCarousel",
+          "brief": "Horizontal scrolling carousel of feature cards with snap points.",
+          "status": "ready",
+          "preview": "/previews/services/carousel.png"
+        }
+      ]
+    },
+    {
+      "slug": "features",
+      "label": "Features Grid",
+      "icon": "✨",
+      "dataKey": "SAMPLE_FEATURES",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "features",
+          "label": "Features",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "string"
+            },
+            {
+              "name": "heading",
+              "label": "Heading",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "image",
+          "label": "Section Image",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Image Source",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Alt Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "tabs",
+          "label": "Feature Tabs",
+          "type": "string",
+          "list": true,
+          "fields": [
+            {
+              "name": "label",
+              "label": "Tab Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "features",
+              "label": "Features",
+              "type": "string",
+              "list": true,
+              "fields": [
+                {
+                  "name": "icon",
+                  "label": "Icon",
+                  "type": "string"
+                },
+                {
+                  "name": "heading",
+                  "label": "Heading",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "description",
+                  "label": "Description",
+                  "type": "text",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "name": "image",
+              "label": "Tab Image",
+              "type": "string",
+              "required": false,
+              "fields": [
+                {
+                  "name": "src",
+                  "label": "Image Source",
+                  "type": "image",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "label": "Alt Text",
+                  "type": "string",
+                  "required": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "threeCol",
+          "label": "3-Column Grid",
+          "component": "FeaturesThreeCol",
+          "brief": "Three features per row with icon, heading, and description.",
+          "status": "ready",
+          "preview": "/previews/features/threeCol.png"
+        },
+        {
+          "key": "twoColImage",
+          "label": "2-Column with Image",
+          "component": "FeaturesTwoColImage",
+          "brief": "Large image left, stacked feature list right.",
+          "status": "ready",
+          "preview": "/previews/features/twoColImage.png"
+        },
+        {
+          "key": "checklist",
+          "label": "Checklist Style",
+          "component": "FeaturesChecklist",
+          "brief": "Vertical list with checkmark icons and feature descriptions.",
+          "status": "ready",
+          "preview": "/previews/features/checklist.png"
+        },
+        {
+          "key": "fourColGrid",
+          "label": "4-Column Icon Grid",
+          "component": "FeaturesFourCol",
+          "brief": "Four features per row with centered icons on tinted backgrounds.",
+          "status": "ready",
+          "preview": "/previews/features/fourColGrid.png"
+        },
+        {
+          "key": "tabbed",
+          "label": "Tabbed Features",
+          "component": "FeaturesTabbed",
+          "brief": "Tab row at top, each tab shows mockup + feature list.",
+          "status": "ready",
+          "preview": "/previews/features/tabbed.png"
+        },
+        {
+          "key": "stickyScroll",
+          "label": "Sticky Scroll",
+          "component": "FeaturesStickyScroll",
+          "brief": "Scrolling feature list left, sticky image right that changes per feature.",
+          "status": "ready",
+          "preview": "/previews/features/stickyScroll.png"
+        }
+      ]
+    },
+    {
+      "slug": "benefits",
+      "label": "Benefits",
+      "icon": "🎯",
+      "dataKey": "SAMPLE_BENEFITS",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "benefits",
+          "label": "Benefits",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "string"
+            },
+            {
+              "name": "heading",
+              "label": "Heading",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "number",
+              "label": "Number",
+              "type": "number",
+              "description": "Display order number"
+            }
+          ]
+        },
+        {
+          "name": "image",
+          "label": "Section Image",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Image Source",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Alt Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "iconList",
+          "label": "Icon List",
+          "component": "BenefitsIconList",
+          "brief": "Two-column grid of benefit items with icons, headings, and descriptions.",
+          "status": "ready",
+          "preview": "/previews/benefits/iconList.png"
+        },
+        {
+          "key": "altRows",
+          "label": "Alternating Rows",
+          "component": "BenefitsAltRows",
+          "brief": "Full-width rows alternating image/text for storytelling flow.",
+          "status": "ready",
+          "preview": "/previews/benefits/altRows.png"
+        },
+        {
+          "key": "numbered",
+          "label": "Numbered Benefits",
+          "component": "BenefitsNumbered",
+          "brief": "Numbered list with large styled numbers in accent color.",
+          "status": "ready",
+          "preview": "/previews/benefits/numbered.png"
+        },
+        {
+          "key": "vsComparison",
+          "label": "Us vs. Competitors",
+          "component": "BenefitsComparison",
+          "brief": "Comparison table with your business highlighted against competitors.",
+          "status": "ready",
+          "preview": "/previews/benefits/vsComparison.png"
+        },
+        {
+          "key": "usVsCompetitors",
+          "label": "Comparison Table",
+          "component": "BenefitsUsVsCompetitors",
+          "brief": "Full-width comparison table with sticky first column and optional CTA link.",
+          "status": "ready",
+          "preview": "/previews/benefits/usVsCompetitors.png"
+        },
+        {
+          "key": "splitShowcase",
+          "label": "Split Showcase",
+          "component": "BenefitsSplitShowcase",
+          "brief": "Large image left, stacked benefits with icons on right.",
+          "status": "ready",
+          "preview": "/previews/benefits/splitShowcase.png"
+        },
+        {
+          "key": "timeline",
+          "label": "Benefits Timeline",
+          "component": "BenefitsTimeline",
+          "brief": "Horizontal timeline with benefit stops alternating above/below.",
+          "status": "ready",
+          "preview": "/previews/benefits/timeline.png"
+        }
+      ]
+    },
+    {
+      "slug": "videos",
+      "label": "Video / Demo",
+      "icon": "🎬",
+      "dataKey": "SAMPLE_VIDEO",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "videoUrl",
+          "label": "Video URL",
+          "type": "url",
+          "description": "Embed URL for the video"
+        },
+        {
+          "name": "thumbnailImage",
+          "label": "Thumbnail Image",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Image Source",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Alt Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "videos",
+          "label": "Video Gallery",
+          "type": "string",
+          "list": true,
+          "fields": [
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "thumbnailImage",
+              "label": "Thumbnail",
+              "type": "string",
+              "required": true,
+              "fields": [
+                {
+                  "name": "src",
+                  "label": "Image Source",
+                  "type": "image",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "label": "Alt Text",
+                  "type": "string",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "name": "videoUrl",
+              "label": "Video URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "testimonial",
+          "label": "Video Testimonial",
+          "type": "string",
+          "fields": [
+            {
+              "name": "name",
+              "label": "Name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string"
+            },
+            {
+              "name": "company",
+              "label": "Company",
+              "type": "string"
+            },
+            {
+              "name": "rating",
+              "label": "Rating (1-5)",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "centered",
+          "label": "Centered Video",
+          "component": "VideoCentered",
+          "brief": "Centered heading above video embed/thumbnail with play button overlay.",
+          "status": "ready",
+          "preview": "/previews/videos/centered.png"
+        },
+        {
+          "key": "splitText",
+          "label": "Split with Text",
+          "component": "VideoSplitText",
+          "brief": "Two-column: text and CTA left, video right.",
+          "status": "ready",
+          "preview": "/previews/videos/splitText.png"
+        },
+        {
+          "key": "fullWidth",
+          "label": "Full-Width",
+          "component": "VideoFullWidth",
+          "brief": "Full-width video with minimal padding. Heading above.",
+          "status": "ready",
+          "preview": "/previews/videos/fullWidth.png"
+        },
+        {
+          "key": "multiVideo",
+          "label": "Video Tabs / Gallery",
+          "component": "VideoGallery",
+          "brief": "Tab/thumbnail strip with multiple videos. Click to swap main player.",
+          "status": "ready",
+          "preview": "/previews/videos/multiVideo.png"
+        },
+        {
+          "key": "testimonialVideo",
+          "label": "Video Testimonial",
+          "component": "VideoTestimonial",
+          "brief": "Customer testimonial video with name, title, and star rating below.",
+          "status": "ready",
+          "preview": "/previews/videos/testimonialVideo.png"
+        }
+      ]
+    },
+    {
+      "slug": "testimonials",
+      "label": "Testimonials / Reviews",
+      "icon": "⭐",
+      "dataKey": "SAMPLE_TESTIMONIALS",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "testimonials",
+          "label": "Testimonials",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "quote",
+              "label": "Quote",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "name",
+              "label": "Name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "title",
+              "label": "Job Title",
+              "type": "string"
+            },
+            {
+              "name": "company",
+              "label": "Company",
+              "type": "string"
+            },
+            {
+              "name": "location",
+              "label": "Location",
+              "type": "string"
+            },
+            {
+              "name": "photo",
+              "label": "Photo",
+              "type": "image"
+            },
+            {
+              "name": "rating",
+              "label": "Rating (1-5)",
+              "type": "number"
+            },
+            {
+              "name": "logo",
+              "label": "Company Logo",
+              "type": "string",
+              "required": false,
+              "fields": [
+                {
+                  "name": "src",
+                  "label": "Image Source",
+                  "type": "image",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "label": "Alt Text",
+                  "type": "string",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "name": "platform",
+              "label": "Platform",
+              "type": "string",
+              "description": "e.g. Google, Facebook, Yelp"
+            }
+          ]
+        },
+        {
+          "name": "averageRating",
+          "label": "Average Rating",
+          "type": "number"
+        },
+        {
+          "name": "totalReviews",
+          "label": "Total Reviews",
+          "type": "number"
+        },
+        {
+          "name": "ratingBreakdown",
+          "label": "Rating Breakdown",
+          "type": "string",
+          "list": true,
+          "fields": [
+            {
+              "name": "stars",
+              "label": "Stars",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "percentage",
+              "label": "Percentage",
+              "type": "number",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "threeCol",
+          "label": "3-Column Cards",
+          "component": "TestimonialsThreeCol",
+          "brief": "Three cards with star rating, quote, customer name, and optional avatar.",
+          "status": "ready",
+          "preview": "/previews/testimonials/threeCol.png"
+        },
+        {
+          "key": "featured",
+          "label": "Single Featured",
+          "component": "TestimonialsFeatured",
+          "brief": "One large centered testimonial with decorative quote marks and photo.",
+          "status": "ready",
+          "preview": "/previews/testimonials/featured.png"
+        },
+        {
+          "key": "carousel",
+          "label": "Carousel / Slider",
+          "component": "TestimonialsCarousel",
+          "brief": "Single testimonial visible, auto-advances with arrows and dots.",
+          "status": "ready",
+          "preview": "/previews/testimonials/carousel.png"
+        },
+        {
+          "key": "masonry",
+          "label": "Masonry Grid",
+          "component": "TestimonialsMasonry",
+          "brief": "Mixed-size cards in masonry layout for organic visual rhythm.",
+          "status": "ready",
+          "preview": "/previews/testimonials/masonry.png"
+        },
+        {
+          "key": "logoQuote",
+          "label": "Logo + Quote",
+          "component": "TestimonialsLogoQuote",
+          "brief": "Wide horizontal cards: company logo, quote text, customer info.",
+          "status": "ready",
+          "preview": "/previews/testimonials/logoQuote.png"
+        },
+        {
+          "key": "socialEmbed",
+          "label": "Social Proof Wall",
+          "component": "TestimonialsSocialWall",
+          "brief": "Grid styled as social media posts with platform icons.",
+          "status": "ready",
+          "preview": "/previews/testimonials/socialEmbed.png"
+        },
+        {
+          "key": "ratingBreakdown",
+          "label": "Rating Breakdown",
+          "component": "TestimonialsRatingBreakdown",
+          "brief": "Large average rating with bar chart breakdown and quote snippets.",
+          "status": "ready",
+          "preview": "/previews/testimonials/ratingBreakdown.png"
+        },
+        {
+          "key": "marquee",
+          "label": "Scrolling Marquee",
+          "component": "TestimonialsMarqueeSection",
+          "brief": "Infinite horizontal scroll of testimonial cards with pause on hover.",
+          "status": "ready",
+          "preview": "/previews/testimonials/marquee.png"
+        }
+      ]
+    },
+    {
+      "slug": "portfolios",
+      "label": "Portfolio / Gallery",
+      "icon": "🖼️",
+      "dataKey": "SAMPLE_PORTFOLIO",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "categories",
+          "label": "Filter Categories",
+          "type": "string",
+          "list": true
+        },
+        {
+          "name": "projects",
+          "label": "Projects",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "category",
+              "label": "Category",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text"
+            },
+            {
+              "name": "image",
+              "label": "Project Image",
+              "type": "string",
+              "required": true,
+              "fields": [
+                {
+                  "name": "src",
+                  "label": "Image Source",
+                  "type": "image",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "label": "Alt Text",
+                  "type": "string",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "name": "metric",
+              "label": "Key Metric",
+              "type": "string",
+              "description": "e.g. \"+120% conversions\""
+            },
+            {
+              "name": "link",
+              "label": "Project Link",
+              "type": "url"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "masonry",
+          "label": "Masonry Grid",
+          "component": "PortfolioMasonry",
+          "brief": "Asymmetric image grid with hover overlays showing project title.",
+          "status": "ready",
+          "preview": "/previews/portfolios/masonry.png"
+        },
+        {
+          "key": "uniform",
+          "label": "Uniform Grid",
+          "component": "PortfolioUniform",
+          "brief": "Even grid with consistent aspect ratios and hover overlays.",
+          "status": "ready",
+          "preview": "/previews/portfolios/uniform.png"
+        },
+        {
+          "key": "featuredGrid",
+          "label": "Featured + Grid",
+          "component": "PortfolioFeatured",
+          "brief": "One large hero image at top, smaller grid below.",
+          "status": "ready",
+          "preview": "/previews/portfolios/featuredGrid.png"
+        },
+        {
+          "key": "scroll",
+          "label": "Horizontal Scroll",
+          "component": "PortfolioScroll",
+          "brief": "Large horizontally scrolling images with scroll-snap.",
+          "status": "ready",
+          "preview": "/previews/portfolios/scroll.png"
+        },
+        {
+          "key": "filtered",
+          "label": "Filtered Gallery",
+          "component": "PortfolioFiltered",
+          "brief": "Category filter pills at top, grid filters with smooth transitions.",
+          "status": "ready",
+          "preview": "/previews/portfolios/filtered.png"
+        },
+        {
+          "key": "lightbox",
+          "label": "Lightbox Gallery",
+          "component": "PortfolioLightbox",
+          "brief": "Thumbnail grid, click opens full-screen lightbox with navigation.",
+          "status": "ready",
+          "preview": "/previews/portfolios/lightbox.png"
+        },
+        {
+          "key": "caseStudy",
+          "label": "Case Study Cards",
+          "component": "PortfolioCaseStudy",
+          "brief": "Two-column cards with image, title, description, and key metric.",
+          "status": "ready",
+          "preview": "/previews/portfolios/caseStudy.png"
+        }
+      ]
+    },
+    {
+      "slug": "processes",
+      "label": "Process / How it Works",
+      "icon": "🔄",
+      "dataKey": "SAMPLE_PROCESS",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "steps",
+          "label": "Steps",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "number",
+              "label": "Step Number",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "string"
+            },
+            {
+              "name": "heading",
+              "label": "Heading",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "image",
+              "label": "Step Image",
+              "type": "string",
+              "required": false,
+              "fields": [
+                {
+                  "name": "src",
+                  "label": "Image Source",
+                  "type": "image",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "label": "Alt Text",
+                  "type": "string",
+                  "required": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "numbered",
+          "label": "Numbered Steps",
+          "component": "ProcessNumbered",
+          "brief": "Horizontal row of numbered circles with headings, connected by lines.",
+          "status": "ready",
+          "preview": "/previews/processes/numbered.png"
+        },
+        {
+          "key": "timeline",
+          "label": "Vertical Timeline",
+          "component": "ProcessTimeline",
+          "brief": "Centered vertical line with steps alternating left and right.",
+          "status": "ready",
+          "preview": "/previews/processes/timeline.png"
+        },
+        {
+          "key": "iconCards",
+          "label": "Icon Step Cards",
+          "component": "ProcessIconCards",
+          "brief": "Card per step with step number, large icon, heading, description.",
+          "status": "ready",
+          "preview": "/previews/processes/iconCards.png"
+        },
+        {
+          "key": "interactive",
+          "label": "Interactive Steps",
+          "component": "ProcessInteractive",
+          "brief": "Clickable step tabs at top revealing detailed content below.",
+          "status": "ready",
+          "preview": "/previews/processes/interactive.png"
+        },
+        {
+          "key": "roadmap",
+          "label": "Journey Roadmap",
+          "component": "ProcessRoadmap",
+          "brief": "Winding horizontal path with stops at each process step.",
+          "status": "ready",
+          "preview": "/previews/processes/roadmap.png"
+        }
+      ]
+    },
+    {
+      "slug": "pricing",
+      "label": "Pricing",
+      "icon": "💰",
+      "dataKey": "SAMPLE_PRICING",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "tiers",
+          "label": "Pricing Tiers",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "name",
+              "label": "Plan Name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "monthlyPrice",
+              "label": "Monthly Price",
+              "type": "number"
+            },
+            {
+              "name": "annualPrice",
+              "label": "Annual Price",
+              "type": "number"
+            },
+            {
+              "name": "price",
+              "label": "Display Price",
+              "type": "string",
+              "description": "Formatted price string (e.g. \"$99\")"
+            },
+            {
+              "name": "period",
+              "label": "Billing Period",
+              "type": "string",
+              "description": "e.g. \"/month\""
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "features",
+              "label": "Features",
+              "type": "string",
+              "list": true,
+              "required": true,
+              "fields": [
+                {
+                  "name": "text",
+                  "label": "Feature Text",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "included",
+                  "label": "Included",
+                  "type": "boolean",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "name": "cta",
+              "label": "Plan CTA",
+              "type": "string",
+              "required": true,
+              "fields": [
+                {
+                  "name": "text",
+                  "label": "Button Text",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "url",
+                  "label": "Button URL",
+                  "type": "url",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "name": "recommended",
+              "label": "Recommended",
+              "type": "boolean",
+              "description": "Highlight this plan"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "threeCol",
+          "label": "3-Tier Cards",
+          "component": "PricingThreeTier",
+          "brief": "Three pricing cards, middle highlighted as recommended.",
+          "status": "ready",
+          "preview": "/previews/pricing/threeCol.png"
+        },
+        {
+          "key": "twoCol",
+          "label": "2-Plan Comparison",
+          "component": "PricingTwoCol",
+          "brief": "Two plans side by side with optional feature comparison table below.",
+          "status": "ready",
+          "preview": "/previews/pricing/twoCol.png"
+        },
+        {
+          "key": "single",
+          "label": "Single Plan",
+          "component": "PricingSingle",
+          "brief": "One centered plan card with feature checklist and CTA.",
+          "status": "ready",
+          "preview": "/previews/pricing/single.png"
+        },
+        {
+          "key": "toggleBilling",
+          "label": "Toggle Monthly / Annual",
+          "component": "PricingToggle",
+          "brief": "Monthly/Annual toggle switch above pricing cards with animated price swap.",
+          "status": "ready",
+          "preview": "/previews/pricing/toggleBilling.png"
+        },
+        {
+          "key": "featureMatrix",
+          "label": "Feature Comparison Matrix",
+          "component": "PricingMatrix",
+          "brief": "Plans as column headers on a feature comparison table with checkmarks.",
+          "status": "ready",
+          "preview": "/previews/pricing/featureMatrix.png"
+        }
+      ]
+    },
+    {
+      "slug": "faqs",
+      "label": "FAQ",
+      "icon": "❓",
+      "dataKey": "SAMPLE_FAQ",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "contactCta",
+          "label": "Contact CTA",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "categories",
+          "label": "Categories",
+          "type": "string",
+          "list": true
+        },
+        {
+          "name": "items",
+          "label": "FAQ Items",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "question",
+              "label": "Question",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "answer",
+              "label": "Answer",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "category",
+              "label": "Category",
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "accordion",
+          "label": "Accordion",
+          "component": "FaqAccordion",
+          "brief": "Vertical accordion list, one answer open at a time. Chevron rotates.",
+          "status": "ready",
+          "preview": "/previews/faqs/accordion.png"
+        },
+        {
+          "key": "twoColGrid",
+          "label": "Two-Column Grid",
+          "component": "FaqTwoColGrid",
+          "brief": "All Q&As visible in a 2-column card grid. No collapsing.",
+          "status": "ready",
+          "preview": "/previews/faqs/twoColGrid.png"
+        },
+        {
+          "key": "sideBySide",
+          "label": "Side-by-Side",
+          "component": "FaqSideBySide",
+          "brief": "Heading + CTA left, accordion right.",
+          "status": "ready",
+          "preview": "/previews/faqs/sideBySide.png"
+        },
+        {
+          "key": "categorised",
+          "label": "Categorised FAQ",
+          "component": "FaqCategorised",
+          "brief": "Category tabs/pills at top filtering different sets of Q&As.",
+          "status": "ready",
+          "preview": "/previews/faqs/categorised.png"
+        },
+        {
+          "key": "searchable",
+          "label": "Searchable FAQ",
+          "component": "FaqSearchable",
+          "brief": "Search input at top with real-time filtering of accordion items.",
+          "status": "ready",
+          "preview": "/previews/faqs/searchable.png"
+        }
+      ]
+    },
+    {
+      "slug": "newsletters",
+      "label": "Newsletter Signup",
+      "icon": "📧",
+      "dataKey": "SAMPLE_NEWSLETTER",
+      "fields": [
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text"
+        },
+        {
+          "name": "incentive",
+          "label": "Incentive",
+          "type": "string",
+          "description": "e.g. \"Get 10% Off Your First Project\""
+        },
+        {
+          "name": "newsletterBenefits",
+          "label": "Benefits",
+          "type": "string",
+          "list": true
+        },
+        {
+          "name": "trustText",
+          "label": "Trust Text",
+          "type": "string",
+          "description": "e.g. \"No spam, unsubscribe anytime\""
+        },
+        {
+          "name": "buttonText",
+          "label": "Button Text",
+          "type": "string"
+        }
+      ],
+      "variants": [
+        {
+          "key": "centered",
+          "label": "Centered",
+          "component": "NewsletterCentered",
+          "brief": "Centered heading, subtext, inline email input + submit button.",
+          "status": "ready",
+          "preview": "/previews/newsletters/centered.png"
+        },
+        {
+          "key": "split",
+          "label": "Split Layout",
+          "component": "NewsletterSplit",
+          "brief": "Benefits list left, form inputs right.",
+          "status": "ready",
+          "preview": "/previews/newsletters/split.png"
+        },
+        {
+          "key": "banner",
+          "label": "Banner",
+          "component": "NewsletterBanner",
+          "brief": "Full-width bar with contrasting background. Text left, form right.",
+          "status": "ready",
+          "preview": "/previews/newsletters/banner.png"
+        },
+        {
+          "key": "floating",
+          "label": "Floating / Sticky",
+          "component": "NewsletterFloating",
+          "brief": "Sticky bottom bar appearing after 50% scroll with dismiss button.",
+          "status": "ready",
+          "preview": "/previews/newsletters/floating.png"
+        },
+        {
+          "key": "withIncentive",
+          "label": "With Incentive",
+          "component": "NewsletterIncentive",
+          "brief": "Strong offer heading (\"Get 10% Off\"), form, trust text below.",
+          "status": "ready",
+          "preview": "/previews/newsletters/withIncentive.png"
+        }
+      ]
+    },
+    {
+      "slug": "ctas",
+      "label": "Final CTA",
+      "icon": "🚀",
+      "dataKey": "SAMPLE_CTA",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "primaryCta",
+          "label": "Primary CTA",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "secondaryCta",
+          "label": "Secondary CTA",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "image",
+          "label": "Section Image",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Image Source",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Alt Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "ctaStats",
+          "label": "Statistics",
+          "type": "string",
+          "list": true,
+          "fields": [
+            {
+              "name": "value",
+              "label": "Value",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "testimonial",
+          "label": "Testimonial",
+          "type": "string",
+          "fields": [
+            {
+              "name": "quote",
+              "label": "Quote",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "name",
+              "label": "Name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "title",
+              "label": "Job Title",
+              "type": "string"
+            },
+            {
+              "name": "company",
+              "label": "Company",
+              "type": "string"
+            },
+            {
+              "name": "rating",
+              "label": "Rating (1-5)",
+              "type": "number"
+            },
+            {
+              "name": "photo",
+              "label": "Photo",
+              "type": "image"
+            }
+          ]
+        },
+        {
+          "name": "formFields",
+          "label": "Form Fields",
+          "type": "string",
+          "list": true,
+          "fields": [
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "type",
+              "label": "Input Type",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "placeholder",
+              "label": "Placeholder",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "countdownTarget",
+          "label": "Countdown Target",
+          "type": "date",
+          "description": "ISO date string for countdown timer"
+        },
+        {
+          "name": "trustBadges",
+          "label": "Trust Badges",
+          "type": "string",
+          "list": true,
+          "fields": [
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "text",
+              "label": "Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "centeredBanner",
+          "label": "Centered Banner",
+          "component": "CtaCenteredBanner",
+          "brief": "Full-width contrasting section with centered heading, subtext, CTA button.",
+          "status": "ready",
+          "preview": "/previews/ctas/centeredBanner.png"
+        },
+        {
+          "key": "splitImage",
+          "label": "Split with Image",
+          "component": "CtaSplitImage",
+          "brief": "Text and CTA left, emotional image right.",
+          "status": "ready",
+          "preview": "/previews/ctas/splitImage.png"
+        },
+        {
+          "key": "cardCta",
+          "label": "Card CTA",
+          "component": "CtaCard",
+          "brief": "Centered floating card with heading, subtext, CTA on contrasting background.",
+          "status": "ready",
+          "preview": "/previews/ctas/cardCta.png"
+        },
+        {
+          "key": "formCta",
+          "label": "Form CTA",
+          "component": "CtaForm",
+          "brief": "Persuasive text and trust badges left, lead form right.",
+          "status": "ready",
+          "preview": "/previews/ctas/formCta.png"
+        },
+        {
+          "key": "statsCta",
+          "label": "Stats + CTA",
+          "component": "CtaStats",
+          "brief": "Key statistics row above centered heading and CTA button.",
+          "status": "ready",
+          "preview": "/previews/ctas/statsCta.png"
+        },
+        {
+          "key": "countdownCta",
+          "label": "Countdown CTA",
+          "component": "CtaCountdown",
+          "brief": "Urgency heading with live countdown timer and CTA button.",
+          "status": "ready",
+          "preview": "/previews/ctas/countdownCta.png"
+        },
+        {
+          "key": "testimonialCta",
+          "label": "Testimonial + CTA",
+          "component": "CtaTestimonial",
+          "brief": "Customer quote left, persuasive heading and CTA right.",
+          "status": "ready",
+          "preview": "/previews/ctas/testimonialCta.png"
+        }
+      ]
+    },
+    {
+      "slug": "footers",
+      "label": "Footer",
+      "icon": "📋",
+      "dataKey": "SAMPLE_FOOTER",
+      "fields": [
+        {
+          "name": "logo",
+          "label": "Logo",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "tagline",
+          "label": "Tagline",
+          "type": "string"
+        },
+        {
+          "name": "columns",
+          "label": "Link Columns",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "heading",
+              "label": "Column Heading",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "links",
+              "label": "Links",
+              "type": "string",
+              "list": true,
+              "required": true,
+              "fields": [
+                {
+                  "name": "label",
+                  "label": "Label",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "url",
+                  "label": "URL",
+                  "type": "url",
+                  "required": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "socials",
+          "label": "Social Links",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "platform",
+              "label": "Platform",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "URL",
+              "type": "url",
+              "required": true
+            },
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "copyright",
+          "label": "Copyright Text",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "legalLinks",
+          "label": "Legal Links",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "newsletterHeading",
+          "label": "Newsletter Heading",
+          "type": "string"
+        },
+        {
+          "name": "newsletterDescription",
+          "label": "Newsletter Description",
+          "type": "string"
+        }
+      ],
+      "variants": [
+        {
+          "key": "fourCol",
+          "label": "4-Column",
+          "component": "FooterFourCol",
+          "brief": "Logo + tagline + socials, 2 nav columns, contact info. Copyright bar below.",
+          "status": "ready",
+          "preview": "/previews/footers/fourCol.png"
+        },
+        {
+          "key": "minimal",
+          "label": "Minimal",
+          "component": "FooterMinimal",
+          "brief": "Single row: logo left, links center, socials right. Copyright below.",
+          "status": "ready",
+          "preview": "/previews/footers/minimal.png"
+        },
+        {
+          "key": "newsletterLinks",
+          "label": "Newsletter + Links",
+          "component": "FooterNewsletter",
+          "brief": "Newsletter signup at top, multi-column links below, copyright bar.",
+          "status": "ready",
+          "preview": "/previews/footers/newsletterLinks.png"
+        },
+        {
+          "key": "fatFooter",
+          "label": "Fat Footer",
+          "component": "FooterFat",
+          "brief": "Large content-rich footer with 5–6 columns, certifications, payment icons.",
+          "status": "ready",
+          "preview": "/previews/footers/fatFooter.png"
+        },
+        {
+          "key": "centered",
+          "label": "Centered Simple",
+          "component": "FooterCentered",
+          "brief": "Everything centered: logo, nav links, socials, copyright.",
+          "status": "ready",
+          "preview": "/previews/footers/centered.png"
+        },
+        {
+          "key": "antigravity",
+          "label": "Antigravity",
+          "component": "FooterAntigravity",
+          "brief": "Bold typography-driven footer with massive brand wordmark, clean link columns, and minimal bottom bar.",
+          "status": "ready",
+          "preview": "/previews/footers/antigravity.png"
+        },
+        {
+          "key": "full",
+          "label": "Full with Acknowledgement",
+          "component": "FooterFull",
+          "brief": "Full-featured footer with logo, socials, multi-column links, and Indigenous land acknowledgement.",
+          "status": "ready",
+          "preview": "/previews/footers/full.png"
+        }
+      ]
+    },
+    {
+      "slug": "team",
+      "label": "Team",
+      "icon": "👥",
+      "dataKey": "SAMPLE_TEAM",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "members",
+          "label": "Team Members",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "name",
+              "label": "Name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "role",
+              "label": "Role",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "bio",
+              "label": "Bio",
+              "type": "text"
+            },
+            {
+              "name": "photo",
+              "label": "Photo",
+              "type": "image"
+            },
+            {
+              "name": "initials",
+              "label": "Initials",
+              "type": "string",
+              "description": "Fallback when no photo"
+            },
+            {
+              "name": "emoji",
+              "label": "Emoji",
+              "type": "string"
+            },
+            {
+              "name": "colorClass",
+              "label": "Colour Class",
+              "type": "string"
+            },
+            {
+              "name": "linkedin",
+              "label": "LinkedIn URL",
+              "type": "url"
+            },
+            {
+              "name": "socials",
+              "label": "Social Links",
+              "type": "string",
+              "list": true,
+              "fields": [
+                {
+                  "name": "platform",
+                  "label": "Platform",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "url",
+                  "label": "URL",
+                  "type": "url",
+                  "required": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "threeCol",
+          "label": "3-Column Grid",
+          "component": "TeamThreeCol",
+          "brief": "Three-column grid of team cards with photos, names, roles, and social links.",
+          "status": "ready",
+          "preview": "/previews/team/threeCol.png"
+        },
+        {
+          "key": "featured",
+          "label": "Featured Leader",
+          "component": "TeamFeatured",
+          "brief": "Large featured leader card on top, remaining team in 3-column grid below.",
+          "status": "ready",
+          "preview": "/previews/team/featured.png"
+        },
+        {
+          "key": "carousel",
+          "label": "Carousel",
+          "component": "TeamCarousel",
+          "brief": "Horizontal carousel of team cards with navigation arrows.",
+          "status": "ready",
+          "preview": "/previews/team/carousel.png"
+        }
+      ]
+    },
+    {
+      "slug": "blog",
+      "label": "Blog / Insights",
+      "icon": "📝",
+      "dataKey": "SAMPLE_BLOG",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "posts",
+          "label": "Blog Posts",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "slug",
+              "label": "Slug",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text",
+              "required": true
+            },
+            {
+              "name": "pubDate",
+              "label": "Publish Date",
+              "type": "date",
+              "required": true
+            },
+            {
+              "name": "updatedDate",
+              "label": "Updated Date",
+              "type": "date"
+            },
+            {
+              "name": "heroImage",
+              "label": "Hero Image",
+              "type": "image"
+            },
+            {
+              "name": "tags",
+              "label": "Tags",
+              "type": "string",
+              "list": true
+            },
+            {
+              "name": "author",
+              "label": "Author",
+              "type": "string",
+              "fields": [
+                {
+                  "name": "name",
+                  "label": "Name",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "photo",
+                  "label": "Photo",
+                  "type": "image"
+                }
+              ]
+            },
+            {
+              "name": "readTime",
+              "label": "Read Time",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "viewAllCta",
+          "label": "View All CTA",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "threeCol",
+          "label": "3-Column Grid",
+          "component": "BlogThreeCol",
+          "brief": "Three-column grid of blog post cards with images, titles, excerpts, and metadata.",
+          "status": "ready",
+          "preview": "/previews/blog/threeCol.png"
+        },
+        {
+          "key": "featured",
+          "label": "Featured Post",
+          "component": "BlogFeatured",
+          "brief": "Large featured post at top, remaining posts in 3-column grid below.",
+          "status": "ready",
+          "preview": "/previews/blog/featured.png"
+        },
+        {
+          "key": "list",
+          "label": "List View",
+          "component": "BlogList",
+          "brief": "Vertical list layout with thumbnail images, titles, and excerpts.",
+          "status": "ready",
+          "preview": "/previews/blog/list.png"
+        },
+        {
+          "key": "minimal",
+          "label": "Minimal Cards",
+          "component": "BlogMinimal",
+          "brief": "Clean minimal cards with title, excerpt, and date only.",
+          "status": "ready",
+          "preview": "/previews/blog/minimal.png"
+        },
+        {
+          "key": "magazine",
+          "label": "Magazine Layout",
+          "component": "BlogMagazine",
+          "brief": "Asymmetric magazine-style layout with varying card sizes.",
+          "status": "ready",
+          "preview": "/previews/blog/magazine.png"
+        }
+      ]
+    },
+    {
+      "slug": "forms",
+      "label": "Forms",
+      "icon": "📋",
+      "dataKey": "SAMPLE_FORM",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "submitText",
+          "label": "Submit Button Text",
+          "type": "string"
+        },
+        {
+          "name": "privacyNote",
+          "label": "Privacy Note",
+          "type": "string",
+          "description": "Small text below the form"
+        },
+        {
+          "name": "fields",
+          "label": "Form Fields",
+          "type": "string",
+          "list": true,
+          "fields": [
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "type",
+              "label": "Type",
+              "type": "string",
+              "required": true,
+              "description": "text, email, tel, textarea, select, checkbox"
+            },
+            {
+              "name": "name",
+              "label": "Field Name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "placeholder",
+              "label": "Placeholder",
+              "type": "string"
+            },
+            {
+              "name": "required",
+              "label": "Required",
+              "type": "boolean"
+            },
+            {
+              "name": "rows",
+              "label": "Rows",
+              "type": "number",
+              "description": "For textarea fields"
+            },
+            {
+              "name": "options",
+              "label": "Options",
+              "type": "string",
+              "list": true,
+              "description": "For select fields",
+              "fields": [
+                {
+                  "name": "label",
+                  "label": "Label",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "value",
+                  "label": "Value",
+                  "type": "string",
+                  "required": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "contact",
+          "label": "Contact Form",
+          "component": "FormContact",
+          "brief": "Clean centered contact form with name, email, phone, and message fields.",
+          "status": "ready",
+          "preview": "/previews/forms/contact.png"
+        },
+        {
+          "key": "step",
+          "label": "Step Form",
+          "component": "FormStep",
+          "brief": "Multi-step form with progress indicator and step navigation.",
+          "status": "ready",
+          "preview": "/previews/forms/step.png"
+        },
+        {
+          "key": "quote",
+          "label": "Quote Form",
+          "component": "FormQuote",
+          "brief": "Comprehensive long quote form with 4 sections for detailed project requirements.",
+          "status": "ready",
+          "preview": "/previews/forms/quote.png"
+        }
+      ]
+    },
+    {
+      "slug": "stats",
+      "label": "Stats",
+      "icon": "📊",
+      "dataKey": "SAMPLE_STATS",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "image",
+          "label": "Section Image",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Image Source",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Alt Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "stats",
+          "label": "Statistics",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "value",
+              "label": "Value",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "string"
+            },
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "primaryCta",
+          "label": "CTA Button",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "grid",
+          "label": "Stats Grid",
+          "component": "StatsGrid",
+          "brief": "A simple, clean grid of stats with optional icons and descriptions.",
+          "status": "ready",
+          "preview": "/previews/stats/grid.png"
+        },
+        {
+          "key": "minimal",
+          "label": "Stats Minimal",
+          "component": "StatsMinimal",
+          "brief": "Clean inline stats perfect for breaking up content, no extra borders or background colors.",
+          "status": "ready",
+          "preview": "/previews/stats/minimal.png"
+        },
+        {
+          "key": "withImage",
+          "label": "Stats with Image",
+          "component": "StatsWithImage",
+          "brief": "Image on one side, headings & stats grid on the other.",
+          "status": "ready",
+          "preview": "/previews/stats/withImage.png"
+        }
+      ]
+    },
+    {
+      "slug": "banners",
+      "label": "Banners",
+      "icon": "🏷️",
+      "dataKey": "SAMPLE_BANNER",
+      "fields": [
+        {
+          "name": "text",
+          "label": "Banner Text",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "link",
+          "label": "Banner Link",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "primaryCta",
+          "label": "Primary Action",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "secondaryCta",
+          "label": "Secondary Action",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "dismissible",
+          "label": "Dismissible",
+          "type": "boolean",
+          "description": "Can the user close this banner?"
+        }
+      ],
+      "variants": [
+        {
+          "key": "sticky",
+          "label": "Sticky Banner",
+          "component": "BannerSticky",
+          "brief": "A full-width dark banner at the top of the page with a dismiss button.",
+          "status": "ready",
+          "preview": "/previews/banners/sticky.png"
+        },
+        {
+          "key": "floating",
+          "label": "Floating Banner",
+          "component": "BannerFloating",
+          "brief": "A rounded banner that floats slightly below the top of the page.",
+          "status": "ready",
+          "preview": "/previews/banners/floating.png"
+        },
+        {
+          "key": "cookie",
+          "label": "Cookie Banner",
+          "component": "BannerCookie",
+          "brief": "A floating card in the bottom corner with consent actions.",
+          "status": "ready",
+          "preview": "/previews/banners/cookie.png"
+        },
+        {
+          "key": "cookieBottom",
+          "label": "Cookie Bottom Bar",
+          "component": "BannerCookieBottom",
+          "brief": "A full-width bar fixed to the bottom of the screen.",
+          "status": "ready",
+          "preview": "/previews/banners/cookieBottom.png"
+        }
+      ]
+    },
+    {
+      "slug": "breakouts",
+      "label": "Breakout",
+      "icon": "💥",
+      "dataKey": "SAMPLE_BREAKOUT",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "cta",
+          "label": "Call to Action",
+          "type": "string",
+          "required": true,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "centered",
+          "label": "Centered",
+          "component": "BreakoutCentered",
+          "brief": "Full-width breakout section with centered content, eyebrow, heading, description, and CTA button.",
+          "status": "ready",
+          "preview": "/previews/breakouts/centered.png"
+        }
+      ]
+    },
+    {
+      "slug": "showcases",
+      "label": "Showcase",
+      "icon": "🖥️",
+      "dataKey": "SAMPLE_SHOWCASE",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "cta",
+          "label": "Call to Action",
+          "type": "string",
+          "required": true,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "image",
+          "label": "Showcase Image",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Image Source",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Alt Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "reverse",
+          "label": "Reverse Layout",
+          "type": "boolean",
+          "description": "Flip content and image sides"
+        }
+      ],
+      "variants": [
+        {
+          "key": "scrollReveal",
+          "label": "Scroll Reveal Left",
+          "component": "ShowcaseScrollReveal",
+          "brief": "Sticky scroll section with content on left, browser mockup image on right that scrolls vertically.",
+          "status": "ready",
+          "preview": "/previews/showcases/scrollReveal.png"
+        },
+        {
+          "key": "scrollRevealRight",
+          "label": "Scroll Reveal Right",
+          "component": "ShowcaseScrollRevealRight",
+          "brief": "Sticky scroll section with content on right, browser mockup image on left that scrolls vertically.",
+          "status": "ready",
+          "preview": "/previews/showcases/scrollRevealRight.png"
+        }
+      ]
+    },
+    {
+      "slug": "content",
+      "label": "Content / Prose",
+      "icon": "📄",
+      "dataKey": "SAMPLE_CONTENT",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "body",
+          "label": "Body Content",
+          "type": "rich-text",
+          "required": true
+        },
+        {
+          "name": "image",
+          "label": "Featured Image",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Image Source",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Alt Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "author",
+          "label": "Author",
+          "type": "string",
+          "fields": [
+            {
+              "name": "name",
+              "label": "Name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "role",
+              "label": "Role",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "photo",
+              "label": "Photo",
+              "type": "image"
+            },
+            {
+              "name": "date",
+              "label": "Date",
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "prose",
+          "label": "Centered Prose",
+          "component": "ContentProse",
+          "brief": "A simple centered text block for long-form content using typography prose.",
+          "status": "ready",
+          "preview": "/previews/content/prose.png"
+        },
+        {
+          "key": "split",
+          "label": "Split Layout",
+          "component": "ContentSplit",
+          "brief": "A two-column layout with heading on the left and rich text on the right.",
+          "status": "ready",
+          "preview": "/previews/content/split.png"
+        },
+        {
+          "key": "withImage",
+          "label": "Prose with Image",
+          "component": "ContentWithImage",
+          "brief": "A content block accompanied by a large featured hero image and author metadata.",
+          "status": "ready",
+          "preview": "/previews/content/withImage.png"
+        }
+      ]
+    }
+  ]
+}

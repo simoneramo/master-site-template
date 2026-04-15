@@ -3,9 +3,11 @@
  * CtaSplitImage — Split with Image CTA
  * Text and CTA left, emotional image right.
  */
-import type { CtaData } from '../../../data/sample-data';
+import type { CtaData } from "../../../data/sample-data";
 
-interface Props { data: CtaData; }
+interface Props {
+  data: CtaData;
+}
 
 const { data } = Astro.props;
 const { eyebrow, heading, description, primaryCta, secondaryCta, image } = data;
@@ -15,29 +17,62 @@ const { eyebrow, heading, description, primaryCta, secondaryCta, image } = data;
   <div class="container mx-auto px-4 md:px-8">
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
       <div>
-        {eyebrow && (
-          <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">{eyebrow}</span>
-        )}
-        <h2 class="text-4xl md:text-5xl font-bold leading-tight mb-6">{heading}</h2>
-        <p class="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed mb-10">{description}</p>
+        {
+          eyebrow && (
+            <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+              {eyebrow}
+            </span>
+          )
+        }
+        <h2 class="text-4xl md:text-5xl font-bold leading-tighter mb-6">
+          {heading}
+        </h2>
+        <p
+          class="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed mb-10"
+        >
+          {description}
+        </p>
         <div class="flex flex-col sm:flex-row gap-4">
-          {primaryCta && (
-            <a href={primaryCta.url} class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black text-lg rounded-lg transition-all">
-              <span class="transform transition-transform duration-300 group-hover:-translate-x-3">{primaryCta.text}</span>
-              <span class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">→</span>
-            </a>
-          )}
-          {secondaryCta && (
-            <a href={secondaryCta.url} class="inline-flex items-center justify-center h-14 px-8 font-bold border-2 border-zinc-300 dark:border-zinc-700 rounded-lg hover:border-black dark:hover:border-white transition-colors text-lg">{secondaryCta.text}</a>
-          )}
+          {
+            primaryCta && (
+              <a
+                href={primaryCta.url}
+                class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black text-lg rounded-lg transition-all"
+              >
+                <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
+                  {primaryCta.text}
+                </span>
+                <span class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                  →
+                </span>
+              </a>
+            )
+          }
+          {
+            secondaryCta && (
+              <a
+                href={secondaryCta.url}
+                class="inline-flex items-center justify-center h-14 px-8 font-bold border-2 border-zinc-300 dark:border-zinc-700 rounded-lg hover:border-black dark:hover:border-white transition-colors text-lg"
+              >
+                {secondaryCta.text}
+              </a>
+            )
+          }
         </div>
       </div>
-      {image && (
-        <div class="relative">
-          <img src={image.src} alt={image.alt} class="w-full rounded-2xl shadow-xl object-cover aspect-4/3" loading="lazy" />
-          <div class="absolute -z-10 top-4 left-4 right--4 bottom--4 rounded-2xl bg-indigo-500/10 dark:bg-indigo-400/10" />
-        </div>
-      )}
+      {
+        image && (
+          <div class="relative">
+            <img
+              src={image.src}
+              alt={image.alt}
+              class="w-full rounded-2xl shadow-xl object-cover aspect-4/3"
+              loading="lazy"
+            />
+            <div class="absolute -z-10 top-4 left-4 right--4 bottom--4 rounded-2xl bg-indigo-500/10 dark:bg-indigo-400/10" />
+          </div>
+        )
+      }
     </div>
   </div>
 </section>

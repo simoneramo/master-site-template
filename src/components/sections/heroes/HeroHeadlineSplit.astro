@@ -1,0 +1,85 @@
+---
+/**
+ * HeroHeadlineSplit — Asymmetric headline hero
+ * Pattern key: headlineSplit
+ * Section: Hero
+ *
+ * Top row: intro text + pill CTA on the left, large headline on the right.
+ * Bottom: full-width image.
+ */
+import type { HeroData } from '../../../data/sample-data';
+
+interface Props {
+  data: HeroData;
+}
+
+const { data } = Astro.props;
+const {
+  heading,
+  headingAccent,
+  description,
+  primaryCta,
+  image,
+} = data;
+
+// Split heading to highlight accent word(s)
+let headingBefore = heading;
+let headingAfter = '';
+if (headingAccent && heading.includes(headingAccent)) {
+  const idx = heading.indexOf(headingAccent);
+  headingBefore = heading.slice(0, idx);
+  headingAfter = heading.slice(idx + headingAccent.length);
+}
+---
+
+<section class="py-16 md:py-24 lg:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <!-- Top row -->
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-16 items-end mb-12 lg:mb-20">
+      <!-- LEFT: Description + pill CTA -->
+      <div class="lg:col-span-4">
+        {description && (
+          <p class="text-base md:text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed mb-6">
+            {description}
+          </p>
+        )}
+        {primaryCta && (
+          <a
+            href={primaryCta.url}
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-neutral-900 dark:text-white text-sm font-semibold hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+          >
+            <span>→</span>
+            <span>{primaryCta.text}</span>
+          </a>
+        )}
+      </div>
+
+      <!-- RIGHT: Large Headline -->
+      <div class="lg:col-span-8">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] text-zinc-900 dark:text-white">
+          {headingAccent ? (
+            <>
+              {headingBefore}
+              <span class="text-indigo-600 dark:text-indigo-500">{headingAccent}</span>
+              {headingAfter}
+            </>
+          ) : (
+            heading
+          )}
+        </h1>
+      </div>
+    </div>
+
+    <!-- BOTTOM: Full-width Image -->
+    {image && (
+      <div class="w-full">
+        <img
+          src={image.src}
+          alt={image.alt}
+          class="w-full h-auto object-cover rounded-2xl"
+          loading="eager"
+        />
+      </div>
+    )}
+  </div>
+</section>

@@ -318,7 +318,7 @@ export const SAMPLE_HERO: HeroData = {
   description: 'From concept to launch, we create high-converting websites for local businesses across Sydney. No templates. No compromise.',
   primaryCta: { text: 'Get Your Free Quote', url: '/quote' },
   secondaryCta: { text: 'View Our Work', url: '/work' },
-  image: { src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop', alt: 'Modern workspace' },
+  image: { src: 'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=800&h=600&fit=crop', alt: 'Modern workspace' },
   trustBadge: { icon: '⭐', title: '5.0 Rating', subtitle: '120+ Reviews' },
   rotatingWords: ['drive results', 'convert visitors', 'grow brands', 'stand out'],
   slides: [
@@ -1174,7 +1174,7 @@ export const SAMPLE_SHOWCASE: ShowcaseData = {
     url: '/work'
   },
   image: {
-    src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=2400&fit=crop',
+    src: '../src/assets/patterns-parallax-landing-page.svg',
     alt: 'Website showcase',
     url: 'yoursite.com'
   },
