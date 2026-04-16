@@ -1,6 +1,10 @@
 # build output
 dist/
 
+# generated files
+public/pattern-registry.json
+public/tokens.json
+
 # generated types
 .astro/
 
@@ -38,4 +42,8 @@ node_modules
 .netlify
 
 .agent
+.antigravity/
 .antigravity.claude/settings.local.json
+
+
+.old-plans
