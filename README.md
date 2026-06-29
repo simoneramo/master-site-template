@@ -1,4 +1,4 @@
-# Falcon 1 - Master Site Template
+# Master Site Template
 
 A modern, production-ready Astro template built with accessibility at its core and integrated with TinaCMS for easy content management. Features a complete website with blog functionality, dynamic pages, and full WCAG 2.1 compliance. This project is focused on accessibility, SEO optimisation, and high-contrast design.
 
@@ -74,6 +74,7 @@ The template includes a comprehensive component library with **190 layout varian
 The canonical source for sections and variants is `src/data/pattern-registry.ts`.
 
 **Browse the library:**
+
 - Run `npm run dev` and visit `http://localhost:4321/component-library`
 - View live previews of all variants with sample data
 - Use the gallery view for visual browsing
@@ -89,6 +90,7 @@ This template uses a 3-tier page system designed to work with the **Project Star
 | **Tier 3 (Optional)** | Toggle as needed via `template.config.json` | Portfolio, Careers, Partners, Reviews, Events, Book |
 
 **Optional Pages Available:**
+
 - `/work` - Portfolio/Work showcase
 - `/careers` - Job listings and team culture
 - `/partners` - Technology partners and integrations
