@@ -47,4 +47,5 @@ node_modules
 .claude/
 
 .old-plans
-Icon
+# macOS custom folder icon (filename is "Icon" + CR)
+Icon?
