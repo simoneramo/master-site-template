@@ -34,7 +34,7 @@
 
   /* ─── Typography ────────────────────────────────────────────────────────── */
   /* Body font (swapped by Project Starter via font selection) */
-  --font-sans: system-ui, sans-serif;
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
   /* Heading font — set to same as body by default, override per client */
   --font-heading: var(--font-sans);
 
@@ -107,7 +107,7 @@
 
 
 body {
-  font-family: 'Inter Variable', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-display: swap;
   font-optical-sizing: auto;
   font-style: normal;

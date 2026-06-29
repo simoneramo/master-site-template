@@ -1,0 +1,82 @@
+---
+/**
+ * BreakoutGradient — Full-bleed Gradient Breakout
+ * Pattern key: gradient
+ * Section: Breakout
+ *
+ * Edge-to-edge dark panel with a soft radial gradient glow,
+ * centered eyebrow, heading, description, and CTA button.
+ */
+import type { BreakoutData } from "../../../data/sample-data";
+
+interface Props {
+  data: BreakoutData;
+  /** Section ID for anchor links */
+  id?: string;
+}
+
+const { data, id } = Astro.props;
+
+const eyebrow = data?.eyebrow || "";
+const heading = data?.heading || "";
+const description = data?.description || "";
+const cta = data?.cta;
+---
+
+<section {id} class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div
+      class="relative overflow-hidden rounded-3xl bg-zinc-950 px-8 py-16 md:px-20 md:py-24 text-center"
+    >
+      <!-- Radial glow -->
+      <div
+        class="pointer-events-none absolute inset-0 opacity-60"
+        style="background: radial-gradient(60% 80% at 50% 0%, rgba(99,102,241,0.35), transparent 70%);"
+      >
+      </div>
+
+      <div class="relative">
+        {
+          eyebrow && (
+            <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-white/15 text-white/70 mb-6">
+              <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+              {eyebrow}
+            </span>
+          )
+        }
+
+        {
+          heading && (
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-white">
+              {heading}
+            </h2>
+          )
+        }
+
+        {
+          description && (
+            <p class="text-lg md:text-xl text-white/70 font-medium leading-relaxed mb-10 max-w-2xl mx-auto">
+              {description}
+            </p>
+          )
+        }
+
+        {
+          cta?.text && cta?.url && (
+            <a
+              href={cta.url}
+              class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-black bg-white transition-all duration-300 text-lg rounded-lg hover:bg-zinc-200"
+            >
+              <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
+                {cta.text}
+              </span>
+              <span class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                →
+              </span>
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

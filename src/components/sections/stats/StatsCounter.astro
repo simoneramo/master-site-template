@@ -1,0 +1,61 @@
+---
+/**
+ * StatsCounter — Animated Count-up Stats
+ * A bold row of stats whose numeric values count up from zero on load.
+ * Preserves prefixes/suffixes (e.g. "$", "+", "/5") around the number.
+ */
+import type { StatsData } from '../../../data/sample-data';
+
+interface Props { data: StatsData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, stats } = data;
+---
+
+<section class="py-20 md:py-32 bg-zinc-950 text-white">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-white/15 text-white/70 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      {heading && <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>}
+      {description && <p class="text-lg text-white/60">{description}</p>}
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-10 lg:gap-12 text-center">
+      {stats.map((stat) => (
+        <div
+          x-data={`{
+            target: '${stat.value}',
+            current: '0',
+            init() {
+              const match = this.target.match(/^([^0-9]*)([\\.0-9]+)(.*)/);
+              if (!match) { this.current = this.target; return; }
+              const prefix = match[1];
+              const numStr = match[2];
+              const suffix = match[3];
+              const num = parseFloat(numStr);
+              const isDecimal = numStr.includes('.');
+              const decimals = isDecimal ? (numStr.split('.')[1] || '').length : 0;
+              let c = 0;
+              const step = isDecimal ? num / 40 : Math.max(1, Math.floor(num / 40));
+              const interval = setInterval(() => {
+                c = Math.min(c + step, num);
+                this.current = prefix + (isDecimal ? c.toFixed(decimals) : Math.round(c)) + suffix;
+                if (c >= num) clearInterval(interval);
+              }, 30);
+            }
+          }`}
+        >
+          <div class="text-5xl lg:text-6xl font-extrabold tracking-tight tabular-nums mb-2" x-text="current">0</div>
+          <div class="text-base font-bold mb-1">{stat.label}</div>
+          {stat.description && (
+            <p class="text-sm text-white/50">{stat.description}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

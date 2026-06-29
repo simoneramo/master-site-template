@@ -1,0 +1,65 @@
+---
+/**
+ * GalleryMasonry — Masonry Column Layout
+ * Pattern key: masonry
+ * Section: Gallery
+ *
+ * Pinterest-style masonry using CSS columns so images keep their natural
+ * aspect ratio. Captions fade in on hover.
+ */
+import type { GalleryData } from "../../../data/sample-data";
+
+interface Props {
+  data: GalleryData;
+  /** Section ID for anchor links */
+  id?: string;
+}
+
+const { data, id } = Astro.props;
+const { eyebrow, heading, description, images = [] } = data;
+---
+
+<section {id} class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    {
+      (eyebrow || heading || description) && (
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          {eyebrow && (
+            <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+              {eyebrow}
+            </span>
+          )}
+          {heading && <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>}
+          {description && (
+            <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>
+          )}
+        </div>
+      )
+    }
+
+    {images.length > 0 && (
+      <div class="columns-2 md:columns-3 lg:columns-4 gap-4 [column-fill:_balance]">
+        {images.map((image) => (
+          <figure class="group relative mb-4 break-inside-avoid overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-900">
+            <img
+              src={image.src}
+              alt={image.alt || image.caption || ''}
+              class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+            {(image.caption || image.category) && (
+              <figcaption class="absolute inset-x-0 bottom-0 p-4 bg-linear-to-t from-black/70 to-transparent opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                {image.category && (
+                  <span class="block text-[10px] font-bold uppercase tracking-wider text-white/70 mb-0.5">{image.category}</span>
+                )}
+                {image.caption && (
+                  <span class="block text-sm font-bold text-white">{image.caption}</span>
+                )}
+              </figcaption>
+            )}
+          </figure>
+        ))}
+      </div>
+    )}
+  </div>
+</section>

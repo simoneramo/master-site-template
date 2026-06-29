@@ -1,0 +1,77 @@
+---
+/**
+ * BreakoutSplit — Two-column Breakout
+ * Pattern key: split
+ * Section: Breakout
+ *
+ * Bordered panel split into two columns: heading + eyebrow on the
+ * left, description and CTA on the right. Stacks on mobile.
+ */
+import type { BreakoutData } from "../../../data/sample-data";
+
+interface Props {
+  data: BreakoutData;
+  /** Section ID for anchor links */
+  id?: string;
+}
+
+const { data, id } = Astro.props;
+
+const eyebrow = data?.eyebrow || "";
+const heading = data?.heading || "";
+const description = data?.description || "";
+const cta = data?.cta;
+---
+
+<section {id} class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div
+      class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center border-2 border-zinc-300 dark:border-zinc-700 rounded-2xl p-10 md:p-16"
+    >
+      <!-- Left: eyebrow + heading -->
+      <div>
+        {
+          eyebrow && (
+            <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+              <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+              {eyebrow}
+            </span>
+          )
+        }
+        {
+          heading && (
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight dark:text-white">
+              {heading}
+            </h2>
+          )
+        }
+      </div>
+
+      <!-- Right: description + CTA -->
+      <div class="lg:border-l-2 lg:border-zinc-200 lg:dark:border-zinc-800 lg:pl-16">
+        {
+          description && (
+            <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-300 font-medium leading-relaxed mb-8">
+              {description}
+            </p>
+          )
+        }
+        {
+          cta?.text && cta?.url && (
+            <a
+              href={cta.url}
+              class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200"
+            >
+              <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
+                {cta.text}
+              </span>
+              <span class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                →
+              </span>
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

@@ -4,47 +4,12 @@
   "description": "A production-ready Astro template with TinaCMS integration",
   "pages": {
     "tier1": {
-      "name": "Core Pages (Always Included)",
-      "description": "Essential pages that every site needs",
+      "name": "Core Page (Always Included)",
+      "description": "Your homepage — always included",
       "pages": [
         {
           "path": "src/pages/index.astro",
           "name": "Homepage",
-          "required": true
-        },
-        {
-          "path": "src/pages/about/index.astro",
-          "name": "About",
-          "required": true
-        },
-        {
-          "path": "src/pages/contact.astro",
-          "name": "Contact",
-          "required": true
-        },
-        {
-          "path": "src/pages/contact-thankyou.astro",
-          "name": "Contact Thank You",
-          "required": true
-        },
-        {
-          "path": "src/pages/home-thankyou.astro",
-          "name": "Home Thank You",
-          "required": true
-        },
-        {
-          "path": "src/pages/privacy-policy.astro",
-          "name": "Privacy Policy",
-          "required": true
-        },
-        {
-          "path": "src/pages/terms-and-conditions.astro",
-          "name": "Terms & Conditions",
-          "required": true
-        },
-        {
-          "path": "src/pages/404.astro",
-          "name": "404 Error Page",
           "required": true
         }
       ]
@@ -54,9 +19,46 @@
       "description": "Standard business pages that most clients need",
       "pages": [
         {
+          "path": "src/pages/about/index.astro",
+          "name": "About",
+          "default": true
+        },
+        {
+          "path": "src/pages/contact.astro",
+          "name": "Contact",
+          "default": true,
+          "requires": ["src/pages/contact-thankyou.astro"]
+        },
+        {
+          "path": "src/pages/contact-thankyou.astro",
+          "name": "Contact Thank You",
+          "default": true
+        },
+        {
+          "path": "src/pages/home-thankyou.astro",
+          "name": "Home Thank You",
+          "default": true
+        },
+        {
+          "path": "src/pages/privacy-policy.astro",
+          "name": "Privacy Policy",
+          "default": true
+        },
+        {
+          "path": "src/pages/terms-and-conditions.astro",
+          "name": "Terms & Conditions",
+          "default": true
+        },
+        {
+          "path": "src/pages/404.astro",
+          "name": "404 Error Page",
+          "default": true
+        },
+        {
           "path": "src/pages/quote.astro",
           "name": "Get a Quote",
-          "default": false
+          "default": false,
+          "requires": ["src/pages/quote-thankyou.astro"]
         },
         {
           "path": "src/pages/quote-thankyou.astro",
@@ -284,6 +286,105 @@
     "src/pages/work/index.astro": "src/content/pages/work.md",
     "src/pages/book/index.astro": "src/content/bookPage/book.md",
     "src/pages/team/index.astro": "src/content/teamPage/team.md"
+  },
+  "navigation": {
+    "_comment": "Default site nav/footer used by Project Starter. Each leaf references the owning page via `page`; the scaffolder keeps only links whose page is selected. A nav group survives if its own page is selected OR it has >=1 surviving child. Links with no `page` are always kept.",
+    "header": {
+      "logo": "Your Brand",
+      "cta": { "text": "Get a Quote", "url": "/quote", "page": "src/pages/quote.astro", "fallbackUrl": "/contact", "fallbackPage": "src/pages/contact.astro" },
+      "groups": [
+        { "label": "Home", "url": "/", "page": "src/pages/index.astro" },
+        {
+          "label": "Services", "url": "/services", "page": "src/pages/services/index.astro",
+          "children": [
+            { "label": "All Services", "url": "/services", "page": "src/pages/services/index.astro" }
+          ]
+        },
+        {
+          "label": "Process", "url": "/process", "page": "src/pages/process/index.astro",
+          "children": [
+            { "label": "Our Process", "url": "/process", "page": "src/pages/process/index.astro" }
+          ]
+        },
+        { "label": "Work", "url": "/work", "page": "src/pages/work/index.astro" },
+        {
+          "label": "About", "url": "/about", "page": "src/pages/about/index.astro",
+          "children": [
+            { "label": "About Us", "url": "/about", "page": "src/pages/about/index.astro" },
+            { "label": "Team", "url": "/team", "page": "src/pages/team/index.astro" },
+            { "label": "Pricing", "url": "/pricing", "page": "src/pages/pricing/index.astro" },
+            { "label": "Careers", "url": "/careers", "page": "src/pages/careers/index.astro" }
+          ]
+        },
+        {
+          "label": "Insights", "url": "/insights", "page": "src/pages/insights/index.astro",
+          "children": [
+            { "label": "Blog", "url": "/insights", "page": "src/pages/insights/index.astro" },
+            { "label": "Events", "url": "/events", "page": "src/pages/events/index.astro" },
+            { "label": "Reviews", "url": "/reviews", "page": "src/pages/reviews/index.astro" }
+          ]
+        },
+        {
+          "label": "Contact", "url": "/contact", "page": "src/pages/contact.astro",
+          "children": [
+            { "label": "Contact Us", "url": "/contact", "page": "src/pages/contact.astro" },
+            { "label": "FAQ", "url": "/faq", "page": "src/pages/faq.astro" },
+            { "label": "Book a Call", "url": "/book", "page": "src/pages/book/index.astro" },
+            { "label": "Partners", "url": "/partners", "page": "src/pages/partners/index.astro" }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "logo": "Your Brand",
+      "tagline": "Built to help your business grow online.",
+      "columns": [
+        {
+          "heading": "Services",
+          "links": [
+            { "label": "All Services", "url": "/services", "page": "src/pages/services/index.astro" },
+            { "label": "Pricing", "url": "/pricing", "page": "src/pages/pricing/index.astro" }
+          ]
+        },
+        {
+          "heading": "Company",
+          "links": [
+            { "label": "About", "url": "/about", "page": "src/pages/about/index.astro" },
+            { "label": "Team", "url": "/team", "page": "src/pages/team/index.astro" },
+            { "label": "Work", "url": "/work", "page": "src/pages/work/index.astro" },
+            { "label": "Careers", "url": "/careers", "page": "src/pages/careers/index.astro" }
+          ]
+        },
+        {
+          "heading": "Resources",
+          "links": [
+            { "label": "Insights", "url": "/insights", "page": "src/pages/insights/index.astro" },
+            { "label": "FAQ", "url": "/faq", "page": "src/pages/faq.astro" },
+            { "label": "Events", "url": "/events", "page": "src/pages/events/index.astro" },
+            { "label": "Reviews", "url": "/reviews", "page": "src/pages/reviews/index.astro" },
+            { "label": "Partners", "url": "/partners", "page": "src/pages/partners/index.astro" }
+          ]
+        },
+        {
+          "heading": "Get in Touch",
+          "links": [
+            { "label": "Contact", "url": "/contact", "page": "src/pages/contact.astro" },
+            { "label": "Book a Call", "url": "/book", "page": "src/pages/book/index.astro" },
+            { "label": "Get a Quote", "url": "/quote", "page": "src/pages/quote.astro" }
+          ]
+        }
+      ],
+      "legal": [
+        { "label": "Privacy Policy", "url": "/privacy-policy", "page": "src/pages/privacy-policy.astro" },
+        { "label": "Terms & Conditions", "url": "/terms-and-conditions", "page": "src/pages/terms-and-conditions.astro" }
+      ],
+      "socials": [
+        { "platform": "Twitter", "url": "#", "icon": "𝕏" },
+        { "platform": "LinkedIn", "url": "#", "icon": "in" },
+        { "platform": "Instagram", "url": "#", "icon": "📷" },
+        { "platform": "Facebook", "url": "#", "icon": "f" }
+      ]
+    }
   },
   "features": {
     "darkMode": true,

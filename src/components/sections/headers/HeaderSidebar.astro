@@ -9,6 +9,7 @@
  * Note: This variant is best used as a layout wrapper, not just a header.
  */
 import type { HeaderData } from '../../../data/sample-data';
+import ThemeToggle from '../../ThemeToggle.astro';
 
 interface Props {
   data: HeaderData;
@@ -16,6 +17,9 @@ interface Props {
 
 const { data } = Astro.props;
 const { logo, navLinks, cta } = data;
+
+// Collapsed sidebar shows just the brand initial (no emoji logo).
+const logoInitial = (logo || '').replace(/[^A-Za-z0-9]/g, '').charAt(0).toUpperCase() || 'Y';
 ---
 
 <aside
@@ -28,7 +32,7 @@ const { logo, navLinks, cta } = data;
   <div class="h-20 flex items-center justify-between px-5 border-b border-zinc-200 dark:border-zinc-800 shrink-0">
     <a href="/" class="font-bold text-black dark:text-white shrink-0 overflow-hidden" :class="expanded ? 'text-lg' : 'text-sm text-center w-full'">
       <span x-show="expanded">{logo}</span>
-      <span x-show="!expanded">🚀</span>
+      <span x-show="!expanded">{logoInitial}</span>
     </a>
     <button
       @click="expanded = !expanded"
@@ -59,11 +63,14 @@ const { logo, navLinks, cta } = data;
     ))}
   </nav>
 
-  <!-- Bottom CTA -->
-  <div class="p-4 border-t border-zinc-200 dark:border-zinc-800 shrink-0">
+  <!-- Bottom: Theme Toggle + CTA -->
+  <div class="p-4 border-t border-zinc-200 dark:border-zinc-800 shrink-0 flex flex-col gap-3">
+    <div class="flex justify-center text-black dark:text-white">
+      <ThemeToggle />
+    </div>
     <a
       href={cta.url}
-      class="flex items-center justify-center gap-2 h-12 bg-black dark:bg-white text-white dark:text-black font-bold rounded-xl hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors overflow-hidden"
+      class="flex items-center justify-center gap-2 h-12 bg-black dark:bg-white text-white dark:text-black font-bold rounded-full hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors overflow-hidden"
     >
       <span x-show="expanded">{cta.text}</span>
       <span x-show="!expanded">→</span>

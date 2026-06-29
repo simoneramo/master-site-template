@@ -1,0 +1,80 @@
+---
+/**
+ * CareersList — Openings List
+ * Pattern key: list
+ * Section: Careers
+ *
+ * Full-width rows for each opening: title + description on the left,
+ * department/location/type tags, and an apply arrow on the right.
+ */
+import type { CareersData } from "../../../data/sample-data";
+
+interface Props {
+  data: CareersData;
+  /** Section ID for anchor links */
+  id?: string;
+}
+
+const { data, id } = Astro.props;
+const { eyebrow, heading, description, jobs = [], cta } = data;
+---
+
+<section {id} class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8 max-w-4xl">
+    {
+      (eyebrow || heading || description) && (
+        <div class="max-w-2xl mb-12">
+          {eyebrow && (
+            <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+              {eyebrow}
+            </span>
+          )}
+          {heading && <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>}
+          {description && (
+            <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>
+          )}
+        </div>
+      )
+    }
+
+    {jobs.length > 0 && (
+      <div class="divide-y divide-zinc-200 dark:divide-zinc-800 border-y border-zinc-200 dark:border-zinc-800">
+        {jobs.map((job) => {
+          const Tag = job.url ? 'a' : 'div';
+          return (
+            <Tag href={job.url} class="group flex items-center gap-6 py-6 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 -mx-4 px-4 transition-colors">
+              <div class="flex-1 min-w-0">
+                <h3 class="text-lg md:text-xl font-bold leading-tight">{job.title}</h3>
+                {job.description && (
+                  <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1 hidden sm:block">{job.description}</p>
+                )}
+                <div class="flex flex-wrap items-center gap-2 mt-3">
+                  {job.department && (
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-neutral-600 dark:text-neutral-300">{job.department}</span>
+                  )}
+                  {job.location && (
+                    <span class="text-xs font-medium px-2.5 py-1 rounded-full border border-zinc-200 dark:border-zinc-700 text-neutral-500 dark:text-neutral-400">{job.location}</span>
+                  )}
+                  {job.type && (
+                    <span class="text-xs font-medium px-2.5 py-1 rounded-full border border-zinc-200 dark:border-zinc-700 text-neutral-500 dark:text-neutral-400">{job.type}</span>
+                  )}
+                </div>
+              </div>
+              {job.url && (
+                <span class="shrink-0 text-xl text-neutral-400 group-hover:text-black dark:group-hover:text-white group-hover:translate-x-1 transition-all">&rarr;</span>
+              )}
+            </Tag>
+          );
+        })}
+      </div>
+    )}
+
+    {cta?.text && cta?.url && (
+      <div class="mt-10">
+        <a href={cta.url} class="font-bold border-b-2 border-black dark:border-white hover:border-transparent transition-colors text-black dark:text-white">
+          {cta.text} &rarr;
+        </a>
+      </div>
+    )}
+  </div>
+</section>

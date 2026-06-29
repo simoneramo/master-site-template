@@ -7,6 +7,7 @@
  * Logo left, hamburger right on all screens. Full-screen overlay menu.
  */
 import type { HeaderData } from '../../../data/sample-data';
+import ThemeToggle from '../../ThemeToggle.astro';
 
 interface Props {
   data: HeaderData;
@@ -27,19 +28,23 @@ const { logo, navLinks, cta } = data;
       {logo}
     </a>
 
-    <!-- Hamburger (always visible) -->
-    <button
-      @click="menuOpen = !menuOpen"
-      class="relative z-60 p-2 rounded-lg border-2 border-zinc-300 dark:border-zinc-700"
-      :class="menuOpen ? 'border-white/40' : ''"
-      aria-label="Toggle menu"
-    >
-      <div class="w-6 h-5 flex flex-col justify-between">
-        <span class="block w-full h-0.5 transition-all duration-300 origin-left" :class="menuOpen ? 'rotate-45 translate-x-0.5 bg-white' : 'bg-black dark:bg-white'" />
-        <span class="block w-full h-0.5 transition-all duration-300" :class="menuOpen ? 'opacity-0 bg-white' : 'bg-black dark:bg-white'" />
-        <span class="block w-full h-0.5 transition-all duration-300 origin-left" :class="menuOpen ? '-rotate-45 translate-x-0.5 bg-white' : 'bg-black dark:bg-white'" />
-      </div>
-    </button>
+    <div class="flex items-center gap-2 relative z-60">
+      <ThemeToggle />
+
+      <!-- Hamburger (always visible) -->
+      <button
+        @click="menuOpen = !menuOpen"
+        class="p-2 rounded-lg border-2 border-zinc-300 dark:border-zinc-700"
+        :class="menuOpen ? 'border-white/40' : ''"
+        aria-label="Toggle menu"
+      >
+        <div class="w-6 h-5 flex flex-col justify-between">
+          <span class="block w-full h-0.5 transition-all duration-300 origin-left" :class="menuOpen ? 'rotate-45 translate-x-0.5 bg-white' : 'bg-black dark:bg-white'" />
+          <span class="block w-full h-0.5 transition-all duration-300" :class="menuOpen ? 'opacity-0 bg-white' : 'bg-black dark:bg-white'" />
+          <span class="block w-full h-0.5 transition-all duration-300 origin-left" :class="menuOpen ? '-rotate-45 translate-x-0.5 bg-white' : 'bg-black dark:bg-white'" />
+        </div>
+      </button>
+    </div>
   </div>
 
   <!-- Full-Screen Overlay Menu -->
@@ -74,7 +79,7 @@ const { logo, navLinks, cta } = data;
         <a
           href={cta.url}
           @click="menuOpen = false"
-          class="inline-flex items-center justify-center h-16 px-12 bg-white text-black font-bold text-xl rounded-lg hover:bg-zinc-200 transition-colors"
+          class="inline-flex items-center justify-center h-16 px-12 bg-white text-black font-bold text-xl rounded-full hover:bg-zinc-200 transition-colors"
         >
           {cta.text} →
         </a>

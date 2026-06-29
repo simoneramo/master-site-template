@@ -8,6 +8,7 @@
  * White text initially, switches to dark text when solid background appears.
  */
 import type { HeaderData } from '../../../data/sample-data';
+import ThemeToggle from '../../ThemeToggle.astro';
 
 interface Props {
   data: HeaderData;
@@ -49,9 +50,11 @@ const { logo, navLinks, cta } = data;
     </nav>
 
     <div class="flex items-center gap-4">
+        <ThemeToggle />
+
       <a
         href={cta.url}
-        class="hidden md:inline-flex group relative items-center justify-center overflow-hidden font-bold px-6 py-2.5 rounded-lg transition-all duration-300"
+        class="hidden md:inline-flex group relative items-center justify-center overflow-hidden font-bold px-6 py-2.5 rounded-full transition-all duration-300"
         :class="scrollY > 100
           ? 'bg-black dark:bg-white text-white dark:text-black hover:bg-zinc-800 dark:hover:bg-zinc-200'
           : 'bg-white text-black hover:bg-zinc-100'"
@@ -92,7 +95,7 @@ const { logo, navLinks, cta } = data;
           {link.label}
         </a>
       ))}
-      <a href={cta.url} class="inline-flex items-center justify-center h-12 bg-black dark:bg-white text-white dark:text-black font-bold rounded-lg mt-4">
+      <a href={cta.url} class="inline-flex items-center justify-center h-12 bg-black dark:bg-white text-white dark:text-black font-bold rounded-full mt-4">
         {cta.text}
       </a>
     </nav>

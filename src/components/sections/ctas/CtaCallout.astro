@@ -1,0 +1,70 @@
+---
+/**
+ * CtaCallout — Split Image Callout
+ * Pattern key: callout
+ * Section: CTA
+ *
+ * Two-column callout: eyebrow + heading + description + button on one
+ * side, a featured image on the other. Set `flip` to swap sides.
+ */
+import type { CtaData } from "../../../data/sample-data";
+
+interface Props {
+  data: CtaData;
+  /** Swap the image to the opposite side */
+  flip?: boolean;
+}
+
+const { data, flip = false } = Astro.props;
+const { eyebrow, heading, description, primaryCta, image } = data;
+---
+
+<section class="py-20">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <!-- Text Content -->
+      <div class={`text-left ${flip ? "md:order-last" : ""}`}>
+        {
+          eyebrow && (
+            <p class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+              {eyebrow}
+            </p>
+          )
+        }
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 dark:text-white">{heading}</h2>
+        <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-8 font-medium">
+          {description}
+        </p>
+        {
+          primaryCta?.text && primaryCta?.url && (
+            <a
+              href={primaryCta.url}
+              class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black transition-all duration-300 text-lg rounded-full hover:bg-zinc-800 dark:hover:bg-zinc-200"
+            >
+              <span class="transform transition-transform duration-300 group-hover:-translate-x-4">
+                {primaryCta.text}
+              </span>
+              <span class="absolute right-6 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                &rarr;
+              </span>
+            </a>
+          )
+        }
+      </div>
+
+      <!-- Image -->
+      {
+        image?.src && (
+          <div class={`relative aspect-video rounded-lg overflow-hidden ${flip ? "md:order-first" : ""}`}>
+            <img
+              src={image.src}
+              alt={image.alt || heading}
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

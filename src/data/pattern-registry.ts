@@ -38,6 +38,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     dataKey: 'SAMPLE_HEADER',
     fields: SECTION_FIELDS.headers,
     variants: [
+      { key: 'classic', label: 'Classic (Original)', component: 'HeaderClassic', brief: 'Original master-template header. Logo left, centered nav with hover mega-dropdowns, theme toggle + CTA right. Becomes a fixed translucent bar on scroll.', status: 'ready' },
       { key: 'standard', label: 'Standard', component: 'HeaderStandard', brief: 'Sticky header with logo left, nav right, CTA far right. Mobile hamburger with slide-out drawer.', status: 'ready' },
       { key: 'withPhone', label: 'With Phone', component: 'HeaderWithPhone', brief: 'Sticky header with phone number displayed before the CTA button. Mobile: tap-to-call icon.', status: 'ready' },
       { key: 'centeredLogo', label: 'Centered Logo', component: 'HeaderCenteredLogo', brief: 'Logo centered, nav links split evenly on either side. CTA far right.', status: 'ready' },
@@ -57,6 +58,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     dataKey: 'SAMPLE_HERO',
     fields: SECTION_FIELDS.heroes,
     variants: [
+      { key: 'classic', label: 'Classic (Original)', component: 'HeroClassic', brief: 'Original master-template hero — label, heading, description, CTA button, trust badge. Split/centered/bold layouts.', status: 'ready', dataKey: 'SAMPLE_HERO_CLASSIC' },
       { key: 'splitLR', label: 'Copy Left / Image Right', component: 'HeroSplitLR', brief: 'Two-column (55/45). Text left with eyebrow, headline, CTAs. Image right with floating trust badge.', status: 'ready' },
       { key: 'splitRL', label: 'Image Left / Copy Right', component: 'HeroSplitRL', brief: 'Two-column (45/55). Image left, text content right.', status: 'ready' },
       { key: 'centered', label: 'Centered', component: 'HeroCentered', brief: 'Full-width centered layout. Eyebrow, headline, CTAs, then large image below.', status: 'ready' },
@@ -147,12 +149,14 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     dataKey: 'SAMPLE_FEATURES',
     fields: SECTION_FIELDS.features,
     variants: [
+      { key: 'classic', label: 'Classic (Original)', component: 'CardGridClassic', brief: 'Original card grid — icon/title/description cards with section heading and CTA.', status: 'ready', dataKey: 'SAMPLE_CARDGRID_CLASSIC' },
       { key: 'threeCol', label: '3-Column Grid', component: 'FeaturesThreeCol', brief: 'Three features per row with icon, heading, and description.', status: 'ready' },
       { key: 'twoColImage', label: '2-Column with Image', component: 'FeaturesTwoColImage', brief: 'Large image left, stacked feature list right.', status: 'ready' },
       { key: 'checklist', label: 'Checklist Style', component: 'FeaturesChecklist', brief: 'Vertical list with checkmark icons and feature descriptions.', status: 'ready' },
       { key: 'fourColGrid', label: '4-Column Icon Grid', component: 'FeaturesFourCol', brief: 'Four features per row with centered icons on tinted backgrounds.', status: 'ready' },
       { key: 'tabbed', label: 'Tabbed Features', component: 'FeaturesTabbed', brief: 'Tab row at top, each tab shows mockup + feature list.', status: 'ready' },
       { key: 'stickyScroll', label: 'Sticky Scroll', component: 'FeaturesStickyScroll', brief: 'Scrolling feature list left, sticky image right that changes per feature.', status: 'ready' },
+      { key: 'cardGrid', label: 'Bordered Card Grid', component: 'FeaturesCardGrid', brief: 'Features as fully-bordered icon cards with heading and description, left-aligned in an even 3-up grid.', status: 'ready' },
     ],
   },
   {
@@ -192,6 +196,8 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     dataKey: 'SAMPLE_TESTIMONIALS',
     fields: SECTION_FIELDS.testimonials,
     variants: [
+      { key: 'classic', label: 'Classic (Original)', component: 'TestimonialsClassic', brief: 'Original testimonials grid — quote, author name, title, and avatar.', status: 'ready', dataKey: 'SAMPLE_TESTIMONIALS_CLASSIC' },
+      { key: 'classicMarquee', label: 'Classic Marquee (Original)', component: 'TestimonialsMarqueeClassic', brief: 'Original scrolling testimonials marquee.', status: 'ready', dataKey: 'SAMPLE_TESTIMONIALS_CLASSIC' },
       { key: 'threeCol', label: '3-Column Cards', component: 'TestimonialsThreeCol', brief: 'Three cards with star rating, quote, customer name, and optional avatar.', status: 'ready' },
       { key: 'featured', label: 'Single Featured', component: 'TestimonialsFeatured', brief: 'One large centered testimonial with decorative quote marks and photo.', status: 'ready' },
       { key: 'carousel', label: 'Carousel / Slider', component: 'TestimonialsCarousel', brief: 'Single testimonial visible, auto-advances with arrows and dots.', status: 'ready' },
@@ -200,6 +206,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
       { key: 'socialEmbed', label: 'Social Proof Wall', component: 'TestimonialsSocialWall', brief: 'Grid styled as social media posts with platform icons.', status: 'ready' },
       { key: 'ratingBreakdown', label: 'Rating Breakdown', component: 'TestimonialsRatingBreakdown', brief: 'Large average rating with bar chart breakdown and quote snippets.', status: 'ready' },
       { key: 'marquee', label: 'Scrolling Marquee', component: 'TestimonialsMarqueeSection', brief: 'Infinite horizontal scroll of testimonial cards with pause on hover.', status: 'ready' },
+      { key: 'reviewGrid', label: 'Review Grid', component: 'TestimonialsReviewGrid', brief: 'Aggregate star rating and review count above a grid of review cards with avatar, name, stars, and quote.', status: 'ready' },
     ],
   },
   {
@@ -209,6 +216,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     dataKey: 'SAMPLE_PORTFOLIO',
     fields: SECTION_FIELDS.portfolios,
     variants: [
+      { key: 'classic', label: 'Classic (Original)', component: 'WorkGridClassic', brief: 'Original work/portfolio grid — project image, title, and category.', status: 'ready', dataKey: 'SAMPLE_WORKGRID_CLASSIC' },
       { key: 'masonry', label: 'Masonry Grid', component: 'PortfolioMasonry', brief: 'Asymmetric image grid with hover overlays showing project title.', status: 'ready' },
       { key: 'uniform', label: 'Uniform Grid', component: 'PortfolioUniform', brief: 'Even grid with consistent aspect ratios and hover overlays.', status: 'ready' },
       { key: 'featuredGrid', label: 'Featured + Grid', component: 'PortfolioFeatured', brief: 'One large hero image at top, smaller grid below.', status: 'ready' },
@@ -239,6 +247,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     dataKey: 'SAMPLE_PRICING',
     fields: SECTION_FIELDS.pricing,
     variants: [
+      { key: 'classic', label: 'Classic (Original)', component: 'PricingTiersClassic', brief: 'Original pricing tiers with feature rows and a popular highlight.', status: 'ready', dataKey: 'SAMPLE_PRICING_CLASSIC' },
       { key: 'threeCol', label: '3-Tier Cards', component: 'PricingThreeTier', brief: 'Three pricing cards, middle highlighted as recommended.', status: 'ready' },
       { key: 'twoCol', label: '2-Plan Comparison', component: 'PricingTwoCol', brief: 'Two plans side by side with optional feature comparison table below.', status: 'ready' },
       { key: 'single', label: 'Single Plan', component: 'PricingSingle', brief: 'One centered plan card with feature checklist and CTA.', status: 'ready' },
@@ -253,6 +262,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     dataKey: 'SAMPLE_FAQ',
     fields: SECTION_FIELDS.faqs,
     variants: [
+      { key: 'classic', label: 'Classic (Original)', component: 'FaqClassic', brief: 'Original FAQ list with section heading and show-more.', status: 'ready', dataKey: 'SAMPLE_FAQ_CLASSIC' },
       { key: 'accordion', label: 'Accordion', component: 'FaqAccordion', brief: 'Vertical accordion list, one answer open at a time. Chevron rotates.', status: 'ready' },
       { key: 'twoColGrid', label: 'Two-Column Grid', component: 'FaqTwoColGrid', brief: 'All Q&As visible in a 2-column card grid. No collapsing.', status: 'ready' },
       { key: 'sideBySide', label: 'Side-by-Side', component: 'FaqSideBySide', brief: 'Heading + CTA left, accordion right.', status: 'ready' },
@@ -281,6 +291,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     dataKey: 'SAMPLE_CTA',
     fields: SECTION_FIELDS.ctas,
     variants: [
+      { key: 'classic', label: 'Classic (Original)', component: 'CtaSectionClassic', brief: 'Original CTA band — label, heading, description, and button.', status: 'ready', dataKey: 'SAMPLE_CTASECTION_CLASSIC' },
       { key: 'centeredBanner', label: 'Centered Banner', component: 'CtaCenteredBanner', brief: 'Full-width contrasting section with centered heading, subtext, CTA button.', status: 'ready' },
       { key: 'splitImage', label: 'Split with Image', component: 'CtaSplitImage', brief: 'Text and CTA left, emotional image right.', status: 'ready' },
       { key: 'cardCta', label: 'Card CTA', component: 'CtaCard', brief: 'Centered floating card with heading, subtext, CTA on contrasting background.', status: 'ready' },
@@ -288,6 +299,8 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
       { key: 'statsCta', label: 'Stats + CTA', component: 'CtaStats', brief: 'Key statistics row above centered heading and CTA button.', status: 'ready' },
       { key: 'countdownCta', label: 'Countdown CTA', component: 'CtaCountdown', brief: 'Urgency heading with live countdown timer and CTA button.', status: 'ready' },
       { key: 'testimonialCta', label: 'Testimonial + CTA', component: 'CtaTestimonial', brief: 'Customer quote left, persuasive heading and CTA right.', status: 'ready' },
+      { key: 'modalForm', label: 'Modal Form CTA', component: 'CtaModalForm', brief: 'Centered CTA banner. Button opens a modal popup with a lead-capture form.', status: 'ready' },
+      { key: 'callout', label: 'Split Image Callout', component: 'CtaCallout', brief: 'Two-column callout: eyebrow, heading, description and button on one side, a featured image on the other. Supports flip.', status: 'ready' },
     ],
   },
   {
@@ -297,6 +310,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     dataKey: 'SAMPLE_FOOTER',
     fields: SECTION_FIELDS.footers,
     variants: [
+      { key: 'classic', label: 'Classic (Original)', component: 'FooterClassic', brief: 'Original master-template footer. Logo with Beta badge + socials on top, multi-column links grid, and a bottom bar with copyright, legal links, and back-to-top.', status: 'ready' },
       { key: 'fourCol', label: '4-Column', component: 'FooterFourCol', brief: 'Logo + tagline + socials, 2 nav columns, contact info. Copyright bar below.', status: 'ready' },
       { key: 'minimal', label: 'Minimal', component: 'FooterMinimal', brief: 'Single row: logo left, links center, socials right. Copyright below.', status: 'ready' },
       { key: 'newsletterLinks', label: 'Newsletter + Links', component: 'FooterNewsletter', brief: 'Newsletter signup at top, multi-column links below, copyright bar.', status: 'ready' },
@@ -316,6 +330,8 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
       { key: 'threeCol', label: '3-Column Grid', component: 'TeamThreeCol', brief: 'Three-column grid of team cards with photos, names, roles, and social links.', status: 'ready' },
       { key: 'featured', label: 'Featured Leader', component: 'TeamFeatured', brief: 'Large featured leader card on top, remaining team in 3-column grid below.', status: 'ready' },
       { key: 'carousel', label: 'Carousel', component: 'TeamCarousel', brief: 'Horizontal carousel of team cards with navigation arrows.', status: 'ready' },
+      { key: 'grid', label: 'Compact Grid', component: 'TeamGrid', brief: 'Denser 4-column grid of square-photo cards with a hover overlay revealing social links.', status: 'ready' },
+      { key: 'list', label: 'Roster List', component: 'TeamList', brief: 'Full-width rows with avatar left, name/role/bio centre, and social links right.', status: 'ready' },
     ],
   },
   {
@@ -339,9 +355,12 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     dataKey: 'SAMPLE_FORM',
     fields: SECTION_FIELDS.forms,
     variants: [
+      { key: 'classic', label: 'Classic (Original)', component: 'ContactFormClassic', brief: 'Original contact form with name, email, message, and success state.', status: 'ready', dataKey: 'SAMPLE_CONTACTFORM_CLASSIC' },
       { key: 'contact', label: 'Contact Form', component: 'FormContact', brief: 'Clean centered contact form with name, email, phone, and message fields.', status: 'ready' },
       { key: 'step', label: 'Step Form', component: 'FormStep', brief: 'Multi-step form with progress indicator and step navigation.', status: 'ready' },
       { key: 'quote', label: 'Quote Form', component: 'FormQuote', brief: 'Comprehensive long quote form with 4 sections for detailed project requirements.', status: 'ready' },
+      { key: 'inline', label: 'Inline Form', component: 'FormInline', brief: 'Compact single-row form with copy beside it — ideal for embedded lead capture between sections.', status: 'ready' },
+      { key: 'split', label: 'Split Contact', component: 'FormSplit', brief: 'Two-column layout: heading, copy and contact details on the left, full form on the right.', status: 'ready' },
     ],
   },
   {
@@ -354,6 +373,8 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
       { key: 'grid', label: 'Stats Grid', component: 'StatsGrid', brief: 'A simple, clean grid of stats with optional icons and descriptions.', status: 'ready' },
       { key: 'minimal', label: 'Stats Minimal', component: 'StatsMinimal', brief: 'Clean inline stats perfect for breaking up content, no extra borders or background colors.', status: 'ready' },
       { key: 'withImage', label: 'Stats with Image', component: 'StatsWithImage', brief: 'Image on one side, headings & stats grid on the other.', status: 'ready' },
+      { key: 'counter', label: 'Animated Counters', component: 'StatsCounter', brief: 'Dark band of bold stats whose numeric values count up from zero on load, preserving prefixes/suffixes.', status: 'ready' },
+      { key: 'bigNumber', label: 'Featured Big Number', component: 'StatsBigNumber', brief: 'Promotes the first stat to a huge focal number with the remaining stats in a bordered grid alongside.', status: 'ready' },
     ],
   },
   {
@@ -363,6 +384,7 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     dataKey: 'SAMPLE_BANNER',
     fields: SECTION_FIELDS.banners,
     variants: [
+      { key: 'classic', label: 'Classic (Original)', component: 'PageHeroClassic', brief: 'Original page hero / banner — label, heading, description, and button.', status: 'ready', dataKey: 'SAMPLE_PAGEHERO_CLASSIC' },
       { key: 'sticky', label: 'Sticky Banner', component: 'BannerSticky', brief: 'A full-width dark banner at the top of the page with a dismiss button.', status: 'ready' },
       { key: 'floating', label: 'Floating Banner', component: 'BannerFloating', brief: 'A rounded banner that floats slightly below the top of the page.', status: 'ready' },
       { key: 'cookie', label: 'Cookie Banner', component: 'BannerCookie', brief: 'A floating card in the bottom corner with consent actions.', status: 'ready' },
@@ -377,6 +399,9 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     fields: SECTION_FIELDS.breakouts,
     variants: [
       { key: 'centered', label: 'Centered', component: 'BreakoutCentered', brief: 'Full-width breakout section with centered content, eyebrow, heading, description, and CTA button.', status: 'ready' },
+      { key: 'gradient', label: 'Gradient Glow', component: 'BreakoutGradient', brief: 'Edge-to-edge dark panel with a soft radial gradient glow, centered content and CTA.', status: 'ready' },
+      { key: 'split', label: 'Two-column', component: 'BreakoutSplit', brief: 'Bordered panel split into heading on the left and description plus CTA on the right.', status: 'ready' },
+      { key: 'quote', label: 'Pull Quote', component: 'BreakoutQuote', brief: 'Large editorial pull-quote treating the heading as the quote and eyebrow as attribution.', status: 'ready' },
     ],
   },
   {
@@ -386,8 +411,11 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
     dataKey: 'SAMPLE_SHOWCASE',
     fields: SECTION_FIELDS.showcases,
     variants: [
+      { key: 'classic', label: 'Classic (Original)', component: 'CarouselClassic', brief: 'Original carousel of icon/title/description cards.', status: 'ready', dataKey: 'SAMPLE_CARDGRID_CLASSIC' },
       { key: 'scrollReveal', label: 'Scroll Reveal Left', component: 'ShowcaseScrollReveal', brief: 'Sticky scroll section with content on left, browser mockup image on right that scrolls vertically.', status: 'ready' },
       { key: 'scrollRevealRight', label: 'Scroll Reveal Right', component: 'ShowcaseScrollRevealRight', brief: 'Sticky scroll section with content on right, browser mockup image on left that scrolls vertically.', status: 'ready' },
+      { key: 'static', label: 'Static Split', component: 'ShowcaseStatic', brief: 'Non-animated two-column showcase with content beside a browser-chrome product mockup. Honours reverse.', status: 'ready' },
+      { key: 'deviceMockup', label: 'Laptop Mockup', component: 'ShowcaseDeviceMockup', brief: 'Centered heading and copy above a large laptop-frame mockup of the product.', status: 'ready' },
     ],
   },
   {
@@ -400,6 +428,94 @@ export const PATTERN_REGISTRY: SectionDefinition[] = [
       { key: 'prose', label: 'Centered Prose', component: 'ContentProse', brief: 'A simple centered text block for long-form content using typography prose.', status: 'ready' },
       { key: 'split', label: 'Split Layout', component: 'ContentSplit', brief: 'A two-column layout with heading on the left and rich text on the right.', status: 'ready' },
       { key: 'withImage', label: 'Prose with Image', component: 'ContentWithImage', brief: 'A content block accompanied by a large featured hero image and author metadata.', status: 'ready' },
+      { key: 'sidebar', label: 'Prose with Sidebar', component: 'ContentSidebar', brief: 'Long-form prose in the main column with a sticky author byline and meta sidebar.', status: 'ready' },
+      { key: 'highlight', label: 'Boxed Highlight', component: 'ContentHighlight', brief: 'Centered prose set on a tinted card with an author byline up top — for notes, letters, announcements.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'comparison',
+    label: 'Comparison',
+    icon: '⚖️',
+    dataKey: 'SAMPLE_COMPARISON',
+    fields: SECTION_FIELDS.comparison,
+    variants: [
+      { key: 'table', label: 'Comparison Table', component: 'ComparisonTable', brief: 'Responsive us-vs-competitors table with a highlighted "us" column, per-row feature + subtitle, and optional CTA.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'contact',
+    label: 'Contact / Areas',
+    icon: '📍',
+    dataKey: 'SAMPLE_CONTACT',
+    fields: SECTION_FIELDS.contact,
+    variants: [
+      { key: 'serviceAreas', label: 'Map + Service Areas', component: 'ContactServiceAreas', brief: 'Centered heading, embedded map iframe, and an expandable grid of service-area suburbs with show-more toggle.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'logos',
+    label: 'Logos / Trusted By',
+    icon: '🏆',
+    dataKey: 'SAMPLE_LOGOS',
+    fields: SECTION_FIELDS.logos,
+    variants: [
+      { key: 'row', label: 'Text / Icon Row', component: 'LogosRow', brief: 'Centered caption above a wrapping flex row of brand marks rendered as icon plus name.', status: 'ready' },
+      { key: 'imageGrid', label: 'Image Logo Grid', component: 'LogosImageGrid', brief: 'Image logos in an even bordered grid, greyscaled and fading to full colour on hover.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'galleries',
+    label: 'Gallery',
+    icon: '🖼️',
+    dataKey: 'SAMPLE_GALLERY',
+    fields: SECTION_FIELDS.galleries,
+    variants: [
+      { key: 'grid', label: 'Uniform Grid', component: 'GalleryGrid', brief: 'Even responsive grid of square-cropped images with captions that reveal on hover.', status: 'ready' },
+      { key: 'masonry', label: 'Masonry', component: 'GalleryMasonry', brief: 'Pinterest-style masonry via CSS columns so images keep their natural aspect ratio. Hover captions.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'integrations',
+    label: 'Integrations',
+    icon: '🔌',
+    dataKey: 'SAMPLE_INTEGRATIONS',
+    fields: SECTION_FIELDS.integrations,
+    variants: [
+      { key: 'grid', label: 'Integration Cards', component: 'IntegrationsGrid', brief: 'Bordered cards with app icon, name, description, and category tag, plus an optional CTA.', status: 'ready' },
+      { key: 'compact', label: 'Dense Logo Tiles', component: 'IntegrationsCompact', brief: 'Dense even grid of icon + name tiles for showing "works with 100+ tools" at a glance.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'about',
+    label: 'About / Story',
+    icon: '📖',
+    dataKey: 'SAMPLE_ABOUT',
+    fields: SECTION_FIELDS.about,
+    variants: [
+      { key: 'storySplit', label: 'Image + Story', component: 'AboutStorySplit', brief: 'Feature image beside the company story (eyebrow, heading, rich-text body) with an optional stats row beneath.', status: 'ready' },
+      { key: 'valuesGrid', label: 'Mission + Values', component: 'AboutValuesGrid', brief: 'Centered heading above a grid of value cards, each with an icon, title, and description.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'careers',
+    label: 'Careers / Jobs',
+    icon: '💼',
+    dataKey: 'SAMPLE_CAREERS',
+    fields: SECTION_FIELDS.careers,
+    variants: [
+      { key: 'list', label: 'Openings List', component: 'CareersList', brief: 'Full-width rows per opening with title, description, department/location/type tags, and an apply arrow.', status: 'ready' },
+      { key: 'grid', label: 'Openings Grid', component: 'CareersGrid', brief: 'Bordered cards per opening with department, title, meta tags, description, and an apply link.', status: 'ready' },
+    ],
+  },
+  {
+    slug: 'events',
+    label: 'Events',
+    icon: '📅',
+    dataKey: 'SAMPLE_EVENTS',
+    fields: SECTION_FIELDS.events,
+    variants: [
+      { key: 'list', label: 'Agenda List', component: 'EventsList', brief: 'Agenda-style rows with a prominent date block left and event details right.', status: 'ready' },
+      { key: 'grid', label: 'Event Cards', component: 'EventsGrid', brief: 'Image-topped cards with a date badge, category, title, meta, and register link.', status: 'ready' },
     ],
   },
 ];

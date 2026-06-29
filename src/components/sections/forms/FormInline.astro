@@ -1,0 +1,80 @@
+---
+/**
+ * FormInline — Compact Inline Form
+ * A single-row form (stacks on mobile) ideal for embedding a quick
+ * email/lead capture between content sections. Renders non-textarea
+ * fields inline with the submit button.
+ */
+import type { FormData } from "../../../data/sample-data";
+
+interface Props {
+  data: FormData;
+}
+
+const { data } = Astro.props;
+const {
+  eyebrow,
+  heading,
+  description,
+  submitText = "Get Started",
+  privacyNote,
+  fields = [],
+} = data || {};
+
+// Inline form is best with short fields — drop textareas, cap at 2 inputs.
+const inlineFields = (fields.length > 0 ? fields : [
+  { label: "Email", type: "email", name: "email", placeholder: "you@example.com", required: true },
+]).filter((f) => f.type !== "textarea").slice(0, 2);
+---
+
+<section class="py-20 md:py-28">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="max-w-4xl mx-auto rounded-3xl bg-neutral-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-8 md:p-12">
+      <div class="grid lg:grid-cols-2 gap-8 items-center">
+        <!-- Copy -->
+        <div>
+          {eyebrow && (
+            <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-4">
+              {eyebrow}
+            </span>
+          )}
+          <h2 class="text-2xl md:text-3xl font-bold mb-2">{heading}</h2>
+          {description && <p class="text-neutral-600 dark:text-neutral-400">{description}</p>}
+        </div>
+
+        <!-- Inline form -->
+        <form
+          class="flex flex-col sm:flex-row gap-3"
+          x-data="{ submitting: false, submitted: false }"
+          @submit.prevent="submitting = true; setTimeout(() => { submitting = false; submitted = true }, 1000)"
+        >
+          {inlineFields.map((field) => (
+            <div class="flex-1">
+              <label for={`inline-${field.name}`} class="sr-only">{field.label}</label>
+              <input
+                id={`inline-${field.name}`}
+                name={field.name}
+                type={field.type as "text" | "email" | "tel"}
+                placeholder={field.placeholder || field.label}
+                required={field.required}
+                class="w-full h-12 px-4 rounded-md border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:outline-none focus:border-zinc-950 dark:focus:border-white transition-colors text-sm"
+              />
+            </div>
+          ))}
+          <button
+            type="submit"
+            class="h-12 px-6 shrink-0 bg-zinc-950 dark:bg-white text-white dark:text-black font-bold rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            :disabled="submitting"
+          >
+            <span x-show="!submitted">{submitText}</span>
+            <span x-show="submitted">Done ✓</span>
+          </button>
+        </form>
+      </div>
+
+      {privacyNote && (
+        <p class="text-xs text-neutral-400 mt-4">{privacyNote}</p>
+      )}
+    </div>
+  </div>
+</section>

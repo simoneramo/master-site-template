@@ -5,6 +5,7 @@
  * Section: Navigation / Header
  */
 import type { HeaderData } from '../../../data/sample-data';
+import ThemeToggle from '../../ThemeToggle.astro';
 
 interface Props {
   data: HeaderData;
@@ -48,6 +49,8 @@ const { logo, navLinks, cta } = data;
     <!-- CTA + Mobile Toggle -->
     <div class="flex items-center gap-4">
       <div class="hidden lg:block">
+        <ThemeToggle />
+
         <a href={cta.url} class="inline-flex items-center justify-center gap-2 py-2 px-5 text-sm font-semibold rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors whitespace-nowrap">
           {cta.text}
         </a>

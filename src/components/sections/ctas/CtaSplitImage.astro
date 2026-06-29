@@ -37,7 +37,7 @@ const { eyebrow, heading, description, primaryCta, secondaryCta, image } = data;
             primaryCta && (
               <a
                 href={primaryCta.url}
-                class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black text-lg rounded-lg transition-all"
+                class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-white bg-black dark:bg-white dark:text-black text-lg rounded-full transition-all"
               >
                 <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
                   {primaryCta.text}
@@ -52,7 +52,7 @@ const { eyebrow, heading, description, primaryCta, secondaryCta, image } = data;
             secondaryCta && (
               <a
                 href={secondaryCta.url}
-                class="inline-flex items-center justify-center h-14 px-8 font-bold border-2 border-zinc-300 dark:border-zinc-700 rounded-lg hover:border-black dark:hover:border-white transition-colors text-lg"
+                class="inline-flex items-center justify-center h-14 px-8 font-bold border-2 border-zinc-300 dark:border-zinc-700 rounded-full hover:border-black dark:hover:border-white transition-colors text-lg"
               >
                 {secondaryCta.text}
               </a>

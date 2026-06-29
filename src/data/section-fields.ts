@@ -642,4 +642,121 @@ export const SECTION_FIELDS: Record<string, FieldDef[]> = {
       ],
     },
   ],
+  contact: [
+    { name: 'sectionLabel', label: 'Section Label', type: 'string', description: 'Small uppercase label above the heading' },
+    { name: 'heading', label: 'Heading', type: 'string', required: true },
+    { name: 'description', label: 'Description', type: 'text' },
+    { name: 'mapSrc', label: 'Map Embed URL', type: 'url', description: 'Google Maps (or similar) iframe embed src' },
+    { name: 'suburbs', label: 'Service Areas', type: 'string', list: true, description: 'List of areas/suburbs served' },
+  ],
+  comparison: [
+    { name: 'sectionLabel', label: 'Section Label', type: 'string', description: 'Small uppercase label above the heading' },
+    { name: 'heading', label: 'Heading', type: 'string', required: true },
+    { name: 'description', label: 'Description', type: 'text' },
+    { name: 'columnHeaders', label: 'Column Headers', type: 'string', list: true, description: 'Table column headers (first is the feature column)' },
+    {
+      name: 'rows', label: 'Rows', type: 'string', list: true,
+      fields: [
+        { name: 'feature', label: 'Feature', type: 'string', required: true },
+        { name: 'subtitle', label: 'Subtitle', type: 'string' },
+        { name: 'weMakeSmall', label: 'Our Column (HTML allowed)', type: 'string' },
+        { name: 'webAgency', label: 'Competitor A', type: 'string' },
+        { name: 'websiteBuilder', label: 'Competitor B', type: 'string' },
+      ],
+    },
+  ],
+  logos: [
+    { name: 'eyebrow', label: 'Caption', type: 'string', description: 'Small caption above the logos (e.g. "Trusted by…")' },
+    { name: 'heading', label: 'Heading', type: 'string', required: true },
+    { name: 'description', label: 'Description', type: 'text' },
+    {
+      name: 'brands', label: 'Brands', type: 'string', list: true, required: true,
+      fields: [
+        { name: 'name', label: 'Brand Name', type: 'string', required: true },
+        { name: 'icon', label: 'Icon / Text Mark', type: 'string', description: 'Emoji or text mark for text-style rows' },
+        { name: 'src', label: 'Logo Image', type: 'image', description: 'Image logo for image-style grids' },
+        { name: 'alt', label: 'Image Alt', type: 'string' },
+        { name: 'url', label: 'Link URL', type: 'url' },
+      ],
+    },
+  ],
+  galleries: [
+    ...sectionHeader(),
+    {
+      name: 'images', label: 'Images', type: 'string', list: true, required: true,
+      fields: [
+        { name: 'src', label: 'Image', type: 'image', required: true },
+        { name: 'alt', label: 'Alt Text', type: 'string' },
+        { name: 'caption', label: 'Caption', type: 'string' },
+        { name: 'category', label: 'Category', type: 'string' },
+      ],
+    },
+  ],
+  careers: [
+    ...sectionHeader(),
+    {
+      name: 'jobs', label: 'Job Openings', type: 'string', list: true, required: true,
+      fields: [
+        { name: 'title', label: 'Title', type: 'string', required: true },
+        { name: 'department', label: 'Department', type: 'string' },
+        { name: 'location', label: 'Location', type: 'string' },
+        { name: 'type', label: 'Employment Type', type: 'string' },
+        { name: 'description', label: 'Description', type: 'text' },
+        { name: 'url', label: 'Apply URL', type: 'url' },
+      ],
+    },
+    ctaField('cta', 'Call To Action', true),
+  ],
+  events: [
+    ...sectionHeader(),
+    {
+      name: 'events', label: 'Events', type: 'string', list: true, required: true,
+      fields: [
+        { name: 'title', label: 'Title', type: 'string', required: true },
+        { name: 'date', label: 'Date', type: 'string', required: true },
+        { name: 'time', label: 'Time', type: 'string' },
+        { name: 'location', label: 'Location', type: 'string' },
+        { name: 'speaker', label: 'Speaker / Host', type: 'string' },
+        { name: 'category', label: 'Category', type: 'string' },
+        { name: 'description', label: 'Description', type: 'text' },
+        imageField('image', 'Image'),
+        { name: 'url', label: 'Link URL', type: 'url' },
+      ],
+    },
+    ctaField('cta', 'Call To Action', true),
+  ],
+  integrations: [
+    ...sectionHeader(),
+    {
+      name: 'integrations', label: 'Integrations', type: 'string', list: true, required: true,
+      fields: [
+        { name: 'name', label: 'Name', type: 'string', required: true },
+        { name: 'icon', label: 'Icon / Logo Mark', type: 'string' },
+        { name: 'description', label: 'Description', type: 'text' },
+        { name: 'category', label: 'Category', type: 'string' },
+        { name: 'url', label: 'Link URL', type: 'url' },
+      ],
+    },
+    ctaField('cta', 'Call To Action', true),
+  ],
+  about: [
+    ...sectionHeader(true, false),
+    { name: 'body', label: 'Story Body', type: 'rich-text', required: true },
+    imageField('image', 'Image'),
+    {
+      name: 'metrics', label: 'Metrics', type: 'string', list: true,
+      fields: [
+        { name: 'value', label: 'Value', type: 'string', required: true },
+        { name: 'label', label: 'Label', type: 'string', required: true },
+      ],
+    },
+    {
+      name: 'values', label: 'Values', type: 'string', list: true,
+      fields: [
+        { name: 'icon', label: 'Icon', type: 'string' },
+        { name: 'title', label: 'Title', type: 'string', required: true },
+        { name: 'description', label: 'Description', type: 'text', required: true },
+      ],
+    },
+  ],
 };

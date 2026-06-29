@@ -1,0 +1,84 @@
+---
+/**
+ * ComparisonTable — Us vs. Competitors Table
+ * Pattern key: table
+ * Section: Comparison
+ *
+ * Responsive feature-comparison table with a highlighted "us" column,
+ * per-row feature + subtitle, and an optional trailing CTA link.
+ */
+import type { ComparisonData } from "../../../data/sample-data";
+
+interface Props {
+  data?: ComparisonData;
+  ctaText?: string;
+  ctaLink?: string;
+}
+
+const { data, ctaText, ctaLink } = Astro.props;
+---
+
+{
+  data && (
+    <section id="comparison" class="py-20">
+      <div class="container mx-auto px-4 md:px-0">
+        {data.sectionLabel && (
+          <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
+            {data.sectionLabel}
+          </p>
+        )}
+        {data.heading && <h2 class="text-5xl font-bold mb-4">{data.heading}</h2>}
+        {data.description && (
+          <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-12 max-w-3xl font-medium">
+            {data.description}
+          </p>
+        )}
+
+        {/* Responsive Table Wrapper */}
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y-2 divide-neutral-200 dark:divide-zinc-700 border-b-2 border-neutral-200 dark:border-zinc-700 border-collapse">
+            <thead class="bg-black dark:bg-white text-white dark:text-black">
+              <tr>
+                {data.columnHeaders.map((header, index) => (
+                  <th
+                    class={`p-4 text-lg font-extrabold ${index === 0 ? "text-left sticky left-0 z-20 bg-black dark:bg-white text-white dark:text-black" : "text-center"}`}
+                  >
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody class="divide-y-2 divide-neutral-200 dark:divide-zinc-700">
+              {data.rows.map((row) => (
+                <tr class="bg-white text-md font-medium dark:bg-black">
+                  <td class="p-4 sticky left-0 bg-white dark:bg-black font-bold">
+                    {row.feature}
+                    <p class="text-md text-neutral-600 dark:text-neutral-400 font-normal mt-1">
+                      {row.subtitle}
+                    </p>
+                  </td>
+                  <td class="p-4 bg-zinc-100 dark:bg-zinc-800 text-center font-bold">
+                    <Fragment set:html={row.weMakeSmall} />
+                  </td>
+                  <td class="p-4 text-center">{row.webAgency}</td>
+                  <td class="p-4 text-center">{row.websiteBuilder}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {ctaText && ctaLink && (
+          <div class="mt-10">
+            <a
+              href={ctaLink}
+              class="font-bold border-b-2 border-black dark:border-white hover:border-transparent transition-colors text-black dark:text-white"
+            >
+              {ctaText} &rarr;
+            </a>
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}

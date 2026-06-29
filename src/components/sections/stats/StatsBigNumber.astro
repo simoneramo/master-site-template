@@ -1,0 +1,58 @@
+---
+/**
+ * StatsBigNumber — Featured Hero Stat
+ * Promotes the first stat to a huge focal number on one side, with the
+ * remaining stats stacked alongside. Great for a single headline metric.
+ */
+import type { StatsData } from '../../../data/sample-data';
+
+interface Props { data: StatsData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, stats } = data;
+
+const [hero, ...rest] = stats;
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <!-- Hero stat -->
+      <div>
+        {eyebrow && (
+          <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+            {eyebrow}
+          </span>
+        )}
+        {heading && <h2 class="text-3xl md:text-4xl font-bold mb-4">{heading}</h2>}
+        {description && <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-10">{description}</p>}
+
+        {hero && (
+          <div>
+            <div class="text-7xl md:text-8xl lg:text-9xl font-extrabold tracking-tighter text-accent leading-none mb-3">
+              {hero.value}
+            </div>
+            <div class="text-xl font-bold mb-1">{hero.label}</div>
+            {hero.description && (
+              <p class="text-neutral-600 dark:text-neutral-400 max-w-sm">{hero.description}</p>
+            )}
+          </div>
+        )}
+      </div>
+
+      <!-- Supporting stats -->
+      <div class="grid sm:grid-cols-2 gap-px bg-zinc-200 dark:bg-zinc-800 rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800">
+        {rest.map((stat) => (
+          <div class="bg-white dark:bg-zinc-950 p-8">
+            {stat.icon && <div class="text-2xl mb-3">{stat.icon}</div>}
+            <div class="text-4xl font-extrabold tracking-tight mb-2">{stat.value}</div>
+            <div class="font-bold mb-1">{stat.label}</div>
+            {stat.description && (
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">{stat.description}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

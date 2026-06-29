@@ -1,0 +1,73 @@
+---
+/**
+ * BreakoutQuote — Pull-quote Breakout
+ * Pattern key: quote
+ * Section: Breakout
+ *
+ * Large editorial pull-quote. The heading is treated as the quote,
+ * the eyebrow as attribution, and the description as supporting context.
+ */
+import type { BreakoutData } from "../../../data/sample-data";
+
+interface Props {
+  data: BreakoutData;
+  /** Section ID for anchor links */
+  id?: string;
+}
+
+const { data, id } = Astro.props;
+
+const eyebrow = data?.eyebrow || "";
+const heading = data?.heading || "";
+const description = data?.description || "";
+const cta = data?.cta;
+---
+
+<section {id} class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <figure class="max-w-4xl mx-auto text-center">
+      <!-- Quote mark -->
+      <div
+        class="text-7xl md:text-8xl leading-none font-serif text-zinc-200 dark:text-zinc-800 select-none mb-2"
+        aria-hidden="true"
+      >
+        &ldquo;
+      </div>
+
+      {
+        heading && (
+          <blockquote class="text-2xl sm:text-3xl lg:text-4xl font-bold leading-snug tracking-tight dark:text-white mb-8">
+            {heading}
+          </blockquote>
+        )
+      }
+
+      {
+        description && (
+          <p class="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-2xl mx-auto mb-8">
+            {description}
+          </p>
+        )
+      }
+
+      {
+        eyebrow && (
+          <figcaption class="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
+            {eyebrow}
+          </figcaption>
+        )
+      }
+
+      {
+        cta?.text && cta?.url && (
+          <a
+            href={cta.url}
+            class="mt-10 inline-block font-bold border-b-2 border-black dark:border-white hover:border-transparent transition-colors text-black dark:text-white"
+          >
+            {cta.text} &rarr;
+          </a>
+        )
+      }
+    </figure>
+  </div>
+</section>

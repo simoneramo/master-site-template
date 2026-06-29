@@ -7,6 +7,7 @@
  * Logo centered, nav links split evenly on either side. CTA far right.
  */
 import type { HeaderData } from '../../../data/sample-data';
+import ThemeToggle from '../../ThemeToggle.astro';
 
 interface Props {
   data: HeaderData;
@@ -29,7 +30,7 @@ const rightLinks = navLinks.slice(midpoint);
   <div class="container mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
 
     <!-- Left Nav (desktop) -->
-    <nav class="hidden lg:flex items-center gap-6 flex-1 justify-end pr-8">
+    <nav class="hidden lg:flex items-center gap-8 flex-1 justify-end pr-8">
       {leftLinks.map((link) => (
         <a
           href={link.url}
@@ -46,7 +47,7 @@ const rightLinks = navLinks.slice(midpoint);
     </a>
 
     <!-- Right Nav (desktop) -->
-    <nav class="hidden lg:flex items-center gap-6 flex-1 pl-8">
+    <nav class="hidden lg:flex items-center gap-8 flex-1 pl-8">
       {rightLinks.map((link) => (
         <a
           href={link.url}
@@ -56,9 +57,11 @@ const rightLinks = navLinks.slice(midpoint);
         </a>
       ))}
 
+        <ThemeToggle />
+
       <a
         href={cta.url}
-        class="ml-auto group relative inline-flex items-center justify-center overflow-hidden bg-black dark:bg-white text-white dark:text-black font-bold px-6 py-2.5 rounded-lg transition-all"
+        class="ml-auto group relative inline-flex items-center justify-center overflow-hidden bg-black dark:bg-white text-white dark:text-black font-bold px-6 py-2.5 rounded-full transition-all"
       >
         <span class="transform transition-transform duration-300 group-hover:-translate-x-3">{cta.text}</span>
         <span class="absolute right-4 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">→</span>
@@ -96,7 +99,7 @@ const rightLinks = navLinks.slice(midpoint);
           {link.label}
         </a>
       ))}
-      <a href={cta.url} class="inline-flex items-center justify-center h-12 bg-black dark:bg-white text-white dark:text-black font-bold rounded-lg mt-4">
+      <a href={cta.url} class="inline-flex items-center justify-center h-12 bg-black dark:bg-white text-white dark:text-black font-bold rounded-full mt-4">
         {cta.text}
       </a>
     </nav>

@@ -10,7 +10,7 @@ interface Props {
 }
 
 const { data } = Astro.props;
-const { heading, description, primaryCta, trustBadges } = data;
+const { eyebrow, heading, description, primaryCta, trustBadges } = data;
 ---
 
 <section class="py-20 md:py-32">
@@ -25,6 +25,11 @@ const { heading, description, primaryCta, trustBadges } = data;
       </div>
 
       <div class="relative z-10">
+        {eyebrow && (
+          <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-white/20 dark:border-black/20 text-white/70 dark:text-black/70 mb-6">
+            {eyebrow}
+          </span>
+        )}
         <h2 class="text-3xl md:text-5xl font-bold leading-tight mb-6">
           {heading}
         </h2>
@@ -38,7 +43,7 @@ const { heading, description, primaryCta, trustBadges } = data;
           primaryCta && (
             <a
               href={primaryCta.url}
-              class="group relative inline-flex items-center justify-center overflow-hidden h-16 px-14 font-bold bg-white text-black dark:bg-black dark:text-white text-lg rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all"
+              class="group relative inline-flex items-center justify-center overflow-hidden h-16 px-14 font-bold bg-white text-black dark:bg-black dark:text-white text-lg rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all"
             >
               <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
                 {primaryCta.text}

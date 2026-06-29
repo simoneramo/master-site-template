@@ -78,6 +78,14 @@ const sampleDataMap: Record<string, any> = {
   content: SampleData.SAMPLE_CONTENT,
   breakouts: SampleData.SAMPLE_BREAKOUT,
   showcases: SampleData.SAMPLE_SHOWCASE,
+  comparison: SampleData.SAMPLE_COMPARISON,
+  contact: SampleData.SAMPLE_CONTACT,
+  logos: SampleData.SAMPLE_LOGOS,
+  galleries: SampleData.SAMPLE_GALLERY,
+  integrations: SampleData.SAMPLE_INTEGRATIONS,
+  about: SampleData.SAMPLE_ABOUT,
+  careers: SampleData.SAMPLE_CAREERS,
+  events: SampleData.SAMPLE_EVENTS,
 };
 
 const sampleData = sampleDataMap[sectionSlug] ?? {};
@@ -164,6 +172,11 @@ const sampleData = sampleDataMap[sectionSlug] ?? {};
         {section.variants.map((variant) => {
           const Component = componentMap[variant.component];
           const isBuilt = !!Component;
+          // A variant may declare its own dataKey (e.g. Classic variants with
+          // legacy-shaped data); otherwise fall back to the section's sample.
+          const variantData = (variant as any).dataKey
+            ? ((SampleData as any)[(variant as any).dataKey] ?? sampleData)
+            : sampleData;
 
           return (
             <div id={variant.key} class="scroll-mt-32" x-data="{ device: 'desktop' }">
@@ -270,7 +283,7 @@ const sampleData = sampleDataMap[sectionSlug] ?? {};
                         <div class:list={["header-preview-frame relative max-h-[500px] overflow-y-auto", variant.key === 'sidebar' && 'sidebar-layout']}
                         >
                           <!-- Force header/aside to be relative so it stays in container -->
-                          <Component data={sampleData} />
+                          <Component data={variantData} />
                           <!-- Fake page content - for sidebar this becomes the main content area -->
                           <div class:list={["bg-linear-to-b from-zinc-100 to-zinc-200 dark:from-zinc-900 dark:to-zinc-800 p-8 pt-4 space-y-4", variant.key === 'sidebar' ? 'flex-1 min-h-[500px]' : 'h-[800px]']}
                           >
@@ -306,7 +319,7 @@ const sampleData = sampleDataMap[sectionSlug] ?? {};
                           </div>
                         </div>
                       ) : (
-                        <Component data={sampleData} />
+                        <Component data={variantData} />
                       )}
                     </div>
                   </div>

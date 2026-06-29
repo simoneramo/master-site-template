@@ -1,0 +1,60 @@
+---
+/**
+ * LogosRow — Text / Icon Logo Row
+ * Pattern key: row
+ * Section: Logos
+ *
+ * Centered caption above a wrapping flex row of brand marks rendered as
+ * an icon (emoji/text mark) plus the brand name.
+ */
+import type { LogosData } from "../../../data/sample-data";
+
+interface Props {
+  data: LogosData;
+  /** Section ID for anchor links */
+  id?: string;
+}
+
+const { data, id } = Astro.props;
+const { eyebrow, heading, description, brands = [] } = data;
+---
+
+<section {id} class="py-12 md:py-20">
+  <div class="mx-auto px-4 md:px-0 max-w-7xl text-center">
+    {
+      eyebrow && (
+        <p class="text-xs font-bold text-neutral-500 dark:text-neutral-400 mb-8 uppercase tracking-widest">
+          {eyebrow}
+        </p>
+      )
+    }
+    {heading && <h2 class="text-3xl md:text-4xl font-bold mb-4 dark:text-white">{heading}</h2>}
+    {
+      description && (
+        <p class="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-8">
+          {description}
+        </p>
+      )
+    }
+
+    <div class="flex flex-wrap justify-center items-center gap-8 md:gap-20">
+      {
+        brands.map((logo) => {
+          const inner = (
+            <div class="flex items-center gap-3">
+              {logo.icon && <span class="text-4xl">{logo.icon}</span>}
+              <span class="text-xl font-bold text-neutral-700 dark:text-neutral-300">
+                {logo.name}
+              </span>
+            </div>
+          );
+          return logo.url ? (
+            <a href={logo.url} class="opacity-80 hover:opacity-100 transition-opacity" aria-label={logo.name}>
+              {inner}
+            </a>
+          ) : inner;
+        })
+      }
+    </div>
+  </div>
+</section>

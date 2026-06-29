@@ -8,6 +8,7 @@
  * Top bar hides on scroll.
  */
 import type { HeaderData } from '../../../data/sample-data';
+import ThemeToggle from '../../ThemeToggle.astro';
 
 interface Props {
   data: HeaderData;
@@ -77,9 +78,11 @@ const { logo, navLinks, cta, topBar } = data;
       </nav>
 
       <div class="flex items-center gap-4">
+        <ThemeToggle />
+
         <a
           href={cta.url}
-          class="hidden md:inline-flex group relative items-center justify-center overflow-hidden bg-black dark:bg-white text-white dark:text-black font-bold px-6 py-2.5 rounded-lg transition-all"
+          class="hidden md:inline-flex group relative items-center justify-center overflow-hidden bg-black dark:bg-white text-white dark:text-black font-bold px-6 py-2.5 rounded-full transition-all"
         >
           <span class="transform transition-transform duration-300 group-hover:-translate-x-3">{cta.text}</span>
           <span class="absolute right-4 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">→</span>
@@ -116,7 +119,7 @@ const { logo, navLinks, cta, topBar } = data;
             {link.label}
           </a>
         ))}
-        <a href={cta.url} class="inline-flex items-center justify-center h-12 bg-black dark:bg-white text-white dark:text-black font-bold rounded-lg mt-4">
+        <a href={cta.url} class="inline-flex items-center justify-center h-12 bg-black dark:bg-white text-white dark:text-black font-bold rounded-full mt-4">
           {cta.text}
         </a>
       </nav>

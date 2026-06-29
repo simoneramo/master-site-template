@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-04-15T23:15:54.590Z",
+  "generatedAt": "2026-06-25T09:38:57.006Z",
   "sections": [
     {
       "slug": "headers",
@@ -131,6 +131,14 @@
         }
       ],
       "variants": [
+        {
+          "key": "classic",
+          "label": "Classic (Original)",
+          "component": "HeaderClassic",
+          "brief": "Original master-template header. Logo left, centered nav with hover mega-dropdowns, theme toggle + CTA right. Becomes a fixed translucent bar on scroll.",
+          "status": "ready",
+          "preview": "/previews/headers/classic.png"
+        },
         {
           "key": "standard",
           "label": "Standard",
@@ -424,6 +432,15 @@
         }
       ],
       "variants": [
+        {
+          "key": "classic",
+          "label": "Classic (Original)",
+          "component": "HeroClassic",
+          "brief": "Original master-template hero — label, heading, description, CTA button, trust badge. Split/centered/bold layouts.",
+          "status": "ready",
+          "dataKey": "SAMPLE_HERO_CLASSIC",
+          "preview": "/previews/heroes/classic.png"
+        },
         {
           "key": "splitLR",
           "label": "Copy Left / Image Right",
@@ -1382,6 +1399,15 @@
       ],
       "variants": [
         {
+          "key": "classic",
+          "label": "Classic (Original)",
+          "component": "CardGridClassic",
+          "brief": "Original card grid — icon/title/description cards with section heading and CTA.",
+          "status": "ready",
+          "dataKey": "SAMPLE_CARDGRID_CLASSIC",
+          "preview": "/previews/features/classic.png"
+        },
+        {
           "key": "threeCol",
           "label": "3-Column Grid",
           "component": "FeaturesThreeCol",
@@ -1428,6 +1454,14 @@
           "brief": "Scrolling feature list left, sticky image right that changes per feature.",
           "status": "ready",
           "preview": "/previews/features/stickyScroll.png"
+        },
+        {
+          "key": "cardGrid",
+          "label": "Bordered Card Grid",
+          "component": "FeaturesCardGrid",
+          "brief": "Features as fully-bordered icon cards with heading and description, left-aligned in an even 3-up grid.",
+          "status": "ready",
+          "preview": "/previews/features/cardGrid.png"
         }
       ]
     },
@@ -1858,6 +1892,24 @@
       ],
       "variants": [
         {
+          "key": "classic",
+          "label": "Classic (Original)",
+          "component": "TestimonialsClassic",
+          "brief": "Original testimonials grid — quote, author name, title, and avatar.",
+          "status": "ready",
+          "dataKey": "SAMPLE_TESTIMONIALS_CLASSIC",
+          "preview": "/previews/testimonials/classic.png"
+        },
+        {
+          "key": "classicMarquee",
+          "label": "Classic Marquee (Original)",
+          "component": "TestimonialsMarqueeClassic",
+          "brief": "Original scrolling testimonials marquee.",
+          "status": "ready",
+          "dataKey": "SAMPLE_TESTIMONIALS_CLASSIC",
+          "preview": "/previews/testimonials/classicMarquee.png"
+        },
+        {
           "key": "threeCol",
           "label": "3-Column Cards",
           "component": "TestimonialsThreeCol",
@@ -1920,6 +1972,14 @@
           "brief": "Infinite horizontal scroll of testimonial cards with pause on hover.",
           "status": "ready",
           "preview": "/previews/testimonials/marquee.png"
+        },
+        {
+          "key": "reviewGrid",
+          "label": "Review Grid",
+          "component": "TestimonialsReviewGrid",
+          "brief": "Aggregate star rating and review count above a grid of review cards with avatar, name, stars, and quote.",
+          "status": "ready",
+          "preview": "/previews/testimonials/reviewGrid.png"
         }
       ]
     },
@@ -2012,6 +2072,15 @@
         }
       ],
       "variants": [
+        {
+          "key": "classic",
+          "label": "Classic (Original)",
+          "component": "WorkGridClassic",
+          "brief": "Original work/portfolio grid — project image, title, and category.",
+          "status": "ready",
+          "dataKey": "SAMPLE_WORKGRID_CLASSIC",
+          "preview": "/previews/portfolios/classic.png"
+        },
         {
           "key": "masonry",
           "label": "Masonry Grid",
@@ -2307,6 +2376,15 @@
       ],
       "variants": [
         {
+          "key": "classic",
+          "label": "Classic (Original)",
+          "component": "PricingTiersClassic",
+          "brief": "Original pricing tiers with feature rows and a popular highlight.",
+          "status": "ready",
+          "dataKey": "SAMPLE_PRICING_CLASSIC",
+          "preview": "/previews/pricing/classic.png"
+        },
+        {
           "key": "threeCol",
           "label": "3-Tier Cards",
           "component": "PricingThreeTier",
@@ -2426,6 +2504,15 @@
         }
       ],
       "variants": [
+        {
+          "key": "classic",
+          "label": "Classic (Original)",
+          "component": "FaqClassic",
+          "brief": "Original FAQ list with section heading and show-more.",
+          "status": "ready",
+          "dataKey": "SAMPLE_FAQ_CLASSIC",
+          "preview": "/previews/faqs/classic.png"
+        },
         {
           "key": "accordion",
           "label": "Accordion",
@@ -2750,6 +2837,15 @@
       ],
       "variants": [
         {
+          "key": "classic",
+          "label": "Classic (Original)",
+          "component": "CtaSectionClassic",
+          "brief": "Original CTA band — label, heading, description, and button.",
+          "status": "ready",
+          "dataKey": "SAMPLE_CTASECTION_CLASSIC",
+          "preview": "/previews/ctas/classic.png"
+        },
+        {
           "key": "centeredBanner",
           "label": "Centered Banner",
           "component": "CtaCenteredBanner",
@@ -2804,6 +2900,22 @@
           "brief": "Customer quote left, persuasive heading and CTA right.",
           "status": "ready",
           "preview": "/previews/ctas/testimonialCta.png"
+        },
+        {
+          "key": "modalForm",
+          "label": "Modal Form CTA",
+          "component": "CtaModalForm",
+          "brief": "Centered CTA banner. Button opens a modal popup with a lead-capture form.",
+          "status": "ready",
+          "preview": "/previews/ctas/modalForm.png"
+        },
+        {
+          "key": "callout",
+          "label": "Split Image Callout",
+          "component": "CtaCallout",
+          "brief": "Two-column callout: eyebrow, heading, description and button on one side, a featured image on the other. Supports flip.",
+          "status": "ready",
+          "preview": "/previews/ctas/callout.png"
         }
       ]
     },
@@ -2926,6 +3038,14 @@
         }
       ],
       "variants": [
+        {
+          "key": "classic",
+          "label": "Classic (Original)",
+          "component": "FooterClassic",
+          "brief": "Original master-template footer. Logo with Beta badge + socials on top, multi-column links grid, and a bottom bar with copyright, legal links, and back-to-top.",
+          "status": "ready",
+          "preview": "/previews/footers/classic.png"
+        },
         {
           "key": "fourCol",
           "label": "4-Column",
@@ -3105,6 +3225,22 @@
           "brief": "Horizontal carousel of team cards with navigation arrows.",
           "status": "ready",
           "preview": "/previews/team/carousel.png"
+        },
+        {
+          "key": "grid",
+          "label": "Compact Grid",
+          "component": "TeamGrid",
+          "brief": "Denser 4-column grid of square-photo cards with a hover overlay revealing social links.",
+          "status": "ready",
+          "preview": "/previews/team/grid.png"
+        },
+        {
+          "key": "list",
+          "label": "Roster List",
+          "component": "TeamList",
+          "brief": "Full-width rows with avatar left, name/role/bio centre, and social links right.",
+          "status": "ready",
+          "preview": "/previews/team/list.png"
         }
       ]
     },
@@ -3370,6 +3506,15 @@
       ],
       "variants": [
         {
+          "key": "classic",
+          "label": "Classic (Original)",
+          "component": "ContactFormClassic",
+          "brief": "Original contact form with name, email, message, and success state.",
+          "status": "ready",
+          "dataKey": "SAMPLE_CONTACTFORM_CLASSIC",
+          "preview": "/previews/forms/classic.png"
+        },
+        {
           "key": "contact",
           "label": "Contact Form",
           "component": "FormContact",
@@ -3392,6 +3537,22 @@
           "brief": "Comprehensive long quote form with 4 sections for detailed project requirements.",
           "status": "ready",
           "preview": "/previews/forms/quote.png"
+        },
+        {
+          "key": "inline",
+          "label": "Inline Form",
+          "component": "FormInline",
+          "brief": "Compact single-row form with copy beside it — ideal for embedded lead capture between sections.",
+          "status": "ready",
+          "preview": "/previews/forms/inline.png"
+        },
+        {
+          "key": "split",
+          "label": "Split Contact",
+          "component": "FormSplit",
+          "brief": "Two-column layout: heading, copy and contact details on the left, full form on the right.",
+          "status": "ready",
+          "preview": "/previews/forms/split.png"
         }
       ]
     },
@@ -3515,6 +3676,22 @@
           "brief": "Image on one side, headings & stats grid on the other.",
           "status": "ready",
           "preview": "/previews/stats/withImage.png"
+        },
+        {
+          "key": "counter",
+          "label": "Animated Counters",
+          "component": "StatsCounter",
+          "brief": "Dark band of bold stats whose numeric values count up from zero on load, preserving prefixes/suffixes.",
+          "status": "ready",
+          "preview": "/previews/stats/counter.png"
+        },
+        {
+          "key": "bigNumber",
+          "label": "Featured Big Number",
+          "component": "StatsBigNumber",
+          "brief": "Promotes the first stat to a huge focal number with the remaining stats in a bordered grid alongside.",
+          "status": "ready",
+          "preview": "/previews/stats/bigNumber.png"
         }
       ]
     },
@@ -3598,6 +3775,15 @@
         }
       ],
       "variants": [
+        {
+          "key": "classic",
+          "label": "Classic (Original)",
+          "component": "PageHeroClassic",
+          "brief": "Original page hero / banner — label, heading, description, and button.",
+          "status": "ready",
+          "dataKey": "SAMPLE_PAGEHERO_CLASSIC",
+          "preview": "/previews/banners/classic.png"
+        },
         {
           "key": "sticky",
           "label": "Sticky Banner",
@@ -3685,6 +3871,30 @@
           "brief": "Full-width breakout section with centered content, eyebrow, heading, description, and CTA button.",
           "status": "ready",
           "preview": "/previews/breakouts/centered.png"
+        },
+        {
+          "key": "gradient",
+          "label": "Gradient Glow",
+          "component": "BreakoutGradient",
+          "brief": "Edge-to-edge dark panel with a soft radial gradient glow, centered content and CTA.",
+          "status": "ready",
+          "preview": "/previews/breakouts/gradient.png"
+        },
+        {
+          "key": "split",
+          "label": "Two-column",
+          "component": "BreakoutSplit",
+          "brief": "Bordered panel split into heading on the left and description plus CTA on the right.",
+          "status": "ready",
+          "preview": "/previews/breakouts/split.png"
+        },
+        {
+          "key": "quote",
+          "label": "Pull Quote",
+          "component": "BreakoutQuote",
+          "brief": "Large editorial pull-quote treating the heading as the quote and eyebrow as attribution.",
+          "status": "ready",
+          "preview": "/previews/breakouts/quote.png"
         }
       ]
     },
@@ -3761,6 +3971,15 @@
       ],
       "variants": [
         {
+          "key": "classic",
+          "label": "Classic (Original)",
+          "component": "CarouselClassic",
+          "brief": "Original carousel of icon/title/description cards.",
+          "status": "ready",
+          "dataKey": "SAMPLE_CARDGRID_CLASSIC",
+          "preview": "/previews/showcases/classic.png"
+        },
+        {
           "key": "scrollReveal",
           "label": "Scroll Reveal Left",
           "component": "ShowcaseScrollReveal",
@@ -3775,6 +3994,22 @@
           "brief": "Sticky scroll section with content on right, browser mockup image on left that scrolls vertically.",
           "status": "ready",
           "preview": "/previews/showcases/scrollRevealRight.png"
+        },
+        {
+          "key": "static",
+          "label": "Static Split",
+          "component": "ShowcaseStatic",
+          "brief": "Non-animated two-column showcase with content beside a browser-chrome product mockup. Honours reverse.",
+          "status": "ready",
+          "preview": "/previews/showcases/static.png"
+        },
+        {
+          "key": "deviceMockup",
+          "label": "Laptop Mockup",
+          "component": "ShowcaseDeviceMockup",
+          "brief": "Centered heading and copy above a large laptop-frame mockup of the product.",
+          "status": "ready",
+          "preview": "/previews/showcases/deviceMockup.png"
         }
       ]
     },
@@ -3882,6 +4117,753 @@
           "brief": "A content block accompanied by a large featured hero image and author metadata.",
           "status": "ready",
           "preview": "/previews/content/withImage.png"
+        },
+        {
+          "key": "sidebar",
+          "label": "Prose with Sidebar",
+          "component": "ContentSidebar",
+          "brief": "Long-form prose in the main column with a sticky author byline and meta sidebar.",
+          "status": "ready",
+          "preview": "/previews/content/sidebar.png"
+        },
+        {
+          "key": "highlight",
+          "label": "Boxed Highlight",
+          "component": "ContentHighlight",
+          "brief": "Centered prose set on a tinted card with an author byline up top — for notes, letters, announcements.",
+          "status": "ready",
+          "preview": "/previews/content/highlight.png"
+        }
+      ]
+    },
+    {
+      "slug": "comparison",
+      "label": "Comparison",
+      "icon": "⚖️",
+      "dataKey": "SAMPLE_COMPARISON",
+      "fields": [
+        {
+          "name": "sectionLabel",
+          "label": "Section Label",
+          "type": "string",
+          "description": "Small uppercase label above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text"
+        },
+        {
+          "name": "columnHeaders",
+          "label": "Column Headers",
+          "type": "string",
+          "list": true,
+          "description": "Table column headers (first is the feature column)"
+        },
+        {
+          "name": "rows",
+          "label": "Rows",
+          "type": "string",
+          "list": true,
+          "fields": [
+            {
+              "name": "feature",
+              "label": "Feature",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "subtitle",
+              "label": "Subtitle",
+              "type": "string"
+            },
+            {
+              "name": "weMakeSmall",
+              "label": "Our Column (HTML allowed)",
+              "type": "string"
+            },
+            {
+              "name": "webAgency",
+              "label": "Competitor A",
+              "type": "string"
+            },
+            {
+              "name": "websiteBuilder",
+              "label": "Competitor B",
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "table",
+          "label": "Comparison Table",
+          "component": "ComparisonTable",
+          "brief": "Responsive us-vs-competitors table with a highlighted \"us\" column, per-row feature + subtitle, and optional CTA.",
+          "status": "ready",
+          "preview": "/previews/comparison/table.png"
+        }
+      ]
+    },
+    {
+      "slug": "contact",
+      "label": "Contact / Areas",
+      "icon": "📍",
+      "dataKey": "SAMPLE_CONTACT",
+      "fields": [
+        {
+          "name": "sectionLabel",
+          "label": "Section Label",
+          "type": "string",
+          "description": "Small uppercase label above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text"
+        },
+        {
+          "name": "mapSrc",
+          "label": "Map Embed URL",
+          "type": "url",
+          "description": "Google Maps (or similar) iframe embed src"
+        },
+        {
+          "name": "suburbs",
+          "label": "Service Areas",
+          "type": "string",
+          "list": true,
+          "description": "List of areas/suburbs served"
+        }
+      ],
+      "variants": [
+        {
+          "key": "serviceAreas",
+          "label": "Map + Service Areas",
+          "component": "ContactServiceAreas",
+          "brief": "Centered heading, embedded map iframe, and an expandable grid of service-area suburbs with show-more toggle.",
+          "status": "ready",
+          "preview": "/previews/contact/serviceAreas.png"
+        }
+      ]
+    },
+    {
+      "slug": "logos",
+      "label": "Logos / Trusted By",
+      "icon": "🏆",
+      "dataKey": "SAMPLE_LOGOS",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Caption",
+          "type": "string",
+          "description": "Small caption above the logos (e.g. \"Trusted by…\")"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text"
+        },
+        {
+          "name": "brands",
+          "label": "Brands",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "name",
+              "label": "Brand Name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "icon",
+              "label": "Icon / Text Mark",
+              "type": "string",
+              "description": "Emoji or text mark for text-style rows"
+            },
+            {
+              "name": "src",
+              "label": "Logo Image",
+              "type": "image",
+              "description": "Image logo for image-style grids"
+            },
+            {
+              "name": "alt",
+              "label": "Image Alt",
+              "type": "string"
+            },
+            {
+              "name": "url",
+              "label": "Link URL",
+              "type": "url"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "row",
+          "label": "Text / Icon Row",
+          "component": "LogosRow",
+          "brief": "Centered caption above a wrapping flex row of brand marks rendered as icon plus name.",
+          "status": "ready",
+          "preview": "/previews/logos/row.png"
+        },
+        {
+          "key": "imageGrid",
+          "label": "Image Logo Grid",
+          "component": "LogosImageGrid",
+          "brief": "Image logos in an even bordered grid, greyscaled and fading to full colour on hover.",
+          "status": "ready",
+          "preview": "/previews/logos/imageGrid.png"
+        }
+      ]
+    },
+    {
+      "slug": "galleries",
+      "label": "Gallery",
+      "icon": "🖼️",
+      "dataKey": "SAMPLE_GALLERY",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "images",
+          "label": "Images",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Image",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Alt Text",
+              "type": "string"
+            },
+            {
+              "name": "caption",
+              "label": "Caption",
+              "type": "string"
+            },
+            {
+              "name": "category",
+              "label": "Category",
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "grid",
+          "label": "Uniform Grid",
+          "component": "GalleryGrid",
+          "brief": "Even responsive grid of square-cropped images with captions that reveal on hover.",
+          "status": "ready",
+          "preview": "/previews/galleries/grid.png"
+        },
+        {
+          "key": "masonry",
+          "label": "Masonry",
+          "component": "GalleryMasonry",
+          "brief": "Pinterest-style masonry via CSS columns so images keep their natural aspect ratio. Hover captions.",
+          "status": "ready",
+          "preview": "/previews/galleries/masonry.png"
+        }
+      ]
+    },
+    {
+      "slug": "integrations",
+      "label": "Integrations",
+      "icon": "🔌",
+      "dataKey": "SAMPLE_INTEGRATIONS",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "integrations",
+          "label": "Integrations",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "name",
+              "label": "Name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "icon",
+              "label": "Icon / Logo Mark",
+              "type": "string"
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text"
+            },
+            {
+              "name": "category",
+              "label": "Category",
+              "type": "string"
+            },
+            {
+              "name": "url",
+              "label": "Link URL",
+              "type": "url"
+            }
+          ]
+        },
+        {
+          "name": "cta",
+          "label": "Call To Action",
+          "type": "string",
+          "required": true,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "grid",
+          "label": "Integration Cards",
+          "component": "IntegrationsGrid",
+          "brief": "Bordered cards with app icon, name, description, and category tag, plus an optional CTA.",
+          "status": "ready",
+          "preview": "/previews/integrations/grid.png"
+        },
+        {
+          "key": "compact",
+          "label": "Dense Logo Tiles",
+          "component": "IntegrationsCompact",
+          "brief": "Dense even grid of icon + name tiles for showing \"works with 100+ tools\" at a glance.",
+          "status": "ready",
+          "preview": "/previews/integrations/compact.png"
+        }
+      ]
+    },
+    {
+      "slug": "about",
+      "label": "About / Story",
+      "icon": "📖",
+      "dataKey": "SAMPLE_ABOUT",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "body",
+          "label": "Story Body",
+          "type": "rich-text",
+          "required": true
+        },
+        {
+          "name": "image",
+          "label": "Image",
+          "type": "string",
+          "required": false,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Image Source",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Alt Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "metrics",
+          "label": "Metrics",
+          "type": "string",
+          "list": true,
+          "fields": [
+            {
+              "name": "value",
+              "label": "Value",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "label",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "values",
+          "label": "Values",
+          "type": "string",
+          "list": true,
+          "fields": [
+            {
+              "name": "icon",
+              "label": "Icon",
+              "type": "string"
+            },
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "storySplit",
+          "label": "Image + Story",
+          "component": "AboutStorySplit",
+          "brief": "Feature image beside the company story (eyebrow, heading, rich-text body) with an optional stats row beneath.",
+          "status": "ready",
+          "preview": "/previews/about/storySplit.png"
+        },
+        {
+          "key": "valuesGrid",
+          "label": "Mission + Values",
+          "component": "AboutValuesGrid",
+          "brief": "Centered heading above a grid of value cards, each with an icon, title, and description.",
+          "status": "ready",
+          "preview": "/previews/about/valuesGrid.png"
+        }
+      ]
+    },
+    {
+      "slug": "careers",
+      "label": "Careers / Jobs",
+      "icon": "💼",
+      "dataKey": "SAMPLE_CAREERS",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "jobs",
+          "label": "Job Openings",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "department",
+              "label": "Department",
+              "type": "string"
+            },
+            {
+              "name": "location",
+              "label": "Location",
+              "type": "string"
+            },
+            {
+              "name": "type",
+              "label": "Employment Type",
+              "type": "string"
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text"
+            },
+            {
+              "name": "url",
+              "label": "Apply URL",
+              "type": "url"
+            }
+          ]
+        },
+        {
+          "name": "cta",
+          "label": "Call To Action",
+          "type": "string",
+          "required": true,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "list",
+          "label": "Openings List",
+          "component": "CareersList",
+          "brief": "Full-width rows per opening with title, description, department/location/type tags, and an apply arrow.",
+          "status": "ready",
+          "preview": "/previews/careers/list.png"
+        },
+        {
+          "key": "grid",
+          "label": "Openings Grid",
+          "component": "CareersGrid",
+          "brief": "Bordered cards per opening with department, title, meta tags, description, and an apply link.",
+          "status": "ready",
+          "preview": "/previews/careers/grid.png"
+        }
+      ]
+    },
+    {
+      "slug": "events",
+      "label": "Events",
+      "icon": "📅",
+      "dataKey": "SAMPLE_EVENTS",
+      "fields": [
+        {
+          "name": "eyebrow",
+          "label": "Eyebrow",
+          "type": "string",
+          "description": "Small text above the heading"
+        },
+        {
+          "name": "heading",
+          "label": "Heading",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "events",
+          "label": "Events",
+          "type": "string",
+          "list": true,
+          "required": true,
+          "fields": [
+            {
+              "name": "title",
+              "label": "Title",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "date",
+              "label": "Date",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "time",
+              "label": "Time",
+              "type": "string"
+            },
+            {
+              "name": "location",
+              "label": "Location",
+              "type": "string"
+            },
+            {
+              "name": "speaker",
+              "label": "Speaker / Host",
+              "type": "string"
+            },
+            {
+              "name": "category",
+              "label": "Category",
+              "type": "string"
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "text"
+            },
+            {
+              "name": "image",
+              "label": "Image",
+              "type": "string",
+              "required": false,
+              "fields": [
+                {
+                  "name": "src",
+                  "label": "Image Source",
+                  "type": "image",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "label": "Alt Text",
+                  "type": "string",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "name": "url",
+              "label": "Link URL",
+              "type": "url"
+            }
+          ]
+        },
+        {
+          "name": "cta",
+          "label": "Call To Action",
+          "type": "string",
+          "required": true,
+          "fields": [
+            {
+              "name": "text",
+              "label": "Button Text",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "Button URL",
+              "type": "url",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "key": "list",
+          "label": "Agenda List",
+          "component": "EventsList",
+          "brief": "Agenda-style rows with a prominent date block left and event details right.",
+          "status": "ready",
+          "preview": "/previews/events/list.png"
+        },
+        {
+          "key": "grid",
+          "label": "Event Cards",
+          "component": "EventsGrid",
+          "brief": "Image-topped cards with a date badge, category, title, meta, and register link.",
+          "status": "ready",
+          "preview": "/previews/events/grid.png"
         }
       ]
     }

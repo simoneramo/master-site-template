@@ -1,0 +1,96 @@
+---
+/**
+ * FooterClassic — the original master-template footer, now data-driven.
+ * Pattern key: classic
+ * Section: Footer
+ *
+ * Logo + Beta badge with socials on top, a multi-column links grid, and a
+ * bottom bar with copyright, legal links, and a back-to-top control.
+ */
+import type { FooterData } from '../../../data/sample-data';
+
+interface Props {
+  data: FooterData;
+}
+
+const { data } = Astro.props;
+const { logo, columns, socials, copyright, legalLinks } = data;
+---
+
+<footer class="pt-10 pb-6">
+  <div class="mx-auto px-8">
+    <!-- Top Section: Logo and Socials -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-10">
+      <div>
+        <span class="text-xl font-bold text-black dark:text-neutral-300 px-2 pt-1 pb-1.5 inline-flex items-center gap-2">
+          {logo}
+          <span class="text-[10px] font-bold uppercase tracking-widest bg-zinc-100 text-neutral-600 dark:bg-zinc-800 dark:text-neutral-300 px-2 py-0.5 rounded-full mb-px">
+            Beta
+          </span>
+        </span>
+      </div>
+      <div class="flex gap-4 mt-6 md:mt-0">
+        {socials.map((platform) => (
+          <a
+            href={platform.url}
+            class="w-10 h-10 bg-zinc-600 dark:bg-zinc-800 rounded-full hover:bg-black hover:text-white dark:hover:bg-zinc-700 transition-colors flex items-center justify-center text-white dark:text-white"
+            aria-label={platform.platform}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Fragment set:html={platform.icon} />
+          </a>
+        ))}
+      </div>
+    </div>
+
+    {columns.length > 0 && (
+      <>
+        <hr class="mb-10 border-t border-zinc-300 dark:border-zinc-800" />
+
+        <!-- Middle Section: Links Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12 mb-20">
+          {columns.map((column) => (
+            <div>
+              <h4 class="font-bold text-black dark:text-white mb-2 text-xl">
+                {column.heading}
+              </h4>
+              <ul class="space-y-6 text-neutral-700 dark:text-neutral-400 font-medium">
+                {column.links.map((link) => (
+                  <li>
+                    <a
+                      href={link.url}
+                      class="hover:text-black dark:hover:text-white transition-colors relative inline-block hover:after:content-[''] hover:after:absolute hover:after:left-0 hover:after:bottom-0 hover:after:w-full hover:after:h-[2px] hover:after:bg-black dark:hover:after:bg-white"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </>
+    )}
+
+    <hr class="mb-6 border-t border-zinc-300 dark:border-zinc-800" />
+
+    <!-- Bottom Section: Copyright and Legal Links -->
+    <div class="flex flex-col md:flex-row justify-between items-center text-sm text-neutral-800 dark:text-neutral-400 font-bold">
+      <p class="mb-4 md:mb-0">{copyright}</p>
+      <div class="flex gap-8">
+        {legalLinks.map((link) => (
+          <a
+            href={link.url}
+            class="hover:text-black dark:hover:text-white transition-colors relative inline-block hover:after:content-[''] hover:after:absolute hover:after:left-0 hover:after:bottom-0 hover:after:w-full hover:after:h-[2px] hover:after:bg-black dark:hover:after:bg-white"
+          >
+            {link.label}
+          </a>
+        ))}
+        <a href="#" class="hover:text-black dark:hover:text-white transition-colors">
+          Back to top &uarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

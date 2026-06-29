@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-04-15T23:15:54.773Z",
+  "generatedAt": "2026-06-25T09:38:57.171Z",
   "sourceFile": "src/styles/global.css",
   "light": {
     "colors": {
@@ -25,7 +25,7 @@
       "--shadow-lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
     },
     "fonts": {
-      "--font-sans": "system-ui, sans-serif",
+      "--font-sans": "'Inter Variable', system-ui, sans-serif",
       "--font-heading": "var(--font-sans)"
     },
     "animate": {

@@ -1,0 +1,57 @@
+---
+/**
+ * ContentSidebar — Prose with Author Sidebar
+ * Long-form prose in the main column with a sticky sidebar holding the
+ * author byline and meta. Falls back gracefully when no author is set.
+ */
+import type { ContentData } from '../../../data/sample-data';
+
+interface Props { data: ContentData; }
+const { data } = Astro.props;
+const { eyebrow, heading, description, body, author } = data;
+---
+
+<section class="py-24 bg-white dark:bg-zinc-950">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+    <div class="mb-16 max-w-3xl">
+      {eyebrow && (
+        <span class="text-accent font-bold tracking-wider uppercase text-sm mb-4 block">{eyebrow}</span>
+      )}
+      <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white mb-6">
+        {heading}
+      </h2>
+      {description && (
+        <p class="text-xl text-neutral-600 dark:text-neutral-400">{description}</p>
+      )}
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-12">
+      <!-- Sidebar -->
+      <aside class="lg:col-span-3 order-last lg:order-first">
+        <div class="sticky top-32 space-y-6">
+          {author && (
+            <div class="flex items-center gap-3">
+              {author.photo && (
+                <img src={author.photo} alt={author.name} class="w-12 h-12 rounded-full object-cover" loading="lazy" />
+              )}
+              <div>
+                <div class="font-bold text-sm">{author.name}</div>
+                <div class="text-xs text-neutral-500 dark:text-neutral-400">{author.role}</div>
+              </div>
+            </div>
+          )}
+          {author?.date && (
+            <div class="text-xs font-medium uppercase tracking-wider text-neutral-400 border-t border-zinc-200 dark:border-zinc-800 pt-4">
+              {author.date}
+            </div>
+          )}
+        </div>
+      </aside>
+
+      <!-- Body -->
+      <div class="lg:col-span-9">
+        <div class="prose prose-lg dark:prose-invert prose-zinc max-w-none" set:html={body} />
+      </div>
+    </div>
+  </div>
+</section>

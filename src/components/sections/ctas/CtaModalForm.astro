@@ -1,0 +1,161 @@
+---
+/**
+ * CtaModalForm — CTA with Modal Form
+ * Centered CTA banner. Clicking the button opens a modal with a lead-capture form.
+ */
+import type { CtaData } from '../../../data/sample-data';
+
+interface Props { data: CtaData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, primaryCta, trustBadges, formFields = [] } = data;
+
+const fields = formFields.length > 0 ? formFields : [
+  { label: 'Name', type: 'text', placeholder: 'Your name' },
+  { label: 'Email', type: 'email', placeholder: 'you@example.com' },
+  { label: 'Phone', type: 'tel', placeholder: '0400 000 000' },
+  { label: 'Message', type: 'textarea', placeholder: 'Tell us about your project...' },
+];
+---
+
+<section class="py-24 md:py-32 bg-zinc-950 text-white dark:bg-white dark:text-black">
+  <div class="container mx-auto px-4 md:px-8 text-center max-w-3xl">
+    {eyebrow && (
+      <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-white/20 dark:border-black/20 text-white/70 dark:text-black/70 mb-8">
+        {eyebrow}
+      </span>
+    )}
+
+    <h2 class="text-4xl md:text-6xl font-bold leading-tighter mb-6">
+      {heading}
+    </h2>
+    <p class="text-lg text-white/80 dark:text-black/60 mb-10 leading-relaxed">
+      {description}
+    </p>
+
+    <div x-data="{ open: false }" @keydown.escape.window="open = false">
+      {/* CTA Button */}
+      <button
+        type="button"
+        @click="open = true"
+        class="group relative inline-flex items-center justify-center overflow-hidden h-16 px-12 font-bold bg-white text-black dark:bg-black dark:text-white text-lg rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all"
+      >
+        <span class="transform transition-transform duration-300 group-hover:-translate-x-3">
+          {primaryCta.text}
+        </span>
+        <span class="absolute right-8 transform -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+          →
+        </span>
+      </button>
+
+      {trustBadges && trustBadges.length > 0 && (
+        <div class="flex flex-wrap items-center justify-center gap-6 mt-10 text-sm text-white/80 dark:text-black/50">
+          {trustBadges.map((badge) => (
+            <span class="flex items-center gap-1.5">
+              <span>{badge.icon}</span> {badge.text}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Modal Backdrop + Panel */}
+      <div
+        x-show="open"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-50"
+        style="display: none;"
+        x-cloak
+      >
+        {/* Backdrop */}
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="open = false"></div>
+
+        {/* Modal Panel */}
+        <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+          <div
+            x-show="open"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+            x-transition:leave-end="opacity-0 scale-95 translate-y-4"
+            class="bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white rounded-2xl shadow-2xl w-full max-w-lg p-8 md:p-10 relative text-left"
+            @click.stop
+          >
+            {/* Close Button */}
+            <button
+              type="button"
+              @click="open = false"
+              class="absolute top-4 right-4 w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+              aria-label="Close modal"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+
+            {/* Form Header */}
+            <div class="mb-6 pr-8">
+              <h3 class="text-2xl font-bold mb-1">{primaryCta.text}</h3>
+              <p class="text-sm text-neutral-500 dark:text-neutral-400">Fill out the details below and we&apos;ll be in touch shortly.</p>
+            </div>
+
+            {/* Form */}
+            <form
+              class="space-y-4"
+              x-data="{ submitting: false, submitted: false }"
+              @submit.prevent="submitting = true; setTimeout(() => { submitting = false; submitted = true }, 1000)"
+            >
+              {fields.map((field) => (
+                <div>
+                  <label class="block text-sm font-bold mb-1.5">{field.label}</label>
+                  {field.type === 'textarea' ? (
+                    <textarea
+                      placeholder={field.placeholder}
+                      rows="3"
+                      class="w-full px-4 py-3 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:outline-none focus:border-zinc-950 dark:focus:border-white transition-colors text-sm resize-none"
+                    />
+                  ) : (
+                    <input
+                      type={field.type as any}
+                      placeholder={field.placeholder}
+                      class="w-full px-4 py-3 rounded-lg border-2 border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 focus:outline-none focus:border-zinc-950 dark:focus:border-white transition-colors text-sm"
+                    />
+                  )}
+                </div>
+              ))}
+
+              <button
+                type="submit"
+                class="w-full h-14 bg-zinc-950 dark:bg-white text-white dark:text-black font-bold text-lg rounded-full hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                :disabled="submitting"
+              >
+                <span x-show="!submitting && !submitted">Send Message →</span>
+                <span x-show="submitting" class="flex items-center justify-center gap-2">
+                  <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Sending...
+                </span>
+                <span x-show="submitted && !submitting" class="flex items-center justify-center gap-2">
+                  <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Sent!
+                </span>
+              </button>
+
+              <p class="text-xs text-center text-neutral-400 mt-2">🔒 Your data is safe. We never share your information.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -8,6 +8,7 @@
  * Mobile hamburger with dropdown menu.
  */
 import type { HeaderData } from '../../../data/sample-data';
+import ThemeToggle from '../../ThemeToggle.astro';
 
 interface Props {
   data: HeaderData;
@@ -55,6 +56,8 @@ const { logo, navLinks, cta } = data;
     <!-- Desktop CTA & Mobile Toggle (Right) -->
     <div class="flex items-center gap-4 shrink-0">
       <div class="hidden lg:block">
+          <ThemeToggle />
+
         <a
           href={cta.url}
           class="group relative inline-flex items-center justify-center overflow-hidden bg-black dark:bg-white text-white dark:text-black font-bold px-5 py-2 rounded-full transition-colors hover:bg-zinc-800 dark:hover:bg-zinc-200 whitespace-nowrap"

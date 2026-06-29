@@ -1,0 +1,86 @@
+---
+/**
+ * CTASection — Call-to-action section with two layout variants
+ *
+ * variant="center"  → centered text (default)
+ * variant="left"    → left-aligned text
+ */
+
+interface Props {
+  variant?: "center" | "left";
+  data: {
+    sectionLabel: string;
+    heading: string;
+    description: string;
+    buttonText: string;
+    buttonLink: string;
+  };
+}
+
+const { variant = "center", data } = Astro.props;
+const { sectionLabel, heading, description, buttonText, buttonLink } = data;
+---
+
+{
+  /* ─────────────────────────────────────────────
+  VARIANT: CENTER (centered text)
+  ───────────────────────────────────────────── */
+}
+{
+  variant === "center" && (
+    <section class="pb-32 container mx-auto px-4 md:px-0">
+      <div class="bg-zinc-200 dark:bg-zinc-900 p-16 md:p-32 text-center rounded-xl">
+        {sectionLabel && (
+          <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
+            {sectionLabel}
+          </p>
+        )}
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">{heading}</h2>
+        <p class="text-lg mb-10">{description}</p>
+        <a
+          href={buttonLink}
+          class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-black bg-white dark:bg-green-600 dark:text-white transition-all duration-300 text-lg rounded-md hover:bg-white dark:hover:bg-black"
+        >
+          <span class="transform transition-transform duration-300 group-hover:-translate-x-4">
+            {buttonText}
+          </span>
+          <span class="absolute right-6 transform translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+            &rarr;
+          </span>
+        </a>
+      </div>
+    </section>
+  )
+}
+
+{
+  /* ─────────────────────────────────────────────
+  VARIANT: LEFT (left-aligned text)
+  ───────────────────────────────────────────── */
+}
+{
+  variant === "left" && (
+    <section class="pb-32 container mx-auto px-4 md:px-0">
+      <div class="bg-zinc-200 dark:bg-zinc-900 p-16 md:py-32 md:px-24 rounded-xl">
+        {sectionLabel && (
+          <p class="text-xs font-bold uppercase tracking-widest text-black dark:text-white mb-4">
+            {sectionLabel}
+          </p>
+        )}
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">{heading}</h2>
+        <p class="text-lg mb-10">{description}</p>
+        <a
+          href={buttonLink}
+          class="group relative inline-flex items-center justify-center overflow-hidden h-14 px-10 font-bold text-black bg-white dark:bg-green-600 dark:text-white transition-all duration-300 text-lg rounded-md hover:bg-white dark:hover:bg-black"
+        >
+          <span class="transform transition-transform duration-300 group-hover:-translate-x-4">
+            {buttonText}
+          </span>
+          <span class="absolute right-6 transform translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+            &rarr;
+          </span>
+        </a>
+      </div>
+    </section>
+  )
+}

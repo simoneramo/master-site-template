@@ -1,0 +1,68 @@
+---
+/**
+ * TeamGrid — Compact 4-Column Cards
+ * Denser grid of square-photo cards with a hover overlay revealing the
+ * member's social links. Supports photo or initials avatars.
+ */
+import type { TeamData } from '../../../data/sample-data';
+
+interface Props { data: TeamData; }
+
+const { data } = Astro.props;
+const { eyebrow, heading, description, members = [] } = data || {};
+---
+
+<section class="py-20 md:py-32">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      {eyebrow && (
+        <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 text-neutral-600 dark:text-neutral-400 mb-6">
+          {eyebrow}
+        </span>
+      )}
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h2>
+      {description && <p class="text-lg text-neutral-600 dark:text-neutral-400">{description}</p>}
+    </div>
+
+    {members && members.length > 0 && (
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+      {members.map((member) => (
+        <div class="group">
+          <div class="relative aspect-square mb-4 rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900">
+            {member.photo ? (
+              <img
+                src={member.photo}
+                alt={member.name}
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+            ) : member.initials ? (
+              <div class={`w-full h-full flex items-center justify-center text-4xl font-bold ${member.colorClass || 'bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300'}`}>
+                {member.initials}
+              </div>
+            ) : null}
+
+            {/* Hover overlay with socials */}
+            {(member.socials || member.linkedin) && (
+              <div class="absolute inset-x-0 bottom-0 p-3 flex items-center justify-center gap-2 bg-linear-to-t from-black/70 to-transparent opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                {member.linkedin && (
+                  <a href={member.linkedin} aria-label={`${member.name} on LinkedIn`} class="w-9 h-9 rounded-full bg-white/90 text-zinc-900 flex items-center justify-center hover:bg-white transition-colors">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h5v-8.306c0-4.613 6.11-4.953 6.11 2.433v5.873h4.972v-9.167c0-7.85-8.835-7.516-11.114-3.56v-3.273z"/></svg>
+                  </a>
+                )}
+                {member.socials?.filter(s => s.platform !== 'LinkedIn').map((social) => (
+                  <a href={social.url} aria-label={`${member.name} on ${social.platform}`} class="w-9 h-9 rounded-full bg-white/90 text-zinc-900 flex items-center justify-center hover:bg-white transition-colors text-xs font-bold">
+                    {social.platform.charAt(0)}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+          <h3 class="font-bold leading-tight">{member.name}</h3>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400">{member.role}</p>
+        </div>
+      ))}
+    </div>
+    )}
+  </div>
+</section>

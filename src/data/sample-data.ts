@@ -284,7 +284,7 @@ export interface FooterData {
 // ─── Sample Data Instances ──────────────────────────────────
 
 export const SAMPLE_HEADER: HeaderData = {
-  logo: '🚀 Acme Studio',
+  logo: 'Acme Studio',
   navLinks: [
     {
       label: 'Services', url: '/services', children: [
@@ -661,7 +661,7 @@ export const SAMPLE_TEAM: TeamData = {
 };
 
 export const SAMPLE_FOOTER: FooterData = {
-  logo: '🚀 Acme Studio',
+  logo: 'Acme Studio',
   tagline: 'We build websites that drive results for local businesses across Sydney.',
   columns: [
     {
@@ -1205,4 +1205,395 @@ export const SAMPLE_CONTENT: ContentData = {
     date: 'April 4, 2026',
     photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop'
   }
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Contact / Service Areas Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface ContactData {
+  sectionLabel?: string;
+  heading?: string;
+  description?: string;
+  mapSrc?: string;
+  suburbs?: string[];
+}
+
+export const SAMPLE_CONTACT: ContactData = {
+  sectionLabel: 'Service Areas',
+  heading: 'Proudly serving businesses across Sydney',
+  description: 'Based locally and working with small businesses near you. Here are just some of the areas we cover.',
+  mapSrc:
+    'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d212858.5!2d151.0!3d-33.86!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sau!4v1700000000000',
+  suburbs: [
+    'Sydney CBD', 'Parramatta', 'Bondi', 'Manly', 'Chatswood', 'Newtown',
+    'Surry Hills', 'Cronulla', 'Penrith', 'Liverpool', 'Bankstown', 'Hornsby',
+    'Blacktown', 'Castle Hill', 'Mosman', 'Randwick', 'Marrickville', 'Ryde',
+    'Sutherland', 'Hurstville',
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Comparison Table Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface ComparisonData {
+  sectionLabel?: string;
+  heading?: string;
+  description?: string;
+  columnHeaders: string[];
+  rows: {
+    feature: string;
+    subtitle: string;
+    weMakeSmall: string;
+    webAgency: string;
+    websiteBuilder: string;
+  }[];
+}
+
+export const SAMPLE_COMPARISON: ComparisonData = {
+  sectionLabel: 'How we compare',
+  heading: 'Why businesses choose us',
+  description: 'A clear, honest look at how we stack up against the typical alternatives.',
+  columnHeaders: ['Feature', 'WeMakeSmall', 'Web Agency', 'Website Builder'],
+  rows: [
+    { feature: 'Upfront price', subtitle: 'What you pay to get started', weMakeSmall: '<strong>$0 deposit</strong>', webAgency: '$5,000+', websiteBuilder: '$0' },
+    { feature: 'Performance', subtitle: 'Core Web Vitals & load speed', weMakeSmall: '✅ Hand-tuned', webAgency: '⚠️ Varies', websiteBuilder: '❌ Bloated' },
+    { feature: 'You own it', subtitle: 'Full code & asset ownership', weMakeSmall: '✅ Always', webAgency: '⚠️ Sometimes', websiteBuilder: '❌ Rented' },
+    { feature: 'Turnaround', subtitle: 'Time to launch', weMakeSmall: '✅ ~28 days', webAgency: '8–12 weeks', websiteBuilder: 'DIY' },
+    { feature: 'Ongoing support', subtitle: 'Help after launch', weMakeSmall: '✅ Direct line', webAgency: '💲 Retainer', websiteBuilder: '❌ Forums' },
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Logos / "Trusted By" Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface LogoItem {
+  /** Brand name (used as label and image alt fallback) */
+  name: string;
+  /** Emoji/text mark for text-style logo rows */
+  icon?: string;
+  /** Image logo source for image-style logo grids */
+  src?: string;
+  /** Image alt text (defaults to name) */
+  alt?: string;
+  /** Optional link */
+  url?: string;
+}
+
+export interface LogosData {
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+  brands: LogoItem[];
+}
+
+export const SAMPLE_LOGOS: LogosData = {
+  eyebrow: 'Trusted by teams everywhere',
+  brands: [
+    { name: 'Astro', icon: '🚀', src: 'https://placehold.co/140x48/e5e7eb/a1a1aa?text=Astro', alt: 'Astro' },
+    { name: 'Vercel', icon: '▲', src: 'https://placehold.co/140x48/e5e7eb/a1a1aa?text=Vercel', alt: 'Vercel' },
+    { name: 'TinaCMS', icon: '🦙', src: 'https://placehold.co/140x48/e5e7eb/a1a1aa?text=TinaCMS', alt: 'TinaCMS' },
+    { name: 'Tailwind', icon: '🎨', src: 'https://placehold.co/140x48/e5e7eb/a1a1aa?text=Tailwind', alt: 'Tailwind' },
+    { name: 'React', icon: '⚛️', src: 'https://placehold.co/140x48/e5e7eb/a1a1aa?text=React', alt: 'React' },
+    { name: 'Stripe', icon: '💳', src: 'https://placehold.co/140x48/e5e7eb/a1a1aa?text=Stripe', alt: 'Stripe' },
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Gallery Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface GalleryImage {
+  src: string;
+  alt?: string;
+  caption?: string;
+  category?: string;
+}
+
+export interface GalleryData {
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+  images: GalleryImage[];
+}
+
+export const SAMPLE_GALLERY: GalleryData = {
+  eyebrow: 'Gallery',
+  heading: 'A look at our recent work',
+  description: 'A selection of projects, spaces, and moments captured along the way.',
+  images: [
+    { src: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop', alt: 'Modern office', caption: 'Studio HQ', category: 'Workspace' },
+    { src: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800&h=1000&fit=crop', alt: 'Code on screen', caption: 'Build day', category: 'Process' },
+    { src: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop', alt: 'Team meeting', caption: 'Discovery workshop', category: 'Team' },
+    { src: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&h=800&fit=crop', alt: 'Designer at work', caption: 'Design sprint', category: 'Process' },
+    { src: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&h=600&fit=crop', alt: 'Whiteboard session', caption: 'Mapping it out', category: 'Team' },
+    { src: 'https://images.unsplash.com/photo-1497032205916-ac775f0649ae?w=800&h=1000&fit=crop', alt: 'Workspace desk', caption: 'Focus time', category: 'Workspace' },
+    { src: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop', alt: 'Planning board', caption: 'Roadmapping', category: 'Process' },
+    { src: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&h=800&fit=crop', alt: 'Team collaboration', caption: 'Shipping together', category: 'Team' },
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Integrations Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface IntegrationItem {
+  name: string;
+  /** Emoji/text mark or short logo glyph */
+  icon?: string;
+  description?: string;
+  category?: string;
+  url?: string;
+}
+
+export interface IntegrationsData {
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+  integrations: IntegrationItem[];
+  cta?: CtaLink;
+}
+
+export const SAMPLE_INTEGRATIONS: IntegrationsData = {
+  eyebrow: 'Integrations',
+  heading: 'Connects with the tools you already use',
+  description: 'Plug into your existing stack in minutes. No code, no headaches.',
+  integrations: [
+    { name: 'Slack', icon: '💬', description: 'Send alerts and updates straight to your channels.', category: 'Communication' },
+    { name: 'Stripe', icon: '💳', description: 'Sync payments, invoices, and subscriptions.', category: 'Payments' },
+    { name: 'HubSpot', icon: '🧲', description: 'Two-way contact and deal synchronisation.', category: 'CRM' },
+    { name: 'Google Analytics', icon: '📊', description: 'Track conversions and traffic automatically.', category: 'Analytics' },
+    { name: 'Mailchimp', icon: '📧', description: 'Push new leads into your email campaigns.', category: 'Marketing' },
+    { name: 'Zapier', icon: '⚡', description: 'Connect to 5,000+ apps with no code.', category: 'Automation' },
+    { name: 'Notion', icon: '📝', description: 'Mirror content and docs into your workspace.', category: 'Productivity' },
+    { name: 'Shopify', icon: '🛍️', description: 'Sync products, orders, and customers.', category: 'E-Commerce' },
+  ],
+  cta: { text: 'Browse all integrations', url: '/integrations' },
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// About / Story Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface AboutValue {
+  icon?: string;
+  title: string;
+  description: string;
+}
+
+export interface AboutData {
+  eyebrow?: string;
+  heading: string;
+  description?: string;
+  body?: string;
+  image?: ImageData;
+  metrics?: { value: string; label: string }[];
+  values?: AboutValue[];
+}
+
+export const SAMPLE_ABOUT: AboutData = {
+  eyebrow: 'Our Story',
+  heading: 'Big-agency craft, without the big-agency overhead',
+  description: 'We started with a simple belief: small businesses deserve websites that actually grow their revenue.',
+  body: `
+    <p>Founded in 2011, we set out to close the gap between cheap DIY builders and overpriced city agencies. A decade later, we've delivered 500+ projects for businesses that needed a site they could actually own and rely on.</p>
+    <p>We keep our team small and senior on purpose — the people who scope your project are the same ones who build it. No account-manager telephone game, no junior hand-offs.</p>
+  `,
+  image: { src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&h=800&fit=crop', alt: 'Our team at work' },
+  metrics: [
+    { value: '500+', label: 'Projects delivered' },
+    { value: '15', label: 'Years in business' },
+    { value: '4.9★', label: 'Average rating' },
+    { value: '98%', label: 'Client retention' },
+  ],
+  values: [
+    { icon: '🎯', title: 'Outcomes over output', description: 'We measure success by your results, not the number of pages we ship.' },
+    { icon: '🤝', title: 'Senior, not siloed', description: 'You work directly with the people building your site, start to finish.' },
+    { icon: '⚡', title: 'Fast by default', description: 'Performance is a feature, baked in from the very first commit.' },
+    { icon: '🔓', title: 'You own everything', description: 'Full code and asset ownership — no lock-in, no hostage situations.' },
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Careers / Job Openings Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface JobOpening {
+  title: string;
+  department?: string;
+  location?: string;
+  /** e.g. Full-time, Part-time, Contract, Remote */
+  type?: string;
+  description?: string;
+  url?: string;
+}
+
+export interface CareersData {
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+  jobs: JobOpening[];
+  cta?: CtaLink;
+}
+
+export const SAMPLE_CAREERS: CareersData = {
+  eyebrow: "We're hiring",
+  heading: 'Build the future with us',
+  description: 'Join a small, senior team that ships real work and looks after its people.',
+  jobs: [
+    { title: 'Senior Frontend Engineer', department: 'Engineering', location: 'Sydney / Remote', type: 'Full-time', description: 'Own and ship high-performance Astro + TypeScript builds end to end.', url: '/careers/senior-frontend-engineer' },
+    { title: 'Product Designer', department: 'Design', location: 'Remote', type: 'Full-time', description: 'Shape conversion-led UX across client projects, from wireframe to polish.', url: '/careers/product-designer' },
+    { title: 'SEO Strategist', department: 'Marketing', location: 'Sydney', type: 'Full-time', description: 'Drive organic growth strategy and reporting for our client portfolio.', url: '/careers/seo-strategist' },
+    { title: 'Project Coordinator', department: 'Operations', location: 'Remote', type: 'Part-time', description: 'Keep projects on track and clients delighted from kickoff to launch.', url: '/careers/project-coordinator' },
+    { title: 'Content Writer', department: 'Marketing', location: 'Remote', type: 'Contract', description: 'Write sharp, on-brand copy for websites, landing pages, and campaigns.', url: '/careers/content-writer' },
+  ],
+  cta: { text: 'See all openings', url: '/careers' },
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Events Data
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface EventItem {
+  title: string;
+  /** Display date, e.g. "Jun 7, 2026" */
+  date: string;
+  time?: string;
+  location?: string;
+  speaker?: string;
+  category?: string;
+  description?: string;
+  image?: ImageData;
+  url?: string;
+}
+
+export interface EventsData {
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+  events: EventItem[];
+  cta?: CtaLink;
+}
+
+export const SAMPLE_EVENTS: EventsData = {
+  eyebrow: 'Upcoming Events',
+  heading: "What's on",
+  description: 'Workshops, webinars, and meetups to help you grow your business online.',
+  events: [
+    { title: 'Website Speed Masterclass', date: 'Jul 8, 2026', time: '10:00 AM AEST', location: 'Online', speaker: 'Sarah Mitchell', category: 'Webinar', description: 'A hands-on session on Core Web Vitals and what actually moves the needle.', image: { src: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&h=500&fit=crop', alt: 'Speaker on stage' }, url: '/events/website-speed-masterclass' },
+    { title: 'Small Business SEO Bootcamp', date: 'Jul 22, 2026', time: '2:00 PM AEST', location: 'Sydney CBD', speaker: 'David Park', category: 'Workshop', description: 'A practical, no-fluff workshop covering local SEO from the ground up.', image: { src: 'https://images.unsplash.com/photo-1531058020387-3be344556be6?w=800&h=500&fit=crop', alt: 'Workshop room' }, url: '/events/seo-bootcamp' },
+    { title: 'Design That Converts', date: 'Aug 5, 2026', time: '11:00 AM AEST', location: 'Online', speaker: 'James Chen', category: 'Webinar', description: 'How layout, hierarchy, and copy work together to turn visitors into leads.', image: { src: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=500&fit=crop', alt: 'Design session' }, url: '/events/design-that-converts' },
+    { title: 'Founders Meetup', date: 'Aug 19, 2026', time: '6:00 PM AEST', location: 'Surry Hills', speaker: 'The team', category: 'Meetup', description: 'Casual evening of drinks and conversation with local business owners.', image: { src: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&h=500&fit=crop', alt: 'Networking event' }, url: '/events/founders-meetup' },
+  ],
+  cta: { text: 'View full calendar', url: '/events' },
+};
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Classic (Original / Legacy) component sample data
+// These feed the "Classic (Original)" variants ported from the original
+// src/components/*.astro components. Each matches its component's own data shape.
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const SAMPLE_HERO_CLASSIC = {
+  label: 'Award-Winning Studio',
+  heading: 'We build websites that drive results',
+  description: 'From concept to launch, we create high-converting websites for local businesses across Sydney.',
+  buttonText: 'Get Your Free Quote',
+  buttonLink: '/quote',
+  trustBadge: '⭐ 5.0 Rating · 120+ Reviews',
+};
+
+export const SAMPLE_FAQ_CLASSIC = {
+  sectionLabel: 'FAQ',
+  heading: 'Frequently asked questions',
+  description: 'Everything you need to know about working with us.',
+  items: [
+    { question: 'How long does a project take?', answer: 'Most projects launch within 4–6 weeks depending on scope.' },
+    { question: 'Do you offer ongoing support?', answer: 'Yes — we offer managed care plans covering content, hosting, and updates.' },
+    { question: 'How much does it cost?', answer: 'Every project starts with a fixed quote after a free discovery call.' },
+    { question: 'Do you build with SEO in mind?', answer: 'Always. Technical SEO and performance are baked into every build.' },
+  ],
+};
+
+export const SAMPLE_TESTIMONIALS_CLASSIC = {
+  sectionLabel: 'Testimonials',
+  heading: 'What our clients say',
+  description: 'Real results from real businesses.',
+  items: [
+    { quote: 'Our revenue is up 40% since launch — best decision we made this year.', authorName: 'Sarah Mitchell', authorTitle: 'CEO, Mitchell & Co', authorImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop' },
+    { quote: 'Professional, fast, and the design is absolutely stunning.', authorName: 'James Lee', authorTitle: 'Founder, Northside', authorImage: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop' },
+    { quote: 'They just get it. Communication was flawless from start to finish.', authorName: 'Priya Sharma', authorTitle: 'Director, BrightPath', authorImage: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop' },
+  ],
+};
+
+export const SAMPLE_CARDGRID_CLASSIC = {
+  sectionLabel: 'What We Do',
+  heading: 'Everything you need to grow online',
+  description: 'A full-service team covering design, build, and growth.',
+  ctaText: 'See all services',
+  ctaLink: '/services',
+  items: [
+    { icon: '🎨', title: 'Web Design', description: 'Beautiful, conversion-focused websites tailored to your brand.' },
+    { icon: '⚡', title: 'Development', description: 'Fast, accessible, SEO-ready builds on a modern stack.' },
+    { icon: '📈', title: 'Growth', description: 'SEO, analytics, and CRO to keep you growing after launch.' },
+  ],
+};
+
+export const SAMPLE_WORKGRID_CLASSIC = {
+  sectionLabel: 'Our Work',
+  heading: 'Recent projects',
+  description: 'A selection of work we’re proud of.',
+  ctaText: 'View all work',
+  ctaLink: '/work',
+  projects: [
+    { slug: 'acme-rebrand', data: { title: 'Acme Rebrand', description: 'Full site redesign and brand refresh.', category: 'Web Design', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop' } },
+    { slug: 'northside-store', data: { title: 'Northside Store', description: 'High-converting e-commerce build.', category: 'E-commerce', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop' } },
+    { slug: 'brightpath-app', data: { title: 'BrightPath App', description: 'Marketing site for a SaaS launch.', category: 'SaaS', image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=600&fit=crop' } },
+  ],
+};
+
+export const SAMPLE_CONTACTFORM_CLASSIC = {
+  sectionLabel: 'Contact',
+  heading: 'Get in touch',
+  description: 'Tell us about your project and we’ll get back to you within one business day.',
+  nameField: { label: 'Full Name', placeholder: 'John Smith', errorMessage: 'Please enter your name' },
+  emailField: { label: 'Email', placeholder: 'john@example.com', errorMessage: 'Please enter a valid email' },
+  messageField: { label: 'Message', placeholder: 'Tell us about your project...', errorMessage: 'Please enter a message' },
+  submitButton: 'Send Message',
+  successMessage: 'Thanks! We’ll be in touch shortly.',
+  privacyNote: '🔒 Your data is safe. We never share your information.',
+  responseTime: 'We typically reply within 1 business day.',
+};
+
+export const SAMPLE_CTASECTION_CLASSIC = {
+  sectionLabel: 'Ready to grow?',
+  heading: 'Let’s build something great together',
+  description: 'Get a free consultation and a custom proposal for your project. No obligation.',
+  buttonText: 'Get Your Free Quote',
+  buttonLink: '/quote',
+};
+
+export const SAMPLE_PAGEHERO_CLASSIC = {
+  label: 'About Us',
+  heading: 'We’re a team that cares about results',
+  description: 'Learn more about our story, our process, and the people behind the work.',
+  buttonText: 'Get in touch',
+  buttonLink: '/contact',
+};
+
+export const SAMPLE_PRICING_CLASSIC = {
+  sectionLabel: 'Pricing',
+  heading: 'Simple, transparent pricing',
+  description: 'Choose the plan that fits your business.',
+  ctaText: 'Compare all features',
+  ctaLink: '/pricing',
+  footerNote: 'All plans include hosting and ongoing support.',
+  tiers: [
+    { name: 'Starter', description: 'For small businesses getting started', price: '$1,500', priceLabel: 'one-off', isPopular: false, buttonText: 'Get started', buttonLink: '/quote', learnMoreLink: '/services', features: [ { label: 'Pages', value: 'Up to 5' }, { label: 'Support', value: 'Email' }, { label: 'SEO', value: 'Basic' } ] },
+    { name: 'Growth', description: 'For growing teams who need more', price: '$3,500', priceLabel: 'one-off', isPopular: true, buttonText: 'Get started', buttonLink: '/quote', learnMoreLink: '/services', features: [ { label: 'Pages', value: 'Up to 15' }, { label: 'Support', value: 'Priority' }, { label: 'SEO', value: 'Advanced' } ] },
+    { name: 'Scale', description: 'For established brands', price: 'Custom', priceLabel: '', isPopular: false, buttonText: 'Contact us', buttonLink: '/contact', learnMoreLink: '/services', features: [ { label: 'Pages', value: 'Unlimited' }, { label: 'Support', value: 'Dedicated' }, { label: 'SEO', value: 'Managed' } ] },
+  ],
 };
