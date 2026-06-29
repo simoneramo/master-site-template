@@ -2,6 +2,8 @@
 
 A modern, production-ready Astro template built with accessibility at its core and integrated with TinaCMS for easy content management. Features a complete website with blog functionality, dynamic pages, and full WCAG 2.1 compliance. This project is focused on accessibility, SEO optimisation, and high-contrast design.
 
+This project is part of the [Project Starter](https://github.com/simoneramo/Project-Starter) ecosystem.
+
 ## Features
 
 - **Fully Accessible**: WCAG 2.1 AA/AAA compliant with semantic HTML, ARIA attributes, and keyboard navigation.
