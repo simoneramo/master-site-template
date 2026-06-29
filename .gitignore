@@ -44,6 +44,6 @@ node_modules
 .agent
 .antigravity/
 .antigravity.claude/settings.local.json
-
+.claude/
 
 .old-plans
