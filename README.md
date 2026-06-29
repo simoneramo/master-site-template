@@ -6,7 +6,7 @@ A modern, production-ready Astro template built with accessibility at its core a
 
 - **Fully Accessible**: WCAG 2.1 AA/AAA compliant with semantic HTML, ARIA attributes, and keyboard navigation.
 - **TinaCMS Integration**: visual editing for all pages, blog posts, and site configuration.
-- **Dark Mode**: Complete dark mode support with system preference detection. Controlled by Alpine.js state, persisted in localStorage, and respects system preference on first visit.
+- **Dark Mode**: Complete dark mode support via a reusable `ThemeToggle.astro` component. Persists the choice in localStorage and respects the OS preference on first visit.
 - **Blog System**: Content collections managed via CMS with pagination, tags, and dynamic routing.
 - **Contact Form**: Functional API route integrated with Resend for email delivery.
 - **Responsive Design**: Mobile-first responsive design that works on all devices.
@@ -30,6 +30,8 @@ A modern, production-ready Astro template built with accessibility at its core a
 ├── public/            # Static assets
 ├── src/
 │   ├── components/    # Reusable Astro components
+│   │   └── sections/  # Section library, grouped by type (headers, heroes, ...)
+│   ├── data/          # Pattern registry, section fields, and sample data
 │   ├── content/       # Content collections (managed by Tina)
 │   ├── layouts/       # Page layouts
 │   ├── pages/         # Page routes and API endpoints
@@ -47,14 +49,29 @@ A modern, production-ready Astro template built with accessibility at its core a
 
 ### Component Library
 
-The template includes a comprehensive component library with **103 layout variants** across 23 section types:
+The template includes a comprehensive component library with **190 layout variants** across 33 section types. Each section also ships a **"Classic (Original)"** variant that restores the original master-template design (see `CLASSIC_VARIANTS.md`).
 
-| Section | Variants |
-|---------|----------|
-| Heroes, Headers, Footers, CTAs, FAQs | 9, 8, 6, 7, 5 |
-| Trust Bars, Pricing, Services, Testimonials | 5, 5, 8, 7 |
-| Features, Benefits, Process, Portfolio | 6, 6, 5, 7 |
-| Team, Blog, Forms, Stats, Banners, Content | 3, 5, 3, 3, 4, 3 |
+| Section | Variants | Section | Variants |
+|---------|----------|---------|----------|
+| Headers | 11 | Footers | 8 |
+| Heroes | 21 | Team | 5 |
+| Trust Bars | 6 | Blog | 5 |
+| Problems | 5 | Forms | 6 |
+| Solutions | 5 | Stats | 5 |
+| Services | 9 | Banners | 5 |
+| Features | 8 | Breakouts | 4 |
+| Benefits | 7 | Showcases | 5 |
+| Videos | 5 | Content | 5 |
+| Testimonials | 11 | Comparison | 1 |
+| Portfolio | 8 | Contact / Areas | 1 |
+| Processes | 5 | Logos | 2 |
+| Pricing | 6 | Galleries | 2 |
+| FAQs | 6 | Integrations | 2 |
+| Newsletters | 5 | About | 2 |
+| CTAs | 10 | Careers | 2 |
+| | | Events | 2 |
+
+The canonical source for sections and variants is `src/data/pattern-registry.ts`.
 
 **Browse the library:**
 - Run `npm run dev` and visit `http://localhost:4321/component-library`
@@ -214,7 +231,7 @@ To adapt this skeleton for a new brand, update the following files:
 
 - **Header/Nav**: Edit `src/components/Header.astro` to update the logo and navigation links.
 - **Footer**: Edit `src/components/Footer.astro` for copyright logic and links.
-- **Logos**: Add client logos to `src/assets/logos/` and update `src/components/LogoCloud.astro`.
+- **Logos**: Add client logos to `src/assets/logos/` and use the Logos section variants in `src/components/sections/logos/` (`LogosRow`, `LogosImageGrid`).
 
 ### Styling
 
